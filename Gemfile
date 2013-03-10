@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-#gem 'bootstrap-sass', '2.1'
+gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 #gem 'faker', '1.0.1'
 #gem 'will_paginate', '3.0.3'
@@ -39,6 +39,6 @@ group :test do
   gem 'libnotify', '0.5.9'
 end
 group :production do
-  gem 'sqlite3'
+  gem 'mysql2'
   #gem 'pg'
 end
