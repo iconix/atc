@@ -26,7 +26,7 @@ public class LoginActivity extends Activity {
 	
 	//errors
 	public static final String INVALID_LOGIN_ID_ERROR = "Username must has at least " + MIN_USERNAME_LENGTH + " characters"; 
-	public static final String INVALID_LOGIN_PASSWORD_ERROR = "Password must has at least " + MIN_USERNAME_LENGTH + " characters"; 
+	public static final String INVALID_LOGIN_PASSWORD_ERROR = "Password must has at least " + MIN_PASSWORD_LENGTH + " characters"; 
 	public static final String GENERAL_LOGIN_ERROR = "Invalid input of username or password";
 	EditText loginID;
 	EditText loginPassword;
@@ -50,7 +50,7 @@ public class LoginActivity extends Activity {
     }
     
     /**
-     * Add a click listener for the register screen to transfer to the register page
+     * Add a click listener for the login screen to transfer to the register page
      */
     private void addRegisterScreenClickListener() {
     	registerScreen.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +63,8 @@ public class LoginActivity extends Activity {
     }
     
     /**
-     * Add a click listener for the login button. When the login button is clicked. 
-     * It first check if the username and password is of the right format. If not, then
+     * Add a click listener for the login button. When the login button is clicked, 
+     * It first check if the username and password are of the right format. If not, then
      * it prompt the user to input them again. If the input it valid, it send the request
      * to server to check if the account exist on the server, and if so, if this device is 
      * new to that account. Upon getting successful login, the accountID should be shared
