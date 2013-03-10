@@ -1,7 +1,6 @@
 BusinessApp::Application.routes.draw do
-  get "businesses/new"
+  resources :businesses
 
-  get "static_pages/home"
   root to: 'static_pages#home'
 
   match 'signup', to: 'businesses#new'
