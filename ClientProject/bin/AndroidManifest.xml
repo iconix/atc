@@ -39,6 +39,8 @@
         
         <activity android:name=".LoginActivity"
                   android:label="Login To Your Account"></activity>
+        <activity android:name=".MapActivity"
+                  android:label="Putting Map On Your Device"></activity>
         
         <service 
             android:enabled="true"
@@ -46,7 +48,7 @@
         
         <meta-data
 		    android:name="com.google.android.maps.v2.API_KEY"
-		    android:value="AIzaSyCDaZzTI0rE8pQWG2KGNTNHfgBuLedbWro"/>
+		    android:value="AIzaSyDomDSCAIcU3HpB5OXESjGDqbCquAqmPIg"/>
     </application>
     
     <uses-feature
