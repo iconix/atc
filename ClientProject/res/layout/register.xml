@@ -39,6 +39,17 @@
             android:padding="10dip" >
 
             <!-- Full Name Label -->
+            
+            <TextView
+                android:id="@+id/registerErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:ems="10"
+                android:textColor="#ff0000"
+                android:textSize="16sp" >
+				
+                <requestFocus />
+            </TextView>
 
             <TextView
                 android:layout_width="fill_parent"
