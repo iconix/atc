@@ -33,6 +33,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity android:name=".RegisterActivity"
+                  android:label="Register New Account"></activity>
+        
+        <service 
+            android:enabled="true"
+            android:name="com.sap.clientproject.SendCoordinateService"/>
+        
         <meta-data
 		    android:name="com.google.android.maps.v2.API_KEY"
 		    android:value="AIzaSyCDaZzTI0rE8pQWG2KGNTNHfgBuLedbWro"/>

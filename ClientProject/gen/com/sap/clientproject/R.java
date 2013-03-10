@@ -25,11 +25,17 @@ public final class R {
         public static final int sap_logo=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080001;
+        public static final int action_settings=0x7f080005;
+        public static final int editText2=0x7f080004;
+        public static final int header=0x7f080001;
+        public static final int login=0x7f080003;
+        public static final int registration_description=0x7f080002;
         public static final int splashscreen=0x7f080000;
     }
     public static final class layout {
         public static final int activity_client_main=0x7f030000;
+        public static final int header_gradient=0x7f030001;
+        public static final int register=0x7f030002;
     }
     public static final class menu {
         public static final int client_main=0x7f070000;
