@@ -75,7 +75,7 @@
 	                android:layout_marginBottom="40dip"
 	                android:text="New to AroundTheCorner? Register here"
 	                android:gravity="center"
-	                android:textSize="20dip"
+	                android:textSize="25dip"
 	                android:textColor="#0b84aa"/>
 	 
 	    </LinearLayout>
