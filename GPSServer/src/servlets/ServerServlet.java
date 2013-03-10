@@ -63,11 +63,38 @@ public class ServerServlet extends HttpServlet {
 	}
 	
 	/**
+	 * Check for login in request. If the server notice a request to login in from client.
+	 * It will first check if it is a valid account. If it is not, then throw an error message
+	 * back to the client. If it is a valid account, it will check whether this device has already
+	 * register under this account. If not, then create new account to include this device
+	 * @param inherited request from the doPost
+	 * @param inherited response from doPost
+	 */
+	private void checkForRegisterRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String registerUserID = (String) request.getParameter("registerUserID");
+		String registerUserPassword = (String) request.getParameter("registerUserPassword");
+		String registerUserEmail = (String) request.getParameter("registerUserEmail");
+		String registerDeviceID = (String) request.getParameter("registerDeviceID");
+		if (registerUserID != null && registerUserPassword != null && registerDeviceID != null && registerUserEmail != null) {
+			AccountsManager accountManager = new AccountsManager();
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			if (!accountManager.isAccountWithGivenUsernameExisted(registerUserID)) 
+				out.println("Error");
+			else {
+				Account newAccount = new Account(registerUserID, registerDeviceID, registerUserPassword, registerUserEmail);
+				accountManager.addNewAccount(newAccount);
+				out.println("Registered");
+			}
+		}
+	}
+	
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		checkForLoginRequest(request, response);
-		
+		checkForRegisterRequest(request, response);
 		
 		GpsCoordinateManager coorManager = new GpsCoordinateManager();
 		
@@ -78,14 +105,6 @@ public class ServerServlet extends HttpServlet {
 			coorManager.addNewGpsCoordinate(coor);
 		}
 		
-		
-		String getSomething = (String)request.getParameter("getSomething");
-		if (getSomething != null) {
-			System.out.println(getSomething);
-			response.setContentType("text/plain");
-			PrintWriter out = response.getWriter();
-			out.println("you get something");
-		}
 		/*
 		String getCoordinate = (String)request.getParameter("getCoordinate");
 		if (getCoordinate != null) {
