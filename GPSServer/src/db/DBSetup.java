@@ -3,6 +3,7 @@ import java.sql.*;
 
 public class DBSetup {
 	protected static final String coordinateDB = "GPSCoordinate";
+	protected static final String clientAccountDB = "ClientAccounts";
 	private DBConnection connection;
 	
 	/**
@@ -19,22 +20,51 @@ public class DBSetup {
 	 */
 	public DBSetup() {
 		connection = new DBConnection();
+		createNewClientAccountsTable();
 		createNewGPSCoordinateTable();
+	}
+	
+	/**
+	 * Create a new table in the database with the name from clientAccountDB.
+	 * This database will contains the accountID, the hashed password, 
+	 * the device unique ID, and the email address
+	 * 		accountID: CHAR(16);
+	 * 		deviceID: CHAR(64);
+	 * 		password: CHAR(64);
+	 * 		email: CHAR(32);
+	 */
+	private void createNewClientAccountsTable() {
+		removeClientAccountsTableIfExisted();
+		String query = "CREATE TABLE " + clientAccountDB + 
+				"(accountID CHAR(16), deviceID CHAR(64), password CHAR(64), email CHAR(32))";
+		try {
+			connection.runUpdate(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Remove the table with the name from clientAccountDB
+	 */
+	private void removeClientAccountsTableIfExisted() {
+		removeTableIfExisted(clientAccountDB);
 	}
 	
 	/**
 	 * Create a new table in the database with the name from coordinateDB.
 	 * This database will contains the date/time in which the coordinate was taken, 
 	 * the longitude, and the latitude of the coordinate
-	 * 		userID: CHAR(16);
-	 * 		time: CHAR(16);
-	 * 		longitude: CHAR(32);
-	 * 		latitude: CHAR(32);
+	 * 		accountID: CHAR(16);
+	 * 		deviceID: CHAR(64);
+	 * 		time: BIGINT; format should be like this yyyyMMddHHmmss
+	 * 		longitude: DOUBLE;
+	 * 		latitude: DOUBLE;
 	 */
 	private void createNewGPSCoordinateTable() {
 		removeGPSCoordinateTableIfExisted();
 		String query = "CREATE TABLE " + coordinateDB + 
-				"(userID CHAR(16), time CHAR(16), longitude CHAR(32), latitude CHAR(32))";
+				"(accountID CHAR(16), deviceID CHAR(64), time BIGINT, longitude DOUBLE, latitude DOUBLE)";
 		try {
 			connection.runUpdate(query);
 		} catch (SQLException e) {
@@ -72,4 +102,13 @@ public class DBSetup {
 	public static String getCoordinateDBTable() {
 		return coordinateDB;
 	}
+	
+	/**
+	 * Get the name of the clientAccountDB table
+	 * @return the name of the clientAccountDB table
+	 */
+	public static String getClientAccountDBTable() {
+		return clientAccountDB;
+	}
+	
 }

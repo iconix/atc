@@ -1,27 +1,46 @@
 package classesAndManagers;
 
 public class GpsCoordinate {
-	protected String userID;
-	protected String time;
-	protected String longitude;
-	protected String latitude;
+	protected String accountID;
+	protected String deviceID;
+	protected long time;
+	protected double longitude;
+	protected double latitude;
 	
 	private static final String delimiter = "DELIMITER";
-	private static final int numParams = 4;
 	
 	/**
 	 * Class constructor
 	 * Create a new GpsCoordinate instance, with input of time, longitude and latitude
-	 * @param the userID
+	 * @param the accountID
+	 * @param the deviceID
 	 * @param time where the coordinate was taken
 	 * @param the longitude of the instance
 	 * @param the latitude of the instance
 	 */
-	public GpsCoordinate(String userID, String time, String longitude, String latitude) {
-		this.userID = userID;
+	public GpsCoordinate(String accountID, String deviceID, long time, double longitude, double latitude) {
+		this.accountID = accountID;
+		this.deviceID = deviceID;
 		this.time = time;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+	
+	/**
+	 * Class constructor
+	 * Create a new GpsCoordinate instance, with input of time, longitude and latitude
+	 * @param the accountID
+	 * @param the deviceID
+	 * @param time where the coordinate was taken
+	 * @param the longitude of the instance
+	 * @param the latitude of the instance
+	 */
+	public GpsCoordinate(String accountID, String deviceID, String time, String longitude, String latitude) {
+		this.accountID = accountID;
+		this.deviceID = deviceID;
+		this.time = Long.valueOf(time);
+		this.latitude = Double.valueOf(latitude);
+		this.longitude = Double.valueOf(longitude);
 	}
 	
 	/**
@@ -31,33 +50,44 @@ public class GpsCoordinate {
 	 * @param the string of the coordinate
 	 */
 	public GpsCoordinate(String coordinate) {
-		String line = coordinate;
-		String[] fields = new String[numParams];
-		for (int j = 0; j < numParams; j++) {
-			int index = line.indexOf(delimiter);
-			fields[j] = line.substring(0, index);
-			line = line.substring(index + delimiter.length());
-		}
-		this.userID = fields[0];
-		this.time = fields[1];
-		this.latitude = fields[2];
-		this.longitude = fields[3];
+		String[] fields = coordinate.split(delimiter);
+		this.accountID = fields[0];
+		this.deviceID = fields[1];
+		this.time = Long.valueOf(fields[2]);
+		this.latitude = Double.valueOf(fields[3]);
+		this.longitude = Double.valueOf(fields[4]);
 	}
 	
 	/**
-	 * Public setter. Set the userID of the GpsCoordinate instance
-	 * @param userID where the coordinate was taken
+	 * Public setter. Set the accountID of the GpsCoordinate instance
+	 * @param accountID where the coordinate was taken
 	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
 	
 	/**
-	 * Public getter. Get the userID of the GpsCoordinate
-	 * @return the userID where the coordinate was taken
+	 * Public getter. Get the accountID of the GpsCoordinate
+	 * @return the accountID where the coordinate was taken
 	 */
-	public String getUserID() {
-		return userID;
+	public String getAccountID() {
+		return accountID;
+	}
+	
+	/**
+	 * Public setter. Set the deviceID of the GpsCoordinate instance
+	 * @param deviceID where the coordinate was taken
+	 */
+	public void setDeviceID(String deviceID) {
+		this.deviceID = deviceID;
+	}
+	
+	/**
+	 * Public getter. Get the deviceID of the GpsCoordinate
+	 * @return the deviceID where the coordinate was taken
+	 */
+	public String getDeviceID() {
+		return deviceID;
 	}
 	
 	/**
@@ -65,6 +95,14 @@ public class GpsCoordinate {
 	 * @param time where the coordinate was taken
 	 */
 	public void setTime(String time) {
+		this.time = Long.valueOf(time);
+	}
+	
+	/**
+	 * Public setter. Set the time of the GpsCoordinate instance
+	 * @param time where the coordinate was taken
+	 */
+	public void setTime(long time) {
 		this.time = time;
 	}
 	
@@ -72,7 +110,7 @@ public class GpsCoordinate {
 	 * Public getter. Get the time of the GpsCoordinate
 	 * @return the time where the coordinate was taken
 	 */
-	public String getTime() {
+	public long getTime() {
 		return time;
 	}
 	
@@ -81,6 +119,14 @@ public class GpsCoordinate {
 	 * @param the longitude of the instance
 	 */
 	public void setLongitude(String longitude) {
+		this.longitude = Double.valueOf(longitude);
+	}
+	
+	/**
+	 * Public setter. Set the longitude of the GpsCoordinate instance
+	 * @param the longitude of the instance
+	 */
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	
@@ -88,7 +134,7 @@ public class GpsCoordinate {
 	 * Public getter. Get the longitude of the GpsCoordinate instance
 	 * @return the longtitude of the instance
 	 */
-	public String getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 	
@@ -97,6 +143,14 @@ public class GpsCoordinate {
 	 * @param the latitude of the instance
 	 */
 	public void setLatitude(String latitude) {
+		this.latitude = Double.valueOf(latitude);
+	}
+	
+	/**
+	 * Public setter. Set the latitude of the GpsCoordinate instance
+	 * @param the latitude of the instance
+	 */
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	
@@ -104,7 +158,7 @@ public class GpsCoordinate {
 	 * Public getter. Get the latitude of the GpsCoordinate instance
 	 * @return the latitude of the instance
 	 */
-	public String getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 	
@@ -116,7 +170,8 @@ public class GpsCoordinate {
 		return "longitude: " + longitude + "\t" +
 				"latitude: " + latitude + "\t" +
 				"was taken at: " + time + "\t" +
-				"by: " + userID;
+				"by: " + accountID + "\t" +
+				"using: " + deviceID;
 	}
 
 }

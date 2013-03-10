@@ -79,8 +79,8 @@ public class AppHttpClient {
         while ((line = bufferedReader.readLine()) != null) {
         	buffer.append(line + NL);
         }
-        bufferedReader.close();
         String page = buffer.toString();
+        bufferedReader.close();
     	return page;
     }
 

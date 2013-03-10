@@ -42,6 +42,17 @@
             <!-- Email Label -->
 
             <TextView
+                android:id="@+id/loginErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="40px"
+                android:ems="10"
+                android:textColor="#ff0000"
+                android:textSize="16sp" >
+				
+                <requestFocus />
+            </TextView>
+
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Username"

@@ -3,6 +3,8 @@ package com.sap.clientproject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -103,7 +105,8 @@ public class SendCoordinateService extends Service implements LocationListener{
 	 * @return the current time represent in the format yyyyMMdd_HHmmss
 	 */
 	private final String getTimeStamp() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+		sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
 		return sdf.format(new Date());
 	}
 	

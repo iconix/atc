@@ -34,9 +34,41 @@ public class ServerServlet extends HttpServlet {
 	}
 
 	/**
+	 * Check for login in request. If the server notice a request to login in from client.
+	 * It will first check if it is a valid account. If it is not, then throw an error message
+	 * back to the client. If it is a valid account, it will check whether this device has already
+	 * register under this account. If not, then create new account to include this device
+	 * @param inherited request from the doPost
+	 * @param inherited response from doPost
+	 */
+	private void checkForLoginRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String loginUserID = (String) request.getParameter("loginUserID");
+		String loginUserPassword = (String) request.getParameter("loginUserPassword");
+		String loginDeviceID = (String) request.getParameter("loginDeviceID");
+		if (loginUserID != null && loginUserPassword != null && loginDeviceID != null) {
+			AccountsManager accountManager = new AccountsManager();
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			if (!accountManager.isAccountExisted(loginUserID, loginUserPassword)) 
+				out.println("Error");
+			else {
+				if (!accountManager.isThisDeviceHasAccount(loginUserID, loginUserPassword, loginDeviceID)) {
+					String email = accountManager.getEmailAssociateWithAccount(loginUserID, loginUserPassword);
+					Account newAccount = new Account(loginUserID, loginDeviceID, loginUserPassword, email);
+					accountManager.addNewAccount(newAccount);
+				}
+				out.println("Logged in");
+			}
+		}
+	}
+	
+	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		checkForLoginRequest(request, response);
+		
+		
 		GpsCoordinateManager coorManager = new GpsCoordinateManager();
 		
 		String coordinate = (String)request.getParameter("coordinate");
@@ -46,6 +78,15 @@ public class ServerServlet extends HttpServlet {
 			coorManager.addNewGpsCoordinate(coor);
 		}
 		
+		
+		String getSomething = (String)request.getParameter("getSomething");
+		if (getSomething != null) {
+			System.out.println(getSomething);
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			out.println("you get something");
+		}
+		/*
 		String getCoordinate = (String)request.getParameter("getCoordinate");
 		if (getCoordinate != null) {
 			System.out.println(getCoordinate);
@@ -59,7 +100,8 @@ public class ServerServlet extends HttpServlet {
 			response.setContentType("text/plain");
 			PrintWriter out = response.getWriter();
 			out.println(coordinateString.toString());
-		}
+		}*/
+	
 	}
 
 }

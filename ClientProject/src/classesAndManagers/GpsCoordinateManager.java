@@ -19,13 +19,13 @@ public class GpsCoordinateManager {
 	 * Add a new coordinate to the DB table with the information from the GpsCoordinate instance
 	 * @param coordinate instance of the GpsCoordinate
 	 */
-	public void addNewGpsCoordiate(GpsCoordinate coordinate) {
+	public void addNewGpsCoordinate(GpsCoordinate coordinate) {
 		String query = "INSERT INTO " + DBSetup.getCoordinateDBTable() + 
 				" VALUES(\"" + coordinate.accountID + "\", \"" +
-				coordinate.deviceID + "\", \"" +
-				coordinate.time + "\", \"" +
-				coordinate.longitude + "\", \"" +
-				coordinate.latitude + "\")";
+				coordinate.deviceID + "\", " +
+				coordinate.time + ", " +
+				coordinate.longitude + ", " +
+				coordinate.latitude + ")";
 		try {
 			connection.runUpdate(query);
 		} catch (SQLException e) {
@@ -41,15 +41,6 @@ public class GpsCoordinateManager {
 	public String getGpsCoordinateInStringFormat(GpsCoordinate coordinate) {
 		return coordinate.accountID + delimiter + coordinate.deviceID + delimiter +
 				coordinate.time + delimiter + coordinate.longitude + delimiter + 
-				coordinate.latitude + delimiter + endLn;
-	}
-	
-	/**
-	 * Write the coordinate given in the string format to the GpsCoordinate instance
-	 * @param string format of the coordinate
-	 * @return instance of GpsCoordinate
-	 */
-	public GpsCoordinate getGpsCoordinateFromString(String coordinate) {
-		return new GpsCoordinate(coordinate);
+				coordinate.latitude + endLn;
 	}
 }
