@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:background="#fff" >
+      
+        <!--  Header  Starts-->
+
+      <LinearLayout
+          android:id="@+id/header"
+          android:layout_width="fill_parent"
+          android:layout_height="match_parent"
+          android:background="@layout/header_gradient"
+          android:orientation="vertical"
+          android:paddingBottom="5dip"
+          android:paddingTop="5dip" >
+
+          <ImageView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="10dip"
+              android:src="@drawable/ic_launcher" />
+
+          <TextView
+              android:id="@+id/registration_description"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10" 
+              android:text="Write Description">
+
+              <requestFocus />
+          </TextView>
+
+          <TextView
+              android:id="@+id/login"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10" 
+              android:text="Write Description">
+
+              <requestFocus />
+          </TextView>
+          <EditText
+              android:id="@+id/editText2"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:ems="10" />
+
+      </LinearLayout>
+       
+
+  </RelativeLayout>
