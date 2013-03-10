@@ -12,8 +12,6 @@ public class AdDescriptionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ad);
         
-        LinearLayout lview = (LinearLayout)findViewById(R.id.informationId);
-
         TextView companyNameLabel = (TextView)findViewById(R.id.companyNameId);
         companyNameLabel.setText(company);
         
@@ -31,5 +29,23 @@ public class AdDescriptionActivity extends Activity {
         
         TextView adDescriptionLabel = (TextView)findViewById(R.id.adDescriptionId);
         adDescriptionLabel.setText(adDescription);        
-    } 
+    }
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onMenuItemSelected(featureId, item);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return super.onOptionsItemSelected(item);
+	} 
 }

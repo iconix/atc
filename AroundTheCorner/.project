@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>res/logo.jpg</name>
+			<type>1</type>
+			<location>C:/Users/mnguyen/Downloads/logo.jpg</location>
+		</link>
+	</linkedResources>
 </projectDescription>
