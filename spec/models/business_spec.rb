@@ -76,8 +76,8 @@ describe Business do
 
 	describe "when email address is already taken" do
     before do
-      user_with_same_email = @business.dup
-      user_with_same_email.save
+      business_with_same_email = @business.dup
+      business_with_same_email.save
     end
 
     it { should_not be_valid }
