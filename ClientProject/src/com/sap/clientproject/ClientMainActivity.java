@@ -1,6 +1,5 @@
 package com.sap.clientproject;
 
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 public class ClientMainActivity extends Activity{
 
-	private LocationManager locationManager;
 	//Service name
 	public static final String SEND_COORDINATE_SERVICE = "com.sap.clientproject.SendCoordinateService";
 	
@@ -65,6 +63,8 @@ public class ClientMainActivity extends Activity{
 	    if (accountID.equals("")) loginToDevice();
 	    else {
 	    	startSendingCoordinateService();
+	    	Intent i = new Intent(getApplicationContext(), MapActivity.class);
+	        startActivity(i);
 	    }
 	}
 	
@@ -102,14 +102,6 @@ public class ClientMainActivity extends Activity{
 	private String getAccountID() {
 		SharedPreferences settings = getSharedPreferences(UNIQUE_ID, 0);
 		return settings.getString(ACCOUNT_ID, "");
-	}
-	
-	/**
-	 * Register the new device. Open the new window with the registering layout
-	 */
-	private void registerNewDevice() {
-		Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
-        startActivity(i);
 	}
 	
 	/**
