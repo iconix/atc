@@ -21,7 +21,8 @@ public class GpsCoordinateManager {
 	 */
 	public void addNewGpsCoordiate(GpsCoordinate coordinate) {
 		String query = "INSERT INTO " + DBSetup.getCoordinateDBTable() + 
-				" VALUES(\"" + coordinate.userID + "\", \"" +
+				" VALUES(\"" + coordinate.accountID + "\", \"" +
+				coordinate.deviceID + "\", \"" +
 				coordinate.time + "\", \"" +
 				coordinate.longitude + "\", \"" +
 				coordinate.latitude + "\")";
@@ -38,8 +39,9 @@ public class GpsCoordinateManager {
 	 * @return string format of the coordinate
 	 */
 	public String getGpsCoordinateInStringFormat(GpsCoordinate coordinate) {
-		return coordinate.userID + delimiter + coordinate.time + delimiter +
-				coordinate.longitude + delimiter + coordinate.latitude + delimiter + endLn;
+		return coordinate.accountID + delimiter + coordinate.deviceID + delimiter +
+				coordinate.time + delimiter + coordinate.longitude + delimiter + 
+				coordinate.latitude + delimiter + endLn;
 	}
 	
 	/**

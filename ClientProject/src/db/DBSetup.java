@@ -26,7 +26,8 @@ public class DBSetup {
 	 * Create a new table in the database with the name from coordinateDB.
 	 * This database will contains the date/time in which the coordinate was taken, 
 	 * the longitude, and the latitude of the coordinate
-	 * 		userID: CHAR(16);
+	 * 		accountID: CHAR(16);
+	 * 		deviceID: CHAR(64);
 	 * 		time: CHAR(16);
 	 * 		longitude: CHAR(32);
 	 * 		latitude: CHAR(32);
@@ -34,7 +35,7 @@ public class DBSetup {
 	private void createNewGPSCoordinateTable() {
 		removeGPSCoordinateTableIfExisted();
 		String query = "CREATE TABLE " + coordinateDB + 
-				"(userID CHAR(16), time CHAR(16), longitude CHAR(32), latitude CHAR(32))";
+				"(accountID CHAR(16), deviceID CHAR(64), time CHAR(16), longitude CHAR(32), latitude CHAR(32))";
 		try {
 			connection.runUpdate(query);
 		} catch (SQLException e) {

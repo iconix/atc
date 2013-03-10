@@ -1,24 +1,27 @@
 package classesAndManagers;
 
 public class GpsCoordinate {
-	protected String userID;
+	protected String accountID;
+	protected String deviceID;
 	protected String time;
 	protected String longitude;
 	protected String latitude;
 	
 	private static final String delimiter = "DELIMITER";
-	private static final int numParams = 4;
+	private static final int numParams = 5;
 	
 	/**
 	 * Class constructor
 	 * Create a new GpsCoordinate instance, with input of time, longitude and latitude
-	 * @param the userID
+	 * @param the accountID
+	 * @param the deviceID
 	 * @param time where the coordinate was taken
 	 * @param the longitude of the instance
 	 * @param the latitude of the instance
 	 */
-	public GpsCoordinate(String userID, String time, String longitude, String latitude) {
-		this.userID = userID;
+	public GpsCoordinate(String accountID, String deviceID, String time, String longitude, String latitude) {
+		this.accountID = accountID;
+		this.deviceID = deviceID;
 		this.time = time;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -38,26 +41,43 @@ public class GpsCoordinate {
 			fields[j] = line.substring(0, index);
 			line = line.substring(index + delimiter.length());
 		}
-		this.userID = fields[0];
-		this.time = fields[1];
-		this.latitude = fields[2];
-		this.longitude = fields[3];
+		this.accountID = fields[0];
+		this.deviceID = fields[1];
+		this.time = fields[2];
+		this.latitude = fields[3];
+		this.longitude = fields[4];
 	}
 	
 	/**
-	 * Public setter. Set the userID of the GpsCoordinate instance
-	 * @param userID where the coordinate was taken
+	 * Public setter. Set the accountID of the GpsCoordinate instance
+	 * @param accountID where the coordinate was taken
 	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
 	
 	/**
-	 * Public getter. Get the userID of the GpsCoordinate
-	 * @return the userID where the coordinate was taken
+	 * Public getter. Get the accountID of the GpsCoordinate
+	 * @return the accountID where the coordinate was taken
 	 */
-	public String getUserID() {
-		return userID;
+	public String getAccountID() {
+		return accountID;
+	}
+	
+	/**
+	 * Public setter. Set the accountID of the GpsCoordinate instance
+	 * @param accountID where the coordinate was taken
+	 */
+	public void setDeviceID(String deviceID) {
+		this.deviceID = deviceID;
+	}
+	
+	/**
+	 * Public getter. Get the accountID of the GpsCoordinate
+	 * @return the accountID where the coordinate was taken
+	 */
+	public String getDeviceID() {
+		return deviceID;
 	}
 	
 	/**
@@ -116,7 +136,8 @@ public class GpsCoordinate {
 		return "longitude: " + longitude + "\t" +
 				"latitude: " + latitude + "\t" +
 				"was taken at: " + time + "\t" +
-				"by: " + userID;
+				"by: " + accountID + "\t" +
+				"using: " + deviceID;
 	}
 
 }

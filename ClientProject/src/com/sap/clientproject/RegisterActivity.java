@@ -16,11 +16,11 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         // Set View to register.xml
         setContentView(R.layout.register);
-      //putting the account ID into the preferences setting
+        //putting the account ID into the preferences setting
   		SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
   		SharedPreferences.Editor editor = settings.edit();
   		//TODO give the device the new ID or give it existing ID
-  		editor.putString("accountID", "");
+  		editor.putString(ClientMainActivity.ACCOUNT_ID, "");
   		editor.commit();
     }
 }

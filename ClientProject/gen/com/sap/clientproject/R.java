@@ -22,19 +22,26 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int sap_logo=0x7f020001;
+        public static final int logo=0x7f020001;
+        public static final int sap_logo=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f080005;
-        public static final int editText2=0x7f080004;
+        public static final int action_settings=0x7f08000b;
+        public static final int btnLogin=0x7f080004;
+        public static final int btnRegister=0x7f080009;
         public static final int header=0x7f080001;
-        public static final int login=0x7f080003;
-        public static final int registration_description=0x7f080002;
+        public static final int link_to_login=0x7f08000a;
+        public static final int link_to_register=0x7f080005;
+        public static final int loginUserID=0x7f080002;
+        public static final int loginUserPassword=0x7f080003;
+        public static final int reg_email=0x7f080007;
+        public static final int reg_fullname=0x7f080006;
+        public static final int reg_password=0x7f080008;
         public static final int splashscreen=0x7f080000;
     }
     public static final class layout {
         public static final int activity_client_main=0x7f030000;
-        public static final int header_gradient=0x7f030001;
+        public static final int login=0x7f030001;
         public static final int register=0x7f030002;
     }
     public static final class menu {

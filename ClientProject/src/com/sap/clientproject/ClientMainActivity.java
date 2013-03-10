@@ -26,6 +26,7 @@ public class ClientMainActivity extends Activity{
 	
 	//unique ID in which all the information is stored in the DB
 	public static final String UNIQUE_ID = "MyUniqueID";
+	public static final String ACCOUNT_ID = "accountID";
 	
 	private static final int STOPSPLASH = 0;
     //time in milliseconds
@@ -61,7 +62,7 @@ public class ClientMainActivity extends Activity{
 	    
 	    //Get the account ID, if no such parameter exist, then we need to register the device
 	    accountID = getAccountID();
-	    if (accountID.equals("")) registerNewDevice();
+	    if (accountID.equals("")) loginToDevice();
 	    else {
 	    	startSendingCoordinateService();
 	    }
@@ -96,35 +97,27 @@ public class ClientMainActivity extends Activity{
 	
 	/**
 	 * Get the account ID, which suppose to be unique for each person using the application.
-	 * The ID is assigned to each mobile device once it register. In case the user 
-	 * switch to new device, he or she should has an option to continue with all his/her
-	 * previous data. This function is serve to get the account ID from the sharedPreferences 
-	 * setting. If the accountID is empty, take the user to the registration page, where upon 
-	 * inputing the valid email address, the user will receive his/her unique ID and the email
-	 * confirmation
 	 * @return the account ID
 	 */
 	private String getAccountID() {
 		SharedPreferences settings = getSharedPreferences(UNIQUE_ID, 0);
-		return settings.getString("accountID", "");
+		return settings.getString(ACCOUNT_ID, "");
 	}
 	
 	/**
-	 * Register the new device. On registering, the user has the option of using
-	 * previously created account (in case he/she gets new phone) or create a new
-	 * fresh account and capture fresh information. In that case, server should
-	 * generate a unique ID and send it to the phone and make an email with the ID 
-	 * sending to the email specified by user. 
+	 * Register the new device. Open the new window with the registering layout
 	 */
 	private void registerNewDevice() {
 		Intent i = new Intent(getApplicationContext(), RegisterActivity.class);
         startActivity(i);
-        /*
-		//putting the account ID into the preferences setting
-		SharedPreferences settings = getSharedPreferences(UNIQUE_ID, 0);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("accountID", accountID);
-		editor.commit();*/
+	}
+	
+	/**
+	 * Log in to your account. Open a new window with the login layout
+	 */
+	private void loginToDevice() {
+		Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
 	}
 	 
 	@Override
