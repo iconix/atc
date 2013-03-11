@@ -19,6 +19,9 @@
             	    android:src="@drawable/ikes"
             	    android:layout_width="wrap_content"
             	    android:layout_height="wrap_content"
+            	    android:maxWidth="100dp"
+	                android:maxHeight="100dp"
+	                android:scaleType="fitCenter"
             	    android:layout_marginLeft="10dip"/>
             	<!--  Company Image Ends -->
             	<!--  Company Name Start -->
@@ -63,13 +66,18 @@
 	                android:layout_height="wrap_content"
 	                android:textColor="#372c24"
 	                android:text="Ad Title"
-	                android:textSize="20dip"/>
+	                android:textSize="20dip"
+	                android:gravity="center"/>
 
 	          <!-- Ad Image Label -->
 	          <ImageView android:id="@+id/adImageId"
 	              	android:src="@drawable/sandwich"
 	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"/>
+	                android:layout_height="wrap_content"
+	                android:maxWidth="100dp"
+	                android:maxHeight="100dp"
+	                android:scaleType="fitCenter"
+	                android:layout_gravity="center"/>
 	          
 	          <!-- Ad Description Label -->
 
@@ -77,7 +85,8 @@
 	              android:id="@+id/ratingBarId"
 	              android:layout_width="wrap_content"
 	              android:layout_height="wrap_content"
-	              android:numStars="5"/>
+	              android:numStars="5"
+	              android:layout_gravity="center"/>
 
 	          <TextView android:id="@+id/adDescriptionId"
 	                android:layout_width="fill_parent"
