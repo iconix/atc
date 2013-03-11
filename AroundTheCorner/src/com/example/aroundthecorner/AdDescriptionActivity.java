@@ -20,6 +20,9 @@ public class AdDescriptionActivity extends Activity {
              
         TextView addressLabel = (TextView)findViewById(R.id.addressId);
         addressLabel.setText(address);
+
+        TextView hoursLabel = (TextView)findViewById(R.id.hoursId);
+        addressLabel.setText(hours);
         
         TextView adTitleLabel = (TextView)findViewById(R.id.adTitleId);
         adTitleLabel.setText(adTitle);
@@ -27,25 +30,11 @@ public class AdDescriptionActivity extends Activity {
         ImageView adImage = (ImageView)findViewById(R.id.adImageId);
         adImage.setImageBitmap(ad_bm);
         
+        RatingBar ratingLabel = (RatingBar)findViewById(R.id.ratingBarId);
+        ratingLabel.setRating(rating);
+        
         TextView adDescriptionLabel = (TextView)findViewById(R.id.adDescriptionId);
         adDescriptionLabel.setText(adDescription);        
     }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onMenuItemSelected(int featureId, MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onMenuItemSelected(featureId, item);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		return super.onOptionsItemSelected(item);
-	} 
 }
