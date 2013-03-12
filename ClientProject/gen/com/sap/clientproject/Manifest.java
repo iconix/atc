@@ -9,6 +9,6 @@ package com.sap.clientproject;
 
 public final class Manifest {
     public static final class permission {
-        public static final String MAPS_RECEIVE="com.sap.samplemap.permission.MAPS_RECEIVE";
+        public static final String MAPS_RECEIVE="com.sap.clientproject.permission.MAPS_RECEIVE";
     }
 }

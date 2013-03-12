@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -35,6 +36,9 @@ public class ClientMainActivity extends Activity{
     private String accountID;
     
     private Intent sendCoordinateService;
+    
+    Button mapView;
+    Button singleAdsView;
 	    
 	/** Called when the activity is first created. */
 	@Override
@@ -62,9 +66,26 @@ public class ClientMainActivity extends Activity{
 	    accountID = getAccountID();
 	    if (accountID.equals("")) loginToDevice();
 	    else {
-	    	startSendingCoordinateService();
-	    	Intent i = new Intent(getApplicationContext(), MapActivity.class);
-	        startActivity(i);
+	    	mapView = (Button)findViewById(R.id.map_view);
+	    	
+	    	mapView.setOnClickListener(new Button.OnClickListener() {
+	    		@Override
+				public void onClick(View arg0) {
+			    	startSendingCoordinateService();
+			    	Intent i = new Intent(getApplicationContext(), MapActivity.class);
+			        startActivity(i);
+	    		}
+	    	});
+	    	
+	    	singleAdsView = (Button)findViewById(R.id.single_ad_view);
+	    	singleAdsView.setOnClickListener(new Button.OnClickListener() {
+	    		@Override
+				public void onClick(View arg0) {
+			    	startSendingCoordinateService();
+			    	Intent i = new Intent(getApplicationContext(), SingleAdActivity.class);
+			        startActivity(i);
+	    		}
+	    	});
 	    }
 	}
 	
