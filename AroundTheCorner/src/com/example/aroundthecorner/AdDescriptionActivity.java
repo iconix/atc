@@ -13,28 +13,28 @@ public class AdDescriptionActivity extends Activity {
         setContentView(R.layout.ad);
         
         TextView companyNameLabel = (TextView)findViewById(R.id.companyNameId);
-        companyNameLabel.setText(company);
+        //companyNameLabel.setText(company);
         
         ImageView companyImage = (ImageView)findViewById(R.id.companyImageId);
-        companyImage.setImageBitmap(company_bm);
+        //companyImage.setImageBitmap(company_bm);
              
         TextView addressLabel = (TextView)findViewById(R.id.addressId);
-        addressLabel.setText(address);
+        //addressLabel.setText(address);
 
         TextView hoursLabel = (TextView)findViewById(R.id.hoursId);
-        addressLabel.setText(hours);
+        //addressLabel.setText(hours);
         
         TextView adTitleLabel = (TextView)findViewById(R.id.adTitleId);
-        adTitleLabel.setText(adTitle);
+        //adTitleLabel.setText(adTitle);
         
         ImageView adImage = (ImageView)findViewById(R.id.adImageId);
-        adImage.setImageBitmap(ad_bm);
+        //adImage.setImageBitmap(ad_bm);
         
         RatingBar ratingLabel = (RatingBar)findViewById(R.id.ratingBarId);
-        ratingLabel.setRating(rating);
+        //ratingLabel.setRating(rating);
         
         TextView adDescriptionLabel = (TextView)findViewById(R.id.adDescriptionId);
-        adDescriptionLabel.setText(adDescription);        
+        //aDescriptionLabel.setText(adDescription);        
     }
 
 }
