@@ -28,16 +28,38 @@ public class AdListArrayAdapter extends ArrayAdapter<String>{
 		TextView companyLabel = (TextView) rowView.findViewById(R.id.adListCompanyId);
 		TextView distanceLabel = (TextView) rowView.findViewById(R.id.adListDistanceId);
 		
-		adLabel.setText(values[position]);
+		companyLabel.setText(values[position]);
 		
 		String s = values[position];
 		
-		if (s.equals("")) {
-			
-		} else if (s.equals("")) {
-			
-		} else if (s.equals("")) {
-			
+		if (s.equals("Baume")) {
+			adImage.setImageResource(R.drawable.baume);
+			adLabel.setText("Free Dessert");
+			distanceLabel.setText("1.2 mi");
+		} else if (s.equals("Cool Cafe")) {
+			adImage.setImageResource(R.drawable.coolcafe);
+			adLabel.setText("Lunch Special");
+			distanceLabel.setText("0.6 mi");
+		} else if (s.equals("Ike's Place")) {
+			adImage.setImageResource(R.drawable.ikes);
+			adLabel.setText("Free Drink");
+			distanceLabel.setText("0.3 mi");
+		} else if (s.equals("Coupa Cafe")) {
+			adImage.setImageResource(R.drawable.coupa);
+			adLabel.setText("$2 Off Coffee");
+			distanceLabel.setText("0.5 mi");
+		} else if (s.equals("Evvia Estiatorio")) {
+			adImage.setImageResource(R.drawable.evvia);
+			adLabel.setText("20% Off Dinner Items");
+			distanceLabel.setText("1.3 mi");
+		} else if (s.equals("Garden Fresh")) {
+			adImage.setImageResource(R.drawable.gardenfresh);
+			adLabel.setText("Free Appetizer");
+			distanceLabel.setText("1.2 mi");
+		} else if (s.equals("Tamarine")){
+			adImage.setImageResource(R.drawable.tamarine);
+			adLabel.setText("Happy Hour");
+			distanceLabel.setText("1.4 mi");
 		}
 		
 		return rowView;
