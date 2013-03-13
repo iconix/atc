@@ -30,7 +30,7 @@ public class AdDescriptionActivity extends Activity {
         ImageView adImage = (ImageView)findViewById(R.id.adImageId);
         //adImage.setImageBitmap(ad_bm);
         
-        RatingBar ratingLabel = (RatingBar)findViewById(R.id.ratingBarId);
+        //RatingBar ratingLabel = (RatingBar)findViewById(R.id.ratingBarId);
         //ratingLabel.setRating(rating);
         
         TextView adDescriptionLabel = (TextView)findViewById(R.id.adDescriptionId);
