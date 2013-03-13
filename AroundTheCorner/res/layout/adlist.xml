@@ -55,7 +55,7 @@
         android:gravity="right"
         android:layout_marginRight="5dip"
         android:textSize="10dip"
-        android:textColor="#10bcc9"
+        android:textColor="#040404"
         android:textStyle="bold"/>
  
      <!-- Arrow -->
