@@ -22,7 +22,7 @@ public class NearbyAdArrayAdapter extends ArrayAdapter<String>{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		View rowView = inflater.inflate(R.layout.adlist, parent, false);
+		View rowView = inflater.inflate(R.layout.nearby_list_item, parent, false);
 		TextView adLabel = (TextView) rowView.findViewById(R.id.adListTitleId);
 		ImageView adImage = (ImageView) rowView.findViewById(R.id.adListImageId);
 		TextView companyLabel = (TextView) rowView.findViewById(R.id.adListCompanyId);

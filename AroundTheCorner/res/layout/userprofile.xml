@@ -31,6 +31,10 @@
 	                android:id="@+id/userImageId"
 	                android:layout_width="fill_parent"
 	                android:layout_height="fill_parent"
+	                android:adjustViewBounds="true"
+	                android:maxWidth="200dp"
+	                android:maxHeight="200dp"
+	                android:scaleType="fitXY"
 	                android:src="@drawable/minh" />
 	        </LinearLayout>
 	   

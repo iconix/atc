@@ -20,17 +20,17 @@ public class AdTabActivity extends TabActivity {
 		TabHost tabHost = getTabHost();
 		
 		TabSpec nearbySpec = tabHost.newTabSpec(NEARBY_SPEC);
-		//nearbySpec.setIndicator()
+		nearbySpec.setIndicator(NEARBY_SPEC, getResources().getDrawable(R.drawable.nearby_icon));
 		Intent nearbyIntent = new Intent(this, NearbyAdActivity.class);
 		nearbySpec.setContent(nearbyIntent);
 		
 		TabSpec recentSpec = tabHost.newTabSpec(RECENT_SPEC);
-		//recentSpec.setIndicator();
+		recentSpec.setIndicator(RECENT_SPEC, getResources().getDrawable(R.drawable.recent_icon));
 		Intent recentIntent = new Intent(this, RecentAdActivity.class);
 		recentSpec.setContent(recentIntent);
 		
 		TabSpec profileSpec = tabHost.newTabSpec(PROFILE_SPEC);
-		//profileSpec.setIndicator();
+		profileSpec.setIndicator(PROFILE_SPEC, getResources().getDrawable(R.drawable.userprofile_icon));
 		Intent profileIntent = new Intent(this, UserProfileActivity.class);
 		profileSpec.setContent(profileIntent);
 		

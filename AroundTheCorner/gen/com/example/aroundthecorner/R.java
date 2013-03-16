@@ -35,10 +35,14 @@ public final class R {
         public static final int map=0x7f020010;
         public static final int minh=0x7f020011;
         public static final int mostvisitedcompany_bg=0x7f020012;
-        public static final int profile_image_bg=0x7f020013;
-        public static final int sandwich=0x7f020014;
-        public static final int tamarine=0x7f020015;
-        public static final int text_container=0x7f020016;
+        public static final int nearby_icon=0x7f020013;
+        public static final int profile_image_bg=0x7f020014;
+        public static final int recent_icon=0x7f020015;
+        public static final int sandwich=0x7f020016;
+        public static final int tamarine=0x7f020017;
+        public static final int text_container=0x7f020018;
+        public static final int userprofile=0x7f020019;
+        public static final int userprofile_icon=0x7f02001a;
     }
     public static final class id {
         public static final int adDescriptionId=0x7f08000c;
