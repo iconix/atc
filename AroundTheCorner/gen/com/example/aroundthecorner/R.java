@@ -77,11 +77,13 @@ public final class R {
         public static final int activity_login=0x7f030000;
         public static final int ad=0x7f030001;
         public static final int adlist=0x7f030002;
-        public static final int footer_repeat=0x7f030003;
-        public static final int header_gradient=0x7f030004;
-        public static final int login=0x7f030005;
-        public static final int menu=0x7f030006;
-        public static final int register=0x7f030007;
+        public static final int baume=0x7f030003;
+        public static final int coolcafe=0x7f030004;
+        public static final int footer_repeat=0x7f030005;
+        public static final int header_gradient=0x7f030006;
+        public static final int login=0x7f030007;
+        public static final int menu=0x7f030008;
+        public static final int register=0x7f030009;
     }
     public static final class menu {
         public static final int activity_login=0x7f070000;
