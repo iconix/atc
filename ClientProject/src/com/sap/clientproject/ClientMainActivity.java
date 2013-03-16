@@ -72,12 +72,12 @@ public class ClientMainActivity extends Activity{
 	    		@Override
 				public void onClick(View arg0) {
 			    	startSendingCoordinateService();
-			    	Intent i = new Intent(getApplicationContext(), MapActivity.class);
+			    	Intent i = new Intent(getApplicationContext(), AdListActivity.class);
 			        startActivity(i);
 	    		}
 	    	});
 	    	
-	    	singleAdsView = (Button)findViewById(R.id.single_ad_view);
+	    	/*singleAdsView = (Button)findViewById(R.id.single_ad_view);
 	    	singleAdsView.setOnClickListener(new Button.OnClickListener() {
 	    		@Override
 				public void onClick(View arg0) {
@@ -85,7 +85,7 @@ public class ClientMainActivity extends Activity{
 			    	Intent i = new Intent(getApplicationContext(), SingleAdActivity.class);
 			        startActivity(i);
 	    		}
-	    	});
+	    	});*/
 	    }
 	}
 	

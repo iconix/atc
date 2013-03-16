@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" 
     android:layout_width="fill_parent"
+    android:background="@drawable/map"
     android:layout_height="fill_parent">
-
+    
     <ImageView 
         android:id="@+id/splashscreen" 
         android:layout_width="wrap_content"
@@ -12,22 +13,16 @@
         android:src="@drawable/sap_logo"
         android:layout_gravity="center"/>
 
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="Hello World, splash"/>
+    
     
       <Button
                 android:id="@+id/map_view"
                 android:layout_width="fill_parent"
+                android:background="#ffffff"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dip"
-                android:text="view map" />
+                android:text="view advertisements" />
       
-        <Button
-                android:id="@+id/single_ad_view"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                android:text="view single ad" />
+    
 
 </LinearLayout>

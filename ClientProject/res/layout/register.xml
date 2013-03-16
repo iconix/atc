@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#fff" >
+        android:background="@drawable/map" >
 
         <!-- Header  Starts -->
 
@@ -63,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
                 android:layout_marginTop="5dip"
+                android:background="#ffffff"
                 android:singleLine="true" />
             <!-- Email Label -->
 
@@ -78,6 +79,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dip"
                 android:layout_marginTop="5dip"
+                android:background="#ffffff"
                 android:singleLine="true" />
             <!-- Password Label -->
 
@@ -93,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 android:password="true"
+                android:background="#ffffff"
                 android:singleLine="true" />
             <!-- Register Button -->
 
