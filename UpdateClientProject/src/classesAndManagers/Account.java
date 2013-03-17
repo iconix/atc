@@ -1,12 +1,13 @@
 package classesAndManagers;
 
+import staticVariables.*;
+
 public class Account {
 	protected String accountID;
 	protected String deviceID;
 	protected String password;
 	protected String email;
-	
-	private static final String delimiter = "DELIMITER";
+
 	/**
 	 * Class constructor
 	 * Create a new Account object with the following parameters
@@ -29,7 +30,7 @@ public class Account {
 	 * @param the string of the sensitive account information
 	 */
 	public Account(String coordinate) {
-		String[] fields = coordinate.split(delimiter);
+		String[] fields = coordinate.split(SpecialCharacters.delimiter);
 		this.accountID = fields[0];
 		this.deviceID = fields[1];
 		this.password = fields[2];
@@ -104,6 +105,7 @@ public class Account {
 	 * Return the string representation of the account
 	 * @return String of the account
 	 */
+        @Override
 	public String toString() {
 		return "accountID: " + accountID + "\t" +
 				"deviceID: " + deviceID + "\t" +

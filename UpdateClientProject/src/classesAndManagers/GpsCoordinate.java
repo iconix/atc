@@ -1,5 +1,6 @@
 package classesAndManagers;
 
+import staticVariables.*;
 public class GpsCoordinate {
 	protected String accountID;
 	protected String deviceID;
@@ -7,7 +8,6 @@ public class GpsCoordinate {
 	protected double longitude;
 	protected double latitude;
 	
-	private static final String delimiter = "DELIMITER";
 	
 	/**
 	 * Class constructor
@@ -50,7 +50,7 @@ public class GpsCoordinate {
 	 * @param the string of the coordinate
 	 */
 	public GpsCoordinate(String coordinate) {
-		String[] fields = coordinate.split(delimiter);
+		String[] fields = coordinate.split(SpecialCharacters.delimiter);
 		this.accountID = fields[0];
 		this.deviceID = fields[1];
 		this.time = Long.valueOf(fields[2]);
@@ -166,6 +166,7 @@ public class GpsCoordinate {
 	 * Return the string representation of the coordinate
 	 * @return String of the coordinate
 	 */
+        @Override
 	public String toString() {
 		return "longitude: " + longitude + "\t" +
 				"latitude: " + latitude + "\t" +

@@ -123,7 +123,7 @@ public class SendCoordinateService extends Service implements LocationListener{
 			@Override
 			protected Void doInBackground(Void... params) {
 	    		try {
-	    			GpsCoordinate coordinate = new GpsCoordinate(myAccountID, myDeviceID, getTimeStamp(), Double.toString(longitude), Double.toString(latitude));
+	    			GpsCoordinate coordinate = new GpsCoordinate(myAccountID, myDeviceID, Long.valueOf(getTimeStamp()), longitude, latitude);
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
 					postParameters.add(new BasicNameValuePair("coordinate", coorManager.getGpsCoordinateInStringFormat(coordinate)));
 					

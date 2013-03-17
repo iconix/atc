@@ -5,55 +5,44 @@ import java.sql.*;
  * mysql c_cs108_minhthao -h mysql-user.stanford.edu -u ccs108minhthao -p
  * Handing all the accesses to the DB
  */
+
 public class DBConnection {
-	static String account = "ccs108minhthao"; 
-	static String password = "moulohth"; 
-	static String server = "mysql-user.stanford.edu";
-	static String database = "c_cs108_minhthao";
-	public Statement stmt;
 	
-	/**
-	 * Class constructor that establish a connection with the database
-	 * and the statement that can be executed from the database
-	 */
-	public DBConnection(){
+	private static final String MYSQL_USERNAME = "ccs108minhthao";
+	private static final String MYSQL_PASSWORD = "moulohth";
+	private static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
+	private static final String MYSQL_DATABASE_NAME = "c_cs108_minhthao";
+	
+	private static Connection con;
+	
+	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection con = DriverManager.getConnection
-				( "jdbc:mysql://" + server, account ,password);
-			stmt = con.createStatement();
-			stmt.executeQuery("USE " + database);
-		} catch(SQLException e){
+			String url = "jdbc:mysql://" + MYSQL_DATABASE_SERVER + "/" + MYSQL_DATABASE_NAME;
+			con = DriverManager.getConnection(url, MYSQL_USERNAME, MYSQL_PASSWORD);
+		} catch (SQLException e) {
 			e.printStackTrace();
+			System.err.println("CS108 student: Update the MySQL constants to correct values!");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			System.err.println("CS108 student: Add the MySQL jar file to your build path!");
+		}
+	}
+	
+	public static Connection getConnection() {
+		return con;
+	}
+	
+	public static void close() {
+		try {
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	/**
-	 * Get the connection statement
-	 * @return statement
+	/*
+	 * CS108 student: Do not add/remove any methods to this file since this file will be replaced
+	 * when we test your code!
 	 */
-	public Statement getStatement(){
-		return stmt;
-	}	
-	
-	/**
-	 * Run the query and return the result set
-	 * @param queryStr
-	 * @return resultSet of the query
-	 * @throws SQLException
-	 */
-	public ResultSet runQuery(String queryStr) throws SQLException{
-		return stmt.executeQuery(queryStr);	
-	}
-	
-	/**
-	 * Run the update query
-	 * @param updateStr
-	 * @throws SQLException
-	 */
-	public void runUpdate(String updateStr) throws SQLException{
-		stmt.executeUpdate(updateStr);
-	}
 }
