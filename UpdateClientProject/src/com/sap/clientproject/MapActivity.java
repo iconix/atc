@@ -1,18 +1,23 @@
 package com.sap.clientproject;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import com.google.android.gms.maps.*;
 import android.location.*;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapActivity extends FragmentActivity implements LocationListener{
     
+    Context context;
     private GoogleMap googleMap;
     
     SupportMapFragment mMapFragment;
@@ -22,7 +27,9 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
         initMap();
+        context = this;
         addSomeLocationToMap();
+        pinLocation();
     }
     
     /**
@@ -38,6 +45,54 @@ public class MapActivity extends FragmentActivity implements LocationListener{
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
             .position(coordinate)
         );
+    }
+    
+    /**
+     * allow the user to pin location on the map and add a simple description to it
+     */
+    private void pinLocation() {
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+
+            public void onMapLongClick(final LatLng latlng) {
+                LayoutInflater li = LayoutInflater.from(context);
+                final View v = li.inflate(R.layout.inputpin, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setView(v);
+                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText title = (EditText)v.findViewById(R.id.title);
+                        EditText description = (EditText)v.findViewById(R.id.description);
+                        addPin(title.getText().toString(), description.getText().toString(), latlng, false);
+                    }
+                });
+                
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                      
+            }
+        });
+    }
+    
+    /**
+     * pin a location on the map. Allow the user to input title and the description
+     * on the location pinned
+     * @param: the longitude and the latitude of the location
+     */
+    private void addPin(String title, String description, LatLng latlng, boolean draggable) {
+        googleMap.addMarker(new MarkerOptions()
+                .title(title)
+                .snippet(description)
+                .draggable(draggable)
+                .position(latlng)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))   
+                );
     }
     
     /**
