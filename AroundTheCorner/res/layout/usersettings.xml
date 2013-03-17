@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+     
+    <PreferenceCategory android:title="Category 1" >
+        
+        <CheckBoxPreference android:title="GPS ON"
+            android:defaultValue="true"
+            android:key="prefSendReport">
+        </CheckBoxPreference>
+ 
+        <ListPreference android:title="Radius"
+            android:defaultValue="3"
+            android:summary="Default radius of listed deals"
+            android:key="prefRadius"
+            android:entries="@array/radius"
+            android:entryValues="@array/radiusValues">
+        </ListPreference>
+        
+        <ListPreference android:title="Minimum Distance"
+            android:defaultValue="50"
+            android:summary="Default radius of listed deals"
+            android:key="prefMinDistance"
+            android:entries="@array/minDistance"
+            android:entryValues="@array/minDistanceValues">
+        </ListPreference>
+        
+        <ListPreference android:title="Minimum Time"
+            android:defaultValue="60"
+            android:summary="Default radius of listed deals"
+            android:key="prefMinTime"
+            android:entries="@array/minTime"
+            android:entryValues="@array/minTimeValues">
+        </ListPreference>
+       
+    </PreferenceCategory>
+ 
+</PreferenceScreen>
