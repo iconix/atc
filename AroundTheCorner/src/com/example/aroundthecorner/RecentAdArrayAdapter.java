@@ -14,7 +14,7 @@ public class RecentAdArrayAdapter extends ArrayAdapter<String>{
 	private final String[] values;
 	
 	public RecentAdArrayAdapter(Context context, String[] values) {
-		super(context, R.layout.adlist, values);
+		super(context, R.layout.recent_list_item, values);
 		this.context = context;
 		this.values = values;
 	}
@@ -23,7 +23,7 @@ public class RecentAdArrayAdapter extends ArrayAdapter<String>{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
-		View rowView = inflater.inflate(R.layout.nearby_list_item, parent, false);
+		View rowView = inflater.inflate(R.layout.recent_list_item, parent, false);
 		TextView adLabel = (TextView) rowView.findViewById(R.id.adListTitleId);
 		ImageView adImage = (ImageView) rowView.findViewById(R.id.adListImageId);
 		TextView companyLabel = (TextView) rowView.findViewById(R.id.adListCompanyId);
@@ -49,12 +49,12 @@ public class RecentAdArrayAdapter extends ArrayAdapter<String>{
 		rowView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
 				Intent i = new Intent(context, AdDescriptionActivity.class);
-				String adLabelString = ((TextView) view.findViewById(R.id.adListTitleId)).getText().toString();
-				String distanceLabelString = ((TextView) view.findViewById(R.id.adListDistanceId)).getText().toString();
+				//String adLabelString = ((TextView) view.findViewById(R.id.adListTitleId)).getText().toString();
+				//String distanceLabelString = ((TextView) view.findViewById(R.id.adListDistanceId)).getText().toString();
 				String companyLabelString = ((TextView) view.findViewById(R.id.adListCompanyId)).getText().toString();
 				
-				i.putExtra("ad_title", adLabelString);
-				i.putExtra("distance", distanceLabelString);
+				//i.putExtra("ad_title", adLabelString);
+				//i.putExtra("distance", distanceLabelString);
 				i.putExtra("company", companyLabelString);
 				//i.putExtra("ad_image", ((ImageView) view.findViewById(R.id.adListImageId)).getDrawable());
 			}

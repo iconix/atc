@@ -1,89 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/map"
     android:fillViewport="true" >
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/map" >
+    <!-- Header Starts -->
 
-        <!-- Header Starts -->
-        <RelativeLayout
-            android:id="@+id/profileHeaderId"
+    <RelativeLayout
+        android:id="@+id/profileHeaderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_bg"
+        android:orientation="horizontal"
+        android:padding="5dip" >
+
+        <!-- Profile Picture -->
+
+        <LinearLayout
+            android:id="@+id/profilePictureId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" 
-            android:background="@drawable/gradient_bg"
-            android:padding="5dip">
-            
-            <!-- Profile Picture -->
-	        <LinearLayout
-	            android:id="@+id/profilePictureId"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:background="@drawable/profile_image_bg"
-	            android:padding="3dip" >
-	
-	            <ImageView
-	                android:id="@+id/userImageId"
-	                android:layout_width="fill_parent"
-	                android:layout_height="fill_parent"
-	                android:adjustViewBounds="true"
-	                android:maxWidth="200dp"
-	                android:maxHeight="200dp"
-	                android:scaleType="fitXY"
-	                android:src="@drawable/minh" />
-	        </LinearLayout>
-	   
-	        <TextView 
-	            android:id="@+id/userNameId"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Minh Thao Nguyen"
-	            android:textStyle="bold"
-	            android:textSize="30dip"
-	            android:textColor="#372c24"
-	            android:layout_marginLeft="5dip"
-	            android:layout_toRightOf="@id/profilePictureId"/>
-	        
-	        <TextView
-	            android:id="@+id/userDescriptionId"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="\nI'm awesome"
-	            android:textStyle="italic"
-	            android:textSize="15dip"
-	            android:textColor="#372c24"
-	            android:layout_marginLeft="5dip"
-	            android:layout_toRightOf="@id/profilePictureId"
-	            android:layout_below="@id/userNameId"/>
-	        
-	   </RelativeLayout>
-	   
-       <TextView
-           android:id="@+id/mostVisitedId"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Most Visited"
-           android:textStyle="bold" 
-           android:textSize="20dip"
-           android:textColor="#372c24"
-           android:layout_marginLeft="5dip"
-           android:layout_marginTop="5dip"
-           android:layout_below="@id/profileHeaderId"/>
-       
-       <View
-           android:layout_height="1dip"
-           android:layout_width="310dip"
-           android:background="#372c24"
-           android:layout_centerInParent="true"
-           android:layout_below="@id/mostVisitedId"
-           android:layout_marginTop="5dip"/>
-        
-        
+            android:background="@drawable/profile_image_bg"
+            android:padding="3dip" >
+
+            <ImageView
+                android:id="@+id/userImageId"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:adjustViewBounds="true"
+                android:maxHeight="200dp"
+                android:maxWidth="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/minh" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/userNameId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/profilePictureId"
+            android:text="Minh Thao Nguyen"
+            android:textColor="#372c24"
+            android:textSize="30dip"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/userDescriptionId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userNameId"
+            android:layout_marginLeft="5dip"
+            android:layout_toRightOf="@id/profilePictureId"
+            android:text="\nI&apos;m awesome"
+            android:textColor="#372c24"
+            android:textSize="15dip"
+            android:textStyle="italic" />
     </RelativeLayout>
 
-</ScrollView>
+    <TextView
+        android:id="@+id/mostVisitedId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profileHeaderId"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="5dip"
+        android:text="Most Visited"
+        android:textColor="#372c24"
+        android:textSize="20dip"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="310dip"
+        android:layout_height="1dip"
+        android:layout_below="@id/mostVisitedId"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dip"
+        android:background="#372c24" />
+    
+    <!-- List of Companies -->
+    <LinearLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/line" >
+
+        <ListView
+            android:id="@+id/companyList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="#00000000"
+            android:fastScrollEnabled="true"
+            android:smoothScrollbar="true" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -38,13 +38,13 @@ public class AdDescriptionActivity extends Activity {
 		TextView companyDescriptionLabel = (TextView)findViewById(R.id.companyDescriptionId);
 
 		Intent i = getIntent();
-		String adTitleString = i.getStringExtra("ad_title");
-		String distanceString = i.getStringExtra("distance");
+		//String adTitleString = i.getStringExtra("ad_title");
+		//String distanceString = i.getStringExtra("distance");
 		String companyString = i.getStringExtra("company");
 
 		companyNameLabel.setText(companyString);
-		adTitleLabel.setText(adTitleString);
-		distanceLabel.setText(distanceString);
+		//adTitleLabel.setText(adTitleString);
+		//distanceLabel.setText(distanceString);
 
 		if (companyString.equals("Baume")) {
 			companyImage.setImageResource(R.drawable.baume);
@@ -53,6 +53,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 10:00AM - 11:00PM");
 			adDescriptionLabel.setText("With an entree");
 			companyDescriptionLabel.setText("Baume is a really cool place. Get fancy french food and stuff. Brace yourself for a hefty check though.");
+			adTitleLabel.setText("Free Dessert");
+			distanceLabel.setText("1.2 mi");
 		} else if (companyString.equals("Cool Cafe")) {
 			companyImage.setImageResource(R.drawable.coolcafe);
 			adImage.setImageResource(R.drawable.coolcafe);
@@ -60,6 +62,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 10:30AM - 9:00PM");
 			adDescriptionLabel.setText("No kids allowed");
 			companyDescriptionLabel.setText("Cool Cafe is a nice little cafe by the Cantor Art Musuem. A great place to go on a date.");
+			adTitleLabel.setText("Lunch Special");
+			distanceLabel.setText("0.6 mi");
 		} else if (companyString.equals("Ike's Place")) {
 			companyImage.setImageResource(R.drawable.ikes);
 			adImage.setImageResource(R.drawable.ikes);
@@ -67,6 +71,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 11:00AM - 3:00PM");
 			adDescriptionLabel.setText("One per sandwich");
 			companyDescriptionLabel.setText("Get some awesome sandwiches at Ike's. Wide variety of vegan and vegetarian options as well.");
+			adTitleLabel.setText("Free Drink");
+			distanceLabel.setText("0.3 mi");
 		} else if (companyString.equals("Coupa Cafe")) {
 			companyImage.setImageResource(R.drawable.coupa);
 			adImage.setImageResource(R.drawable.coupa);
@@ -74,6 +80,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 9:00AM - 12:00AM");
 			adDescriptionLabel.setText("With purchase of crepe");
 			companyDescriptionLabel.setText("Get some delicious cafe as well as pastries. Not your average Starbucks. Get something good.");
+			adTitleLabel.setText("$2 Off Coffee");
+			distanceLabel.setText("0.5 mi");
 		} else if (companyString.equals("Evvia Estiatorio")) {
 			companyImage.setImageResource(R.drawable.evvia);
 			adImage.setImageResource(R.drawable.evvia);
@@ -81,6 +89,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 5:00PM - 11:00PM");
 			adDescriptionLabel.setText("With an entree");
 			companyDescriptionLabel.setText("Prepare for a delicious meal while submersed in a classy ambiance. Cool beans.");
+			adTitleLabel.setText("20% Off Dinner Items");
+			distanceLabel.setText("1.3 mi");
 		} else if (companyString.equals("Garden Fresh")) {
 			companyImage.setImageResource(R.drawable.gardenfresh);
 			adImage.setImageResource(R.drawable.gardenfresh);
@@ -88,6 +98,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 11:00AM - 11:00PM");
 			adDescriptionLabel.setText("1 per person");
 			companyDescriptionLabel.setText("Garden Fresh is legit. A favorite of local vegetarians.");
+			adTitleLabel.setText("Free Appetizer");
+			distanceLabel.setText("1.2 mi");
 		} else if (companyString.equals("Tamarine")){
 			companyImage.setImageResource(R.drawable.tamarine);
 			adImage.setImageResource(R.drawable.tamarine);
@@ -95,6 +107,8 @@ public class AdDescriptionActivity extends Activity {
 			hoursLabel.setText("Hours: 3:00PM - 11:00PM");
 			adDescriptionLabel.setText("With an entree");
 			companyDescriptionLabel.setText("Get delicious asian cuisine at Tamarine. If you're sick of eating Panda Express, treat yourself to a delicious meal.");
+			adTitleLabel.setText("Happy Hour");
+			distanceLabel.setText("1.4 mi");
 		}       
 	}
 
