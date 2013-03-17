@@ -72,6 +72,7 @@ public class NearbyAdArrayAdapter extends ArrayAdapter<String>{
 				//i.putExtra("ad_title", adLabelString);
 				//i.putExtra("distance", distanceLabelString);
 				i.putExtra("company", companyLabelString);
+				context.startActivity(i);
 				//i.putExtra("ad_image", ((ImageView) view.findViewById(R.id.adListImageId)).getDrawable());
 			}
 		});		
