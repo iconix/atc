@@ -11,7 +11,7 @@ public class AndroidMenusActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.menu);
+		setContentView(R.layout.adtabmain);
 	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

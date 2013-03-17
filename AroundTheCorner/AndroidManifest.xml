@@ -40,6 +40,10 @@
         <activity
             android:name=".LoginActivity"
             android:label="Login To Your Account"></activity>
+        
+        <activity
+            android:name=".AndroidMenusActivity"
+            android:label="Menu"></activity>
             	
     </application>
 </manifest>

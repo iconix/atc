@@ -3,7 +3,11 @@ package com.example.aroundthecorner;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TabHost;
+import android.widget.Toast;
 import android.widget.TabHost.TabSpec;
 
 public class AdTabActivity extends TabActivity {
@@ -39,5 +43,37 @@ public class AdTabActivity extends TabActivity {
 		tabHost.addTab(profileSpec);
 		
 	}
-
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.layout.menu, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_upload:
+				Toast.makeText(AdTabActivity.this, "Upload is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.menu_timeline:
+				Toast.makeText(AdTabActivity.this, "Timeline is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.menu_radius:
+				Toast.makeText(AdTabActivity.this, "Radius is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.menu_timezone:
+				Toast.makeText(AdTabActivity.this, "Time Zone is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.menu_distance:
+				Toast.makeText(AdTabActivity.this, "Min Distance is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.menu_time:
+				Toast.makeText(AdTabActivity.this, "Min Time is Selected", Toast.LENGTH_SHORT).show();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		
+	}
 }

@@ -27,11 +27,9 @@
 
             <ImageView
                 android:id="@+id/userImageId"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
                 android:adjustViewBounds="true"
-                android:maxHeight="200dp"
-                android:maxWidth="200dp"
+                android:layout_width="100dip"
+                android:layout_height="100dip"
                 android:scaleType="fitXY"
                 android:src="@drawable/minh" />
         </LinearLayout>
