@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/map" >
+
+        <!-- Header Starts -->
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bg"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <!-- Company Thumbnail Starts -->
+
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/image_bg"
+                android:padding="3dip" >
+
+                <ImageView
+                    android:id="@+id/companyImageId"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:src="@drawable/ikes" />
+            </LinearLayout>
+            <!-- Company Thumbnail Ends -->
+
+
+            <!-- Company Name Start -->
+
+            <TextView
+                android:id="@+id/companyNameId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/thumbnail"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/thumbnail"
+                android:text="Ike&apos;s Place"
+                android:textColor="#372c24"
+                android:textSize="25dip"
+                tools:ignore="HardcodedText" />
+            <!-- Company Name End -->
+
+
+            <!-- Distance Start -->
+
+            <TextView
+                android:id="@+id/companyDistanceId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/companyNameId"
+                android:layout_marginRight="5dip"
+                android:gravity="right"
+                android:text="0.6 mi"
+                android:textColor="#372c24"
+                android:textSize="10dip"
+                android:textStyle="bold" />
+            <!-- Distance End -->
+
+        </RelativeLayout>
+        <!-- Header Ends -->
+
+
+        <!-- Information Start -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:text="Company Info"
+                android:textStyle="bold"
+                android:textColor="#372c24" />
+
+            <RelativeLayout
+                android:id="@+id/companyInfoBoxId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/text_container"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+
+                <!-- Address Label -->
+
+                <TextView
+                    android:id="@+id/addressId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="475 Via Ortega, Stanford, CA 94305"
+                    android:textColor="#372c24"
+                    android:textSize="10dip" />
+
+                <!-- Hours of Operation Label -->
+
+                <TextView
+                    android:id="@+id/hoursId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/addressId"
+                    android:text="Hours: 10:00 AM - 7:00 PM"
+                    android:textColor="#372c24"
+                    android:textSize="10dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hoursId"
+                    android:text="Sandwiches"
+                    android:textColor="#372c24"
+                    android:textSize="10dip" />
+            </RelativeLayout>
+
+                        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:text=" "
+                android:textColor="#372c24" />
+            
+            <RelativeLayout
+                android:id="@+id/adImageBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/text_container"
+                android:orientation="horizontal"
+                android:padding="5dip" >
+
+                <LinearLayout
+                    android:id="@+id/adThumbnail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/image_bg"
+                    android:padding="3dip" >
+                	<!-- Ad Image Label -->
+                    <ImageView
+                        android:id="@+id/adImageId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxHeight="100dp"
+                        android:maxWidth="100dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/sandwich" />
+                </LinearLayout>
+
+
+
+                <!-- Ad Title Label -->
+
+                <TextView
+                    android:id="@+id/adTitleId"
+                    android:layout_alignTop="@id/adThumbnail"
+                    android:layout_toRightOf="@id/adThumbnail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="Free Drink"
+                    android:textColor="#372c24"
+                    android:textSize="30dip" />
+
+                <TextView
+                    android:id="@+id/adDescriptionId"
+                    android:layout_below="@id/adTitleId"
+                    android:layout_toRightOf="@id/adThumbnail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginTop="3dip"
+                    android:text="With any purchase of an Ike's sandwich"
+                    android:textColor="#372c24"
+                    android:textSize="10dip" />
+                
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:text="\nDescription"
+                android:textStyle="bold"
+                android:textColor="#372c24" />
+
+            <LinearLayout
+                android:id="@+id/descriptionBoxId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/text_container"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/companyDescriptionId"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:text="Ike's Place serves some of the most delicious sandwiches in the Bay Area. Wide selection of vegan and vegetarian sandwiches. Try adding mozzarella sticks or fried zucchini to our sandwich. Free chips! Call ahead to avoid waiting and to avoid the line. "
+                    android:textColor="#372c24" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Information Ends -->
+
+    </RelativeLayout>
+
+</ScrollView>
