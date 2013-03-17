@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="radius">
+        <item name="1">Once a day</item>
+        <item name="7">Once a week</item>
+        <item name="30">Once a year</item>
+        <item name="0">Never (Update maually)</item>
+    </string-array>
+    <string-array name="radiusValues">
+        <item name="1">1</item>
+        <item name="7">7</item>
+        <item name="30">30</item>
+        <item name="0">0</item>
+    </string-array>
+    
+    <string-array name="minTime">
+        <item name="1">1 Minutes</item>
+        <item name="2">2 Minutes</item>
+        <item name="5">5 Minutes</item>
+        <item name="10">10 Minutes</item>
+     </string-array>
+	<string-array name="minTimeValues">
+	    <item name="1">1</item>
+	    <item name="2">2</item>
+	    <item name="5">5</item>
+	    <item name="10">10</item>
+	</string-array>
+	
+    <string-array name="minDistance">
+        <item name="10">10 Meters</item>
+        <item name="25">25 Meters</item>
+        <item name="50">50 Meters</item>
+        <item name="100">100 Meters</item>
+     </string-array>
+	<string-array name="minDistanceValues">
+	    <item name="10">10</item>
+	    <item name="25">25</item>
+	    <item name="50">50</item>
+	    <item name="100">100</item>
+	</string-array>     
+</resources>

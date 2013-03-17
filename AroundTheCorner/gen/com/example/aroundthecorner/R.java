@@ -8,12 +8,20 @@
 package com.example.aroundthecorner;
 
 public final class R {
+    public static final class array {
+        public static final int minDistance=0x7f040004;
+        public static final int minDistanceValues=0x7f040005;
+        public static final int minTime=0x7f040002;
+        public static final int minTimeValues=0x7f040003;
+        public static final int radius=0x7f040000;
+        public static final int radiusValues=0x7f040001;
+    }
     public static final class attr {
     }
     public static final class dimen {
-        public static final int padding_large=0x7f040002;
-        public static final int padding_medium=0x7f040001;
-        public static final int padding_small=0x7f040000;
+        public static final int padding_large=0x7f050002;
+        public static final int padding_medium=0x7f050001;
+        public static final int padding_small=0x7f050000;
     }
     public static final class drawable {
         public static final int arrow=0x7f020000;
@@ -45,52 +53,52 @@ public final class R {
         public static final int userprofile_icon=0x7f02001a;
     }
     public static final class id {
-        public static final int adDescriptionId=0x7f08000c;
-        public static final int adImageBox=0x7f080008;
-        public static final int adImageId=0x7f08000a;
-        public static final int adListCompanyId=0x7f080011;
-        public static final int adListDistanceId=0x7f080012;
-        public static final int adListImageId=0x7f08000f;
-        public static final int adListTitleId=0x7f080010;
-        public static final int adThumbnail=0x7f080009;
-        public static final int adTitleId=0x7f08000b;
-        public static final int addressId=0x7f080006;
-        public static final int btnLogin=0x7f080014;
-        public static final int btnRegister=0x7f080022;
-        public static final int companyDescriptionId=0x7f08000e;
-        public static final int companyDistanceId=0x7f080004;
-        public static final int companyId=0x7f08001c;
-        public static final int companyImageId=0x7f080002;
-        public static final int companyInfoBoxId=0x7f080005;
-        public static final int companyList=0x7f08002c;
-        public static final int companyNameId=0x7f080003;
-        public static final int dateId=0x7f08001e;
-        public static final int descriptionBoxId=0x7f08000d;
-        public static final int footer=0x7f080013;
-        public static final int header=0x7f080000;
-        public static final int hoursId=0x7f080007;
-        public static final int line=0x7f08002a;
-        public static final int link_to_login=0x7f080023;
-        public static final int link_to_register=0x7f080015;
-        public static final int menu_distance=0x7f08001a;
-        public static final int menu_radius=0x7f080018;
-        public static final int menu_settings=0x7f08002d;
-        public static final int menu_time=0x7f08001b;
-        public static final int menu_timeline=0x7f080017;
-        public static final int menu_timezone=0x7f080019;
-        public static final int menu_upload=0x7f080016;
-        public static final int mostVisitedId=0x7f080029;
-        public static final int numberDealsId=0x7f08001d;
-        public static final int profileHeaderId=0x7f080024;
-        public static final int profilePictureId=0x7f080025;
-        public static final int reg_email=0x7f080020;
-        public static final int reg_fullname=0x7f08001f;
-        public static final int reg_password=0x7f080021;
-        public static final int relativeLayout2=0x7f08002b;
-        public static final int thumbnail=0x7f080001;
-        public static final int userDescriptionId=0x7f080028;
-        public static final int userImageId=0x7f080026;
-        public static final int userNameId=0x7f080027;
+        public static final int adDescriptionId=0x7f09000c;
+        public static final int adImageBox=0x7f090008;
+        public static final int adImageId=0x7f09000a;
+        public static final int adListCompanyId=0x7f090011;
+        public static final int adListDistanceId=0x7f090012;
+        public static final int adListImageId=0x7f09000f;
+        public static final int adListTitleId=0x7f090010;
+        public static final int adThumbnail=0x7f090009;
+        public static final int adTitleId=0x7f09000b;
+        public static final int addressId=0x7f090006;
+        public static final int btnLogin=0x7f090014;
+        public static final int btnRegister=0x7f090022;
+        public static final int companyDescriptionId=0x7f09000e;
+        public static final int companyDistanceId=0x7f090004;
+        public static final int companyId=0x7f09001c;
+        public static final int companyImageId=0x7f090002;
+        public static final int companyInfoBoxId=0x7f090005;
+        public static final int companyList=0x7f09002c;
+        public static final int companyNameId=0x7f090003;
+        public static final int dateId=0x7f09001e;
+        public static final int descriptionBoxId=0x7f09000d;
+        public static final int footer=0x7f090013;
+        public static final int header=0x7f090000;
+        public static final int hoursId=0x7f090007;
+        public static final int line=0x7f09002a;
+        public static final int link_to_login=0x7f090023;
+        public static final int link_to_register=0x7f090015;
+        public static final int menu_distance=0x7f09001a;
+        public static final int menu_radius=0x7f090018;
+        public static final int menu_setting=0x7f090016;
+        public static final int menu_settings=0x7f09002d;
+        public static final int menu_time=0x7f09001b;
+        public static final int menu_timeline=0x7f090017;
+        public static final int menu_timezone=0x7f090019;
+        public static final int mostVisitedId=0x7f090029;
+        public static final int numberDealsId=0x7f09001d;
+        public static final int profileHeaderId=0x7f090024;
+        public static final int profilePictureId=0x7f090025;
+        public static final int reg_email=0x7f090020;
+        public static final int reg_fullname=0x7f09001f;
+        public static final int reg_password=0x7f090021;
+        public static final int relativeLayout2=0x7f09002b;
+        public static final int thumbnail=0x7f090001;
+        public static final int userDescriptionId=0x7f090028;
+        public static final int userImageId=0x7f090026;
+        public static final int userNameId=0x7f090027;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
@@ -112,17 +120,18 @@ public final class R {
         public static final int recentads=0x7f030010;
         public static final int register=0x7f030011;
         public static final int userprofile=0x7f030012;
+        public static final int usersettings=0x7f030013;
     }
     public static final class menu {
-        public static final int activity_login=0x7f070000;
+        public static final int activity_login=0x7f080000;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int menu_settings=0x7f050002;
-        public static final int title_activity_login=0x7f050003;
+        public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f060001;
+        public static final int menu_settings=0x7f060002;
+        public static final int title_activity_login=0x7f060003;
     }
     public static final class style {
-        public static final int AppTheme=0x7f060000;
+        public static final int AppTheme=0x7f070000;
     }
 }

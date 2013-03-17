@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <!--  Set id, icon, and title for each menu item -->
 
-	<item android:id="@+id/menu_upload"
+	<item android:id="@+id/menu_setting"
 	      android:icon="@drawable/ic_launcher"
-	      android:title="Upload Images" />
+	      android:title="Settings" />
 	<item android:id="@+id/menu_timeline"
 	      android:icon="@drawable/ic_launcher"
 	      android:title="Default Timeline"/>
