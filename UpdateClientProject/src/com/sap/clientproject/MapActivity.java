@@ -1,67 +1,88 @@
 package com.sap.clientproject;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import android.content.Context;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import com.google.android.gms.maps.*;
+import android.location.*;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.widget.Toast;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapActivity extends FragmentActivity{
+public class MapActivity extends FragmentActivity implements LocationListener{
+    
+    private GoogleMap googleMap;
+    
+    SupportMapFragment mMapFragment;
 
-		private static final String MAP_FRAG_NAME = "MyMap";
-		SupportMapFragment mMapFragment;
-		
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.map);
+        initMap();
+        addSomeLocationToMap();
+    }
+    
+    /**
+     * add some fixed location to the map. For this function, just add
+     * the coordinate of 
+     */
+    private void addSomeLocationToMap() {
+        LatLng coordinate  = new LatLng(37.77699, -122.42697);
+        
+        googleMap.addMarker(new MarkerOptions() 
+            .title("twitter")
+            .snippet("Twitter HQ")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            .position(coordinate)
+        );
+    }
+    
+    /**
+     * Initiate the map. Obtain the map fragment
+     */
+    private void initMap() {
+        SupportMapFragment mf = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.singlemap);
+        googleMap = mf.getMap();
+        googleMap.setMyLocationEnabled(true);
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
 
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-		    super.onCreate(savedInstanceState);
-                    setContentView(R.layout.map);
-		   /* SupportMapFragment fragment = new SupportMapFragment();
-	        getSupportFragmentManager().beginTransaction()
-	                .add(android.R.id.content, fragment).commit();*/
-		    //setContentView(R.layout.map);
-		}
-/*		    final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+    public void onLocationChanged(Location location) {
+    }
 
-		    // Try to obtain the map from the SupportMapFragment.
-		    mMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentByTag(MAP_FRAG_NAME);
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+      
+    }
 
-		    // Not found so make a new instance and add it to the transaction for swapping
-		    if (mMapFragment == null) {
-		        mMapFragment = SupportMapFragment.newInstance();
-		        ft.add(R.id.singlemap, mMapFragment, MAP_FRAG_NAME);
-		    }
+    public void onProviderEnabled(String provider) {
+    }
 
-		    ft.commit();
-		}
+    public void onProviderDisabled(String provider) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("GPS is disable");
+        builder.setCancelable(false);
+        
+        //take user to turn on the GPS setting
+        builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int which) {
+               Intent startGps = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+               startActivity(startGps);
+           } 
+        });
+        
+        //close
+        builder.setNegativeButton("Leave GPS off", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        
+        //display the alert
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
-		@Override
-		    public void onAttachedToWindow() {
-		        // Load the map here such that the fragment has a chance to completely load or else the GoogleMap value may be null
-		        GoogleMap googleMap;
-		googleMap = (mMapFragment).getMap();
-		LatLng latLng = new LatLng(-33.796923, 150.922433);
-		googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		googleMap.addMarker(new MarkerOptions()
-		        .position(latLng)
-		        .title("My Spot")
-		        .snippet("This is my spot!")
-		        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-		googleMap.getUiSettings().setCompassEnabled(true);
-		googleMap.getUiSettings().setZoomControlsEnabled(true);
-		googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-
-		        super.onAttachedToWindow();
-		}*/
 }
