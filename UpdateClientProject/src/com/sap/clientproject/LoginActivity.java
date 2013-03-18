@@ -28,6 +28,8 @@ public class LoginActivity extends Activity {
 	public static final String INVALID_LOGIN_ID_ERROR = "Username must has at least " + MIN_USERNAME_LENGTH + " characters"; 
 	public static final String INVALID_LOGIN_PASSWORD_ERROR = "Password must has at least " + MIN_PASSWORD_LENGTH + " characters"; 
 	public static final String GENERAL_LOGIN_ERROR = "Invalid input of username or password";
+        public static final String UNKNOWN_ERROR = "Unknown error attemp login. Please try again later";
+        
 	EditText loginID;
 	EditText loginPassword;
 	Button loginButton;
@@ -73,51 +75,53 @@ public class LoginActivity extends Activity {
     private void addLoginButtonClickListener(){
         //add a click listener for the login button
         loginButton.setOnClickListener (new Button.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-			
-				new AsyncTask<Void, Void, String>() {
-	    			@Override
-	    			protected String doInBackground(Void... params) {
-	    				if (loginID.getText() == null || loginID.getText().length() < MIN_USERNAME_LENGTH)
-	    					return INVALID_LOGIN_ID_ERROR;
-	    				if (loginPassword.getText() == null || loginPassword.getText().length() < MIN_PASSWORD_LENGTH)
-	    					return INVALID_LOGIN_PASSWORD_ERROR;
-			    		try {
-							ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-							postParameters.add(new BasicNameValuePair("loginUserID", loginID.getText().toString()));
-							postParameters.add(new BasicNameValuePair("loginUserPassword", loginPassword.getText().toString()));
-							postParameters.add(new BasicNameValuePair("loginDeviceID", getDeviceID()));
-							return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
-			    		} catch (Exception e) {
-							e.printStackTrace();
-						}
-			    		return null;
-	    			}
+            @Override
+            public void onClick(View arg0) {
 
-					@Override
-					protected void onPostExecute(String result) {
-						if (result.equals(INVALID_LOGIN_ID_ERROR) || result.equals(INVALID_LOGIN_PASSWORD_ERROR)) {
-							errorMessage.setText(result);
-							loginID.setText("");
-							loginPassword.setText("");
-						} else if (result.contains("Error")){
-							errorMessage.setText(GENERAL_LOGIN_ERROR);
-							loginID.setText("");
-							loginPassword.setText("");
-						} else if (result.contains("Logged in")){
-							//put the username to the shared preferences
-							SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
-					  		SharedPreferences.Editor editor = settings.edit();
-					  		editor.putString(ClientMainActivity.ACCOUNT_ID, loginID.getText().toString());
-					  		editor.commit();
-					  		//go back to the main activity
-					  		Intent i = new Intent(getApplicationContext(), ClientMainActivity.class);
-					        startActivity(i);
-						}
-					}
-	    		}.execute();
-			}
+                new AsyncTask<Void, Void, String>() {
+                    @Override
+                    protected String doInBackground(Void... params) {
+                        if (loginID.getText() == null || loginID.getText().length() < MIN_USERNAME_LENGTH)
+                            return INVALID_LOGIN_ID_ERROR;
+                        if (loginPassword.getText() == null || loginPassword.getText().length() < MIN_PASSWORD_LENGTH)
+                            return INVALID_LOGIN_PASSWORD_ERROR;
+                        try {
+                            ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                            postParameters.add(new BasicNameValuePair("loginUserID", loginID.getText().toString()));
+                            postParameters.add(new BasicNameValuePair("loginUserPassword", 
+                                    Cracker.generatingHashValue(loginPassword.getText().toString())));
+                            postParameters.add(new BasicNameValuePair("loginDeviceID", getDeviceID()));
+                            return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return UNKNOWN_ERROR;
+                    }
+
+                    @Override
+                    protected void onPostExecute(String result) {
+                        if (result.equals(INVALID_LOGIN_ID_ERROR) || result.equals(INVALID_LOGIN_PASSWORD_ERROR)
+                                || (result.equals(UNKNOWN_ERROR))) {
+                            errorMessage.setText(result);
+                            loginID.setText("");
+                            loginPassword.setText("");
+                        } else if (result.contains("Error")){
+                            errorMessage.setText(GENERAL_LOGIN_ERROR);
+                            loginID.setText("");
+                            loginPassword.setText("");
+                        } else if (result.contains("Logged in")){
+                            //put the username to the shared preferences
+                            SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putString(ClientMainActivity.ACCOUNT_ID, loginID.getText().toString());
+                            editor.commit();
+                            //go back to the main activity
+                            Intent i = new Intent(getApplicationContext(), ClientMainActivity.class);
+                            startActivity(i);
+                        }
+                    }
+                }.execute();
+            }
         });
     }
     
@@ -129,6 +133,6 @@ public class LoginActivity extends Activity {
      */
     private String getDeviceID() {
     	return Secure.getString(getBaseContext().getContentResolver(),
-                Secure.ANDROID_ID); 
-    }
+            Secure.ANDROID_ID); 
+}
 }
