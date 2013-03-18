@@ -4,8 +4,6 @@
  */
 package classesAndManagers;
 
-import staticVariables.*;
-
 /**
  *
  * Unlike the Account classes and GPSCoordinate class. We allow the user with the same account

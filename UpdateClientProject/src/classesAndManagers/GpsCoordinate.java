@@ -1,6 +1,5 @@
 package classesAndManagers;
 
-import staticVariables.*;
 public class GpsCoordinate {
     protected String accountID;
     protected String deviceID;

@@ -1,7 +1,5 @@
 package classesAndManagers;
 
-import staticVariables.*;
-
 public class Account {
 	protected String accountID;
 	protected String deviceID;

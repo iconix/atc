@@ -64,7 +64,7 @@ public class ClientMainActivity extends Activity{
         //Get the account ID, if no such parameter exist, then we need to register the device
         accountID = getAccountID();
         if (accountID.equals("")) loginToDevice();
-        /*else {
+        else {
             mapView = (Button)findViewById(R.id.map_view);
 
             mapView.setOnClickListener(new Button.OnClickListener() {
@@ -85,7 +85,7 @@ public class ClientMainActivity extends Activity{
                     startActivity(i);
                 }
             });*/
-        //}
+        }
     }
 	
     //handler for splash screen

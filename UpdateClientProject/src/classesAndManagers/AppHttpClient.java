@@ -73,11 +73,11 @@ public class AppHttpClient {
     	httpPost.setEntity(new UrlEncodedFormEntity(postParameters));
     	HttpResponse httpResponse = client.execute(httpPost);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-        StringBuffer buffer = new StringBuffer("");
-        String line = "";
-        String NL = System.getProperty("line.separater");
+        StringBuilder buffer = new StringBuilder("");
+        String line;
+        String NL = System.getProperty("line.separator");
         while ((line = bufferedReader.readLine()) != null) {
-            buffer.append(line + NL);
+            buffer.append(line).append(NL);
         }
         String page = buffer.toString();
         bufferedReader.close();

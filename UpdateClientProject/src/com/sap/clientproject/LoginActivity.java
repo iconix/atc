@@ -20,21 +20,21 @@ import android.widget.TextView;
 import staticVariables.*;
  
 public class LoginActivity extends Activity {
-	
-	public static final int MIN_USERNAME_LENGTH = 6;
-	public static final int MIN_PASSWORD_LENGTH = 8;
-	
-	//errors
-	public static final String INVALID_LOGIN_ID_ERROR = "Username must has at least " + MIN_USERNAME_LENGTH + " characters"; 
-	public static final String INVALID_LOGIN_PASSWORD_ERROR = "Password must has at least " + MIN_PASSWORD_LENGTH + " characters"; 
-	public static final String GENERAL_LOGIN_ERROR = "Invalid input of username or password";
-        public static final String UNKNOWN_ERROR = "Unknown error attemp login. Please try again later";
-        
-	EditText loginID;
-	EditText loginPassword;
-	Button loginButton;
-	TextView registerScreen;
-	TextView errorMessage;
+
+    public static final int MIN_USERNAME_LENGTH = 6;
+    public static final int MIN_PASSWORD_LENGTH = 8;
+
+    //errors
+    public static final String INVALID_LOGIN_ID_ERROR = "Username must has at least " + MIN_USERNAME_LENGTH + " characters"; 
+    public static final String INVALID_LOGIN_PASSWORD_ERROR = "Password must has at least " + MIN_PASSWORD_LENGTH + " characters"; 
+    public static final String GENERAL_LOGIN_ERROR = "Invalid input of username or password";
+    public static final String UNKNOWN_ERROR = "Unknown error attemp login. Please try again later";
+
+    EditText loginID;
+    EditText loginPassword;
+    Button loginButton;
+    TextView registerScreen;
+    TextView errorMessage;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
