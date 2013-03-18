@@ -59,21 +59,6 @@ public class PinLocation {
     }
     
     /**
-     * Another the constructor. Create a new PinLocation object when all the parameter are concat and
-     * separate by the given delimiter
-     * @param concat string of PinLocation
-     */
-    public PinLocation(String concatPinLocationString) {
-        String[] fields = concatPinLocationString.split(SpecialCharacters.delimiter);
-		this.accountID = fields[0];
-		this.time = Long.valueOf(fields[1]);
-		this.latitude = Double.valueOf(fields[2]);
-		this.longitude = Double.valueOf(fields[3]);
-                this.title = fields[4];
-                this.description = fields[5];
-    }
-    
-    /**
      * Construct an empty PinLocation object which we can will in the information later
      */
     public PinLocation() {
@@ -118,6 +103,14 @@ public class PinLocation {
     }
     
     /**
+     * Set the time of the PinLocationObject
+     * @param time 
+     */
+    public void setTime(String time) {
+        this.time = Long.valueOf(time);
+    }
+    
+    /**
      * Set the longitude of the PinLocation object
      * @return longitude
      */
@@ -134,6 +127,14 @@ public class PinLocation {
     }
     
     /**
+     * Get the longitude of the PinLocation object
+     * @param longitude 
+     */
+    public void setLongitude(String longitude) {
+        this.longitude = Double.valueOf(longitude);
+    }
+    
+    /**
      * Get the latitude of the PinLocation object
      * @return 
      */
@@ -147,6 +148,14 @@ public class PinLocation {
      */
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+    
+    /**
+     * Set the latitude of the PinLocation object
+     * @param latitude 
+     */
+    public void setLatitude(String latitude) {
+        this.latitude = Double.valueOf(latitude);
     }
     
     /**

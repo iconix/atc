@@ -44,21 +44,6 @@ public class GpsCoordinate {
     }
 
     /**
-     * Class constructor
-     * Create a new GpsCoordinate instance with the input is one single string where
-     * all the information is concatenated and separated by delimiter
-     * @param the string of the coordinate
-     */
-    public GpsCoordinate(String coordinate) {
-        String[] fields = coordinate.split(SpecialCharacters.delimiter);
-        this.accountID = fields[0];
-        this.deviceID = fields[1];
-        this.time = Long.valueOf(fields[2]);
-        this.latitude = Double.valueOf(fields[3]);
-        this.longitude = Double.valueOf(fields[4]);
-    }
-
-    /**
      * Public setter. Set the accountID of the GpsCoordinate instance
      * @param accountID where the coordinate was taken
      */

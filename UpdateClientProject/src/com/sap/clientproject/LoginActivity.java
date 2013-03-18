@@ -87,8 +87,8 @@ public class LoginActivity extends Activity {
                             return INVALID_LOGIN_PASSWORD_ERROR;
                         try {
                             ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_USER_ID, loginID.getText().toString()));
-                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_USER_PASSWORD, 
+                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_ACCOUNT_ID, loginID.getText().toString()));
+                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_ACCOUNT_PASSWORD, 
                                     Cracker.generatingHashValue(loginPassword.getText().toString())));
                             postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_DEVICE_ID, getDeviceID()));
                             return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);

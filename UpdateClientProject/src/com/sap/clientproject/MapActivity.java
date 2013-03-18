@@ -32,7 +32,6 @@ public class MapActivity extends FragmentActivity implements LocationListener{
     
     private GoogleMap googleMap;
     private String accountID;
-    private PinLocationManager pinLocationManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +42,6 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         //init the global variables
         context = this;
         accountID = getAccountID();
-        pinLocationManager = new PinLocationManager();
         
         //Set up the map and provider
         LocationManager lm = (LocationManager)getSystemService(LOCATION_SERVICE);

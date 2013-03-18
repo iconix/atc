@@ -33,7 +33,6 @@ public class SendCoordinateService extends Service implements LocationListener{
     private String accountID;
     private String deviceID;
     private LocationManager locationManager;
-    private GpsCoordinateManager coorManager;
     Criteria criteria;
     int updateInterval;
     int updateDistance;
@@ -48,7 +47,6 @@ public class SendCoordinateService extends Service implements LocationListener{
     public void onCreate() {
         deviceID = getDeviceID();
         accountID = getAccountID();
-        coorManager = new GpsCoordinateManager();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();

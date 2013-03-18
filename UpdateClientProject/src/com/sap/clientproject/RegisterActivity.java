@@ -94,11 +94,11 @@ public class RegisterActivity extends Activity {
                         return INVALID_REGISTER_EMAIL_ERROR;
                     try {
                         ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_ID, 
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_ACCOUNT_ID, 
                                 registerUsername.getText().toString()));
-                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_PASSWORD, 
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_ACCOUNT_PASSWORD, 
                                 Cracker.generatingHashValue(registerPassword.getText().toString())));
-                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_EMAIL, 
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_ACCOUNT_EMAIL, 
                                 registerEmail.getText().toString()));
                         postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_DEVICE_ID, 
                                 getDeviceID()));

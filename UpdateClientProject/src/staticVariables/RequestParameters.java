@@ -11,15 +11,15 @@ package staticVariables;
 public class RequestParameters {
     
     //input request for the login 
-    public static final String LOGIN_USER_ID = "loginUserID";
-    public static final String LOGIN_USER_PASSWORD = "loginUserPassword";
+    public static final String LOGIN_ACCOUNT_ID = "loginAccountID";
+    public static final String LOGIN_ACCOUNT_PASSWORD = "loginAccountPassword";
     public static final String LOGIN_DEVICE_ID = "loginDeviceID";
     
     
     //input request for register
-    public static final String REGISTER_USER_ID = "registerUserID";
-    public static final String REGISTER_USER_PASSWORD = "registerUserPassword";
-    public static final String REGISTER_USER_EMAIL = "registerUserEmail";
+    public static final String REGISTER_ACCOUNT_ID = "registerAccountID";
+    public static final String REGISTER_ACCOUNT_PASSWORD = "registerAccountPassword";
+    public static final String REGISTER_ACCOUNT_EMAIL = "registerAccountEmail";
     public static final String REGISTER_DEVICE_ID = "registerDeviceID";
     
     //input request for the coordinate
