@@ -87,10 +87,10 @@ public class LoginActivity extends Activity {
                             return INVALID_LOGIN_PASSWORD_ERROR;
                         try {
                             ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                            postParameters.add(new BasicNameValuePair("loginUserID", loginID.getText().toString()));
-                            postParameters.add(new BasicNameValuePair("loginUserPassword", 
+                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_USER_ID, loginID.getText().toString()));
+                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_USER_PASSWORD, 
                                     Cracker.generatingHashValue(loginPassword.getText().toString())));
-                            postParameters.add(new BasicNameValuePair("loginDeviceID", getDeviceID()));
+                            postParameters.add(new BasicNameValuePair(RequestParameters.LOGIN_DEVICE_ID, getDeviceID()));
                             return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -105,11 +105,11 @@ public class LoginActivity extends Activity {
                             errorMessage.setText(result);
                             loginID.setText("");
                             loginPassword.setText("");
-                        } else if (result.contains("Error")){
+                        } else if (result.contains(ResponseTags.LOGIN_ERROR_TAG)){
                             errorMessage.setText(GENERAL_LOGIN_ERROR);
                             loginID.setText("");
                             loginPassword.setText("");
-                        } else if (result.contains("Logged in")){
+                        } else if (result.contains(ResponseTags.LOGIN_SUCCESS_TAG)){
                             //put the username to the shared preferences
                             SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
                             SharedPreferences.Editor editor = settings.edit();

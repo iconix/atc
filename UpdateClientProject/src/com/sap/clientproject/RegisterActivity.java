@@ -17,6 +17,8 @@ import android.provider.Settings.Secure;
 import android.view.View;
 import android.widget.*;
 import staticVariables.Cracker;
+import staticVariables.RequestParameters;
+import staticVariables.ResponseTags;
  
 public class RegisterActivity extends Activity {
     
@@ -92,11 +94,14 @@ public class RegisterActivity extends Activity {
                         return INVALID_REGISTER_EMAIL_ERROR;
                     try {
                         ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                        postParameters.add(new BasicNameValuePair("registerUserID", registerUsername.getText().toString()));
-                        postParameters.add(new BasicNameValuePair("registerUserPassword", 
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_ID, 
+                                registerUsername.getText().toString()));
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_PASSWORD, 
                                 Cracker.generatingHashValue(registerPassword.getText().toString())));
-                        postParameters.add(new BasicNameValuePair("registerUserEmail", registerEmail.getText().toString()));
-                        postParameters.add(new BasicNameValuePair("registerDeviceID", getDeviceID()));
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_USER_EMAIL, 
+                                registerEmail.getText().toString()));
+                        postParameters.add(new BasicNameValuePair(RequestParameters.REGISTER_DEVICE_ID, 
+                                getDeviceID()));
                         return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -112,12 +117,12 @@ public class RegisterActivity extends Activity {
                         registerUsername.setText("");
                         registerPassword.setText("");
                         registerEmail.setText("");
-                    } else if (result.contains("Error")){
+                    } else if (result.contains(ResponseTags.REGISTER_ERROR_TAG)) {
                         errorMessage.setText(GENERAL_REGISTER_ERROR);
                         registerUsername.setText("");
                         registerPassword.setText("");
                         registerEmail.setText("");
-                    } else if (result.contains("Registered")){
+                    } else if (result.contains(ResponseTags.REGISTER_SUCCESS_TAG)){
                         //put the username to the shared preferences
                         SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
                         SharedPreferences.Editor editor = settings.edit();

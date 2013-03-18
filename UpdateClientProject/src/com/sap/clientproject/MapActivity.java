@@ -52,7 +52,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
             onProviderDisabled(provider);
         }
         
-        addSomeLocationToMap();
+  
         pinLocation();
     }
     
@@ -63,21 +63,6 @@ public class MapActivity extends FragmentActivity implements LocationListener{
     private String getAccountID() {
         SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
         return settings.getString(ClientMainActivity.ACCOUNT_ID, "");
-    }
-        
-    /**
-     * add some fixed location to the map. For this function, just add
-     * the coordinate of 
-     */
-    private void addSomeLocationToMap() {
-        LatLng coordinate  = new LatLng(37.77699, -122.42697);
-        
-        googleMap.addMarker(new MarkerOptions() 
-            .title("twitter")
-            .snippet("Twitter HQ")
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-            .position(coordinate)
-        );
     }
     
     /**
@@ -137,7 +122,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
      * The current time is recorded as UTC
      * @return the current time represent in the format yyyyMMdd_HHmmss
      */
-    private final String getTimeStamp() {
+    private String getTimeStamp() {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
             sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
             return sdf.format(new Date());
@@ -158,11 +143,22 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-            try {
-                PinLocation pinLocation = new PinLocation(myAccountID, Long.valueOf(getTimeStamp()), longitude, latitude, myTitle, myDescription);
+                try {
+             
                     ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                    postParameters.add(new BasicNameValuePair("pinLocation", pinLocationManager.getPinLocationInStringFormat(pinLocation)));
-
+                    //postParameters.add(new BasicNameValuePair("pinLocation", pinLocationManager.getPinLocationInStringFormat(pinLocation)));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_ACCOUNT_ID,
+                            myAccountID));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_TIME,
+                            getTimeStamp()));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_LONGITUDE,
+                            String.valueOf(longitude)));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_LATITUDE,
+                            String.valueOf(latitude)));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_TITLE,
+                            myTitle));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_INPUT_DESCRIPTION,
+                            myDescription));
                     AppHttpClient.executeHttpPost(ServerVariables.URL, postParameters);
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -104,7 +104,7 @@ public class SendCoordinateService extends Service implements LocationListener{
      * The current time is recorded as UTC
      * @return the current time represent in the format yyyyMMdd_HHmmss
      */
-    private final String getTimeStamp() {
+    private String getTimeStamp() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
         sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         return sdf.format(new Date());
@@ -122,16 +122,25 @@ public class SendCoordinateService extends Service implements LocationListener{
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-            try {
-                GpsCoordinate coordinate = new GpsCoordinate(myAccountID, myDeviceID, Long.valueOf(getTimeStamp()), longitude, latitude);
+                try {
+
                     ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-                    postParameters.add(new BasicNameValuePair("coordinate", coorManager.getGpsCoordinateInStringFormat(coordinate)));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_ACCOUNT_ID,
+                            myAccountID));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_DEVICE_ID,
+                            myDeviceID));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_TIME,
+                            getTimeStamp()));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_LONGITUDE,
+                            String.valueOf(longitude)));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_LATITUDE,
+                            String.valueOf(latitude)));
 
                     AppHttpClient.executeHttpPost(ServerVariables.URL, postParameters);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            return null;
+                return null;
             }
         }.execute();
     }
