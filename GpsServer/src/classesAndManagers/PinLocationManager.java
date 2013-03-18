@@ -5,6 +5,8 @@
 package classesAndManagers;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import staticVariables.*;
 /**
  *
@@ -60,6 +62,36 @@ public class PinLocationManager {
             e.printStackTrace();
         }
     }
+     
+    /**
+     * Query for pins with the given PinConfig
+     * @param PinConfig instance
+     */
+     public ArrayList<PinLocation> queryPins(Connection connection, PinConfig pinConfig) {
+    	 ArrayList<PinLocation> pinLocations = new ArrayList<PinLocation>();
+    	 String query = "select * from " + TableName.pinLocationDB +
+    			 " where accountID = \"" + pinConfig.accountID +
+    			 "\" and time > " + pinConfig.lowerTime + 
+    			 " and time < " + pinConfig.higherTime +
+    			 " and longitude > " + pinConfig.lowerLongitude +
+    			 " and longitude < " + pinConfig.higherLongitude +
+    			 " and latitude > " + pinConfig.lowerLatitude +
+    			 " and longitude < " + pinConfig.higherLatitude;
+    	 try {
+    		 Statement stmt = connection.createStatement();
+    		 ResultSet rs = stmt.executeQuery(query);
+    		 rs.beforeFirst();
+    		 while (rs.next()) {
+    			 PinLocation pinLocation = new PinLocation(rs.getString("accountID"), rs.getLong("time"),
+    					 rs.getDouble("longitude"), rs.getDouble("latitude"), 
+    					 rs.getString("title"), rs.getString("description"));
+    			 pinLocations.add(pinLocation);
+    		 }
+    	 } catch (SQLException e) {
+             e.printStackTrace();
+         }
+    	 return pinLocations;
+     }
      
     /**
     * Edit a pin location from the DB table

@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import classesAndManagers.*;
+
 import java.sql.*;
+import java.util.ArrayList;
+
 import db.*;
 import staticVariables.*;
 
@@ -90,7 +93,6 @@ public class ServerServlet extends HttpServlet {
 		String registerUserEmail = (String) request.getParameter(RequestParameters.REGISTER_ACCOUNT_EMAIL);
 		String registerDeviceID = (String) request.getParameter(RequestParameters.REGISTER_DEVICE_ID);
 		if (registerUserID != null && registerUserPassword != null && registerDeviceID != null && registerUserEmail != null) {
-			System.out.println("request obtained");
 			AccountsManager accountManager = new AccountsManager();
 			response.setContentType("text/plain");
 			PrintWriter out = response.getWriter();
@@ -156,9 +158,43 @@ public class ServerServlet extends HttpServlet {
 	 * @param inherited response from doPost
 	 */
 	private void checkForPinLocationOutputRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		String pinRequestUserID = (String) request.getParameter(RequestParameters.PIN_REQUEST_ACCOUNT_ID);
+		String pinRequestLowerLongitude = (String) request.getParameter(RequestParameters.PIN_REQUEST_LOWER_LONGITUDE);
+		String pinRequestHigherLongitude = (String) request.getParameter(RequestParameters.PIN_REQUEST_HIGHER_LONGITUDE);
+		String pinRequestLowerLatitude = (String) request.getParameter(RequestParameters.PIN_REQUEST_LOWER_LATITUDE);
+		String pinRequestHigherLatitude = (String) request.getParameter(RequestParameters.PIN_REQUEST_HIGHER_LATITUDE);
+		String pinRequestLowerTime = (String) request.getParameter(RequestParameters.PIN_REQUEST_LOWER_TIME);
+		String pinRequestHigherTime = (String) request.getParameter(RequestParameters.PIN_REQUEST_HIGHER_TIME);
+		if (pinRequestUserID != null && pinRequestLowerLongitude != null && pinRequestHigherLongitude != null &&
+			pinRequestLowerLatitude != null && pinRequestHigherLatitude != null && pinRequestLowerTime != null &&
+			pinRequestHigherTime != null) {
+			PinConfig pinConfig = new PinConfig(pinRequestUserID, pinRequestLowerLongitude, pinRequestHigherLongitude,
+					pinRequestLowerLatitude, pinRequestHigherLatitude, pinRequestLowerTime, pinRequestHigherTime);
+			ArrayList<PinLocation> pinLocations = pinLocationManager.queryPins(connection, pinConfig);
+			if (pinLocations == null) return;
+			
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			//parse the pin and send back to the client with correct format
+			for (PinLocation pinLocation : pinLocations) {
+				out.println(getPinLocationString(pinLocation));
+			}
+		}
 		
 	}
+	
+    /**
+     * Get the complete pin info in one string
+     * @param PinLocation object
+     */
+    public String getPinLocationString(PinLocation pinLocation) {
+   	 return pinLocation.getAccountID() + SpecialCharacters.delimiter +
+   			 pinLocation.getTitle() + SpecialCharacters.delimiter +
+   			 pinLocation.getDescription() + SpecialCharacters.delimiter +
+   			 pinLocation.getTime() + SpecialCharacters.delimiter +
+   			 pinLocation.getLongitude() + SpecialCharacters.delimiter +
+   			 pinLocation.getLatitude() + SpecialCharacters.delimiter;
+    }
 	
 	
 	/**
