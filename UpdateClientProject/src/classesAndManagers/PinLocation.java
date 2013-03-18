@@ -57,18 +57,6 @@ public class PinLocation {
     }
     
     /**
-     * Construct an empty PinLocation object which we can will in the information later
-     */
-    public PinLocation() {
-        this.accountID = "";
-        this.time = 0;
-        this.longitude = 0;
-        this.latitude = 0;
-        this.title = "";
-        this.description = "";
-    }
-    
-    /**
      * Get the accountId of the PinLocation object
      * @return accountID
      */

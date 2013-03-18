@@ -80,6 +80,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                         EditText title = (EditText)v.findViewById(R.id.title);
                         EditText description = (EditText)v.findViewById(R.id.description);
                         addPin(title.getText().toString(), description.getText().toString(), latlng, false);
+                        addPinToDB(title.getText().toString(), description.getText().toString(), latlng);
                     }
                 });
                 
@@ -113,6 +114,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))   
                 );
         //TODO remove marker mechanism
+        
     }
     
     /**
@@ -121,9 +123,9 @@ public class MapActivity extends FragmentActivity implements LocationListener{
      * @return the current time represent in the format yyyyMMdd_HHmmss
      */
     private String getTimeStamp() {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-            sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-            return sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        return sdf.format(new Date());
     }
     
     /**
@@ -161,7 +163,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            return null;
+                return null;
             }
         }.execute();
     }

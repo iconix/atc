@@ -36,8 +36,8 @@ public class ClientMainActivity extends Activity{
     
     private Intent sendCoordinateService;
     
-    Button mapView;
-    Button singleAdsView;
+    ImageView mapView;
+    ImageView dealsView;
 	    
     /** Called when the activity is first created. */
     @Override
@@ -65,26 +65,27 @@ public class ClientMainActivity extends Activity{
         accountID = getAccountID();
         if (accountID.equals("")) loginToDevice();
         else {
-            mapView = (Button)findViewById(R.id.map_view);
+            //sending the coordinate
+            startSendingCoordinateService();
+            
+            mapView = (ImageView)findViewById(R.id.locationIcon);
 
-            mapView.setOnClickListener(new Button.OnClickListener() {
+            mapView.setOnClickListener(new ImageView.OnClickListener() {
                 @Override
-                    public void onClick(View arg0) {
-                    startSendingCoordinateService();
-                    //Intent i = new Intent(getApplicationContext(), MapActivity.class);//AdListActivity.class);
-                    //startActivity(i);
+                public void onClick(View arg0) {
+                    Intent i = new Intent(getApplicationContext(), MapActivity.class);
+                    startActivity(i);
                 }
             });
 
-            /*singleAdsView = (Button)findViewById(R.id.single_ad_view);
-            singleAdsView.setOnClickListener(new Button.OnClickListener() {
+            dealsView = (ImageView)findViewById(R.id.dealsIcon);
+            dealsView.setOnClickListener(new ImageView.OnClickListener() {
                 @Override
-                    public void onClick(View arg0) {
-                    startSendingCoordinateService();
+                public void onClick(View arg0) {
                     Intent i = new Intent(getApplicationContext(), SingleAdActivity.class);
                     startActivity(i);
                 }
-            });*/
+            });
         }
     }
 	
@@ -107,9 +108,9 @@ public class ClientMainActivity extends Activity{
      * If it has not started, then starts it. 
      */
     private void startSendingCoordinateService() {
-             ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
          for (RunningServiceInfo srv : manager.getRunningServices(Integer.MAX_VALUE)) {
-        if (SEND_COORDINATE_SERVICE.equals(srv.service.getClassName())) return;
+            if (SEND_COORDINATE_SERVICE.equals(srv.service.getClassName())) return;
          }
          sendCoordinateService = new Intent(ClientMainActivity.this, SendCoordinateService.class);
          startService(sendCoordinateService);

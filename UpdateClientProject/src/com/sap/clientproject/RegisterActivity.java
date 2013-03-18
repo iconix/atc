@@ -30,7 +30,7 @@ public class RegisterActivity extends Activity {
     public static final String INVALID_REGISTER_PASSWORD_ERROR = "Password must has at least " + MIN_PASSWORD_LENGTH + " characters";
     public static final String INVALID_REGISTER_EMAIL_ERROR = "Email must has at least " + MIN_EMAIL_LENGTH + " characters"; 
     public static final String GENERAL_REGISTER_ERROR = "The username has already been taken";
-    public static final String UNKNOWN_ERROR = "Uknown error attemp registering. Please try again later";
+    public static final String UNKNOWN_ERROR = "Unknown error attemp registering. Please try again later";
 
     EditText registerUsername;
     EditText registerEmail;
