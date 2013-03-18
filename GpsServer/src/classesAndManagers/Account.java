@@ -1,7 +1,5 @@
 package classesAndManagers;
 
-import staticVariables.*;
-
 public class Account {
 	protected String accountID;
 	protected String deviceID;
@@ -22,21 +20,7 @@ public class Account {
 		this.password = password;
 		this.email = email;
 	}
-	
-	/**
-	 * Class constructor
-	 * Create a new Account object with the input is one single string where
-	 * all the information is concatenated and separated by delimiter
-	 * @param the string of the sensitive account information
-	 */
-	public Account(String coordinate) {
-		String[] fields = coordinate.split(SpecialCharacters.delimiter);
-		this.accountID = fields[0];
-		this.deviceID = fields[1];
-		this.password = fields[2];
-		this.email = fields[3];
-	}
-	
+
 	/**
 	 * Public setter. Set the accountID of the Account object
 	 * @param the accountID of the account

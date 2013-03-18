@@ -27,18 +27,7 @@ public class AccountsManager {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Write the account information stored in the Account object in the string 
-     * format separating by the given delimiter
-     * @param Account object
-     * @return string format of the account
-     */
-    public String getAccountInStringFormat(Account account) {
-            return account.accountID + SpecialCharacters.delimiter + account.deviceID + SpecialCharacters.delimiter +
-                            account.password + SpecialCharacters.delimiter + account.email + SpecialCharacters.endLn;
-    }
-
+    
     /**
      * Make a query to the database to check if any client account with the accountID
      * is already existed. If there is, then return true, else return false
