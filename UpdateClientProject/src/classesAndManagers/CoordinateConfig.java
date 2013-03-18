@@ -211,10 +211,34 @@ public class CoordinateConfig {
     }
     
     /**
-     * Set the higherLongitude of the coordinateConfig Object
-     * @param higherLongitude
+     * Set the lowerTime of the coordinateConfig Object
+     * @param lowerTime
      */
     public void setLowerTime(String lowerTime) {
         this.lowerTime = Long.valueOf(lowerTime);
+    }
+    
+    /**
+     * Get the higherTime of the coordinateConfig object
+     * @return higherTime
+     */
+    public long getHigherTime() {
+        return higherTime;
+    }
+    
+    /**
+     * Set the HigherTime of the coordinateConfig Object
+     * @param lowerTime
+     */
+    public void setHigherTime(long higherTime) {
+        this.higherTime = higherTime;
+    }
+    
+    /**
+     * Set the higherTime of the coordinateConfig Object
+     * @param higherTime
+     */
+    public void setHigherTime(String higherTime) {
+        this.higherTime = Long.valueOf(higherTime);
     }
 }

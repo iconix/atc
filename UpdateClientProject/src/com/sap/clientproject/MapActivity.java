@@ -176,8 +176,74 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         googleMap = mf.getMap();
         googleMap.setMyLocationEnabled(true);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        displayPinOnMap();
+    }
+    
+    /**
+     * Display pin stored in the DB of a given user to the map
+     */
+    private void displayPinOnMap() {
+        //TODO pass the config parameter in here and add listener
+        PinConfig pinConfig = new PinConfig(accountID, "-180", "180", "-90", "90", "0", "20200101000000");
+        
+        displayPinsFromDB(pinConfig);
+    }
+    
+    /**
+     * Send the request to the database to obtain the pin according to the given config
+     * The response is written in string format is is not parsed. 
+     * Parse it and display on map
+     * @param pinConfig
+     */
+    private void displayPinsFromDB (PinConfig pinConfig) {
+        final ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_ACCOUNT_ID,
+                pinConfig.getAccountID()));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LONGITUDE, 
+                String.valueOf(pinConfig.getLowerLongitude())));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LONGITUDE, 
+                String.valueOf(pinConfig.getHigherLongitude())));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LATITUDE, 
+                String.valueOf(pinConfig.getLowerLatitude())));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LATITUDE, 
+                String.valueOf(pinConfig.getHigherLatitude())));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_TIME, 
+                String.valueOf(pinConfig.getLowerTime())));
+        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_TIME, 
+                String.valueOf(pinConfig.getHigherTime())));
+        
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+                    return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                if (result != null) {
+                    String NL = System.getProperty("line.separator");
+                    String[] pinLocations = result.split(NL);
+                    for (String pinLocation : pinLocations) {
+                        String[] pinFields = pinLocation.split("-");
+                        String myTitle = pinFields[0] + " @" + pinFields[2]; //title include time
+                        String myDescription = pinFields[1];
+                        double longitude = Double.valueOf(pinFields[3]);
+                        double latitude = Double.valueOf(pinFields[4]);
+                        LatLng latlng = new LatLng(latitude, longitude);
+                        addPinToDB(myTitle, myDescription, latlng);
+                    }
+                } 
+            }
+        }.execute();
     }
 
+    
+    //------------------INHERITED CLASSES FROM LOCATION LISTENER ----------
     public void onLocationChanged(Location location) {
     }
 

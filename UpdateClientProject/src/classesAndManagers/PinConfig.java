@@ -61,7 +61,7 @@ public class PinConfig {
     }
     
     /**
-     * Get the accountID of the coordinateConfig object
+     * Get the accountID of the pinConfig object
      * @return accountID
      */
     public String getAccountID() {
@@ -69,7 +69,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the accountID of the coordinateConfig Object
+     * Set the accountID of the pinConfig Object
      * @param accountID
      */
     public void setAccountID(String accountID) {
@@ -77,7 +77,7 @@ public class PinConfig {
     }
     
     /**
-     * Get the lowerLongitude of the coordinateConfig object
+     * Get the lowerLongitude of the pinConfig object
      * @return lowerLongitude
      */
     public double getLowerLongitude() {
@@ -85,7 +85,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the lowerLongitude of the coordinateConfig Object
+     * Set the lowerLongitude of the pinConfig Object
      * @param lowerLongitude
      */
     public void setLowerLongitude(double lowerLongitude) {
@@ -93,7 +93,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the lowerLongitude of the coordinateConfig Object
+     * Set the lowerLongitude of the pinConfig Object
      * @param lowerLongitude
      */
     public void setLowerLongitude(String lowerLongitude) {
@@ -101,7 +101,7 @@ public class PinConfig {
     }
     
     /**
-     * Get the higherLongitude of the coordinateConfig object
+     * Get the higherLongitude of the pinConfig object
      * @return higherLongitude
      */
     public double getHigherLongitude() {
@@ -109,7 +109,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the higherLongitude of the coordinateConfig Object
+     * Set the higherLongitude of the pinConfig Object
      * @param higherLongitude
      */
     public void setHigherLongitude(double higherLongitude) {
@@ -117,7 +117,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the higherLongitude of the coordinateConfig Object
+     * Set the higherLongitude of the pinConfig Object
      * @param higherLongitude
      */
     public void setHigherLongitude(String higherLongitude) {
@@ -126,7 +126,7 @@ public class PinConfig {
     
     
     /**
-     * Get the lowerLatitude of the coordinateConfig object
+     * Get the lowerLatitude of the pinConfig object
      * @return lowerLatitude
      */
     public double getLowerLatitude() {
@@ -134,7 +134,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the lowerLatitude of the coordinateConfig Object
+     * Set the lowerLatitude of the pinConfig Object
      * @param lowerLatitude
      */
     public void setLowerLatitude(double lowerLatitude) {
@@ -142,7 +142,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the lowerLatitude of the coordinateConfig Object
+     * Set the lowerLatitude of the pinConfig Object
      * @param lowewLatitude
      */
     public void setLowerLatitude(String lowerLatitude) {
@@ -150,7 +150,7 @@ public class PinConfig {
     }
     
     /**
-     * Get the higherLatitude of the coordinateConfig object
+     * Get the higherLatitude of the pinConfig object
      * @return higherLatitude
      */
     public double getHigherLatitude() {
@@ -158,7 +158,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the higherLatitude of the coordinateConfig Object
+     * Set the higherLatitude of the pinConfig Object
      * @param higherLatitude
      */
     public void setHigherLatitude(double higherLatitude) {
@@ -166,7 +166,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the higherLatitude of the coordinateConfig Object
+     * Set the higherLatitude of the pinConfig Object
      * @param higherLatitude
      */
     public void setHigherLatitude(String higherLatitude) {
@@ -174,7 +174,7 @@ public class PinConfig {
     }
     
     /**
-     * Get the lowerTime of the coordinateConfig object
+     * Get the lowerTime of the pinConfig object
      * @return lowerTime
      */
     public long getLowerTime() {
@@ -182,7 +182,7 @@ public class PinConfig {
     }
     
     /**
-     * Set the lowerTime of the coordinateConfig Object
+     * Set the lowerTime of the pinConfig Object
      * @param lowerTime
      */
     public void setLowerTime(long lowerTime) {
@@ -190,10 +190,34 @@ public class PinConfig {
     }
     
     /**
-     * Set the higherLongitude of the coordinateConfig Object
-     * @param higherLongitude
+     * Set the lowerTime of the pinConfig Object
+     * @param lowerTime
      */
     public void setLowerTime(String lowerTime) {
         this.lowerTime = Long.valueOf(lowerTime);
+    }
+    
+    /**
+     * Get the higherTime of the pinConfig object
+     * @return higherTime
+     */
+    public long getHigherTime() {
+        return higherTime;
+    }
+    
+    /**
+     * Set the HigherTime of the pinConfig Object
+     * @param lowerTime
+     */
+    public void setHigherTime(long higherTime) {
+        this.higherTime = higherTime;
+    }
+    
+    /**
+     * Set the higherTime of the pinConfig Object
+     * @param higherTime
+     */
+    public void setHigherTime(String higherTime) {
+        this.higherTime = Long.valueOf(higherTime);
     }
 }
