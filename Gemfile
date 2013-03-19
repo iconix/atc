@@ -10,6 +10,7 @@ gem 'jquery-rails'
 
 group :development, :test do
   gem 'sqlite3'
+  #gem 'mysql2'
   gem 'rspec-rails', '2.11.0'
   gem 'guard-rspec', '1.2.1'
   gem 'guard-spork', '1.2.0'

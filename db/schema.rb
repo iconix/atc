@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130311053639) do
+ActiveRecord::Schema.define(:version => 20130310094722) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -24,35 +24,15 @@ ActiveRecord::Schema.define(:version => 20130311053639) do
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true
 
   create_table "deals", :force => true do |t|
-    t.float    "longitude",   :limit => 255
-    t.float    "latitude",    :limit => 255
-    t.string   "content"
-    t.datetime "starttime"
-    t.datetime "endtime"
-    t.string   "image_url"
-    t.string   "category"
     t.integer  "business_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-  end
-
-  create_table "gpslogs", :force => true do |t|
-    t.string   "device_id"
-    t.datetime "log_time"
-    t.float    "longitude",  :limit => 255
-    t.float    "latitude",   :limit => 255
-    t.boolean  "is_pin"
-    t.integer  "user_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
-
-  create_table "users", :force => true do |t|
-    t.string   "name"
-    t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.string   "password_digest"
+    t.decimal  "lng",         :precision => 15, :scale => 10
+    t.decimal  "lat",         :precision => 15, :scale => 10
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "title"
+    t.text     "tags"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
 end
