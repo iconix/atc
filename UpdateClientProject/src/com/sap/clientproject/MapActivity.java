@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -176,7 +177,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         googleMap = mf.getMap();
         googleMap.setMyLocationEnabled(true);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        //displayPinOnMap();
+        displayPinOnMap();
     }
     
     /**
@@ -184,7 +185,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
      */
     private void displayPinOnMap() {
         //TODO pass the config parameter in here and add listener
-        PinConfig pinConfig = new PinConfig(accountID, "-180", "180", "-90", "90", "0", "20200101000000");
+        PinConfig pinConfig = new PinConfig(getAccountID(), "-180", "180", "-90", "90", "0", "20200101000000");
         
         displayPinsFromDB(pinConfig);
     }
@@ -196,26 +197,26 @@ public class MapActivity extends FragmentActivity implements LocationListener{
      * @param pinConfig
      */
     private void displayPinsFromDB (PinConfig pinConfig) {
-        final ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_ACCOUNT_ID,
-                pinConfig.getAccountID()));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LONGITUDE, 
-                String.valueOf(pinConfig.getLowerLongitude())));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LONGITUDE, 
-                String.valueOf(pinConfig.getHigherLongitude())));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LATITUDE, 
-                String.valueOf(pinConfig.getLowerLatitude())));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LATITUDE, 
-                String.valueOf(pinConfig.getHigherLatitude())));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_TIME, 
-                String.valueOf(pinConfig.getLowerTime())));
-        postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_TIME, 
-                String.valueOf(pinConfig.getHigherTime())));
-        
+        final PinConfig myPinConfig = pinConfig;
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
                 try {
+                    ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_ACCOUNT_ID,
+                            myPinConfig.getAccountID()));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LONGITUDE, 
+                            String.valueOf(myPinConfig.getLowerLongitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LONGITUDE, 
+                            String.valueOf(myPinConfig.getHigherLongitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_LATITUDE, 
+                            String.valueOf(myPinConfig.getLowerLatitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_LATITUDE, 
+                            String.valueOf(myPinConfig.getHigherLatitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_LOWER_TIME, 
+                            String.valueOf(myPinConfig.getLowerTime())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.PIN_REQUEST_HIGHER_TIME, 
+                            String.valueOf(myPinConfig.getHigherTime())));
                     return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -226,17 +227,16 @@ public class MapActivity extends FragmentActivity implements LocationListener{
             @Override
             protected void onPostExecute(String result) {
                 if (result != null) {
-                    String NL = System.getProperty("line.separator");
-                    String[] pinLocations = result.split(NL);
-                    for (String pinLocation : pinLocations) {
-                        String[] pinFields = pinLocation.split("-");
-                        String myTitle = pinFields[0] + " @" + pinFields[2]; //title include time
-                        String myDescription = pinFields[1];
-                        double longitude = Double.valueOf(pinFields[3]);
-                        double latitude = Double.valueOf(pinFields[4]);
+                    String[] pinLocations = result.split(SpecialCharacters.endLn);
+                    for (String pinLocation : pinLocations) {      
+                        PinLocation pin = new PinLocation(pinLocation);
+                        String myTitle = pin.getTitle() + " @" + pin.getTime(); //title include time
+                        String myDescription = pin.getDescription();
+                        double longitude = pin.getLongitude();
+                        double latitude = pin.getLatitude();
                         LatLng latlng = new LatLng(latitude, longitude);
-                        addPinToDB(myTitle, myDescription, latlng);
-                    }
+                        addPin(myTitle, myDescription, latlng, false);
+                   }
                 } 
             }
         }.execute();

@@ -220,4 +220,19 @@ public class PinConfig {
     public void setHigherTime(String higherTime) {
         this.higherTime = Long.valueOf(higherTime);
     }
+    
+    /**
+     * Write the PinConfig in a string format
+     * @return string representation of PinConfig
+     */
+    @Override
+    public String toString() {
+        return "accountID: " + accountID + 
+                "\t lowerLongitude: " + lowerLongitude +
+                "\t higherLongitude: " + higherLongitude +
+                "\t lowerLatitude: " + lowerLatitude + 
+                "\t higherLatitude: " + higherLatitude +
+                "\t lowerTime: " + lowerTime +
+                "\t higherTime: " + higherTime;
+    }
 }
