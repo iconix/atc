@@ -30,3 +30,12 @@ production:
   password: <%= ENV['RDS_PASSWORD'] %>
   host: <%= ENV['RDS_HOSTNAME'] %>
   port: <%= ENV['RDS_PORT'] %>
+
+server:
+  adapter: mysql2
+  encoding: utf8
+  database: ebdb
+  username: sapenguins
+  password: sapenguins
+  host: aa1bdj7bwieyv5s.cxstmaj8fdow.us-west-1.rds.amazonaws.com
+  port: 3306
