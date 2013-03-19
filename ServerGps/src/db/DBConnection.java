@@ -3,7 +3,7 @@ package db;
 import java.sql.*;
 /**
  * ssh -i smartsense.pem ubuntu@ec2-54-241-229-70.us-west-1.compute.amazonaws.com
- * Amazon DB: mysql ebdb -h aauvtj3qaokqef.cxstmaj8fdow.us-west-1.rds.amazonaws.com -P 3306 -u sapenguins -p 
+ * Amazon DB: mysql ebdb -h aa1bdj7bwieyv5s.cxstmaj8fdow.us-west-1.rds.amazonaws.com -P 3306 -u sapenguins -p 
  * Amazon DB password: sapenguins
  * mysql c_cs108_minhthao -h mysql-user.stanford.edu -u ccs108minhthao -p
  * Handing all the accesses to the DB
@@ -13,7 +13,7 @@ public class DBConnection {
 	
 	private static final String MYSQL_USERNAME = "sapenguins";
 	private static final String MYSQL_PASSWORD = "sapenguins";
-	private static final String MYSQL_DATABASE_SERVER = "aauvtj3qaokqef.cxstmaj8fdow.us-west-1.rds.amazonaws.com:3306";
+	private static final String MYSQL_DATABASE_SERVER = "aa1bdj7bwieyv5s.cxstmaj8fdow.us-west-1.rds.amazonaws.com:3306";
 	private static final String MYSQL_DATABASE_NAME = "ebdb";
 	
 	/*private static final String MYSQL_USERNAME = "ccs108minhthao";
