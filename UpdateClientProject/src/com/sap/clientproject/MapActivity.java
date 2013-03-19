@@ -176,7 +176,7 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         googleMap = mf.getMap();
         googleMap.setMyLocationEnabled(true);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        displayPinOnMap();
+        //displayPinOnMap();
     }
     
     /**
