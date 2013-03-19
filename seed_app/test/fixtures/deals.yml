@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: deals
+#
+#  id          :integer          not null, primary key
+#  business_id :integer
+#  lng         :decimal(15, 10)
+#  lat         :decimal(15, 10)
+#  start       :datetime
+#  end         :datetime
+#  title       :string(255)
+#  tags        :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  business_id: 1
+  lng: 9.99
+  lat: 9.99
+  start: 2013-03-17 21:16:42
+  end: 2013-03-17 21:16:42
+  title: MyString
+  tags: MyText
+
+two:
+  business_id: 1
+  lng: 9.99
+  lat: 9.99
+  start: 2013-03-17 21:16:42
+  end: 2013-03-17 21:16:42
+  title: MyString
+  tags: MyText
