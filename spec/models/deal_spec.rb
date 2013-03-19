@@ -3,14 +3,13 @@
 # Table name: deals
 #
 #  id          :integer          not null, primary key
-#  longitude   :float(255)
-#  latitude    :float(255)
-#  content     :string(255)
-#  starttime   :datetime
-#  endtime     :datetime
-#  image_url   :string(255)
-#  category    :string(255)
 #  business_id :integer
+#  lng         :decimal(15, 10)
+#  lat         :decimal(15, 10)
+#  start_date  :datetime
+#  end_date    :datetime
+#  title       :string(255)
+#  tags        :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

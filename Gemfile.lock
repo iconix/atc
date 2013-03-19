@@ -56,6 +56,8 @@ GEM
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
+    faker (1.0.1)
+      i18n (~> 0.4)
     ffi (1.4.0)
     guard (1.6.2)
       listen (>= 0.6.0)
@@ -178,6 +180,7 @@ DEPENDENCIES
   capybara (= 1.1.2)
   childprocess (= 0.3.6)
   coffee-rails (~> 3.2.2)
+  faker (= 1.0.1)
   guard-rspec (= 1.2.1)
   guard-spork (= 1.2.0)
   jquery-rails
