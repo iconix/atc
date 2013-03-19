@@ -77,6 +77,7 @@ public class PinLocationManager {
     			 " and longitude < " + pinConfig.higherLongitude +
     			 " and latitude > " + pinConfig.lowerLatitude +
     			 " and longitude < " + pinConfig.higherLatitude;
+    	 System.out.println(query);
     	 try {
     		 Statement stmt = connection.createStatement();
     		 ResultSet rs = stmt.executeQuery(query);
@@ -102,17 +103,5 @@ public class PinLocationManager {
     public void editPin(Connection connection, PinLocation oldPinLocation, PinLocation newPinLocation) {
          removePin(connection, oldPinLocation);
          addNewPin(connection, newPinLocation);
-    }
-    
-
-    /**
-     * Write the coordinate in the GpsCoordinate in the string format separate by the given delimiter
-     * @param instance of GpsCoordinate
-     * @return string format of the coordinate
-     */
-    public String getPinLocationInStringFormat(PinLocation pinLocation) {
-        return pinLocation.accountID + SpecialCharacters.delimiter + pinLocation.time + SpecialCharacters.delimiter +
-                    pinLocation.longitude + SpecialCharacters.delimiter + pinLocation.latitude + SpecialCharacters.delimiter + 
-                    pinLocation.title + SpecialCharacters.delimiter + pinLocation.description + SpecialCharacters.endLn;
     }
 }

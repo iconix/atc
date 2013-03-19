@@ -168,8 +168,13 @@ public class ServerServlet extends HttpServlet {
 		if (pinRequestUserID != null && pinRequestLowerLongitude != null && pinRequestHigherLongitude != null &&
 			pinRequestLowerLatitude != null && pinRequestHigherLatitude != null && pinRequestLowerTime != null &&
 			pinRequestHigherTime != null) {
+			///////
+			System.out.println("pin pull request");
+			
 			PinConfig pinConfig = new PinConfig(pinRequestUserID, pinRequestLowerLongitude, pinRequestHigherLongitude,
 					pinRequestLowerLatitude, pinRequestHigherLatitude, pinRequestLowerTime, pinRequestHigherTime);
+			////////
+			System.out.println(pinConfig.toString());
 			ArrayList<PinLocation> pinLocations = pinLocationManager.queryPins(connection, pinConfig);
 			if (pinLocations == null) return;
 			
@@ -177,24 +182,11 @@ public class ServerServlet extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			//parse the pin and send back to the client with correct format
 			for (PinLocation pinLocation : pinLocations) {
-				out.println(getPinLocationString(pinLocation));
+				out.println(pinLocation.getPinInString());
 			}
 		}
 		
 	}
-	
-    /**
-     * Get the complete pin info in one string
-     * @param PinLocation object
-     */
-    public String getPinLocationString(PinLocation pinLocation) {
-   	 return pinLocation.getAccountID() + SpecialCharacters.delimiter +
-   			 pinLocation.getTitle() + SpecialCharacters.delimiter +
-   			 pinLocation.getDescription() + SpecialCharacters.delimiter +
-   			 pinLocation.getTime() + SpecialCharacters.delimiter +
-   			 pinLocation.getLongitude() + SpecialCharacters.delimiter +
-   			 pinLocation.getLatitude() + SpecialCharacters.delimiter;
-    }
 	
 	
 	/**
@@ -202,6 +194,8 @@ public class ServerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		System.out.println("request obtained");
+		
+		//if (connection.isClosed()) connection.
 		
 		checkForLoginRequest(request, response);
 		checkForRegisterRequest(request, response);

@@ -241,4 +241,20 @@ public class CoordinateConfig {
     public void setHigherTime(String higherTime) {
         this.higherTime = Long.valueOf(higherTime);
     }
+    
+    /**
+     * Write the CoordinateConfig in String format
+     * @return String representation of CoordinateConfig
+     */
+    @Override
+    public String toString() {
+        return "accountID: " + accountID + 
+                "\t deviceID: " + deviceID +
+                "\t lowerLongitude: " + lowerLongitude +
+                "\t higherLongitude: " + higherLongitude +
+                "\t lowerLatitude: " + lowerLatitude +
+                "\t higherLatitude: " + higherLatitude +
+                "\t lowerTime: " + lowerTime +
+                "\t higherTime: " + higherTime;
+    }
 }

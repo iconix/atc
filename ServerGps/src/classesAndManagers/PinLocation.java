@@ -4,6 +4,8 @@
  */
 package classesAndManagers;
 
+import staticVariables.SpecialCharacters;
+
 /**
  *
  * Unlike the Account classes and GPSCoordinate class. We allow the user with the same account
@@ -54,6 +56,32 @@ public class PinLocation {
         this.latitude = Double.valueOf(latitude);
         this.title = title;
         this.description = description;
+    }
+    
+    /**
+     * Another alternate constructor. Create a new PinLocationObject where all values are concat into
+     * one single string as shown in getPinInString
+     * @param the string which has all the PinLocation values concats
+     * @return PinLocation object
+     */
+    public PinLocation(String pinLocation) {
+    	String[] pin = pinLocation.split(SpecialCharacters.delimiter);
+    	this.accountID = pin[0];
+        this.time = Long.valueOf(pin[1]);
+        this.longitude = Double.valueOf(pin[2]);
+        this.latitude = Double.valueOf(pin[3]);
+        this.title = pin[4];
+        this.description = pin[5];
+    }
+    
+    /**
+     * Return the parsable string representation of the pinLocation
+     * @return parsable string representation of pinLocation
+     */
+    public String getPinInString() {
+    	  return accountID + SpecialCharacters.delimiter + time + SpecialCharacters.delimiter +
+                  longitude + SpecialCharacters.delimiter + latitude + SpecialCharacters.delimiter + 
+                  title + SpecialCharacters.delimiter + description;
     }
     
     /**
