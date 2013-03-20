@@ -257,11 +257,12 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                         }
                    }
                    
-                   PolylineOptions rectOptions = new PolylineOptions();
-                   rectOptions.color(Color.RED);
+                   PolylineOptions lineOptions = new PolylineOptions();
+                   lineOptions.color(Color.RED);
+                   lineOptions.width(3);
                    for (LatLng latlng : gpsCoordinates)
-                     rectOptions.add(latlng);
-                   Polyline polyline = googleMap.addPolyline(rectOptions);
+                     lineOptions.add(latlng);
+                   Polyline polyline = googleMap.addPolyline(lineOptions);
                 } 
             }
         }.execute();
