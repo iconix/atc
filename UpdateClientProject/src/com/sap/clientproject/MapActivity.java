@@ -247,12 +247,14 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                 if (result != null) {
                     String[] coordinates = result.split(SpecialCharacters.endLn);
                     ArrayList<LatLng> gpsCoordinates = new ArrayList<LatLng>();
-                    for (String coordinate : coordinates) {      
-                        GpsCoordinate gpsCoordinate = new GpsCoordinate(coordinate);
-                        double longitude = gpsCoordinate.getLongitude();
-                        double latitude = gpsCoordinate.getLatitude();
-                        LatLng latlng = new LatLng(latitude, longitude);
-                        gpsCoordinates.add(latlng);
+                    for (String coordinate : coordinates) {
+                        if (coordinateIsCorrectlyFormatted(coordinate)) {
+                            GpsCoordinate gpsCoordinate = new GpsCoordinate(coordinate);
+                            double longitude = gpsCoordinate.getLongitude();
+                            double latitude = gpsCoordinate.getLatitude();
+                            LatLng latlng = new LatLng(latitude, longitude);
+                            gpsCoordinates.add(latlng);
+                        }
                    }
                    
                    PolylineOptions rectOptions = new PolylineOptions();
@@ -263,6 +265,15 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                 } 
             }
         }.execute();
+    }
+    
+    /**
+     * check if the GpsLocation string is correctly formatted
+     * @return correct if we can split it to 5 parameters (since GpsCoordinate need 5 params)
+     */
+    private boolean coordinateIsCorrectlyFormatted(String coordinate) {
+        String[] numFields = coordinate.split(SpecialCharacters.delimiter);
+        return (numFields.length == 5);
     }
     
     /**
@@ -303,19 +314,30 @@ public class MapActivity extends FragmentActivity implements LocationListener{
             protected void onPostExecute(String result) {
                 if (result != null) {
                     String[] pinLocations = result.split(SpecialCharacters.endLn);
-                    for (String pinLocation : pinLocations) {      
-                        PinLocation pin = new PinLocation(pinLocation);
-                        String myTitle = pin.getTitle() + " @" + pin.getTime(); //title include time
-                        String myDescription = pin.getDescription();
-                        double longitude = pin.getLongitude();
-                        double latitude = pin.getLatitude();
-                        LatLng latlng = new LatLng(latitude, longitude);    
-                        addPin(myTitle, myDescription, latlng, false);
+                    for (String pinLocation : pinLocations) {    
+                        if (pinIsCorrectlyFormatted(pinLocation)) {
+                            PinLocation pin = new PinLocation(pinLocation);
+                            String myTitle = pin.getTitle() + " @" + pin.getTime(); //title include time
+                            String myDescription = pin.getDescription();
+                            double longitude = pin.getLongitude();
+                            double latitude = pin.getLatitude();
+                            LatLng latlng = new LatLng(latitude, longitude);    
+                            addPin(myTitle, myDescription, latlng, false);
+                        }
                    }
                 } 
                 displayVisitedLocationOnMap();
             }
         }.execute();
+    }
+    
+    /**
+     * check if the pinLocation string is correctly formatted
+     * @return correct if we can split it to 6 parameters (since PinLocation need 6 params)
+     */
+    private boolean pinIsCorrectlyFormatted(String pinLocation) {
+        String[] numFields = pinLocation.split(SpecialCharacters.delimiter);
+        return (numFields.length == 6);
     }
     
     /**
