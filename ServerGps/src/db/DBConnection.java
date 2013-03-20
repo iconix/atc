@@ -25,7 +25,7 @@ public class DBConnection {
 	static {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://" + MYSQL_DATABASE_SERVER + "/" + MYSQL_DATABASE_NAME;
+			String url = "jdbc:mysql://" + MYSQL_DATABASE_SERVER + "/" + MYSQL_DATABASE_NAME + "?autoReconnect=true";
 			con = DriverManager.getConnection(url, MYSQL_USERNAME, MYSQL_PASSWORD);
 		} catch (SQLException e) {
 			e.printStackTrace();
