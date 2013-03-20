@@ -1,24 +1,24 @@
 module SessionsHelper
 
-	def sign_in(user)
-    cookies.permanent[:remember_token] = user.remember_token
-    self.current_user = user
+	def sign_in(business)
+    cookies.permanent[:remember_token] = business.remember_token
+    self.current_business = business
   end
 
-	def current_user=(user)
-    @current_user = user
+	def current_business=(business)
+    @current_business = business
   end
 
-	def current_user
-    @current_user ||= User.find_by_remember_token(cookies[:remember_token])
+	def current_business
+    @current_business ||= Business.find_by_remember_token(cookies[:remember_token])
   end
 
 	def signed_in?
-    !current_user.nil?
+    !current_business.nil?
   end
 	
 	def sign_out
-    self.current_user = nil
+    self.current_business = nil
     cookies.delete(:remember_token)
   end
 end
