@@ -1,11 +1,14 @@
-<% provide(:title, @business.name) %>
-<div class="row">
+<% provide(:title, @user.name) %>
+<div class="container jumbotron row">
   <aside class="span4">
     <section>
       <h1>
-        <%= gravatar_for @business %>
-        <%= @business.name %>
+        <!-- <%= gravatar_for @user %> -->
+        <%= @user.name %>
       </h1>
+      <p class="lead">
+      	No user content.
+      </p>
     </section>
   </aside>
 </div>

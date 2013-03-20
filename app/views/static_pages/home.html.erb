@@ -1,53 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Template &middot; Bootstrap</title>
+    <title>Welcome to Around the Corner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 700px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
-
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-    </style>
-    <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <link href="/assets/bootstrap.css" media: "all" rel="stylesheet">
+    <link href="/assets/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -55,68 +19,76 @@
     <![endif]-->
 
     <!-- Fav and touch icons -->
+
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    
   </head>
 
   <body>
 
-    <div class="container-narrow">
-
-      <div class="masthead">
-        <form class="navbar-form pull-right">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
+    <!-- Header -->
+    <div class ="container masthead">
+      <div class="navbar">
+        <form class="navbar-form pull-right" method="link" action="/signin">
+          <input type="text" placeholder="Email">
+          <input type="password" placeholder="Password">
+          <button type="submit" class="btn">Sign in</button>
         </form>
-        <h3>Around the Corner</h3>
+        <h3><a href="/" style="color: #777777">Around the Corner</a></h3>
       </div>
+    </div>
+    <hr class="hr-narrow">
 
-      <hr>
-
+    <!-- Welcome -->
+    <div class="container center">
       <div class="jumbotron">
-        <img src="assets/favicon.jpg" alt="logo", width="125" height="125">
-        <!-- <h1>Around the Corner!</h1> -->
-        <p class="lead">Connect with your customers and the
-        world around you on Around the Corner.</p>
-        <%= link_to "Sign up now!", signup_path, class: "btn btn-primary" %>
+          <h1>Welcome to Around the Corner</h1>
+          <img src="/assets/logo_iphone.png" alt="logo", width="250" height="250">
+          <p class="lead">Connect with your customers and the
+          world around you on Around the Corner.</p>
+          <a href="/signup" class="btn btn-primary">Sign up now!</a>
+      </div>
+    </div>
+
+    <hr class="hr-narrow">
+
+    <!-- Messages -->
+    <div class="container center">
+      <div class="row">
+        <div class="span4">
+        <img src="/assets/deal_list.png" alt="Rails", width="350" height="350">
+          <h3>Offers & Deals</h3>
+          <p>Keep and attract new customers with personalized and targeted offers.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <img src="/assets/map.png" alt="Rails", width="350" height="350">
+          <h3>Be Discovered</h3>
+          <p>Users will be notified of your business when Around the Corner.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
+        <div class="span4">
+          <img src="/assets/specific_deal.png" alt="Rails", width="350" height="350">
+          <h3>Keep Them in the Loop</h3>
+          <p>Easily send updates, event invitations, news and reviews to your customers.</p>
+          <p><a class="btn" href="#">View details &raquo;</a></p>
+        </div>
       </div>
 
       <hr>
 
-      <div class="row-fluid marketing">
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>See what’s up with friends, family and anything you’re into.</p>
+      <!-- Footer -->
+      <footer>
+        <p class="pull-right"><a href="#">Back to top</a></p>
+        <p class="pull-left">&copy; 2013 Company, Inc. &middot; <%= link_to "About Us", about_path %> &middot; <%= link_to "Contact", contact_path %></p>
+      </footer>
+    </div>
 
-          <h4>Subheading</h4>
-          <p>See what’s up with friends, family and anything you’re into.</p>
-        </div>
 
-        <div class="span6">
-          <h4>Subheading</h4>
-          <p>See what’s up with friends, family and anything you’re into.</p>
-
-          <h4>Subheading</h4>
-          <p>See what’s up with friends, family and anything you’re into.</p>
-        </div>
-      </div>
-
-      <hr>
-
-      <div class="footer">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="https://github.com/cs210/sociallyawesomepenguins">GitHub</a></li>
-        </ul>
-        <h3 class="muted">&copy; SAPenguins 2013</h3>
-      </div>
-
-    </div> <!-- /container -->
 
     <!-- Le javascript
     ================================================== -->
@@ -134,6 +106,6 @@
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-carousel.js"></script>
     <script src="../assets/js/bootstrap-typeahead.js"></script>
-
+    <script src="../assets/js/holder/holder.js"></script>
   </body>
 </html>
