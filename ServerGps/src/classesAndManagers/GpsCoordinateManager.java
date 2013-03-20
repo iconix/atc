@@ -1,6 +1,8 @@
 package classesAndManagers;
 
 import java.sql.*;
+import java.util.ArrayList;
+
 import staticVariables.*;
 
 public class GpsCoordinateManager {
@@ -32,13 +34,35 @@ public class GpsCoordinateManager {
     }
 
     /**
-     * Write the coordinate in the GpsCoordinate in the string format separate by the given delimiter
-     * @param instance of GpsCoordinate
-     * @return string format of the coordinate
+     * Query for pins with the given PinConfig
+     * @param PinConfig instance
      */
-    public String getGpsCoordinateInStringFormat(GpsCoordinate coordinate) {
-        return coordinate.accountID + SpecialCharacters.delimiter + coordinate.deviceID + SpecialCharacters.delimiter +
-                    coordinate.time + SpecialCharacters.delimiter + coordinate.longitude + SpecialCharacters.delimiter + 
-                    coordinate.latitude + SpecialCharacters.endLn;
-    }
+     public ArrayList<GpsCoordinate> queryCoordinates(Connection connection, CoordinateConfig coordinateConfig) {
+    	 ArrayList<GpsCoordinate> gpsCoordinates = new ArrayList<GpsCoordinate>();
+    	 String query = "select * from " + TableName.coordinateDB +
+    			 " where accountID = \"" + coordinateConfig.getAccountID() +
+    			 "\" and deviceID = \"" + coordinateConfig.getDeviceID() +
+    			 "\" and time > " + coordinateConfig.getLowerTime() + 
+    			 " and time < " + coordinateConfig.getHigherTime() +
+    			 " and longitude > " + coordinateConfig.getLowerLongitude() +
+    			 " and longitude < " + coordinateConfig.getHigherLongitude() +
+    			 " and latitude > " + coordinateConfig.getLowerLatitude() +
+    			 " and longitude < " + coordinateConfig.getHigherLatitude() + 
+    			 " order by time";
+   
+    	 try {
+    		 Statement stmt = connection.createStatement();
+    		 ResultSet rs = stmt.executeQuery(query);
+    		 rs.beforeFirst();
+    		 while (rs.next()) {
+    			 GpsCoordinate gpsCoordinate = new GpsCoordinate(rs.getString("accountID"), 
+    					 rs.getString("deviceID"), rs.getLong("time"),
+    					 rs.getDouble("longitude"), rs.getDouble("latitude"));
+    			 gpsCoordinates.add(gpsCoordinate);
+    		 }
+    	 } catch (SQLException e) {
+             e.printStackTrace();
+         }
+    	 return gpsCoordinates;
+     }
 }

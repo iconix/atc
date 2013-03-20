@@ -70,14 +70,13 @@ public class PinLocationManager {
      public ArrayList<PinLocation> queryPins(Connection connection, PinConfig pinConfig) {
     	 ArrayList<PinLocation> pinLocations = new ArrayList<PinLocation>();
     	 String query = "select * from " + TableName.pinLocationDB +
-    			 " where accountID = \"" + pinConfig.accountID +
-    			 "\" and time > " + pinConfig.lowerTime + 
-    			 " and time < " + pinConfig.higherTime +
-    			 " and longitude > " + pinConfig.lowerLongitude +
-    			 " and longitude < " + pinConfig.higherLongitude +
-    			 " and latitude > " + pinConfig.lowerLatitude +
-    			 " and longitude < " + pinConfig.higherLatitude;
-    	 System.out.println(query);
+    			 " where accountID = \"" + pinConfig.getAccountID() +
+    			 "\" and time > " + pinConfig.getLowerTime() + 
+    			 " and time < " + pinConfig.getHigherTime() +
+    			 " and longitude > " + pinConfig.getLowerLongitude() +
+    			 " and longitude < " + pinConfig.getHigherLongitude() +
+    			 " and latitude > " + pinConfig.getLowerLatitude() +
+    			 " and longitude < " + pinConfig.getHigherLatitude();
     	 try {
     		 Statement stmt = connection.createStatement();
     		 ResultSet rs = stmt.executeQuery(query);

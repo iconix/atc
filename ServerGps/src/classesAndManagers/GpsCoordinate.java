@@ -54,9 +54,19 @@ public class GpsCoordinate {
 		this.accountID = fields[0];
 		this.deviceID = fields[1];
 		this.time = Long.valueOf(fields[2]);
-		this.latitude = Double.valueOf(fields[3]);
-		this.longitude = Double.valueOf(fields[4]);
+		this.longitude = Double.valueOf(fields[3]);
+		this.latitude = Double.valueOf(fields[4]);
 	}
+	
+    /**
+     * Return the parsable string representation of the GpsCoordinate
+     * @param instance of GpsCoordinate
+     * @return parsable string format of the coordinate
+     */
+    public String getGpsCoordinateInStringFormat() {
+        return accountID + SpecialCharacters.delimiter + deviceID + SpecialCharacters.delimiter +
+                    time + SpecialCharacters.delimiter + longitude + SpecialCharacters.delimiter + latitude;
+    }
 	
 	/**
 	 * Public setter. Set the accountID of the GpsCoordinate instance

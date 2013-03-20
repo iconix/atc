@@ -148,7 +148,33 @@ public class ServerServlet extends HttpServlet {
 	 * @param inherited response from doPost
 	 */
 	private void checkForGpsCoordinateOutputRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		String coordinateRequestUserID = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_ACCOUNT_ID);
+		String coordinateRequestDeviceID = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_DEVICE_ID);
+		String coordinateRequestLowerLongitude = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_LOWER_LONGITUDE);
+		String coordinateRequestHigherLongitude = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_HIGHER_LONGITUDE);
+		String coordinateRequestLowerLatitude = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_LOWER_LATITUDE);
+		String coordinateRequestHigherLatitude = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_HIGHER_LATITUDE);
+		String coordinateRequestLowerTime = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_LOWER_TIME);
+		String coordinateRequestHigherTime = (String) request.getParameter(RequestParameters.COORDINATE_REQUEST_HIGHER_TIME);
+		if (coordinateRequestUserID != null && coordinateRequestLowerLongitude != null && coordinateRequestHigherLongitude != null &&
+			coordinateRequestLowerLatitude != null && coordinateRequestHigherLatitude != null && coordinateRequestLowerTime != null &&
+			coordinateRequestHigherTime != null) {
+			CoordinateConfig coordinateConfig = new CoordinateConfig(coordinateRequestUserID, coordinateRequestDeviceID, 
+					coordinateRequestLowerLongitude, coordinateRequestHigherLongitude,
+					coordinateRequestLowerLatitude, coordinateRequestHigherLatitude, 
+					coordinateRequestLowerTime, coordinateRequestHigherTime);
+
+			ArrayList<GpsCoordinate> gpsCoordinates = gpsCoordinateManager.queryCoordinates(connection, coordinateConfig);
+			if (gpsCoordinates == null) return;
+			
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			//parse the pin and send back to the client with correct format
+			for (GpsCoordinate gpsCoordinate : gpsCoordinates) {
+
+				out.println(gpsCoordinate.getGpsCoordinateInStringFormat());
+			}
+		}
 		
 	}
 	
@@ -168,22 +194,17 @@ public class ServerServlet extends HttpServlet {
 		if (pinRequestUserID != null && pinRequestLowerLongitude != null && pinRequestHigherLongitude != null &&
 			pinRequestLowerLatitude != null && pinRequestHigherLatitude != null && pinRequestLowerTime != null &&
 			pinRequestHigherTime != null) {
-			///////
-			System.out.println("pin pull request");
 			
 			PinConfig pinConfig = new PinConfig(pinRequestUserID, pinRequestLowerLongitude, pinRequestHigherLongitude,
 					pinRequestLowerLatitude, pinRequestHigherLatitude, pinRequestLowerTime, pinRequestHigherTime);
-			////////
-			System.out.println(pinConfig.toString());
+
 			ArrayList<PinLocation> pinLocations = pinLocationManager.queryPins(connection, pinConfig);
 			if (pinLocations == null) return;
 			
 			response.setContentType("text/plain");
 			PrintWriter out = response.getWriter();
-			//parse the pin and send back to the client with correct format
-			for (PinLocation pinLocation : pinLocations) {
+			for (PinLocation pinLocation : pinLocations) 
 				out.println(pinLocation.getPinInString());
-			}
 		}
 		
 	}
@@ -193,10 +214,6 @@ public class ServerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
-		System.out.println("request obtained");
-		
-		//if (connection.isClosed()) connection.
-		
 		checkForLoginRequest(request, response);
 		checkForRegisterRequest(request, response);
 		
