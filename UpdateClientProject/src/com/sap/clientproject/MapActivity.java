@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import com.google.android.gms.maps.*;
 import android.location.*;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import classesAndManagers.*;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -188,11 +192,82 @@ public class MapActivity extends FragmentActivity implements LocationListener{
         PinConfig pinConfig = new PinConfig(getAccountID(), "-180", "180", "-90", "90", "0", "20200101000000");
         
         displayPinsFromDB(pinConfig);
+        
+    }
+    
+    /**
+     * Display all the visited location stored in the DB of a given user to
+     * the map. Connect the locations by line according to the time in which
+     * the GPS was taken
+     */
+    private void displayVisitedLocationOnMap() {
+        //TODO grab the config parameter somewhere
+        CoordinateConfig coordinateConfig = new CoordinateConfig(getAccountID(), 
+                getDeviceID(), "-180", "180", "-90", "90", "0", "20200101000000");
+        displayVisitedLocationFromDB(coordinateConfig);
+    }
+    
+    /**
+     * Send the request to the database to obtain the list of coordinate obtained
+     * according to a given config. The response is written in string format
+     * @param CoordinateConfig object
+     */
+    public void displayVisitedLocationFromDB(CoordinateConfig coordinateConfig) {
+        final CoordinateConfig myCoordinateConfig = coordinateConfig;
+         new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                try {
+                    ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_ACCOUNT_ID,
+                            myCoordinateConfig.getAccountID()));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_DEVICE_ID,
+                            myCoordinateConfig.getDeviceID()));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_LOWER_LONGITUDE, 
+                            String.valueOf(myCoordinateConfig.getLowerLongitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_HIGHER_LONGITUDE, 
+                            String.valueOf(myCoordinateConfig.getHigherLongitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_LOWER_LATITUDE, 
+                            String.valueOf(myCoordinateConfig.getLowerLatitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_HIGHER_LATITUDE, 
+                            String.valueOf(myCoordinateConfig.getHigherLatitude())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_LOWER_TIME, 
+                            String.valueOf(myCoordinateConfig.getLowerTime())));
+                    postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_REQUEST_HIGHER_TIME, 
+                            String.valueOf(myCoordinateConfig.getHigherTime())));
+                    return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(String result) {
+                if (result != null) {
+                    String[] coordinates = result.split(SpecialCharacters.endLn);
+                    ArrayList<LatLng> gpsCoordinates = new ArrayList<LatLng>();
+                    for (String coordinate : coordinates) {      
+                        GpsCoordinate gpsCoordinate = new GpsCoordinate(coordinate);
+                        double longitude = gpsCoordinate.getLongitude();
+                        double latitude = gpsCoordinate.getLatitude();
+                        LatLng latlng = new LatLng(latitude, longitude);
+                        gpsCoordinates.add(latlng);
+                   }
+                   
+                   PolylineOptions rectOptions = new PolylineOptions();
+                   rectOptions.color(Color.RED);
+                   for (LatLng latlng : gpsCoordinates)
+                     rectOptions.add(latlng);
+                   Polyline polyline = googleMap.addPolyline(rectOptions);
+                } 
+            }
+        }.execute();
     }
     
     /**
      * Send the request to the database to obtain the pin according to the given config
-     * The response is written in string format is is not parsed. 
+     * The response is written in string format which need to be parsed. 
      * Parse it and display on map
      * @param pinConfig
      */
@@ -234,12 +309,22 @@ public class MapActivity extends FragmentActivity implements LocationListener{
                         String myDescription = pin.getDescription();
                         double longitude = pin.getLongitude();
                         double latitude = pin.getLatitude();
-                        LatLng latlng = new LatLng(latitude, longitude);
+                        LatLng latlng = new LatLng(latitude, longitude);    
                         addPin(myTitle, myDescription, latlng, false);
                    }
                 } 
+                displayVisitedLocationOnMap();
             }
         }.execute();
+    }
+    
+    /**
+     * Get the device unique ID
+     * @return the device ID
+     */
+    private String getDeviceID() {
+    	return Settings.Secure.getString(getBaseContext().getContentResolver(),
+            Settings.Secure.ANDROID_ID); 
     }
 
     

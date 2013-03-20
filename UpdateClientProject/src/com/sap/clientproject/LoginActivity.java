@@ -134,5 +134,5 @@ public class LoginActivity extends Activity {
     private String getDeviceID() {
     	return Secure.getString(getBaseContext().getContentResolver(),
             Secure.ANDROID_ID); 
-}
+    }
 }

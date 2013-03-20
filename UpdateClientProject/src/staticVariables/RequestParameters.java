@@ -40,7 +40,7 @@ public class RequestParameters {
     
     //Request of the coordinate from DB
     public static final String COORDINATE_REQUEST_ACCOUNT_ID = "coordinateRequestAccountID";
-    public static final String COORDINATE_REQUEST_DEVICE_ID = "coordinateRequestAccountID";
+    public static final String COORDINATE_REQUEST_DEVICE_ID = "coordinateRequestDeviceID";
     public static final String COORDINATE_REQUEST_LOWER_LONGITUDE = "coordinateRequestLowerLongitude";
     public static final String COORDINATE_REQUEST_HIGHER_LONGITUDE = "coordinateRequestHigherLongitude";
     public static final String COORDINATE_REQUEST_LOWER_LATITUDE = "coordinateRequestLowerLatitude";
