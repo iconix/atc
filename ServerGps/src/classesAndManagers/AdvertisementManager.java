@@ -35,6 +35,36 @@ public class AdvertisementManager {
 		}
 	}
 	
+	/**
+	 * Find advertisements given the AdvertisementConfig parameters
+	 * @param AdvertisementConfig
+	 */
+	public ArrayList<Advertisement> queryAdvertisement(Connection connection, AdvertisementConfig advertisementConfig) {
+		ArrayList<Advertisement> adList = new ArrayList<Advertisement>();
+		String query = "select * from " + TableName.dealsDB +
+				" where longitude >= " + advertisementConfig.getLowerLongitude() +
+				" and longitude <= " + advertisementConfig.getHigherLongitude() +
+				" and latitude >= " + advertisementConfig.getLowerLatitude() +
+				" and latitude <= " + advertisementConfig.getHigherLatitude() +
+				" time >= " + advertisementConfig.getStartTime() +
+				" time <= " + advertisementConfig.getEndTime();
+		try {
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(query);
+			resultSet.beforeFirst();
+			while (resultSet.next()) {
+				Advertisement advertisement = new Advertisement(resultSet.getInt("businessId"), resultSet.getDouble("longitude"),
+						resultSet.getDouble("latitude"), resultSet.getLong("startDate"), resultSet.getLong("endDate"), resultSet.getString("title"),
+						resultSet.getString("tags"), resultSet.getLong("creationTime"), resultSet.getLong("updateTime"));
+				adList.add(advertisement);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return adList;
+		
+	}
+	
 	
 	
 }
