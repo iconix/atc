@@ -17,7 +17,16 @@ public class AdvertisementManager {
 	 * @param advertisement instance of Advertisement
 	 */
 	public void addNewAdvertisement(Connection connection, Advertisement advertisement) {
-		String query = "";
+        String query = "INSERT INTO " + TableName.dealsDB + 
+                " VALUES(" + advertisement.businessId + ", " +
+                advertisement.longitude + ", " +
+                advertisement.latitude + ", " +
+                advertisement.startDate + ", " +
+                advertisement.endDate + ", \"" +
+                advertisement.title + "\", \"" +
+                advertisement.tags + "\", " +
+                advertisement.creationTime + ", " +
+                advertisement.updateTime + ")";
 		try {
 			Statement s = connection.createStatement();
 			s.executeUpdate(query);
@@ -25,5 +34,7 @@ public class AdvertisementManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

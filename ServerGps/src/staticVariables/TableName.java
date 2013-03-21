@@ -12,4 +12,5 @@ public class TableName {
     public static final String coordinateDB = "GPSCoordinate";
     public static final String clientAccountDB = "ClientAccounts";
     public static final String pinLocationDB = "PinLocations";
+    public static final String dealsDB = "deals";
 }
