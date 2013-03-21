@@ -53,9 +53,9 @@ public class AdvertisementManager {
 			ResultSet resultSet = statement.executeQuery(query);
 			resultSet.beforeFirst();
 			while (resultSet.next()) {
-				Advertisement advertisement = new Advertisement(resultSet.getInt("businessId"), resultSet.getDouble("longitude"),
-						resultSet.getDouble("latitude"), resultSet.getLong("startDate"), resultSet.getLong("endDate"), resultSet.getString("title"),
-						resultSet.getString("tags"), resultSet.getLong("creationTime"), resultSet.getLong("updateTime"));
+				Advertisement advertisement = new Advertisement(resultSet.getInt("business_id"), resultSet.getDouble("lng"),
+						resultSet.getDouble("lat"), resultSet.getLong("start_date"), resultSet.getLong("end_date"), resultSet.getString("title"),
+						resultSet.getString("tags"), resultSet.getLong("created_at"), resultSet.getLong("updated_at"));
 				adList.add(advertisement);
 			}
 		} catch (SQLException e) {
