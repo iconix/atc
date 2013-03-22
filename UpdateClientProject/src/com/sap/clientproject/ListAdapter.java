@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 import classesAndManagers.Advertisement;
 
 import android.app.Activity;
