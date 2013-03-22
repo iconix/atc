@@ -48,6 +48,10 @@
         <activity
             android:name=".AndroidMenusActivity"
             android:label="Menu"></activity>
+        
+        <activity
+            android:name=".UserSettingActivity"
+            android:label="Settings"></activity>
             	
     </application>
 </manifest>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!--  Set id, icon, and title for each menu item -->
+
+	<item android:id="@+id/menu_setting"
+	      android:icon="@drawable/icon_settings"
+	      android:title="Settings" />
+	<item android:id="@+id/menu_timeline"
+	      android:icon="@drawable/ic_launcher"
+	      android:title="Default Timeline"/>
+	<item android:id="@+id/menu_radius"
+	      android:icon="@drawable/ic_launcher"
+	      android:title="Default Radius"/>
+	<item android:id="@+id/menu_timezone"
+	      android:icon="@drawable/ic_launcher"
+	      android:title="Time Zone"/>
+	<item android:id="@+id/menu_distance"
+	      android:icon="@drawable/ic_launcher"
+	      android:title="Min Distance"/>
+	<item android:id="@+id/menu_time"
+	      android:icon="@drawable/ic_launcher"
+	      android:title="Min Time"/>
+	
+</menu>

@@ -21,7 +21,7 @@ import android.widget.ListView;
 public class AdListActivity extends Activity {
     
     ListView list;
-    ListAdapter adapter;
+    AdListAdapter adapter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class AdListActivity extends Activity {
     				for (String adString : adStringList) {
     					adList.add(adString);
     				}
-    				adapter = new ListAdapter(getApplicationContext(), adList);
+    				adapter = new AdListAdapter(getApplicationContext(), adList);
     				list = (ListView)findViewById(R.id.list_of_ads);
     				list.setAdapter(adapter);
     			}

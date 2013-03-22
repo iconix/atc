@@ -54,9 +54,9 @@ public class AdTabActivity extends TabActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case R.id.menu_setting:
-				//Intent i = new Intent(this, UserSettingActivity.class);
-				//startActivityForResult(i, 1);
-				Toast.makeText(AdTabActivity.this, "Settings is Selected", Toast.LENGTH_SHORT).show();
+				Intent i = new Intent(getApplicationContext(), UserSettingActivity.class);
+				startActivityForResult(i, 1);
+				//Toast.makeText(AdTabActivity.this, "Settings is Selected", Toast.LENGTH_SHORT).show();
 				return true;
 			case R.id.menu_timeline:
 				Toast.makeText(AdTabActivity.this, "Timeline is Selected", Toast.LENGTH_SHORT).show();

@@ -25,12 +25,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class ListAdapter extends BaseAdapter {
+public class AdListAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<String> data;
 	private static LayoutInflater inflater = null;
 	
-	public ListAdapter(Context cntxt, ArrayList<String> d) {
+	public AdListAdapter(Context cntxt, ArrayList<String> d) {
 		context = cntxt;
 		data = d;
 		inflater = LayoutInflater.from(context);

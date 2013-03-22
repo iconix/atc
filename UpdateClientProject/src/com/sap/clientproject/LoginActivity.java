@@ -12,10 +12,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import staticVariables.*;
  
@@ -135,4 +139,5 @@ public class LoginActivity extends Activity {
     	return Secure.getString(getBaseContext().getContentResolver(),
             Secure.ANDROID_ID); 
     }
+   
 }

@@ -8,6 +8,14 @@
 package com.sap.clientproject;
 
 public final class R {
+    public static final class array {
+        public static final int minDistance=0x7f060004;
+        public static final int minDistanceValues=0x7f060005;
+        public static final int minTime=0x7f060002;
+        public static final int minTimeValues=0x7f060003;
+        public static final int radius=0x7f060000;
+        public static final int radiusValues=0x7f060001;
+    }
     public static final class attr {
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
@@ -155,32 +163,33 @@ containing a value of this type.
         public static final int icon_nearby_1=0x7f020017;
         public static final int icon_profile=0x7f020018;
         public static final int icon_profile_1=0x7f020019;
-        public static final int ikes=0x7f02001a;
-        public static final int ikes_1=0x7f02001b;
-        public static final int image_bg=0x7f02001c;
-        public static final int image_bg_1=0x7f02001d;
-        public static final int list_selector=0x7f02001e;
-        public static final int list_selector_1=0x7f02001f;
-        public static final int location_icon=0x7f020020;
-        public static final int logo=0x7f020021;
-        public static final int logo_1=0x7f020022;
-        public static final int logo_small=0x7f020023;
-        public static final int map=0x7f020024;
-        public static final int map_1=0x7f020025;
-        public static final int minh=0x7f020026;
-        public static final int mostvisitedcompany_bg=0x7f020027;
-        public static final int nearby_icon=0x7f020028;
-        public static final int profile_image_bg=0x7f020029;
-        public static final int recent_icon=0x7f02002a;
-        public static final int sandwich=0x7f02002b;
-        public static final int sandwich_1=0x7f02002c;
-        public static final int sap_logo=0x7f02002d;
-        public static final int tamarine=0x7f02002e;
-        public static final int tamarine_1=0x7f02002f;
-        public static final int text_container=0x7f020030;
-        public static final int text_container_1=0x7f020031;
-        public static final int userprofile=0x7f020032;
-        public static final int userprofile_icon=0x7f020033;
+        public static final int icon_settings=0x7f02001a;
+        public static final int ikes=0x7f02001b;
+        public static final int ikes_1=0x7f02001c;
+        public static final int image_bg=0x7f02001d;
+        public static final int image_bg_1=0x7f02001e;
+        public static final int list_selector=0x7f02001f;
+        public static final int list_selector_1=0x7f020020;
+        public static final int location_icon=0x7f020021;
+        public static final int logo=0x7f020022;
+        public static final int logo_1=0x7f020023;
+        public static final int logo_small=0x7f020024;
+        public static final int map=0x7f020025;
+        public static final int map_1=0x7f020026;
+        public static final int minh=0x7f020027;
+        public static final int mostvisitedcompany_bg=0x7f020028;
+        public static final int nearby_icon=0x7f020029;
+        public static final int profile_image_bg=0x7f02002a;
+        public static final int recent_icon=0x7f02002b;
+        public static final int sandwich=0x7f02002c;
+        public static final int sandwich_1=0x7f02002d;
+        public static final int sap_logo=0x7f02002e;
+        public static final int tamarine=0x7f02002f;
+        public static final int tamarine_1=0x7f020030;
+        public static final int text_container=0x7f020031;
+        public static final int text_container_1=0x7f020032;
+        public static final int userprofile=0x7f020033;
+        public static final int userprofile_icon=0x7f020034;
     }
     public static final class id {
         public static final int adDescriptionId=0x7f040019;
@@ -194,7 +203,7 @@ containing a value of this type.
         public static final int adTitleId=0x7f040018;
         public static final int addressId=0x7f040013;
         public static final int btnLogin=0x7f040022;
-        public static final int btnRegister=0x7f040029;
+        public static final int btnRegister=0x7f04002f;
         public static final int companyDescriptionId=0x7f04001b;
         public static final int companyDistanceId=0x7f040011;
         public static final int companyImageId=0x7f04000f;
@@ -207,19 +216,25 @@ containing a value of this type.
         public static final int hoursId=0x7f040014;
         public static final int hybrid=0x7f040004;
         public static final int inputPin=0x7f04001c;
-        public static final int link_to_login=0x7f04002a;
+        public static final int link_to_login=0x7f040030;
         public static final int link_to_register=0x7f040023;
         public static final int list_of_ads=0x7f040008;
         public static final int locationIcon=0x7f040006;
         public static final int loginErrorMessage=0x7f04001f;
         public static final int loginUserID=0x7f040020;
         public static final int loginUserPassword=0x7f040021;
+        public static final int menu_distance=0x7f040029;
+        public static final int menu_radius=0x7f040027;
+        public static final int menu_setting=0x7f040025;
+        public static final int menu_time=0x7f04002a;
+        public static final int menu_timeline=0x7f040026;
+        public static final int menu_timezone=0x7f040028;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040001;
-        public static final int reg_email=0x7f040027;
-        public static final int reg_name=0x7f040026;
-        public static final int reg_password=0x7f040028;
-        public static final int registerErrorMessage=0x7f040025;
+        public static final int reg_email=0x7f04002d;
+        public static final int reg_name=0x7f04002c;
+        public static final int reg_password=0x7f04002e;
+        public static final int registerErrorMessage=0x7f04002b;
         public static final int satellite=0x7f040002;
         public static final int singlemap=0x7f040024;
         public static final int splashscreen=0x7f040005;
@@ -237,8 +252,11 @@ containing a value of this type.
         public static final int inputpin=0x7f030006;
         public static final int login=0x7f030007;
         public static final int map=0x7f030008;
-        public static final int register=0x7f030009;
-        public static final int single_ad=0x7f03000a;
+        public static final int option_menu=0x7f030009;
+        public static final int register=0x7f03000a;
+        public static final int settings=0x7f03000b;
+        public static final int single_ad=0x7f03000c;
+        public static final int usersettings=0x7f03000d;
     }
     public static final class string {
         public static final int app_name=0x7f050011;

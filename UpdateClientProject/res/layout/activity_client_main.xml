@@ -13,8 +13,6 @@
         android:src="@drawable/sap_logo"
         android:layout_gravity="center"/>
 
-    
-    
     <ImageView android:id="@+id/locationIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,9 +47,6 @@
         android:textColor="#000000"
         android:textSize="20dip"
         android:text="Deals"/>
-
-
-               
 
     <!--  Include Footer -->
     <include layout="@layout/dashboard_footer"/>
