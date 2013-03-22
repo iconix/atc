@@ -1,25 +1,36 @@
 package com.sap.clientproject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 
 import classesAndManagers.Advertisement;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 public class ListAdapter extends BaseAdapter {
 	private Activity activity;
-	private ArrayList<Advertisement> data;
+	private ArrayList<String> data;
 	private static LayoutInflater inflater = null;
 	
-	public ListAdapter(Activity a, ArrayList<Advertisement> d) {
+	public ListAdapter(Activity a, ArrayList<String> d) {
 		activity = a;
 		data = d;
 		inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -42,12 +53,43 @@ public class ListAdapter extends BaseAdapter {
 		if (convertView == null)
 			rowView = inflater.inflate(R.layout.adlist, null);
 		
+		TextView businessName = (TextView)rowView.findViewById(R.id.companyNameId);
+		TextView adTitle = (TextView)rowView.findViewById(R.id.adTitleId);
+		TextView distanceTitle = (TextView)rowView.findViewById(R.id.adListDistanceId);
+		ImageView adImage = (ImageView)rowView.findViewById(R.id.adImageId);
+		adImage.setImageResource(R.drawable.minh);
+
 		
+		final String adString = data.get(position);
+		Advertisement ad = new Advertisement(adString);
+
+		final double distance = ad.getDistance(0, 0); //Need to grab GPS location
 		
 		// Setting values
+		businessName.setText(ad.getBusinessName());
+		adTitle.setText(ad.getTitle());
+		distanceTitle.setText(String.valueOf(distance));
+
+		try {
+			  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(ad.getImageUrl()).getContent());
+			  adImage.setImageBitmap(bitmap); 
+		} catch (MalformedURLException e) {
+			  e.printStackTrace();
+		} catch (IOException e) {
+			  e.printStackTrace();
+		} 
 		
-		
+		rowView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent i = new Intent(activity.getApplicationContext(), AdDescriptionActivity.class);
+				i.putExtra("advertisementString", adString);
+				i.putExtra("distance", String.valueOf(distance));
+				activity.getApplicationContext().startActivity(i);
+			}
+		});		
 		return rowView;
 		
 	}
+	
+
 }

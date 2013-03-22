@@ -4,6 +4,7 @@ import staticVariables.SpecialCharacters;
 
 public class Advertisement {
 	protected int businessId;
+	protected String businessName;
 	protected double longitude;
 	protected double latitude;
 	protected long startDate;
@@ -12,11 +13,13 @@ public class Advertisement {
 	protected String tags;
 	protected long creationTime;
 	protected long updateTime;
+	protected String imageUrl;
 	
 	/**
 	 * Class constructor
 	 * Create a new Advertisement
 	 * @param business Id
+	 * @param business name
 	 * @param longitude
 	 * @param latitude
 	 * @param the start date of the deal 
@@ -25,9 +28,11 @@ public class Advertisement {
 	 * @param the description for the deal
 	 * @param the time the deal was created
 	 * @param the time the deal was last updated
+	 * @param url to image
 	 */
-	public Advertisement(int businessId, double longitude, double latitude, long startDate, long endDate, String title, String tags, long creationTime, long updateTime) {
+	public Advertisement(int businessId, String businessName, double longitude, double latitude, long startDate, long endDate, String title, String tags, long creationTime, long updateTime, String imageUrl) {
 		this.businessId = businessId;
+		this.businessName = businessName;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.startDate = startDate;
@@ -36,12 +41,14 @@ public class Advertisement {
 		this.tags = tags;
 		this.creationTime = creationTime;
 		this.updateTime = updateTime;
+		this.imageUrl = imageUrl;
 	}
 	
 	/**
 	 * Class constructor
 	 * Create a new Advertisement
 	 * @param business Id
+	 * @param business name
 	 * @param longitude
 	 * @param latitude
 	 * @param the start date of the deal (given as String)
@@ -50,9 +57,11 @@ public class Advertisement {
 	 * @param the description for the deal
 	 * @param the time the deal was created (given as String)
 	 * @param the time the deal was last updated (given as String)
+	 * @param url to image
 	 */
-	public Advertisement(int businessId, double longitude, double latitude, String startDate, String endDate, String title, String tags, String creationTime, String updateTime) {
+	public Advertisement(int businessId, String businessName, double longitude, double latitude, String startDate, String endDate, String title, String tags, String creationTime, String updateTime, String imageUrl) {
 		this.businessId = businessId;
+		this.businessName = businessName;
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.startDate = Long.valueOf(startDate);
@@ -61,12 +70,14 @@ public class Advertisement {
 		this.tags = tags;
 		this.creationTime = Long.valueOf(creationTime);
 		this.updateTime = Long.valueOf(updateTime);
+		this.imageUrl = imageUrl;
 	}
 	
 	/**
 	 * Class constructor
 	 * Create a new Advertisement
 	 * @param business Id
+	 * @param businss name
 	 * @param longitude (given as String)
 	 * @param latitude (given as String)
 	 * @param the start date of the deal 
@@ -74,10 +85,12 @@ public class Advertisement {
 	 * @param the name of the deal
 	 * @param the description for the deal
 	 * @param the time the deal was created 
-	 * @param the time the deal was last updated 
+	 * @param the time the deal was last updated
+	 * @param url to image
 	 */
-	public Advertisement(int businessId, String longitude, String latitude, long startDate, long endDate, String title, String tags, long creationTime, long updateTime) {
+	public Advertisement(int businessId, String businessName, String longitude, String latitude, long startDate, long endDate, String title, String tags, long creationTime, long updateTime, String imageUrl) {
 		this.businessId = businessId;
+		this.businessName = businessName;
 		this.longitude = Double.valueOf(longitude);
 		this.latitude = Double.valueOf(latitude);
 		this.startDate = startDate;
@@ -86,12 +99,14 @@ public class Advertisement {
 		this.tags = tags;
 		this.creationTime = creationTime;
 		this.updateTime = updateTime;
+		this.imageUrl = imageUrl;
 	}
 
 	/**
 	 * Class constructor
 	 * Create a new Advertisement
 	 * @param business Id
+	 * @param business name
 	 * @param longitude (given as String)
 	 * @param latitude (given as String)
 	 * @param the start date of the deal (given as String)
@@ -100,8 +115,9 @@ public class Advertisement {
 	 * @param the description for the deal
 	 * @param the time the deal was created (given as String)
 	 * @param the time the deal was last updated (given as String)
+	 * @param url to image
 	 */
-	public Advertisement(int businessId, String longitude, String latitude, String startDate, String endDate, String title, String tags, String creationTime, String updateTime) {
+	public Advertisement(int businessId, String businessName, String longitude, String latitude, String startDate, String endDate, String title, String tags, String creationTime, String updateTime, String imageUrl) {
 		this.businessId = businessId;
 		this.longitude = Double.valueOf(longitude);
 		this.latitude = Double.valueOf(latitude);
@@ -111,6 +127,7 @@ public class Advertisement {
 		this.tags = tags;
 		this.creationTime = Long.valueOf(creationTime);
 		this.updateTime = Long.valueOf(updateTime);
+		this.imageUrl = imageUrl;
 	}
 	
 	/**
@@ -121,25 +138,28 @@ public class Advertisement {
 	public Advertisement(String ad) {
 		String[] array = ad.split(SpecialCharacters.delimiter);
 		this.businessId = Integer.valueOf(array[0]);
-		this.longitude = Double.valueOf(array[1]);
-		this.latitude = Double.valueOf(array[2]);
-		this.startDate = Long.valueOf(array[3]);
-		this.endDate = Long.valueOf(array[4]);
-		this.title = array[5];
-		this.tags = array[6];
-		this.creationTime = Long.valueOf(creationTime);
-		this.updateTime = Long.valueOf(updateTime);
+		this.businessName = array[1];
+		this.longitude = Double.valueOf(array[2]);
+		this.latitude = Double.valueOf(array[3]);
+		this.startDate = Long.valueOf(array[4]);
+		this.endDate = Long.valueOf(array[5]);
+		this.title = array[6];
+		this.tags = array[7];
+		this.creationTime = Long.valueOf(array[8]);
+		this.updateTime = Long.valueOf(array[9]);
+		this.imageUrl = array[10];
+		
 	}
-	
+		
 	/**
 	 * Return string representation of Advertisement
 	 * @param instance of Advertisement
 	 * @return string form of Advertisement
 	 */
 	public String getAdvertismentInStringFormat() {
-		return businessId + SpecialCharacters.delimiter + longitude + SpecialCharacters.delimiter + latitude + SpecialCharacters.delimiter +
-			    startDate + SpecialCharacters.delimiter + endDate + SpecialCharacters.delimiter + title + SpecialCharacters.delimiter +
-				     tags + SpecialCharacters.delimiter + creationTime + SpecialCharacters.delimiter + updateTime;
+		return businessId + SpecialCharacters.delimiter + businessName + SpecialCharacters.delimiter + longitude + SpecialCharacters.delimiter + latitude + SpecialCharacters.delimiter +
+			    startDate + SpecialCharacters.delimiter + endDate + SpecialCharacters.delimiter + title + SpecialCharacters.delimiter + tags + SpecialCharacters.delimiter + 
+			    creationTime + SpecialCharacters.delimiter + updateTime + SpecialCharacters.delimiter + imageUrl;
 		
 	}
 	
@@ -157,6 +177,22 @@ public class Advertisement {
 	 */
 	public int getBusinessId() {
 		return businessId;
+	}
+	
+	/**
+	 * Public Setter - sets the businessName
+	 * @param the business name
+	 */
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+	
+	/**
+	 * Public Getter - sets the businessName
+	 * @preturn the business name
+	 */
+	public String getBusinessName() {
+		return businessName;
 	}
 	
 	/** 
@@ -333,6 +369,43 @@ public class Advertisement {
 	 */
 	public long getUpdateTime() {
 		return updateTime;
+	}
+	
+	/**
+	 * Public Setter - sets the image url
+	 * @param the image url
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	/**
+	 * Public Getter - gets the image url
+	 * @param the image url
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	
+	public double getDistance(double destLongitude, double destLatitude) {
+		double r = 3959; //Radius of earth is 3,959 miles
+		double conversion = 69; // 69 miles for each degree of longitude or latitude
+		double delta = 0.0001;
+		if (Math.abs(latitude - destLatitude) < delta) {
+			return Math.abs(longitude - destLongitude)*conversion;
+		} else if (Math.abs(longitude - destLongitude) < delta) {
+			return Math.abs(latitude - destLatitude)*conversion;
+		} else {
+			double dLat = Math.toRadians(destLatitude - latitude);
+			double dLong = Math.toRadians(destLongitude - longitude);
+			double sindLat = Math.sin(dLat/2);
+			double sindLong = Math.sin(dLong/2);
+			double a = Math.pow(sindLat, 2);
+			double b = Math.cos(latitude)*Math.cos(destLatitude)*Math.pow(sindLong, 2);
+			double distance = 2*r*Math.asin(Math.pow(a+b,0.5));
+			return distance;
+		}
+
 	}
 }
 	

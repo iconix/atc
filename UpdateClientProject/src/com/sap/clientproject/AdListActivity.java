@@ -33,7 +33,7 @@ public class AdListActivity extends Activity {
      * 
      */
     public void displayAdvertisementsFromDB(AdvertisementConfig adConfig) {
-    	/*
+    	
     	final AdvertisementConfig myAdConfig = adConfig;
     	new AsyncTask<Void, Void, String>() {
     		@Override
@@ -62,12 +62,14 @@ public class AdListActivity extends Activity {
     		@Override
     		protected void onPostExecute(String result) {
     			if (result != null) {
-
     				
+    					adapter = new ListAdapter(adList);
+    					list = (ListView)findViewById(R.id.list);
+    					list.setAdapter(adapter);
     			}
     		}
     	}.execute();
-    	*/
+    	
     		
     }
   
