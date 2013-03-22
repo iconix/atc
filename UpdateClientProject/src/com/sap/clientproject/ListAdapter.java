@@ -3,6 +3,8 @@ package com.sap.clientproject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import classesAndManagers.Advertisement;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,10 +16,10 @@ import android.widget.TextView;
 
 public class ListAdapter extends BaseAdapter {
 	private Activity activity;
-	private ArrayList<HashMap<String, String>> data;
+	private ArrayList<Advertisement> data;
 	private static LayoutInflater inflater = null;
 	
-	public ListAdapter(Activity a, ArrayList<HashMap<String, String>> d) {
+	public ListAdapter(Activity a, ArrayList<Advertisement> d) {
 		activity = a;
 		data = d;
 		inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
