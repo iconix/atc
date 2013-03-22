@@ -15,7 +15,6 @@ public class RequestParameters {
     public static final String LOGIN_ACCOUNT_PASSWORD = "loginAccountPassword";
     public static final String LOGIN_DEVICE_ID = "loginDeviceID";
     
-    
     //input request for register
     public static final String REGISTER_ACCOUNT_ID = "registerAccountID";
     public static final String REGISTER_ACCOUNT_PASSWORD = "registerAccountPassword";
@@ -37,7 +36,6 @@ public class RequestParameters {
     public static final String PIN_INPUT_TITLE = "pinInputTitle";
     public static final String PIN_INPUT_DESCRIPTION = "pinInputDescription";
     
-    
     //Request of the coordinate from DB
     public static final String COORDINATE_REQUEST_ACCOUNT_ID = "coordinateRequestAccountID";
     public static final String COORDINATE_REQUEST_DEVICE_ID = "coordinateRequestDeviceID";
@@ -48,7 +46,6 @@ public class RequestParameters {
     public static final String COORDINATE_REQUEST_LOWER_TIME = "coordinateRequestLowerTime";
     public static final String COORDINATE_REQUEST_HIGHER_TIME = "coordinateRequestHigherTime";
     
-    
     //Request of the pin from DB
     public static final String PIN_REQUEST_ACCOUNT_ID = "pinRequestAccountID";
     public static final String PIN_REQUEST_LOWER_LONGITUDE = "pinRequestLowerLongitude";
@@ -57,5 +54,13 @@ public class RequestParameters {
     public static final String PIN_REQUEST_HIGHER_LATITUDE = "pinRequestHigherLatitude";
     public static final String PIN_REQUEST_LOWER_TIME = "pinRequestLowerTime";
     public static final String PIN_REQUEST_HIGHER_TIME = "pinRequestHigherTime";
+    
+    //Request of the advertisement from DB
+    public static final String ADVERTISEMENT_REQUEST_LOWER_LONGITUDE = "advertisementRequestLowerLongitude";
+    public static final String ADVERTISEMENT_REQUEST_HIGHER_LONGITUDE = "advertisementRequestHigherLongtidue";
+    public static final String ADVERTISEMENT_REQUEST_LOWER_LATITUDE = "advertisementRequestLowerLatitude";
+    public static final String ADVERTISEMENT_REQUEST_HIGHER_LATITUDE = "advertisementRequestHigherLatitude";
+    public static final String ADVERTISEMENT_REQUEST_START_TIME = "advertisementRequestStartTime";
+    public static final String ADVERTISEMENT_REQUEST_END_TIME = "advertisementRequestEndTime";
     
 }
