@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,14 +26,14 @@ import android.widget.TextView;
 
 
 public class ListAdapter extends BaseAdapter {
-	private Activity activity;
+	private Context context;
 	private ArrayList<String> data;
 	private static LayoutInflater inflater = null;
 	
-	public ListAdapter(Activity a, ArrayList<String> d) {
-		activity = a;
+	public ListAdapter(Context cntxt, ArrayList<String> d) {
+		context = cntxt;
 		data = d;
-		inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = LayoutInflater.from(context);
 	}
 	
 	public int getCount() {
@@ -80,10 +81,10 @@ public class ListAdapter extends BaseAdapter {
 		
 		rowView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				Intent i = new Intent(activity.getApplicationContext(), AdDescriptionActivity.class);
+				Intent i = new Intent(context, AdDescriptionActivity.class);
 				i.putExtra("advertisementString", adString);
 				i.putExtra("distance", String.valueOf(distance));
-				activity.getApplicationContext().startActivity(i);
+				context.startActivity(i);
 			}
 		});		
 		return rowView;

@@ -22,6 +22,7 @@ public class AdListActivity extends Activity {
     
     ListView list;
     ListAdapter adapter;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -61,11 +62,16 @@ public class AdListActivity extends Activity {
     		
     		@Override
     		protected void onPostExecute(String result) {
+    			
     			if (result != null) {
-    				
-    					adapter = new ListAdapter(adList);
-    					list = (ListView)findViewById(R.id.list);
-    					list.setAdapter(adapter);
+    				ArrayList<String> adList = new ArrayList<String>();
+    				String[] adStringList = result.split(SpecialCharacters.endLn);
+    				for (String adString : adStringList) {
+    					adList.add(adString);
+    				}
+    				adapter = new ListAdapter(getApplicationContext(), adList);
+    				list = (ListView)findViewById(R.id.list_of_ads);
+    				list.setAdapter(adapter);
     			}
     		}
     	}.execute();
