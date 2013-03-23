@@ -15,7 +15,7 @@ public class RecentAdActivity extends ListActivity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setListAdapter(new RecentAdArrayAdapter(this, RECENT_LIST));
+		
 	}
 
 }
