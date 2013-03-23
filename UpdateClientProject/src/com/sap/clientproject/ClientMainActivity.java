@@ -142,7 +142,7 @@ public class ClientMainActivity extends Activity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.layout.option_menu, menu);
+		menuInflater.inflate(R.layout.menu, menu);
 		return true;
 	}
 	

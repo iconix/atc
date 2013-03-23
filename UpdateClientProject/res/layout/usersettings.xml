@@ -9,7 +9,7 @@
 
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="prefSendReport"
+            android:key="prefSendGps"
             android:title="GPS ON" >
         </CheckBoxPreference>
     </PreferenceCategory>

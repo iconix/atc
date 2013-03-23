@@ -23,6 +23,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 
 public class SendCoordinateService extends Service implements LocationListener{
@@ -78,10 +79,11 @@ public class SendCoordinateService extends Service implements LocationListener{
      * @return the general time interval for each update of coordinate
      */
     private int getUpdateTimeInterval() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int updateTimeInterval = Integer.valueOf(prefs.getInt(UserSettings.PREF_TIME_INTERVAL, DEFAULT_UPDATE_TIME_INTERVAL));
         
-
-        
-        return DEFAULT_UPDATE_TIME_INTERVAL;
+        return updateTimeInterval;
+        // return DEFAULT_UPDATE_TIME_INTERVAL;
     }
 
     /**
@@ -89,8 +91,11 @@ public class SendCoordinateService extends Service implements LocationListener{
      * @return the general minimum distance for each update of coordinate
      */
     private int getUpdateDistance() {
-        //TODO get the update distance from the user setting
-        return DEFAULT_UPDATE_DISTANCE;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int updateDistance = Integer.valueOf(prefs.getInt(UserSettings.PREF_DISTANCE_INTERVAL, DEFAULT_UPDATE_DISTANCE));
+        
+        return updateDistance;
+    	//return DEFAULT_UPDATE_DISTANCE;
     }
 
     @Override

@@ -252,7 +252,7 @@ containing a value of this type.
         public static final int inputpin=0x7f030006;
         public static final int login=0x7f030007;
         public static final int map=0x7f030008;
-        public static final int option_menu=0x7f030009;
+        public static final int menu=0x7f030009;
         public static final int register=0x7f03000a;
         public static final int settings=0x7f03000b;
         public static final int single_ad=0x7f03000c;
