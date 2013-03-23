@@ -13,7 +13,7 @@
 class Business < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation
 	has_secure_password
-  has_many :deals
+  has_many :deals, dependent: :destroy
 
 	before_save { |business| business.email = email.downcase }
 	before_save :create_remember_token

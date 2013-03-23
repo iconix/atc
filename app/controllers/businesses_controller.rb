@@ -11,6 +11,7 @@ class BusinessesController < ApplicationController
   def create
     @business = Business.new(params[:business])
     if @business.save
+			sign_in @business
       flash[:success] = "Welcome to Around the Corner!"
       redirect_to @business
     else
