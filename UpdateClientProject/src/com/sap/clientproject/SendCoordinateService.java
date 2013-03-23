@@ -78,7 +78,9 @@ public class SendCoordinateService extends Service implements LocationListener{
      * @return the general time interval for each update of coordinate
      */
     private int getUpdateTimeInterval() {
-        //TODO get the update interval from the user setting
+        
+
+        
         return DEFAULT_UPDATE_TIME_INTERVAL;
     }
 

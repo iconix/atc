@@ -64,7 +64,7 @@ public class ClientMainActivity extends Activity{
         msg.what = STOPSPLASH;
         splashHandler.sendMessageDelayed(msg, SPLASHTIME);
 
-        /*
+        
         //Get the account ID, if no such parameter exist, then we need to register the device
         accountID = getAccountID();
         if (accountID.equals("")) loginToDevice();
@@ -91,28 +91,7 @@ public class ClientMainActivity extends Activity{
                 }
             });
         }
-        */
-        startSendingCoordinateService();
-        
-        mapView = (ImageView)findViewById(R.id.locationIcon);
-
-        mapView.setOnClickListener(new ImageView.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(getApplicationContext(), MapActivity.class);
-                startActivity(i);
-            }
-        });
-
-        dealsView = (ImageView)findViewById(R.id.dealsIcon);
-        dealsView.setOnClickListener(new ImageView.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(getApplicationContext(), SingleAdActivity.class);
-                startActivity(i);
-            }
-        });
-        
+       
     }
 	
     //handler for splash screen
