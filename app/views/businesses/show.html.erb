@@ -6,9 +6,14 @@
         <!-- <%= gravatar_for @business %> -->
         <%= @business.name %>
       </h1>
-      <p class="lead">
-      	No user content.
-      </p>
     </section>
   </aside>
+	<div class="span8">
+		<% if @business.deals.any? %>
+			<h3> Your Deals: </h3>
+			<ol class="deals">
+				<p><% @deals.title %></p>
+			</ol>
+		<% end %>
+	</div>
 </div>

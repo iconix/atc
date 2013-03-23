@@ -2,6 +2,7 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
+		@deals = Deal.find(1)
   end
 
   def new
