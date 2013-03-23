@@ -12,5 +12,6 @@ class CreateEvents < ActiveRecord::Migration
 
       t.timestamps
     end
+		add_index :events, [:business_id, :created_at]
   end
 end
