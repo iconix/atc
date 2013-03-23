@@ -152,22 +152,6 @@ public class ClientMainActivity extends Activity{
 			case R.id.menu_setting:
 				Intent i = new Intent(getApplicationContext(), UserSettingActivity.class);
 				startActivityForResult(i, 1);
-				//Toast.makeText(AdTabActivity.this, "Settings is Selected", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.menu_timeline:
-				Toast.makeText(getApplicationContext(), "Timeline is Selected", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.menu_radius:
-				Toast.makeText(getApplicationContext(), "Radius is Selected", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.menu_timezone:
-				Toast.makeText(getApplicationContext(), "Time Zone is Selected", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.menu_distance:
-				Toast.makeText(getApplicationContext(), "Min Distance is Selected", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.menu_time:
-				Toast.makeText(getApplicationContext(), "Min Time is Selected", Toast.LENGTH_SHORT).show();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
