@@ -11,8 +11,10 @@
 	<div class="span8">
 		<% if @business.deals.any? %>
 			<h3> Your Deals: </h3>
-			<ol class="deals">
-				<p><%= @deals.title %></p>
+			<ol>
+				<% @deals.each do |deal| %>
+					<li><%= deal.title %>. <i>Posted <%= time_ago_in_words(deal.created_at) %> ago.</i></li>
+				<% end %>
 			</ol>
 		<% end %>
 	</div>

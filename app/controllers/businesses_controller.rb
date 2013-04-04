@@ -2,7 +2,7 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
-		@deals = @business.deals.first
+		@deals = @business.deals
   end
 
   def new
