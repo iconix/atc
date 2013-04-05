@@ -1,5 +1,5 @@
 <% provide(:title, @business.name) %>
-<div class="container jumbotron row">
+<div class="jumbotron row">
   <aside class="span4">
     <section>
       <h1>
@@ -12,8 +12,10 @@
 		<% if @business.deals.any? %>
 			<h3> Your Deals: </h3>
 			<ol>
-				<% @deals.each do |deal| %>
-					<li><%= deal.title %>. <i>Posted <%= time_ago_in_words(deal.created_at) %> ago.</i></li>
+				<% @deals.each do |d| %>
+					<% if d.title %>
+						<li><%= d.title %>. <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i></li>
+					<% end %>
 				<% end %>
 			</ol>
 		<% end %>

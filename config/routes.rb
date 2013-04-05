@@ -1,12 +1,7 @@
 BusinessApp::Application.routes.draw do
-  #resources :businesses
-
-  #root to: 'static_pages#home'
-
-  #match 'signup', to: 'businesses#new'
-
   resources :businesses
   resources :sessions, only: [:new, :create, :destroy]
+	resources :deals, only: [:create, :destroy]
  
   match '/signup',  to: 'businesses#new'
   match '/signin',  to: 'sessions#new'

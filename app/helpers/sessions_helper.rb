@@ -13,6 +13,17 @@ module SessionsHelper
     @current_business ||= Business.find_by_remember_token(cookies[:remember_token])
   end
 
+	def current_business?(business)
+		business == current_business
+	end
+
+	def signed_in_business
+		unless signed_in?
+			store_location
+			redirect_to signin_url, notice: "Please sign in."
+		end
+	end
+
 	def signed_in?
     !current_business.nil?
   end
