@@ -3,7 +3,6 @@ class BusinessesController < ApplicationController
   def show
     @business = Business.find(params[:id])
 		@deals = @business.deals
-		@deal = @business.deals.build if signed_in?
   end
 
   def new

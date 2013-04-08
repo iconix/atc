@@ -2,6 +2,7 @@ class DealsController < ApplicationController
 	before_filter :signed_in_business
 	
 	def new
+		@deal = current_business.deals.build()
 	end
 
 	def create

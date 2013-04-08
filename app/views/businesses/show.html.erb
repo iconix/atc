@@ -6,11 +6,12 @@
         <!-- <%= gravatar_for @business %> -->
         <%= @business.name %>
       </h1>
+		<a href="/newdeal" class="btn btn-primary">New deal!</a>	
     </section>
   </aside>
 	<div class="span8">
+		<h3> Your Deals: </h3>
 		<% if @business.deals.any? %>
-			<h3> Your Deals: </h3>
 			<ol>
 				<% @deals.each do |d| %>
 					<% if d.title %>
