@@ -37,46 +37,36 @@ namespace :db do
                              password: "foobar",
                              password_confirmation: "foobar")
 
-    tap.deals.create!(business_id: tap.id,
-                      lng: -122.1703289,
-                      lat: 37.4251203,
-                      start_date: 2.weeks.ago,
-                      end_date: 1.week.from_now,
-                      title: "50% off milkshakes!!!",
-                      tags: "food|burgers|milkshakes")
-    ikes.deals.create!(business_id: ikes.id,
-                       lng: -122.1749263,
-                       lat: 37.427662,
-                       start_date: 2.days.ago,
-                       end_date: 1.day.from_now,
-                       title: "Buy One Sandwich, Get One Free",
-                       tags: "food|sandwiches")
-    coupa.deals.create!(business_id: coupa.id,
-                        lng: -122.1661241,
-                        lat: 37.4253463,
-                        start_date: 1.week.ago,
-                        end_date: Time.now,
-                        title: "Free Drip Coffee (with purchase of a pastry)",
-                        tags: "food|coffee")
+    tap.deals.create!(longitude: -122.1703289,
+                      latitude: 37.4251203,
+                      startDate: 2.weeks.ago,
+                      endDate: 1.week.from_now,
+                      title: "50% off milkshakes!!!")
+    ikes.deals.create!(longitude: -122.1749263,
+                       latitude: 37.427662,
+                       startDate: 2.days.ago,
+                       endDate: 1.day.from_now,
+                       title: "Buy One Sandwich, Get One Free")
+    coupa.deals.create!(longitude: -122.1661241,
+                        latitude: 37.4253463,
+                        startDate: 1.week.ago,
+                        endDate: Time.now,
+                        title: "Free Drip Coffee (with purchase of a pastry)")
 
     businesses = Business.all(limit: 7)
     3.times do
       businesses.each { |business|
         longitude = rand_longitude
         latitude = rand_latitude
-        start_date = Time.at(rand_in_range(1.year.ago.to_f, Time.now.to_f))
-        end_date = Time.at(rand_in_range(Time.now.to_f, 1.year.from_now.to_f))
+        startDate = Time.at(rand_in_range(1.year.ago.to_f, Time.now.to_f))
+        endDate = Time.at(rand_in_range(Time.now.to_f, 1.year.from_now.to_f))
         title = Faker::Lorem.sentence(3)
-        tags = Faker::Lorem.sentence(5).downcase!
-        tags.gsub!(' ', '|')
 
-        business.deals.create!(business_id: business.id,
-                               lng: longitude,
-                               lat: latitude,
-                               start_date: start_date,
-                               end_date: end_date,
-                               title: title,
-                               tags: tags) 
+        business.deals.create!(longitude: longitude,
+                               latitude: latitude,
+                               startDate: startDate,
+                               endDate: endDate,
+                               title: title) 
       }
     end
   end
