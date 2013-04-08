@@ -1,7 +1,7 @@
 BusinessApp::Application.routes.draw do
   resources :businesses
   resources :sessions, only: [:new, :create, :destroy]
-	resources :deals, only: [:create, :destroy]
+	resources :deals, only: [:new, :create, :destroy]
  
   match '/signup',  to: 'businesses#new'
   match '/signin',  to: 'sessions#new'

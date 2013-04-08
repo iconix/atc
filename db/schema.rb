@@ -11,15 +11,39 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323053619) do
+ActiveRecord::Schema.define(:version => 20130408001302) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
     t.string   "password_digest"
     t.string   "remember_token"
+    t.string   "websiteURL"
+    t.integer  "imageOption"
+    t.string   "imageUrl"
+    t.binary   "imageUpload",        :limit => 2097152
+    t.string   "shortDescription"
+    t.text     "longDescription",    :limit => 1024
+    t.time     "sundayOpenTime"
+    t.time     "sundayCloseTime"
+    t.time     "mondayOpenTime"
+    t.time     "mondayCloseTime"
+    t.time     "tuesdayOpenTime"
+    t.time     "tuesdayCloseTime"
+    t.time     "wednesdayOpenTime"
+    t.time     "wednesdayCloseTime"
+    t.time     "thursdayOpenTime"
+    t.time     "thursdayCloseTime"
+    t.time     "fridayOpenTime"
+    t.time     "fridayCloseTime"
+    t.time     "saturdayOpenTime"
+    t.time     "saturdayCloseTime"
+    t.decimal  "latitute",                              :precision => 15, :scale => 10
+    t.decimal  "longitude",                             :precision => 15, :scale => 10
+    t.text     "address"
+    t.integer  "phoneNumber"
   end
 
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true

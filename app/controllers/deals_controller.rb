@@ -1,5 +1,8 @@
 class DealsController < ApplicationController
 	before_filter :signed_in_business
+	
+	def new
+	end
 
 	def create
 		@deal = current_business.deals.build(params[:deal])
