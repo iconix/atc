@@ -1,7 +1,7 @@
 class CreateDeals < ActiveRecord::Migration
   def change
     create_table :deals do |t|
-      t.integer 	:businessID
+      t.integer 	:business_id
       t.decimal 	:longitude, precision: 15, scale: 10
       t.decimal 	:latitude, precision: 15, scale: 10
       t.date 			:startDate
