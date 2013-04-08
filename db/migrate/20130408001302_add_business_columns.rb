@@ -20,7 +20,7 @@ class AddBusinessColumns < ActiveRecord::Migration
 		add_column :businesses, :fridayCloseTime, :time
 		add_column :businesses, :saturdayOpenTime, :time
 		add_column :businesses, :saturdayCloseTime, :time
-		add_column :businesses, :latitute, :decimal, precision: 15, scale: 10
+		add_column :businesses, :latitude, :decimal, precision: 15, scale: 10
 		add_column :businesses, :longitude, :decimal, precision: 15, scale: 10
 		add_column :businesses, :address, :text
 		add_column :businesses, :phoneNumber, :integer
@@ -47,7 +47,7 @@ class AddBusinessColumns < ActiveRecord::Migration
 		remove_column :businesses, :fridayCloseTime
 		remove_column :businesses, :saturdayOpenTime
 		remove_column :businesses, :saturdayCloseTime
-		remove_column :businesses, :latitute
+		remove_column :businesses, :latitude
 		remove_column :businesses, :longitude
 		remove_column :businesses, :address
 		remove_column :businesses, :phoneNumber
