@@ -3,7 +3,7 @@
 # Table name: deals
 #
 #  id               :integer          not null, primary key
-#  businessID       :integer
+#  business_id      :integer
 #  longitude        :decimal(15, 10)
 #  latitude         :decimal(15, 10)
 #  startDate        :date
@@ -33,10 +33,16 @@
 #
 
 class Deal < ActiveRecord::Base
-  attr_accessible :businessID, :longitude, :latitude, :startDate, :endDate, :title
+  attr_accessible :longitude, :latitude, :startDate, 
+									:endDate, :title, :imageOption, :imageURL, :imageUpload,
+									:shortDescription, :longDescription, :firstTag,
+									:secondTag, :thirdTag, :startTime, :endTime, :sunday,
+									:monday, :tuesday, :wednesday, :thursday, :friday,
+									:saturday, :address, :promotionOrEvent
+
   belongs_to :business
 
-	validates :businessID, presence: true
+	validates :business_id, presence: true
 	validates :title, presence: true
 	validates :startDate, presence: true
 	validates :endDate, presence: true
