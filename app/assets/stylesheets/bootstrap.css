@@ -9,6 +9,7 @@
  */
 
 input[type=date],
+input[type=number] {
 	width: 287px;
 }
 
