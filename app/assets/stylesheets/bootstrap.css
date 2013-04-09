@@ -8,6 +8,10 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+input[type=date],
+	width: 287px;
+}
+
 body {
   padding-bottom: 40px;
   color: #5a5a5a;

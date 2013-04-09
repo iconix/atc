@@ -2,6 +2,32 @@
 
 <div class="container">
   <div class="row">
+		<div class="span12">
+			<form accept-charset="UTF-8" action="/deals" class="new_deal form-signin" id="new_deal" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="TVegYAm8AxgFJYoqvhsyPVIAb5JyboMbwrq/+lEIc2w=" /></div>
+				<h1 class="center">New Deal</h1>
+				
+        <label for="business_name">Name</label>
+        <input id="business_name" name="business[name]" type="text" class="input-block-level" />
+
+				<label for="deal_title">Title</label>
+				<input id="deal_title" name="deal[title]" type="text" class="input-block-level" />
+	
+				<label for="deal_start_date">Start Date</label>
+				<input id="deal_start_date" name="deal[startDate]" type="date" />
+
+				<label for="deal_end_date">End Date</label>
+				<input id="deal_end_date" name="deal[endDate]" type="date" />
+
+				<label for="deal_longitude">Longitude</label>
+				<input id="deal_longitude" name="deal[longitude]" type="number" step="any" min="-180" max="180" />
+
+				<label for="deal_latitude">Latitude</label>
+				<input id="deal_latitude" name="deal[latitude]" type="number" step="any" min="-90" max="90" />
+
+        <input class="btn btn-large btn-primary center" name="commit" type="submit" value="Create Deal" />
+			</form>
+		</div>
+
     <div class="span6">
       <form accept-charset="UTF-8" action="/businesses" class="new_business form-signin" id="new_business" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ciUWLuIlrDyJVuatqhrwopZidOBUn3XcW4oJaI+aZ5k=" /></div>
         <h1 class="center">Sign up</h1>
@@ -22,9 +48,6 @@
 
         <p><br>Already a user? <%= link_to "Sign in now!", signin_path %>
         </form>
-		</div>
-    <div class="span6 center">
-			<%= render 'shared/deal_form' %>
 		</div>
 	</div>
 </div>

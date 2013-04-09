@@ -2,7 +2,7 @@ class DealsController < ApplicationController
 	before_filter :signed_in_business
 	
 	def new
-		@deal = current_business.deals.build()
+		@deal = current_business.deals.build if signed_in?
 	end
 
 	def create

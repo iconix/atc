@@ -46,8 +46,8 @@ class Deal < ActiveRecord::Base
 	validates :title, presence: true
 	validates :startDate, presence: true
 	validates :endDate, presence: true
-	validates :longitude, presence: true
-	validates :latitude, presence: true
+	#validates :longitude, presence: true
+	#validates :latitude, presence: true
 
   default_scope order: 'deals.created_at DESC'
 end
