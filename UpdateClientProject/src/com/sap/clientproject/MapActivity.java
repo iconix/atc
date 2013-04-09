@@ -55,7 +55,6 @@ public class MapActivity extends FragmentActivity implements LocationListener{
             onProviderDisabled(provider);
         }
         
-  
         pinLocation();
     }
     

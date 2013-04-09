@@ -135,9 +135,10 @@ public final class R {
         public static final int recentads=0x7f030015;
         public static final int register=0x7f030016;
         public static final int settings=0x7f030017;
-        public static final int timeline=0x7f030018;
-        public static final int userprofile=0x7f030019;
-        public static final int usersettings=0x7f03001a;
+        public static final int startfragment=0x7f030018;
+        public static final int timeline=0x7f030019;
+        public static final int userprofile=0x7f03001a;
+        public static final int usersettings=0x7f03001b;
     }
     public static final class menu {
         public static final int activity_login=0x7f080000;
