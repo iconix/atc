@@ -19,4 +19,27 @@ class BusinessesController < ApplicationController
       render 'new'
     end
   end
+
+  def edit
+    @business = Business.find(params[:id])
+  end
+
+  def update
+    @business = Business.find(params[:id])
+    if params[:business][:password].blank?
+      @business.update_attribute(:name, params[:business][:name])
+      @business.update_attribute(:email, params[:business][:email])
+      flash[:success] = "Profile updated"
+      sign_in @business
+      redirect_to @business
+    else
+      if @business.update_attributes(params[:business])
+        flash[:success] = "Profile updated"
+        sign_in @business
+        redirect_to @business
+      else
+        render 'edit'
+      end
+    end
+  end
 end

@@ -6,16 +6,21 @@
         <!-- <%= gravatar_for @business %> -->
         <%= @business.name %>
       </h1>
-		<a href="/newdeal" class="btn btn-primary">New deal!</a>	
+	    <%= link_to "Edit profile", edit_business_path(@business) %>	
     </section>
   </aside>
 	<div class="span8">
+    <a href="/newdeal" class="btn btn-primary">New deal!</a>
 		<h3> Your Deals: </h3>
 		<% if @business.deals.any? %>
 			<ol>
 				<% @deals.each do |d| %>
 					<% if d.title %>
-						<li><%= d.title %>. <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i></li>
+						<li>
+              <%= d.title %>. 
+              <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+              <a href="/businesses" > Edit </a>
+            </li>
 					<% end %>
 				<% end %>
 			</ol>
