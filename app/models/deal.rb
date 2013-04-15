@@ -38,7 +38,7 @@ class Deal < ActiveRecord::Base
 									:shortDescription, :longDescription, :firstTag,
 									:secondTag, :thirdTag, :startTime, :endTime, :sunday,
 									:monday, :tuesday, :wednesday, :thursday, :friday,
-									:saturday, :address, :promotionOrEvent
+									:saturday, :address, :promotionOrEvent, :business_id
 
   belongs_to :business
 
