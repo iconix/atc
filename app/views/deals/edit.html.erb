@@ -1,0 +1,24 @@
+<% provide(:title, "Edit deal") %> 
+<h1>Update your deal</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@deal) do |f| %>
+      <%= render 'shared/deal_error_messages' %>
+
+      <%= f.label :title %>
+      <%= f.text_field :title %>
+
+      <%= f.label :"Start Date" %>
+      <%= f.text_field :startDate, :type => "date" %>
+
+      <%= f.label :"End Date" %>
+      <%= f.text_field :endDate, :type => "date" %>
+
+      <br>
+      <%= f.submit "Save changes", class: "btn btn-small btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-small btn-primary", style: "margin-left: 20px;" %>
+    <% end %>
+
+  </div>
+</div>
