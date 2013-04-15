@@ -1,0 +1,142 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/settingsHeader"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/advertisementsHeader"
+        android:layout_alignRight="@+id/advertisementsDescription"
+        android:layout_alignTop="@+id/settings"
+        android:text="PREFERENCE"
+        android:textAlignment="4"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/advertisementsHeader"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mapsHeader"
+        android:layout_alignRight="@+id/mapsDescription"
+        android:layout_alignTop="@+id/ads"
+        android:text="DEALS &amp; EVENTS"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mapsHeader"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/mapIcon"
+        android:layout_marginLeft="30dp"
+        android:layout_toRightOf="@+id/mapIcon"
+        android:text="MAPS"
+        android:textAlignment="4"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/mapsDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mapIcon"
+        android:layout_alignLeft="@+id/mapsHeader"
+        android:layout_alignRight="@+id/mapsHeader"
+        android:layout_below="@+id/mapsHeader"
+        android:text="Choose different map settings"
+        android:textColor="#ffffff" />
+
+    <TextView
+        android:id="@+id/advertisementsDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/settings"
+        android:layout_alignLeft="@+id/advertisementsHeader"
+        android:layout_alignRight="@+id/advertisementsHeader"
+        android:layout_below="@+id/advertisementsHeader"
+        android:text="How you want the add to be display"
+        android:textColor="#ffffff" />
+
+    <ImageView
+        android:id="@+id/mapIcon"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:src="@drawable/maps" />
+
+    <ImageView
+        android:id="@+id/ads"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_below="@+id/mapIcon"
+        android:layout_marginTop="19dp"
+        android:layout_toLeftOf="@+id/mapsHeader"
+        android:src="@drawable/advertisement" />
+
+    <ImageView
+        android:id="@+id/settings"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_below="@+id/ads"
+        android:layout_marginTop="26dp"
+        android:layout_toLeftOf="@+id/mapsHeader"
+        android:src="@drawable/settings_icon" />
+
+    <TextView
+        android:id="@+id/settingsDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/settings"
+        android:layout_alignLeft="@+id/settingsHeader"
+        android:layout_alignRight="@+id/settingsHeader"
+        android:layout_below="@+id/settingsHeader"
+        android:text="Your preferences and settings"
+        android:textColor="#ffffff" />
+
+    <ImageView
+        android:id="@+id/userProfile"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_below="@+id/settings"
+        android:layout_marginTop="23dp"
+        android:layout_toLeftOf="@+id/mapsHeader"
+        android:src="@drawable/about_me" />
+
+    <TextView
+        android:id="@+id/userProfileHeader"
+        android:layout_width="80dip"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/settingsDescription"
+        android:layout_alignRight="@+id/settingsDescription"
+        android:layout_alignTop="@+id/userProfile"
+        android:text="USER PROFILE"
+        android:textAlignment="4"
+        android:textColor="#ffffff"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/userProfileDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/userProfile"
+        android:layout_alignLeft="@+id/userProfileHeader"
+        android:layout_alignRight="@+id/userProfileHeader"
+        android:layout_below="@+id/userProfileHeader"
+        android:text="User profile and activities"
+        android:textColor="#ffffff" />
+
+</RelativeLayout>
