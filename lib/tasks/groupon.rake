@@ -89,28 +89,6 @@ namespace :db do
                                secondTag: deal_secondTag,
                                thirdTag: deal_thirdTag,
                                address: deal_address)
-
-        # puts for testing
-        '''p "business name" if business_name.nil?
-        p "business url" if business_url.nil?
-        p business_email
-        p "deal title" if deal_title.nil?
-        p "deal imageURL" if deal_imageURL.nil?
-        p "deal startDate" if deal_startDate.nil?
-        p "deal endDate" if deal_endDate.nil?
-        p "deal latitude" if deal_latitude.nil?
-        p "deal longitude" if deal_longitude.nil?
-        p "deal shortDesc" if deal_shortDesc.nil?
-        p "deal longDesc" if deal_longDesc.nil?
-        p "deal firstTag" if deal_firstTag.nil?
-        p "deal secondTag" if deal_secondTag.nil?
-        p "deal thirdTag" if deal_thirdTag.nil?
-        p "deal address\n\n" if deal_address.nil?
-
-        p "BUSINESS\n#{business_name} #{business_url} #{business_email}"
-        p "TITLE: #{deal_title}\nIMAGE URL: #{deal_imageURL}\nVALID: #{deal_startDate}-#{deal_endDate}\nCOORDINATES: #{deal_latitude}, #{deal_longitude}\nSHORT DESC: #{deal_shortDesc}\nLONG DESC: #{deal_longDesc}\nTAGS: #{deal_firstTag}, #{deal_secondTag}, #{deal_thirdTag}\nADDRESS: #{deal_address}\n\n"'''
-        
-        
       end
     end
   end
