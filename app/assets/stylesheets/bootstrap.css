@@ -10,8 +10,10 @@
 
 /* Custom CSS. */
 
+label.nowrap { white-space:nowrap; }
+
 input[type=date],
-input[type=number] {
+input[type=time] {
 	width: 287px;
 }
 
