@@ -9,11 +9,50 @@
       <%= f.label :title %>
       <%= f.text_field :title %>
 
+      <%= f.label :"Short Description" %>
+      <%= f.text_field :shortDescription %>
+
+      <%= f.label :"Long Description" %>
+      <%= f.text_field :longDescription %>
+
       <%= f.label :"Start Date" %>
       <%= f.text_field :startDate, :type => "date" %>
 
       <%= f.label :"End Date" %>
       <%= f.text_field :endDate, :type => "date" %>
+
+      <%= f.label :"Start Time" %>
+      <%= f.text_field :startTime, :type => "time" %>
+
+      <%= f.label :"End Time" %>
+      <%= f.text_field :endTime, :type => "time" %>
+
+      <br>
+      <p>Days</p>
+      <%= f.check_box :sunday %> Sunday <br>
+      <%= f.check_box :monday %> Monday <br>
+      <%= f.check_box :tuesday %> Tuesday <br>
+      <%= f.check_box :wednesday %> Wednesday <br>
+      <%= f.check_box :thursday %> Thursday <br>
+      <%= f.check_box :friday %> Friday <br>
+      <%= f.check_box :saturday %> Saturday <br>
+      
+      <br>
+      <%= f.label :"Image URL" %>
+      <%= f.text_field :imageURL %>
+
+      <%= f.label :"Upload Image" %>
+      <%= f.text_field :imageUpload, :type =>"file" %>
+      
+      <br>
+      <%= f.label :"Tag" %>
+      <%= f.text_field :firstTag %>
+
+      <%= f.label :"Tag" %>
+      <%= f.text_field :secondTag %>
+
+      <%= f.label :"Tag" %>
+      <%= f.text_field :thirdTag %>
 
       <br>
       <%= f.submit "Save changes", class: "btn btn-small btn-primary" %>
