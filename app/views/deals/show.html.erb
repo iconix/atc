@@ -1,0 +1,37 @@
+<% provide(:title, @deal.title) %>
+<div class="container row">
+	<div class="span6">
+		<h1><%= current_business.name%>: <%= @deal.title %></h1>
+		<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
+		<p>Start date: <%= @deal.startDate %></p>
+		<p>End date: <%= @deal.startDate %></p>
+		<% if @deal.imageURL %>
+			<p>Image URL: <%= @deal.imageURL %></p>
+		<% end %>
+		<% if @deal.shortDescription %>
+			<p>Short description: <%= @deal.shortDescription %></p>
+		<% end %>
+		<% if @deal.longDescription %>
+			<p>Long description: <%= @deal.longDescription %></p>
+		<% end %>
+		<% if @deal.address %>
+			<p>Address: <%= @deal.address %>
+		<% end %>
+	</div>
+	<div class="span6">
+		<% if @deal.firstTag %>
+			<p>Tag: <%= @deal.firstTag %></p>
+		<% end %>
+		<% if @deal.secondTag %>
+			<p>Tag: <%= @deal.secondTag %></p>
+		<% end %>
+		<% if @deal.thirdTag %>
+			<p>Tag: <%= @deal.thirdTag %></p>
+		<% end %>
+		<% if @deal.startTime && @deal.endTime %>
+			<p>Start time: <%= @deal.startTime %></p>
+			<p>End time: <%= @deal.endTime %></p>
+		<% end %>
+	</div>
+</div>
+	

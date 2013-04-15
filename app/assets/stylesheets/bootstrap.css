@@ -8,6 +8,8 @@
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
 
+/* Custom CSS. */
+
 input[type=date],
 input[type=number] {
 	width: 287px;
@@ -139,6 +141,8 @@ footer a:hover {
 footer {
   padding-top: 20px; 
 }
+
+/* Custom CSS end. */
 
 .clearfix {
   *zoom: 1;

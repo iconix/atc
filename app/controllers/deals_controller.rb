@@ -15,6 +15,10 @@ class DealsController < ApplicationController
     end
 	end
 
+	def show
+		@deal = current_business.deals.find(params[:id])
+	end
+
 	def destroy
 	end
 
