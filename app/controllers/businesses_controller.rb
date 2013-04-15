@@ -26,6 +26,12 @@ class BusinessesController < ApplicationController
 
   def update
     @business = Business.find(params[:id])
+
+    unless params[:cancel].blank?
+      redirect_to @business
+      return
+    end
+
     if params[:business][:password].blank?
       @business.update_attribute(:name, params[:business][:name])
       @business.update_attribute(:email, params[:business][:email])

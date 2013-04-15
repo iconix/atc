@@ -17,4 +17,22 @@ class DealsController < ApplicationController
 
 	def destroy
 	end
+
+  def edit
+    @deal = current_business.deals.find(params[:id])
+  end
+
+  def update
+    unless params[:cancel].blank?
+      redirect_to current_business
+      return
+    end
+    @deal = current_business.deals.find(params[:id])
+    if @deal.update_attributes(params[:deal])
+      flash[:success] = "Deal updated"
+      redirect_to current_business
+    else
+      render 'edit'
+    end
+  end
 end
