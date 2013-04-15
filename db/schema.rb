@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323053258) do
+ActiveRecord::Schema.define(:version => 20130323053619) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -80,5 +80,20 @@ ActiveRecord::Schema.define(:version => 20130323053258) do
   end
 
   add_index "deals", ["business_id", "created_at"], :name => "index_deals_on_business_id_and_created_at"
+
+  create_table "events", :force => true do |t|
+    t.integer  "business_id"
+    t.decimal  "lng",         :precision => 15, :scale => 10
+    t.decimal  "lat",         :precision => 15, :scale => 10
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string   "title"
+    t.string   "content"
+    t.text     "tags"
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+  end
+
+  add_index "events", ["business_id", "created_at"], :name => "index_events_on_business_id_and_created_at"
 
 end
