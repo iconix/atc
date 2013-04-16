@@ -32,35 +32,36 @@
             android:name=".RegisterActivity"
             android:label="Register New Account" >
         </activity>
+        
         <activity
             android:name=".LoginActivity"
             android:label="Login To Your Account" >
         </activity>
+        
         <activity
-            android:name=".MapActivity"
+            android:name=".SingleMapHybridViewActivity"
             android:label="Map View" >
-        </activity>
-        <activity
-            android:name=".SingleAdActivity"
-            android:label="Single Ad View" >
-        </activity>
-        <activity
-            android:name=".AdListActivity"
-            android:label="View Ads" >
         </activity>
         
         <activity
-            android:name=".TestBaume"
-            android:label="View Ads" >
+            android:name=".SingleMapNormalViewActivity"
+            android:label="Map View" >
         </activity>
+    
         <activity
-            android:name=".TestCoolCafe"
-            android:label="View Ads" >
+            android:name=".SingleMapSatelliteActivity"
+            android:label="Map View" >
         </activity>
-        <activity 
-            android:name=".UserSettingActivity"
-            android:label="User Settings">
+        
+        <activity
+            android:name=".SingleMapTerrainActivity"
+            android:label="Map View" >
         </activity>
+        
+        <activity
+            android:name=".MainMenu"
+            android:label="Menu">
+        </activity>      
 
         <service
             android:name="com.sap.clientproject.SendCoordinateService"
@@ -68,6 +69,6 @@
         
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDDWoxNVVmaUfScJ3OSnlA29L8zTH98CYE" />
+            android:value="AIzaSyBVMG-rxSK11t8yuqp_1eAkP3Y1PWLoOhg" />
     </application>
 </manifest>

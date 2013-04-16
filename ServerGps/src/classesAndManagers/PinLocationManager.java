@@ -77,6 +77,7 @@ public class PinLocationManager {
     			 " and longitude < " + pinConfig.getHigherLongitude() +
     			 " and latitude > " + pinConfig.getLowerLatitude() +
     			 " and longitude < " + pinConfig.getHigherLatitude();
+    	 System.out.println(query);
     	 try {
     		 Statement stmt = connection.createStatement();
     		 ResultSet rs = stmt.executeQuery(query);

@@ -78,6 +78,8 @@ public class MainActivity extends FragmentActivity {
         Intent activityIntent = null;
         if (activity.equals(PreferenceValue.VIEW_SINGLE_MAP))
         	activityIntent = new Intent(this, SingleMapViewActivity.class);
+        else if (activity.equals(PreferenceValue.VIEW_MAP_AND_HISTORY))
+        	activityIntent = new Intent(this, MapAndHistoryActivity.class);
         else activityIntent = new Intent(this, MainMenu.class);
         finish();
         startActivity(activityIntent);

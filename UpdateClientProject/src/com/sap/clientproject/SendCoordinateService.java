@@ -8,10 +8,6 @@ import java.util.TimeZone;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-
-import classesAndManagers.*;
-import staticVariables.*;
-
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -23,8 +19,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
+import org.apache.http.client.HttpClient;
+
+import staticVariables.*;
+import supports.*;
 
 public class SendCoordinateService extends Service implements LocationListener{
 
@@ -37,6 +36,8 @@ public class SendCoordinateService extends Service implements LocationListener{
     Criteria criteria;
     int updateInterval;
     int updateDistance;
+    
+    HttpClient client;
 
     @Override
     public IBinder onBind(Intent arg0) {
@@ -48,6 +49,7 @@ public class SendCoordinateService extends Service implements LocationListener{
     public void onCreate() {
         deviceID = getDeviceID();
         accountID = getAccountID();
+        client = AppHttpClient.getHttpClient();
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         criteria = new Criteria();
@@ -56,13 +58,19 @@ public class SendCoordinateService extends Service implements LocationListener{
         locationManager.requestLocationUpdates(updateInterval, updateDistance, criteria, this, null);
     }
 
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+    }
+     
     /**
      * Get the account ID, if the service is running, then the account ID should not be empty
      * @return the account ID
      */
     private String getAccountID() {
-        SharedPreferences settings = getSharedPreferences(ClientMainActivity.UNIQUE_ID, 0);
-        return settings.getString(ClientMainActivity.ACCOUNT_ID, "");
+        SharedPreferences settings = getSharedPreferences(SharedPreference.PREFERENCE, 0);
+        return settings.getString(SharedPreference.ACCOUNT_ID, "");
     }
 
     /**
@@ -79,11 +87,8 @@ public class SendCoordinateService extends Service implements LocationListener{
      * @return the general time interval for each update of coordinate
      */
     private int getUpdateTimeInterval() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int updateTimeInterval = Integer.valueOf(prefs.getInt(UserSettings.PREF_TIME_INTERVAL, DEFAULT_UPDATE_TIME_INTERVAL));
-        
-        return updateTimeInterval;
-        // return DEFAULT_UPDATE_TIME_INTERVAL;
+        //TODO get the update interval from the user setting
+        return DEFAULT_UPDATE_TIME_INTERVAL;
     }
 
     /**
@@ -91,17 +96,8 @@ public class SendCoordinateService extends Service implements LocationListener{
      * @return the general minimum distance for each update of coordinate
      */
     private int getUpdateDistance() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        int updateDistance = Integer.valueOf(prefs.getInt(UserSettings.PREF_DISTANCE_INTERVAL, DEFAULT_UPDATE_DISTANCE));
-        
-        return updateDistance;
-    	//return DEFAULT_UPDATE_DISTANCE;
-    }
-
-    @Override
-    public void onDestroy() {
-    // TODO Auto-generated method stub
-    super.onDestroy();
+        //TODO get the update distance from the user setting
+        return DEFAULT_UPDATE_DISTANCE;
     }
 
     /**
@@ -141,7 +137,7 @@ public class SendCoordinateService extends Service implements LocationListener{
                     postParameters.add(new BasicNameValuePair(RequestParameters.COORDINATE_INPUT_LATITUDE,
                             String.valueOf(latitude)));
 
-                    AppHttpClient.executeHttpPost(ServerVariables.URL, postParameters);
+                    AppHttpClient.executeHttpPost(client, Server.URL, postParameters);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -163,8 +159,6 @@ public class SendCoordinateService extends Service implements LocationListener{
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
         // TODO Auto-generated method stub	
-    }
-	
-	
-
+    }	
+    
 }

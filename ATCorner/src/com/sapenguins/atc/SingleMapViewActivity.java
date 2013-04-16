@@ -402,6 +402,7 @@ public class SingleMapViewActivity extends FragmentActivity implements LocationL
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				reloadMapType();
+				dialog.cancel();
 			}
 		})
 		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

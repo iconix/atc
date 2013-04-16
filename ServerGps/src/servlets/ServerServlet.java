@@ -118,6 +118,7 @@ public class ServerServlet extends HttpServlet {
 		String coordinateLatitude = (String) request.getParameter(RequestParameters.COORDINATE_INPUT_LATITUDE);
 		if (coordinateUserID != null && coordinateDeviceID != null && coordinateTime != null &&
 				coordinateLongitude != null && coordinateLatitude != null) {
+			System.out.println("request obtained");
 			GpsCoordinate coor = new GpsCoordinate(coordinateUserID, coordinateDeviceID, coordinateTime, coordinateLongitude, coordinateLatitude); //new GpsCoordinate(coordinate);
 			gpsCoordinateManager.addNewGpsCoordinate(connection, coor);
 		}

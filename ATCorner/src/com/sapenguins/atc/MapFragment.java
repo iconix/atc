@@ -16,5 +16,5 @@ public class MapFragment extends Fragment {
 			Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.single_map, container, false);
 	}
-	
+
 }
