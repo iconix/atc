@@ -40,7 +40,7 @@ group :test do
   gem 'libnotify', '0.5.9'
 end
 group :production do
-  gem 'sqlite3'
-  #gem 'mysql2'
+  #gem 'sqlite3'
+  gem 'mysql2'
   #gem 'pg'
 end
