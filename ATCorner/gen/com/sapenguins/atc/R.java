@@ -201,9 +201,10 @@ containing a value of this type.
         public static final int custom_menu=0x7f030002;
         public static final int custom_menu_item=0x7f030003;
         public static final int history_and_map=0x7f030004;
-        public static final int inputpin=0x7f030005;
-        public static final int main_menu=0x7f030006;
-        public static final int single_map=0x7f030007;
+        public static final int historylist=0x7f030005;
+        public static final int inputpin=0x7f030006;
+        public static final int main_menu=0x7f030007;
+        public static final int single_map=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f080000;

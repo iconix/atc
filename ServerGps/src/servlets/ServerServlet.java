@@ -210,6 +210,18 @@ public class ServerServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Check for ads output request. Responds with set of ads that fir the request criteria
+	 */
+	private void checkForAdOutputRequest(HttpServletRequest request, HttpServletReponse response) throsw ServletException, IOException {
+		String ad = String request.getParameter("ad", "everything");
+		if (ad != null) {
+			
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			
+		}
+	}
 	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
