@@ -52,16 +52,16 @@ public class AdsSingleViewActivity extends Activity{
 			
 			protected void onPostExecute(String result) {
 				if (result != null) {
-					/*
+					
 					String[] ads = result.split(SpecialCharacters.endLn);
 					String length = "" + ads.length;
 					String test = ads[200];
 					String[] content = test.split(SpecialCharacters.delimiter);
 					String contentLength = "" + content.length;
-					*/
+					
 					TextView text = (TextView)findViewById(R.id.singleAdTitle);
 					
-					text.setText(result);
+					text.setText(contentLength);
 					
 				}
 			}
