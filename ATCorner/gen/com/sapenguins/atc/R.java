@@ -160,7 +160,7 @@ containing a value of this type.
         public static final int settings_icon=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f040021;
+        public static final int action_settings=0x7f040022;
         public static final int adListCompanyId=0x7f040009;
         public static final int adListDistanceId=0x7f04000a;
         public static final int adListImageId=0x7f040007;
@@ -188,6 +188,7 @@ containing a value of this type.
         public static final int settings=0x7f040017;
         public static final int settingsDescription=0x7f04001c;
         public static final int settingsHeader=0x7f040014;
+        public static final int singleAdTitle=0x7f040021;
         public static final int single_map_fragment=0x7f040020;
         public static final int terrain=0x7f040003;
         public static final int thumbnail=0x7f040006;
@@ -205,6 +206,7 @@ containing a value of this type.
         public static final int inputpin=0x7f030006;
         public static final int main_menu=0x7f030007;
         public static final int single_map=0x7f030008;
+        public static final int singlead=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f080000;

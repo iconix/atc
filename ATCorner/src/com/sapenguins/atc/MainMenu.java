@@ -32,6 +32,7 @@ public class MainMenu extends Activity{
             }
         });
 
+        /*
         dealsView = (ImageView)findViewById(R.id.ads);
         dealsView.setOnClickListener(new ImageView.OnClickListener() {
             @Override
@@ -39,7 +40,16 @@ public class MainMenu extends Activity{
                 Intent i = new Intent(getApplicationContext(), MapAndHistoryActivity.class);
                 startActivity(i);
             }
-        });    
+        }); 
+        */   
+        dealsView = (ImageView)findViewById(R.id.ads);
+        dealsView.setOnClickListener(new ImageView.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent i = new Intent(getApplicationContext(), AdsSingleViewActivity.class);
+                startActivity(i);
+            }
+        }); 
         
     }
     
