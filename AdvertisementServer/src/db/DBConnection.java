@@ -10,16 +10,19 @@ import java.sql.*;
  */
 
 public class DBConnection {
-	/*
+	
 	private static final String MYSQL_USERNAME = "sapenguins";
 	private static final String MYSQL_PASSWORD = "sapenguins";
 	private static final String MYSQL_DATABASE_SERVER = "aa1bdj7bwieyv5s.cxstmaj8fdow.us-west-1.rds.amazonaws.com:3306";
 	private static final String MYSQL_DATABASE_NAME = "ebdb";
-	*/
+	
+	
+	/*
 	private static final String MYSQL_USERNAME = "ccs108minhthao";
 	private static final String MYSQL_PASSWORD = "moulohth";
 	private static final String MYSQL_DATABASE_SERVER = "mysql-user.stanford.edu";
 	private static final String MYSQL_DATABASE_NAME = "c_cs108_minhthao";
+	*/
 	
 	private static Connection con;
 	static {

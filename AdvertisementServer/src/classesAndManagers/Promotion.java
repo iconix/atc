@@ -3,6 +3,8 @@ package classesAndManagers;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import staticVariables.SpecialCharacters;
+
 public class Promotion {
 	String id;
 	String business_id;
@@ -503,6 +505,20 @@ public class Promotion {
 		this.updated_at = updated_at;
 	}
 	
+	/**
+	 *  Need to include imageUpload (InputStream)
+	 */
+	public String getPromotionString() {
+		return id + SpecialCharacters.delimiter + business_id + SpecialCharacters.delimiter + latitude + SpecialCharacters.delimiter +
+				longitude + SpecialCharacters.delimiter + startDate + SpecialCharacters.delimiter + endDate + SpecialCharacters.delimiter +
+				title + SpecialCharacters.delimiter + imageOption + SpecialCharacters.delimiter + imageUrl + SpecialCharacters.delimiter + 
+				shortDescription + SpecialCharacters.delimiter + longDescription + SpecialCharacters.delimiter + firstTag + SpecialCharacters.delimiter + 
+				secondTag + SpecialCharacters.delimiter + thirdTag + SpecialCharacters.delimiter + startTime + SpecialCharacters.delimiter +
+				endTime + SpecialCharacters.delimiter + sunday + SpecialCharacters.delimiter + monday + SpecialCharacters.delimiter + 
+				tuesday + SpecialCharacters.delimiter + wednesday + SpecialCharacters.delimiter + thursday + SpecialCharacters.delimiter +
+				friday + SpecialCharacters.delimiter + saturday + SpecialCharacters.delimiter + address + SpecialCharacters.delimiter + 
+				promotionOrEvent + SpecialCharacters.delimiter + created_at + SpecialCharacters.delimiter + updated_at;
+	}
 	
 	
 	

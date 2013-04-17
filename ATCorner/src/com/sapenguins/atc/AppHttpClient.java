@@ -14,8 +14,8 @@ import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.*;
+//import org.apache.http.entity.mime.MultipartEntity;
+//import org.apache.http.entity.mime.content.*;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -90,6 +90,7 @@ public class AppHttpClient {
      * @param bitmap file to be send
      * @throws exception
      */
+    /*
     public static void executeImageHttpPost(String url, Bitmap bitmapFile, String deviceID) throws Exception {
     	HttpClient client = getHttpClient();
         HttpPost httpPost = new HttpPost(url);
@@ -102,6 +103,6 @@ public class AppHttpClient {
         entity.addPart("image", bab);
         httpPost.setEntity(entity);
     	client.execute(httpPost);
-    }
+    }*/
 
 }

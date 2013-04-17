@@ -1,4 +1,5 @@
 package servlets;
+
 import classesAndManagers.*;
 
 import java.io.IOException;
@@ -27,7 +28,6 @@ public class PromotionServlet extends HttpServlet {
 	public void init() throws ServletException {
 		connection = DBConnection.getConnection();
 		promotionManager = new PromotionsManager();	
-		System.out.println("jsut checking");
 	}
 	
     /**
@@ -45,19 +45,34 @@ public class PromotionServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
+	
+	private void checkForDealOutputRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String dealRequest = (String) request.getParameter("deal");
+		if (dealRequest != null) {
+			ArrayList<Promotion> promotions = promotionManager.queryPromotion(connection);
+			if (promotions == null) return;
+			
+			response.setContentType("text/plain");
+			PrintWriter out = response.getWriter();
+			for (Promotion promotion : promotions)
+				out.println(promotion.getPromotionString());
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("just checking");
-		ArrayList<Promotion> promotionList = promotionManager.queryPromotion(connection);
+		checkForDealOutputRequest(request, response);
+		
+		/*ArrayList<Promotion> promotionList = promotionManager.queryPromotion(connection);
 		if (promotionList == null) return;
 		
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
 		for (Promotion promotion : promotionList)
-			out.println(promotion.getTitle());
+			out.println(promotion.getTitle());*/
 	}
 
 }
