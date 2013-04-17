@@ -58,13 +58,20 @@ public class PromotionServlet extends HttpServlet {
 				out.println(promotion.getPromotionString());
 		}
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("just checking");
+		//System.out.println("just checking");
 		checkForDealOutputRequest(request, response);
+		//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		//System.out.println((String) response);
+		//System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+
+
+
 		
 		/*ArrayList<Promotion> promotionList = promotionManager.queryPromotion(connection);
 		if (promotionList == null) return;
