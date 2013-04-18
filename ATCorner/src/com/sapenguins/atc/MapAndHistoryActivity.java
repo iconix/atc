@@ -23,9 +23,10 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history_and_map);
 		//TODO change the view
-		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
+		setCurrentView(PreferenceValue.VIEW_MAP_AND_HISTORY);
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
 		initMenubar();
+		reloadMapType();
 	}
     
     
@@ -36,7 +37,7 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
     public static final int MAIN_MENU_ITEM = 1;
     public static final int MAP_STYLE_ITEM = 2;
     public static final int PREFERENCE_ITEM = 3;
-    public static final int HISTORY_ITEM = 4;
+    public static final int MAP_ITEM = 4;
     
     private void initMenubar() {
         mMenu = new CustomMenu(this, this, getLayoutInflater());
@@ -85,9 +86,9 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
         menuItems.add(cmi);
         
         cmi = new CustomMenuItem();
-        cmi.setCaption("History");
-        cmi.setImageResourceId(R.drawable.history);
-        cmi.setId(HISTORY_ITEM);
+        cmi.setCaption("Full Map");
+        cmi.setImageResourceId(R.drawable.map_icon);
+        cmi.setId(MAP_ITEM);
         menuItems.add(cmi);
         
         if (!mMenu.isShowing())
@@ -120,8 +121,13 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
         switch (selection.getId()) {
             case MAIN_MENU_ITEM:
 				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+				break;
             case MAP_STYLE_ITEM:
             	onMapStyleMenuButtonPressed();
+            	break;
+            case MAP_ITEM:
+            	startActivity(new Intent(getApplicationContext(), SingleMapViewActivity.class));
+            	break;
         }
     }
       

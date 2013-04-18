@@ -27,6 +27,7 @@ public class SingleMapViewActivity extends FragmentActivity implements OnMenuIte
 		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
 
 		initMenubar();		
+		reloadMapType();
 	}
     
     //---------------------------------------
@@ -118,11 +119,15 @@ public class SingleMapViewActivity extends FragmentActivity implements OnMenuIte
      */
     public void MenuItemSelectedEvent(CustomMenuItem selection) {
         switch (selection.getId()) {
+        	case HISTORY_ITEM:
+        		startActivity(new Intent(getApplicationContext(), MapAndHistoryActivity.class));
+        		break;
             case MAIN_MENU_ITEM:
 				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+				break;
             case MAP_STYLE_ITEM:
             	onMapStyleMenuButtonPressed();
-       
+            	break;
         }
     }
       

@@ -247,7 +247,7 @@ public class MapFragment extends Fragment implements LocationListener{
 	//------------------INHERITED CLASSES FROM LOCATION LISTENER ----------
     public void onLocationChanged(Location location) {
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 18);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
         googleMap.animateCamera(cameraUpdate);
         locationManager.removeUpdates(this);
     }
