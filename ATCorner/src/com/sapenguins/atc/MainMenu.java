@@ -32,7 +32,7 @@ public class MainMenu extends Activity{
             }
         });
 
-        /*
+        
         dealsView = (ImageView)findViewById(R.id.ads);
         dealsView.setOnClickListener(new ImageView.OnClickListener() {
             @Override
@@ -41,7 +41,7 @@ public class MainMenu extends Activity{
                 startActivity(i);
             }
         }); 
-        */   
+        /*   
         dealsView = (ImageView)findViewById(R.id.ads);
         dealsView.setOnClickListener(new ImageView.OnClickListener() {
             @Override
@@ -49,7 +49,7 @@ public class MainMenu extends Activity{
                 Intent i = new Intent(getApplicationContext(), AdsSingleViewActivity.class);
                 startActivity(i);
             }
-        }); 
+        }); */
         
     }
     

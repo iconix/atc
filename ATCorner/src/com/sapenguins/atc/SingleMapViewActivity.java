@@ -366,6 +366,7 @@ public class SingleMapViewActivity extends FragmentActivity implements LocationL
 				startActivity(new Intent(getApplicationContext(), MainMenu.class));
             case MAP_STYLE_ITEM:
             	onMapStyleMenuButtonPressed();
+       
         }
     }
       
