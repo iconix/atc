@@ -12,21 +12,17 @@ def get_host_without_www(url)
   host.start_with?('www.') ? host[4..-1] : host
 end
 
-def get_parsed_json(f)
-  #result = Net::HTTP.get(URI.parse(api_call)) 
-  #JSON.parse(result)
-  
-  json = f.read
-  JSON.parse(json)
+def get_parsed_json(api)
+  result = Net::HTTP.get(URI.parse(api))
+  JSON.parse(result)
 end
 
 namespace :db do
   desc "Fill database with Groupon data"
   task groupon: :environment do
-    #api_call = 'http://api.groupon.com/v2/deals.json?client_id=0b6564adf4729e33998b869c7a55f1ed46128f5d&lat=37.424106&lng=-122.166076&show=startAt,endAt,title,merchant,options,largeImageUrl,highlightsHtml,pitchHtml,tags'
-    f = open('./groupon.json')
+    api_call = 'http://api.groupon.com/v2/deals.json?client_id=0b6564adf4729e33998b869c7a55f1ed46128f5d&lat=37.424106&lng=-122.166076&show=startAt,endAt,title,merchant,options,largeImageUrl,highlightsHtml,pitchHtml,tags'
   
-    parsed_groupon = get_parsed_json f
+    parsed_groupon = get_parsed_json api_call
 
     parsed_groupon["deals"].each do |deal|
       # check that deal has physical redemption location

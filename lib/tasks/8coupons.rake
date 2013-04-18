@@ -10,20 +10,17 @@ def get_host_without_www(url)
   host.start_with?('www.') ? host[4..-1] : host
 end
 
-def get_parsed_json(f)
-  #result = Net::HTTP.get(URI.parse(api_call))
-  #JSON.parse(result)
-  
-  json = f.read
-  JSON.parse(json)
+def get_parsed_json(api)
+  result = Net::HTTP.get(URI.parse(api))
+  JSON.parse(result)
 end
 
 namespace :db do
   desc "Fill database with 8coupons.com data"
   task eightcoupons: :environment do
-    #api_call = 'http://api.8coupons.com/v1/getdeals?key=c7e1014c8278e03497628327b0ae75494150691e2b12e975b40fe569e624a0e4a4745ef7ccc2fcfcf7a1e5d2307e6894&zip=94305&mileradius=20'
-    f = open('./8coupons.json')
-    parsed_eightcoupons = get_parsed_json f
+    api_call = 'http://api.8coupons.com/v1/getdeals?key=c7e1014c8278e03497628327b0ae75494150691e2b12e975b40fe569e624a0e4a4745ef7ccc2fcfcf7a1e5d2307e6894&zip=94305&mileradius=20'
+
+    parsed_eightcoupons = get_parsed_json api_call
     
     parsed_eightcoupons.each do |deal|
       business_name = deal["name"]
