@@ -2,6 +2,7 @@ require 'rubygems'
 require 'json'
 #require 'sanitize'
 require 'uri'
+require 'net/http'
 
 # Only parses twice if url doesn't start with a scheme
 def get_host_without_www(url)
@@ -11,18 +12,23 @@ def get_host_without_www(url)
   host.start_with?('www.') ? host[4..-1] : host
 end
 
-def get_parsed_json
-  f = open("./groupon.json")
+def get_parsed_json(f)
+  #result = Net::HTTP.get(URI.parse(api_call)) 
+  #JSON.parse(result)
+  
   json = f.read
   JSON.parse(json)
 end
 
 namespace :db do
-  desc "Fill database with sample data"
+  desc "Fill database with Groupon data"
   task groupon: :environment do
-    parsed = get_parsed_json
+    #api_call = 'http://api.groupon.com/v2/deals.json?client_id=0b6564adf4729e33998b869c7a55f1ed46128f5d&lat=37.424106&lng=-122.166076&show=startAt,endAt,title,merchant,options,largeImageUrl,highlightsHtml,pitchHtml,tags'
+    f = open('./groupon.json')
+  
+    parsed_groupon = get_parsed_json f
 
-    parsed["deals"].each do |deal|
+    parsed_groupon["deals"].each do |deal|
       # check that deal has physical redemption location
       unless deal["options"][0]["redemptionLocations"][0].nil? then
         business_name = deal["merchant"]["name"]
@@ -31,7 +37,8 @@ namespace :db do
         
         # TODO what is business_email if business_url is nil?
         
-        business_email = "email@#{get_host_without_www(business_url)}" unless business_url.nil?
+        r = 1 + rand(999)
+        business_email = "email#{r}@#{get_host_without_www(business_url)}" unless business_url.nil?
         
         business_password = "password"
         
@@ -39,8 +46,8 @@ namespace :db do
         business = Business.create!(name: business_name,
                                     email: business_email,
                                     websiteURL: business_url,
-                                    password: "password",
-                                    password_confirmation: "password")
+                                    password: business_password,
+                                    password_confirmation: business_password)
         
         deal_title = deal["title"]
         deal_imageURL = deal["largeImageUrl"]
