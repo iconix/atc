@@ -22,6 +22,7 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history_and_map);
+		//TODO change the view
 		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
 		initMenubar();
@@ -177,15 +178,6 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
     private void reloadMapType() {
     	String mapViewType = getMapViewType();
     	mapFragment.updateMapType(mapViewType);
-		/*if (mapViewType.equals(PreferenceValue.MAP_VIEW_HYBRID)) {
-			googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-		} else if (mapViewType.equals(PreferenceValue.MAP_VIEW_SATELLITE)) {
-			googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-		} else if (mapViewType.equals(PreferenceValue.MAP_VIEW_TERRAIN)){
-			googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-		} else {
-			googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		}*/
     }
     
     //---------------------------------------------
