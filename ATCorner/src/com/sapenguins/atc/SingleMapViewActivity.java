@@ -23,7 +23,7 @@ public class SingleMapViewActivity extends FragmentActivity implements OnMenuIte
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.single_map);
-		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
+		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_single_fragment);
 		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
 
 		initMenubar();		
