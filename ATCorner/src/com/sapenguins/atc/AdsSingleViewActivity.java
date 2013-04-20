@@ -7,6 +7,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
+import supports.AppHttpClient;
 
 import android.app.Activity;
 import android.os.AsyncTask;

@@ -56,7 +56,7 @@ public class MapFragment extends Fragment implements LocationListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		context = getActivity();
-		View view = inflater.inflate(R.layout.map, container, false);
+		View view = inflater.inflate(R.layout.map_fragment, container, false);
 		
 		pinMarkerDataSource = new PinMarkerDataSource(context);
 		gpsLocationDataSource = new GpsLocationDataSource(context);

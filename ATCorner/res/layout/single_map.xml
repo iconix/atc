@@ -10,7 +10,7 @@
         android:name="com.sapenguins.atc.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" 
-        tools:layout="@layout/map"/>
+        tools:layout="@layout/map_fragment"/>
     
    
     
