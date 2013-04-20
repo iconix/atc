@@ -120,6 +120,15 @@ public class MapFragment extends Fragment implements LocationListener{
 	}
 	
 	/**
+	 * move the camera to a specific coordinate
+	 * @param the coordinate
+	 */
+	public void moveCamera(LatLng coordinate) {
+		CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(coordinate);
+        googleMap.animateCamera(cameraUpdate);
+	}
+	
+	/**
 	 * Check the provider that provide the map
 	 */
 	private void initProvider() {

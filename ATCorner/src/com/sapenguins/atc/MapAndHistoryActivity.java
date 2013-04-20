@@ -2,6 +2,9 @@ package com.sapenguins.atc;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.sapenguins.atc.HistoryListFragment.OnCoordinatePass;
+
 import staticVariables.PreferenceValue;
 import staticVariables.SharedPreference;
 import templates.CustomMenu;
@@ -16,7 +19,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 
-public class MapAndHistoryActivity extends FragmentActivity implements OnMenuItemSelectedListener {
+public class MapAndHistoryActivity extends FragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass{
 	MapFragment mapFragment;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,14 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
 		initMenubar();
 		reloadMapType();
+	}
+	
+	//---------------------------------------
+	//--HANDLE INTERACTIONS BETWEEN FRAGMENT-
+	//---------------------------------------
+	@Override
+	public void onCoordinatePass(LatLng coordinate) {
+	    mapFragment.moveCamera(coordinate);
 	}
     
     

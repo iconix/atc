@@ -52,7 +52,6 @@ public final class R {
         public static final int custom_menu_item_caption=0x7f080007;
         public static final int custom_menu_item_icon=0x7f080006;
         public static final int custom_menu_table=0x7f080005;
-        public static final int fragment1=0x7f08000a;
         public static final int history_and_map_vertical=0x7f080008;
         public static final int history_list=0x7f08000c;
         public static final int history_list_fragment=0x7f08000b;
@@ -61,6 +60,7 @@ public final class R {
         public static final int history_list_view_row_image=0x7f080001;
         public static final int history_list_view_row_title=0x7f080002;
         public static final int inputPin=0x7f08000d;
+        public static final int list_history_fragment=0x7f08000a;
         public static final int mapIcon=0x7f080017;
         public static final int map_history_fragment=0x7f080009;
         public static final int map_single_fragment=0x7f08001e;
@@ -93,7 +93,6 @@ public final class R {
         public static final int map_fragment=0x7f03000a;
         public static final int single_map=0x7f03000b;
         public static final int singlead=0x7f03000c;
-        public static final int test_list_item=0x7f03000d;
     }
     public static final class menu {
         public static final int main=0x7f070000;
