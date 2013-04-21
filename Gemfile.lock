@@ -90,7 +90,6 @@ GEM
     method_source (0.8.1)
     mime-types (1.22)
     multi_json (1.7.2)
-    mysql2 (0.3.11)
     nokogiri (1.5.9)
     polyglot (0.3.3)
     pry (0.9.12)
@@ -185,7 +184,6 @@ DEPENDENCIES
   guard-spork (= 1.2.0)
   jquery-rails
   libnotify (= 0.5.9)
-  mysql2
   rails (= 3.2.12)
   rb-inotify (= 0.8.8)
   rspec-rails (= 2.11.0)

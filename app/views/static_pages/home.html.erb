@@ -35,19 +35,30 @@
   <body>
 
     <!-- Header -->
-    <div class ="container masthead">
-      <div class="navbar">
-        <form class="navbar-form pull-right" method="link" action="/signin">
-          <input type="text" placeholder="Email">
-          <input type="password" placeholder="Password">
-          <button type="submit" class="btn">Sign in</button>
-        </form>
-        <h3><a href="/" style="color: #777777">Around the Corner</a></h3>
-      </div>
+    <div id="header" class ="masthead">
+    	<div class="container center">
+				<div id="header-logo">
+					<a href="/"><img src="/assets/logo_trans.png" alt="logo", width="200px" height="160px">	</a>		
+				</div>
+		    <div id="header-navbar" class="navbar">
+		      <form class="navbar-form pull-right" method="link" action="/signin">
+		        <input type="text" placeholder="Email">
+		        <input type="password" placeholder="Password">
+		        <button type="submit" class="btn">Sign in</button>
+		      </form>
+					<!--        
+					<h3><a href="/" style="color: #777777">Around the Corner</a></h3>
+					-->
+		    </div>
+				<div class="new-account">
+					<p> New to the corner? <a href="/signup">CREATE AN ACCOUNT</a> </p>
+				</div>
+			</div>
     </div>
-    <hr>
+    <!-- hr -->
 
     <!-- Welcome -->
+		<!--
     <div class="container center">
       <div class="jumbotron">
           <h1>Welcome to Around the Corner</h1>
@@ -57,14 +68,48 @@
           <a href="/signup" class="btn btn-primary">Sign up now!</a>
       </div>
     </div>
-
-    <hr>
-
+		<hr>
+		-->
+		
+		<!-- Dynamic panel -->
+		<div id="dynamic-panel">
+			<div class="container center">
+				<!--div class="span4"-->
+					<div class="dynamic-panel-text">
+						<h3>Offers & Deals</h3>
+				    <p>Keep and attract new customers with personalized and targeted offers.</p>
+				    <p><a class="btn" href="#">View details &raquo;</a></p>
+		      </div>
+		      <div class="dynamic-panel-image">
+		      	<img src="/assets/deal_list_crop.png" alt="Rails", width="250" height="250">
+		      </div>
+		    <!--/div-->
+      </div>
+		</div>
+		
+		<!-- Content panel -->
+		<div id="content-panel">
+			<div class="container center">
+				<div class="row">
+					<div class="content span4">
+						Feature #1 placeholder ...
+					</div>
+					<div class="content span4">
+						Feature #2 placeholder ...
+					</div>
+					<div class="content span4">
+						Feature #3 placeholder ...
+					</div>
+				</div>
+			</div>
+		</div>
+    
     <!-- Messages -->
+    <!--
     <div class="container center">
       <div class="row">
         <div class="span4">
-        <img src="/assets/deal_list.png" alt="Rails", width="350" height="350">
+        	<img src="/assets/deal_list.png" alt="Rails", width="350" height="350">
           <h3>Offers & Deals</h3>
           <p>Keep and attract new customers with personalized and targeted offers.</p>
           <p><a class="btn" href="#">View details &raquo;</a></p>
@@ -82,14 +127,22 @@
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
       </div>
-
-      <hr>
-
+			<hr>
+			-->
+      
       <!-- Footer -->
-      <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p class="pull-left">&copy; 2013 Company, Inc. &middot; <%= link_to "About Us", about_path %> &middot; <%= link_to "Contact", contact_path %></p>
-      </footer>
+      <div id="footer">
+		    <div class="container center">
+				  <footer>
+				    <!-- p class="pull-right"><a href="#">Back to top</a></p -->
+				    <p class="pull-left"> 
+				    	<%= link_to "About Us", about_path %> 
+				    	&middot; <%= link_to "Contact Us", contact_path %>
+				    </p>
+				    <p class="pull-right">&copy; 2013 Around the Corner, Inc.</p> 
+				  </footer>
+		    </div>
+		  </div>
     </div>
 
 

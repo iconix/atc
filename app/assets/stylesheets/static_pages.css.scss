@@ -1,3 +1,91 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$stanford_cardinal_color: #990000;
+$header_bkcolor: $stanford_cardinal_color;
+$header_text_color: #FFFFFF;
+$min_container_width: 980px;
+
+#header {
+	height: 100px;
+	/*min-width: $min_container_width;*/
+	background-color: $header_bkcolor;
+	
+	box-shadow: inset 0 -8px 6px -6px rgba(0,0,0,.3);
+	/* http://www.css3.info/preview/box-shadow/ */
+	/* http://css-tricks.com/snippets/css/css-box-shadow/ */
+}
+
+#header-logo {
+	/*margin-left: 10px;*/
+	float: left;
+}
+
+#header-navbar {
+	margin-top: 15px;
+	/*margin-right: 10px;*/
+}
+.new-account {
+	float: right;
+	margin-top: 10px;
+	/*margin-right: 10px;*/
+	color: $header_text_color;
+}
+
+$dynamic_panel_top_color: $header_bkcolor;
+$dynamic_panel_bottom_color: /*#FF4F4A*/#FF9693;
+$dynamic_panel_text_color: $header_text_color;
+
+#dynamic-panel {
+	height: 400px;
+	
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Opera */ 
+	background-image: -o-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $dynamic_panel_bottom_color), color-stop(1, $dynamic_panel_top_color));
+
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to top, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+}
+
+.dynamic-panel-text {
+	padding-top: 100px;
+	color: $dynamic_panel_text_color;
+	float: left;
+	text-align: left;
+}
+
+.dynamic-panel-image {
+	float: right;
+	margin-top: 0px;
+	margin-right: 200px;
+}
+
+#content-panel {
+	height: 300px;
+}
+
+.content {
+	margin-top: 25px;
+	height: 250px;
+	width: 290px;
+	//background-color: #86bde8;
+	border: 1px solid;
+}
+
+#footer {
+	height: 70px;
+	background-color: rgb(242,242,242);
+	box-shadow: inset 0 8px 6px -6px rgba(0,0,0,.3);
+}
