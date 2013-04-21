@@ -1,3 +1,14 @@
+GIT
+  remote: git://github.com/thoughtbot/paperclip.git
+  revision: 7d807c6af3e89c56e2e846352074f2eac1620115
+  specs:
+    paperclip (3.4.1)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.0)
+      mime-types
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -44,6 +55,10 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coderay (1.0.9)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
@@ -88,11 +103,12 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     method_source (0.8.1)
-    mime-types (1.22)
+    mime-types (1.23)
     multi_json (1.7.2)
+    mysql2 (0.3.11)
     nokogiri (1.5.9)
     polyglot (0.3.3)
-    pry (0.9.12)
+    pry (0.9.12.1)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
@@ -184,6 +200,8 @@ DEPENDENCIES
   guard-spork (= 1.2.0)
   jquery-rails
   libnotify (= 0.5.9)
+  mysql2
+  paperclip!
   rails (= 3.2.12)
   rb-inotify (= 0.8.8)
   rspec-rails (= 2.11.0)

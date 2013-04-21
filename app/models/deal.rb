@@ -41,6 +41,9 @@ class Deal < ActiveRecord::Base
 									:saturday, :address, :promotionOrEvent, :business_id
 
   belongs_to :business
+  
+  attr_accessible :image
+  has_attached_file :image
 
 	validates :business_id, presence: true
 	validates :title, presence: true

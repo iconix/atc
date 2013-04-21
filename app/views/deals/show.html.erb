@@ -6,7 +6,10 @@
 		<p>Start date: <%= @deal.startDate %></p>
 		<p>End date: <%= @deal.startDate %></p>
 		<% if @deal.imageURL %>
-			<p>Image URL: <%= @deal.imageURL %></p>
+			<p>Image URL: <%= image_tag @deal.imageURL %></p>
+		<% end %>
+  	<% if @deal.image %>
+			<p>Image Upload: <%= image_tag @deal.image.url %></p>
 		<% end %>
 		<% if @deal.shortDescription %>
 			<p>Short description: <%= @deal.shortDescription %></p>

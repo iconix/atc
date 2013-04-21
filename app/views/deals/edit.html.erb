@@ -3,7 +3,7 @@
 
 <div class="row">
   <div class="span6 offset3">
-    <%= form_for(@deal) do |f| %>
+    <%= form_for @deal, :html => { :multipart => true } do |f| %>
       <%= render 'shared/deal_error_messages' %>
 
       <%= f.label :title %>
@@ -42,7 +42,7 @@
       <%= f.text_field :imageURL %>
 
       <%= f.label :"Upload Image" %>
-      <%= f.text_field :imageUpload, :type =>"file" %>
+      <%= f.file_field :image %>
       
       <br>
       <%= f.label :"Tag" %>
