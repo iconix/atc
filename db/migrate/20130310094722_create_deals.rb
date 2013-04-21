@@ -9,7 +9,6 @@ class CreateDeals < ActiveRecord::Migration
       t.string 		:title
 			t.integer		:imageOption
 			t.string		:imageURL
-			t.binary		:imageUpload, limit: 2.megabytes
 			t.string		:shortDescription
 			t.text			:longDescription, limit: 1024
 			t.string		:firstTag

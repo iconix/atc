@@ -34,7 +34,7 @@
 
 class Deal < ActiveRecord::Base
   attr_accessible :longitude, :latitude, :startDate, 
-									:endDate, :title, :imageOption, :imageURL, :imageUpload,
+									:endDate, :title, :imageOption, :imageURL,
 									:shortDescription, :longDescription, :firstTag,
 									:secondTag, :thirdTag, :startTime, :endTime, :sunday,
 									:monday, :tuesday, :wednesday, :thursday, :friday,
@@ -43,7 +43,9 @@ class Deal < ActiveRecord::Base
   belongs_to :business
   
   attr_accessible :image
-  has_attached_file :image
+  has_attached_file :image, 
+                    :url  => "/assets/deals/:id/:style/:basename.:extension",
+                    :path => ":rails_root/public/assets/deals/:id/:style/:basename.:extension"
 
 	validates :business_id, presence: true
 	validates :title, presence: true
