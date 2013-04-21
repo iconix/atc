@@ -1,3 +1,7 @@
 # cache for current jar dependecy. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
+1366497476000 393154 307c1cc532eabbf1d135b43e5c983c9da700449d /Users/minhthaonguyen/git/sociallyawesomepenguins/ATCorner/libs/android-support-v4.jar
+1366497715000 393154 307c1cc532eabbf1d135b43e5c983c9da700449d /Users/minhthaonguyen/Desktop/JakeWharton-ActionBarSherlock-c47975f/actionbarsherlock/libs/android-support-v4.jar
+1365759801000 380917 19584d79c3c85315cbd9227c1b7abe781ab1ae76 /Users/minhthaonguyen/git/sociallyawesomepenguins/ATCorner/libs/google-play-services.jar
+1365759801000 380917 19584d79c3c85315cbd9227c1b7abe781ab1ae76 /Users/minhthaonguyen/Desktop/adt-bundle-mac-x86_64-20130219/sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar

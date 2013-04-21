@@ -178,6 +178,7 @@ public class MapFragment extends Fragment implements LocationListener{
                 final View v = li.inflate(R.layout.inputpin, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setView(v);
+                builder.setTitle("Mark The Location");
                 builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
