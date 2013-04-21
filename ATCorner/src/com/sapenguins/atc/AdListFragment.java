@@ -1,5 +1,6 @@
 package com.sapenguins.atc;
 
+
 import java.util.ArrayList;
 
 import org.apache.http.NameValuePair;
@@ -8,38 +9,33 @@ import org.apache.http.message.BasicNameValuePair;
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
 import supports.AppHttpClient;
-
-import android.app.Activity;
+import templates.AdListViewAdapter;
+import android.app.ListFragment;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ListView;
 
-public class AdsSingleViewActivity extends Activity{
+public class AdListFragment extends ListFragment {
+	Context context;
 	
-	String title;
-	/* (non-Javadoc)
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.singlead);
-		
-		TextView text = (TextView) findViewById(R.id.singleAdTitle);
-		text.setText("testing");
-		
-		//getAds();
-		
-		
-		
+	public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    context = getActivity();
+	    getAds();
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+
 	}
 	
 	private void getAds() {
 		
 		new AsyncTask<Void, Void, String>() {
-			
-				
+							
 			@Override
 			protected String doInBackground(Void... params) {
 				
@@ -53,24 +49,13 @@ public class AdsSingleViewActivity extends Activity{
 				return null;
 			}
 			
-			
 			protected void onPostExecute(String result) {
 				if (result != null) {
-					
 					String[] ads = result.split(SpecialCharacters.endLn);
-					String length = "" + ads.length;
-					String test = ads[200];
-					String[] content = test.split(SpecialCharacters.delimiter);
-					String contentLength = "" + content.length;
-					
-					TextView text = (TextView)findViewById(R.id.singleAdTitle);
-					
-					text.setText(contentLength);
-					
+					AdListViewAdapter adapter = new AdListViewAdapter(context, R.layout.ad_list_row, ads);
+					setListAdapter(adapter);
 				}
 			}
 		}.execute();
 	}
-	
-
 }

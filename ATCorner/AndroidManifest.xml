@@ -67,6 +67,12 @@
             android:label="Map View">
         </activity>
         
+        <activity
+            android:name="com.sapenguins.atc.AdListActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:label="List View">
+        </activity>
+        
         <service 
             android:name="com.sapenguins.atc.RecordGpsLocationsService"
             android:enabled="true">
