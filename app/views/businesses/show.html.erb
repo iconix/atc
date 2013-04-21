@@ -10,21 +10,27 @@
     </section>
   </aside>
 	<div class="span8">
-    <a href="/newdeal" class="btn btn-primary">New deal!</a>
-		<h3> Your Deals: </h3>
-		<% if @business.deals.any? %>
-			<ol>
-				<% @deals.each do |d| %>
-					<% if d.title %>
-						<li>
-							<%= link_to d.title, deal_path(d) %>
-              <%= d.title %>. 
-              <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
-              <%= link_to "Edit", edit_deal_path(d) %>
-            </li>
-					<% end %>
-				<% end %>
-			</ol>
+	  <% unless current_business.admin? then %>
+      <a href="/newdeal" class="btn btn-primary">New deal!</a>
+		  <h3> Your Deals: </h3>
+		  <% unless @business.deals.any? %>
+			  <ol>
+				  <% @deals.each do |d| %>
+					  <% if d.title %>
+						  <li>
+							  <%= link_to d.title, deal_path(d) %>
+                <%= d.title %>. 
+                <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+                <%= link_to "Edit", edit_deal_path(d) %>
+              </li>
+					  <% end %>
+				  <% end %>
+			  </ol>
+		  <% end %>
+		<% else %>  
+		  <h3> Administrator Pages </h3>
+		   <h4><%= link_to "Show all businesses", businesses_path %></h4>
+		   <h4><%= link_to "Show all deals", "#" %></h4>
 		<% end %>
 	</div>
 </div>

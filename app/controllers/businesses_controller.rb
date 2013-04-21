@@ -1,4 +1,5 @@
 class BusinessesController < ApplicationController
+  before_filter :signed_in_business
 
   def show
     @business = Business.find(params[:id])
@@ -48,4 +49,16 @@ class BusinessesController < ApplicationController
       end
     end
   end
+  
+  def index
+    if current_business.admin?
+      @businesses = Business.all
+    end
+  end
+  
+  def destroy
+	  Business.find(params[:id]).destroy
+    flash[:success] = "Business destroyed."
+    redirect_to businesses_url
+	end
 end

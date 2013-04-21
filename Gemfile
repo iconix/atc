@@ -4,8 +4,8 @@ gem 'rails', '3.2.12'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
-#gem 'will_paginate', '3.0.3'
-#gem 'bootstrap-will_paginate', '0.0.6'
+#gem 'will_paginate'
+#gem 'bootstrap-will_paginate'
 gem 'jquery-rails'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 

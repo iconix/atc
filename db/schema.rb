@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421195407) do
+ActiveRecord::Schema.define(:version => 20130421214413) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -41,8 +41,9 @@ ActiveRecord::Schema.define(:version => 20130421195407) do
     t.decimal  "longitude",                          :precision => 15, :scale => 10
     t.text     "address"
     t.integer  "phoneNumber"
-    t.datetime "created_at",                                                         :null => false
-    t.datetime "updated_at",                                                         :null => false
+    t.datetime "created_at",                                                                            :null => false
+    t.datetime "updated_at",                                                                            :null => false
+    t.boolean  "admin",                                                              :default => false
   end
 
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true
