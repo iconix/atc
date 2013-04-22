@@ -6,12 +6,22 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import objects.BasicPromotion;
 import objects.HistoryRowItem;
 import objects.PromotionRowItem;
+import supports.ImageDownloader;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.sapenguins.atc.R;
 
 import android.app.Activity;
@@ -31,11 +41,24 @@ import android.text.TextUtils;
 public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 
 	Context context;
+	DisplayImageOptions options;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
+	ImageLoader imageLoader;
 	
 	public PromotionListViewAdapter(Context context, int textViewResourceId,
 			List<PromotionRowItem> objects) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
+		options = new DisplayImageOptions.Builder()
+		.showStubImage(R.drawable.no_photo_icon)
+		.showImageForEmptyUri(R.drawable.no_photo_icon)
+		.showImageOnFail(R.drawable.no_photo_icon)
+		.cacheInMemory()
+		.cacheOnDisc()
+		.displayer(new RoundedBitmapDisplayer(20))
+		.build();
+		imageLoader = ImageLoader.getInstance();
+		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 
 	/**
@@ -74,6 +97,8 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 		holder.description.setText(promotionRowItem.getDescription());
 		
 		holder.distance.setText(promotionRowItem.getDistance());
+		
+		imageLoader.displayImage(promotionRowItem.getImageUrl(), holder.imageIcon, options, animateFirstListener);
 		/*Bitmap bitmap = null;
 		try {
 			bitmap = BitmapFactory.decodeStream((InputStream)new URL(promotionRowItem.getImageUrl()).getContent());
@@ -84,9 +109,25 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 		}
 		if (bitmap != null)	{
 			holder.imageIcon.setImageBitmap(bitmap);
-		} else*/ holder.imageIcon.setImageResource(R.drawable.no_photo_icon);
+		} else holder.imageIcon.setImageResource(R.drawable.no_photo_icon);*/
 		return convertView;
 	}
 	
 	
+	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+
+		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+
+		@Override
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					FadeInBitmapDisplayer.animate(imageView, 500);
+					displayedImages.add(imageUri);
+				}
+			}
+		}
+	}
 }
