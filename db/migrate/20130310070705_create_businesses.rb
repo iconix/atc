@@ -8,7 +8,7 @@ class CreateBusinesses < ActiveRecord::Migration
 			t.string		:websiteURL
 			t.integer		:imageOption
 			t.string		:imageURL
-			t.string		:shortDescription
+			t.text  		:shortDescription
 			t.text		  :longDescription
 			t.time			:sundayOpenTime
 			t.time			:sundayCloseTime

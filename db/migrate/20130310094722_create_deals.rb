@@ -10,8 +10,8 @@ class CreateDeals < ActiveRecord::Migration
       t.string 		:title
 			t.integer		:imageOption
 			t.string		:imageURL
-			t.string		:shortDescription
-			t.text			:longDescription, limit: 1024
+			t.text		  :shortDescription
+			t.text			:longDescription
 			t.string		:firstTag
 			t.string		:secondTag
 			t.string		:thirdTag

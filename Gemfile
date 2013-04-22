@@ -7,7 +7,7 @@ gem 'faker', '1.0.1'
 #gem 'will_paginate'
 #gem 'bootstrap-will_paginate'
 gem 'jquery-rails'
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip", "~> 3.0"
 
 group :development, :test do
   gem 'sqlite3'
@@ -41,7 +41,6 @@ group :test do
   gem 'libnotify', '0.5.9'
 end
 group :production do
-  gem 'sqlite3'
-  #gem 'mysql2'
+  gem 'mysql2'
   #gem 'pg'
 end
