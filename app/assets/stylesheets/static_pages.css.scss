@@ -38,7 +38,7 @@ $dynamic_panel_bottom_color: /*#FF4F4A*/#FF9693;
 $dynamic_panel_text_color: $header_text_color;
 
 #dynamic-panel {
-	height: 400px;
+	height: 300px;
 	
 	/* IE10 Consumer Preview */ 
 	background-image: -ms-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
@@ -60,16 +60,16 @@ $dynamic_panel_text_color: $header_text_color;
 }
 
 .dynamic-panel-text {
-	padding-top: 100px;
+	padding-top: 50px;
 	color: $dynamic_panel_text_color;
-	float: left;
+	//float: left;
 	text-align: left;
 }
 
 .dynamic-panel-image {
-	float: right;
-	margin-top: 0px;
-	margin-right: 200px;
+	//float: right;
+	margin-top: 20px;
+	//margin-right: 200px;
 }
 
 #content-panel {
@@ -79,9 +79,16 @@ $dynamic_panel_text_color: $header_text_color;
 .content {
 	margin-top: 25px;
 	height: 250px;
-	width: 290px;
+	width: 280px;
 	//background-color: #86bde8;
-	border: 1px solid;
+	//border: 1px solid;
+	text-align: left;
+}
+.content-image {
+	height: 120px;
+}
+.content-text {
+	text-align: left;
 }
 
 #footer {
