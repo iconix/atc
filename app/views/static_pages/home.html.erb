@@ -41,9 +41,9 @@
 					<a href="/"><img src="/assets/logo_trans.png" alt="logo", width="200px" height="160px">	</a>		
 				</div>
 		    <div id="header-navbar" class="navbar">
-		      <form class="navbar-form pull-right" method="link" action="/signin">
-		        <input type="text" placeholder="Email">
-		        <input type="password" placeholder="Password">
+		      <form class="navbar-form pull-right" method="post" action="/sessions">
+		        <input type="text" name="session[email]" placeholder="Email">
+		        <input type="password" name="session[password]" placeholder="Password">
 		        <button type="submit" class="btn">Sign in</button>
 		      </form>
 					<!--        
@@ -51,7 +51,7 @@
 					-->
 		    </div>
 				<div class="new-account">
-					<p> New to the corner? <a href="/signup">CREATE AN ACCOUNT</a> </p>
+					<p> New to the corner? <%= link_to "CREATE AN ACCOUNT", signup_path %> </p>
 				</div>
 			</div>
     </div>
