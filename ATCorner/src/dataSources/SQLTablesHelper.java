@@ -17,12 +17,17 @@ public class SQLTablesHelper extends SQLiteOpenHelper {
 	    public static final String COORDINATE_TIME = "time";
 	    
 	    //pin table
-	    public static final String PIN_TABLE_NAME = "PinTable";
+	    public static final String PIN_TABLE_NAME = "MyPinTable";
 	    public static final String PIN_TITLE = "title";
 	    public static final String PIN_DESCRIPTION = "description";
 	    public static final String PIN_LONGITUDE = "longitude";
 	    public static final String PIN_LATITUDE = "latitude";
 	    public static final String PIN_TIME = "time";
+	    public static final String PIN_TYPE = "type";
+	    
+	    //type of pin
+	    public static final String PIN_TYPE_MARK = "mark";
+	    public static final String PIN_TYPE_PICTURE = "picture";
 	    
 	    private final String TABLE_COORDINATE_CREATE = "create table if not exists " + COORDINATE_TABLE_NAME + "( "
 	            + COORDINATE_LONGITUDE + " real, " 
@@ -34,7 +39,8 @@ public class SQLTablesHelper extends SQLiteOpenHelper {
 	    		+ PIN_DESCRIPTION + " text, "
 	    		+ PIN_LONGITUDE + " real, " 
 	    		+ PIN_LATITUDE + " real, "
-	    		+ COORDINATE_TIME + " integer);";
+	    		+ COORDINATE_TIME + " integer, " 
+	    		+ PIN_TYPE + " text);";
 	    
 	    
 	    //default constructor

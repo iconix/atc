@@ -34,7 +34,6 @@
         
         <activity
             android:name="com.sapenguins.atc.MainActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,32 +44,22 @@
         
         <activity 
             android:name="com.sapenguins.atc.MainMenu"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:label="Menu">
         </activity>
         
         <activity
             android:name="com.sapenguins.atc.MapAndHistoryActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="History">
-        </activity>
-        
-        <activity
-            android:name="com.sapenguins.atc.AdsSingleViewActivity"
-           	android:theme="@android:style/Theme.NoTitleBar"
             android:label="History">
         </activity>
         
         <activity
             android:name="com.sapenguins.atc.SingleMapViewActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:label="Map View">
         </activity>
         
         <activity
-            android:name="com.sapenguins.atc.AdListActivity"
-            android:theme="@android:style/Theme.NoTitleBar"
-            android:label="List View">
+            android:name="com.sapenguins.atc.PromotionListActivity"
+            android:label="Promotions">
         </activity>
         
         <service 

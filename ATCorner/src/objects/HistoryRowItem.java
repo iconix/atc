@@ -1,4 +1,4 @@
-package templates;
+package objects;
 
 public class HistoryRowItem {
 	int imageId;

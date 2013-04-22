@@ -1,10 +1,14 @@
 package com.sapenguins.atc;
 
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import objects.GpsLocationObj;
+import objects.PinMarkerObj;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -18,9 +22,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import dataSources.GpsLocationDataSource;
-import dataSources.GpsLocationObj;
 import dataSources.PinMarkerDataSource;
-import dataSources.PinMarkerObj;
+import dataSources.SQLTablesHelper;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -228,7 +231,7 @@ public class MapFragment extends Fragment implements LocationListener{
      * @param the longitude and latitude of the location of the pin
      */
     private void addPinToDB(String title, String description, LatLng latlng) {
-        PinMarkerObj pin = new PinMarkerObj(title, description, latlng.longitude, latlng.latitude, getTimeStamp());
+        PinMarkerObj pin = new PinMarkerObj(title, description, latlng.longitude, latlng.latitude, getTimeStamp(), SQLTablesHelper.PIN_TYPE_MARK);
     	pinMarkerDataSource.addPin(pin);
     }
     
@@ -237,6 +240,7 @@ public class MapFragment extends Fragment implements LocationListener{
      */
     private void addPinsFromDB() {
     	pinMarkerObjects = pinMarkerDataSource.getPins();
+    	if (pinMarkerObjects == null) return;
     	for (PinMarkerObj pin : pinMarkerObjects) {
     		addPin(pin.getTitle(), pin.getDescription(), new LatLng(pin.getLatitude(), pin.getLongitude()), false);
     	}	

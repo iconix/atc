@@ -2,6 +2,8 @@ package templates;
 
 import java.util.List;
 
+import objects.HistoryRowItem;
+
 import com.sapenguins.atc.R;
 
 import android.app.Activity;

@@ -2,6 +2,8 @@ package dataSources;
 
 import java.util.ArrayList;
 
+import objects.GpsLocationObj;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

@@ -2,6 +2,8 @@ package dataSources;
 
 import java.util.ArrayList;
 
+import objects.PinMarkerObj;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +14,7 @@ public class PinMarkerDataSource {
 	SQLiteDatabase db;
 	
 	String[] columns = {SQLTablesHelper.PIN_TITLE, SQLTablesHelper.PIN_DESCRIPTION,
-			SQLTablesHelper.PIN_LONGITUDE, SQLTablesHelper.PIN_LATITUDE, SQLTablesHelper.PIN_TIME};
+			SQLTablesHelper.PIN_LONGITUDE, SQLTablesHelper.PIN_LATITUDE, SQLTablesHelper.PIN_TIME, SQLTablesHelper.PIN_TYPE};
 	
 	public PinMarkerDataSource(Context context) {
 		pinTableHelper = new SQLTablesHelper(context);
@@ -37,7 +39,7 @@ public class PinMarkerDataSource {
 		contents.put(SQLTablesHelper.PIN_LONGITUDE, pin.getLongitude());
 		contents.put(SQLTablesHelper.PIN_LATITUDE, pin.getLatitude());
 		contents.put(SQLTablesHelper.PIN_TIME, pin.getTime());
-		
+		contents.put(SQLTablesHelper.PIN_TYPE, pin.getPinType());
 		db.insert(SQLTablesHelper.PIN_TABLE_NAME, null, contents);
 	}
 	
@@ -49,11 +51,12 @@ public class PinMarkerDataSource {
 		ArrayList<PinMarkerObj> pins = new ArrayList<PinMarkerObj>();
 		Cursor cursor = db.query(SQLTablesHelper.PIN_TABLE_NAME, columns, 
 				null, null, null, null, SQLTablesHelper.PIN_TIME);
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			PinMarkerObj pin = cursorToPin(cursor);
-			pins.add(pin);
-			cursor.moveToNext();
+		if (cursor!= null && cursor.moveToFirst()) {
+			while (!cursor.isAfterLast()) {
+				PinMarkerObj pin = cursorToPin(cursor);
+				pins.add(pin);
+				cursor.moveToNext();
+			}
 		}
 		cursor.close();
 		return pins;
@@ -152,6 +155,6 @@ public class PinMarkerDataSource {
 	 */
 	private PinMarkerObj cursorToPin(Cursor cursor) {
 		return new PinMarkerObj(cursor.getString(0), cursor.getString(1),
-				cursor.getDouble(2), cursor.getDouble(3), cursor.getLong(4));
+				cursor.getDouble(2), cursor.getDouble(3), cursor.getLong(4), cursor.getString(5));
 	}
 }

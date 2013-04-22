@@ -48,7 +48,8 @@ public class PromotionsManager {
 			 Statement stmt = connection.createStatement();
     		 ResultSet rs = stmt.executeQuery(query);
     		 rs.beforeFirst();
-    		 while (rs.next()) {
+    		 if (rs.next()) {
+    			 
     			 Promotion promotion = new Promotion(rs.getString(DEAL_ID), 
     					 rs.getString(BUSINESS_ID),
     					 rs.getDouble(LATITUDE), rs.getDouble(LONGITUDE), 
@@ -65,6 +66,40 @@ public class PromotionsManager {
     					 rs.getString(ADDRESS), rs.getBoolean(PROMOTION_OR_EVENT),
     					 rs.getString(CREATED_AT), rs.getString(UPDATED_AT));
     			 promotions.add(promotion);
+    		 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return promotions;
+	}
+	
+	public ArrayList<BasicPromotion> queryBasicPromotion(Connection connection) {
+		ArrayList<BasicPromotion> promotions = new ArrayList<BasicPromotion>();
+		String query = "select * from " + TableNames.TABLE_DEAL;
+		try {
+			 Statement stmt = connection.createStatement();
+    		 ResultSet rs = stmt.executeQuery(query);
+    		 rs.beforeFirst();
+    		 while (rs.next()) {
+    			 String shortDescription = " ";
+    			 String unparsedShortDescription = rs.getString(SHORT_DESCRIPTION);
+    			 if (!rs.wasNull()) {
+    				 int shortDescriptionStart = unparsedShortDescription.indexOf("<p>");
+        			 int shortDescriptionEnd = unparsedShortDescription.indexOf("</p>");
+        			 if ((shortDescriptionStart != -1) && (shortDescriptionEnd != -1)) 
+        				 shortDescription = unparsedShortDescription.substring(shortDescriptionStart + 3, shortDescriptionEnd);
+        			 else shortDescription = unparsedShortDescription;
+    			 }
+    			
+    			
+    			 BasicPromotion promotion = new BasicPromotion(rs.getString(DEAL_ID), 
+    					 rs.getString(TITLE),
+    					 rs.getDouble(LATITUDE), 
+    					 rs.getDouble(LONGITUDE),
+    					 rs.getString(IMAGE_URL), 
+    					 shortDescription);
+    			 promotions.add(promotion);
+   
     		 }
 		} catch (SQLException e) {
 			e.printStackTrace();

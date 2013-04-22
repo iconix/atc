@@ -2,22 +2,27 @@ package com.sapenguins.atc;
 
 import java.util.ArrayList;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.widget.ArrayAdapter;
 
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
 import templates.CustomMenu;
 import staticVariables.*;
 
-public class SingleMapViewActivity extends FragmentActivity implements OnMenuItemSelectedListener {
+public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener  {
 
 	MapFragment mapFragment;
+	ActionBar actionBar;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +33,30 @@ public class SingleMapViewActivity extends FragmentActivity implements OnMenuIte
 
 		initMenubar();		
 		reloadMapType();
+		
+		//init action bar?
+		initActionBar();
+		actionBar.hide();
 	}
+    
+	private void initActionBar() {
+		setTheme(R.style.Theme_Sherlock);
+		//requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		actionBar = getSupportActionBar();
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
+		Context context = getSupportActionBar().getThemedContext();
+        ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.dropDownMapMenu, R.layout.sherlock_spinner_item);
+        list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+        actionBar.setListNavigationCallbacks(list, this);
+        
+	}
+	
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        return true;
+    }
     
     //---------------------------------------
     //--------CREATE MENU BAR ---------------
@@ -54,6 +82,8 @@ public class SingleMapViewActivity extends FragmentActivity implements OnMenuIte
     public boolean onKeyDown(int keyCode, KeyEvent event) { 
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             doMenu();
+            if (actionBar.isShowing()) actionBar.hide();
+            else actionBar.show();
             return true; //always eat it!
         }
         return super.onKeyDown(keyCode, event); 

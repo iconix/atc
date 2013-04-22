@@ -17,7 +17,7 @@ import android.widget.Toast;
 import staticVariables.*;
 
 public class MainActivity extends FragmentActivity {
-
+	
 	public static final String RECORD_GPS_LOCATION_SERVICE = "com.sapenguins.atc.RecordGpsLocationsService";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

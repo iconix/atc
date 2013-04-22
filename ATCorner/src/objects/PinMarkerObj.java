@@ -1,4 +1,4 @@
-package dataSources;
+package objects;
 
 public class PinMarkerObj {
 	private String title;
@@ -6,6 +6,7 @@ public class PinMarkerObj {
 	private double latitude;
 	private double longitude;
 	private long time;
+	private String pinType;
 	
 	/**
 	 * Empty constructor for PinMarkerObj
@@ -19,13 +20,15 @@ public class PinMarkerObj {
 	 * @param description
 	 * @param latitude
 	 * @param longitude
+	 * @param pinType
 	 */
-	public PinMarkerObj(String title, String description, double longitude, double latitude, long time){
+	public PinMarkerObj(String title, String description, double longitude, double latitude, long time, String pinType){
 		this.title = title;
 		this.description = description;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = time;
+		this.pinType = pinType;
 	}
 	
 	/**
@@ -35,13 +38,15 @@ public class PinMarkerObj {
 	 * @param description
 	 * @param latitude
 	 * @param longitude
+	 * @param pinType
 	 */
-	public PinMarkerObj(String title, String description, double longitude, double latitude, String time){
+	public PinMarkerObj(String title, String description, double longitude, double latitude, String time, String pinType){
 		this.title = title;
 		this.description = description;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = Long.valueOf(time);
+		this.pinType = pinType;
 	}
 	
 	/**
@@ -51,13 +56,15 @@ public class PinMarkerObj {
 	 * @param description
 	 * @param latitude
 	 * @param longitude
+	 * @param pinType
 	 */
-	public PinMarkerObj(String title, String description, String longitude, String latitude, String time){
+	public PinMarkerObj(String title, String description, String longitude, String latitude, String time, String pinType){
 		this.title = title;
 		this.description = description;
 		this.latitude = Double.valueOf(latitude);
 		this.longitude = Double.valueOf(longitude);
 		this.time = Long.valueOf(time);
+		this.pinType = pinType;
 	}
 
 	/**
@@ -149,5 +156,19 @@ public class PinMarkerObj {
 	 */
 	public void setTime(String time) {
 		this.time = Long.valueOf(time);
+	}
+
+	/**
+	 * @return the pinType
+	 */
+	public String getPinType() {
+		return pinType;
+	}
+
+	/**
+	 * @param pinType the pinType to set
+	 */
+	public void setPinType(String pinType) {
+		this.pinType = pinType;
 	}
 }

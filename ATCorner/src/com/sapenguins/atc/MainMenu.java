@@ -46,7 +46,7 @@ public class MainMenu extends Activity{
         dealsView.setOnClickListener(new ImageView.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent i = new Intent(getApplicationContext(), AdListActivity.class);
+                Intent i = new Intent(getApplicationContext(), PromotionListActivity.class);
                 startActivity(i);
             }
         }); 

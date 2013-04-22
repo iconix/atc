@@ -2,12 +2,13 @@ package com.sapenguins.atc;
 
 import java.util.ArrayList;
 
+import objects.HistoryRowItem;
+import objects.PinMarkerObj;
+
 import com.google.android.gms.maps.model.LatLng;
 import templates.HistoryListViewAdapter;
-import templates.HistoryRowItem;
 
 import dataSources.PinMarkerDataSource;
-import dataSources.PinMarkerObj;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

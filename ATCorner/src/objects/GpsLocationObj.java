@@ -1,4 +1,4 @@
-package dataSources;
+package objects;
 
 public class GpsLocationObj {
 	double longitude;

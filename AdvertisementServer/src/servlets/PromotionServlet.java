@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import staticVariables.SpecialCharacters;
+
 import db.DBConnection;
 
 /**
@@ -49,13 +51,22 @@ public class PromotionServlet extends HttpServlet {
 	private void checkForDealOutputRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String dealRequest = (String) request.getParameter("deal");
 		if (dealRequest != null) {
-			ArrayList<Promotion> promotions = promotionManager.queryPromotion(connection);
+			/*ArrayList<Promotion> promotions = promotionManager.queryPromotion(connection);
 			if (promotions == null) return;
 			
 			response.setContentType("text/plain");
 			PrintWriter out = response.getWriter();
-			for (Promotion promotion : promotions)
-				out.println(promotion.getPromotionString());
+			for (Promotion promotion : promotions) {
+				out.print(promotion.getPromotionString() + SpecialCharacters.endLn);
+			}*/
+			
+			ArrayList<BasicPromotion> promotions = promotionManager.queryBasicPromotion(connection);
+			if (promotions != null) {
+				response.setContentType("text/plain");
+				PrintWriter out = response.getWriter();
+				for (BasicPromotion promotion : promotions) 
+					out.println(promotion.getBasicPromotionString());
+			}
 		}
 	}
 	

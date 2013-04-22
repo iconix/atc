@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="dropDownMapMenu">
+        <item>History</item>
+        <item>Location</item>
+        <item>Promotion</item>
+        <item>Event</item>
+        <item>Follow</item>
+        <item>Calendar</item>
+        <item>Preference</item>
+        <item>Profile</item>
+    </string-array>
+     
+</resources>

@@ -5,8 +5,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import objects.GpsLocationObj;
+
 import dataSources.GpsLocationDataSource;
-import dataSources.GpsLocationObj;
 
 import android.app.Service;
 import android.content.Context;
