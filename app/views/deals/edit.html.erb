@@ -43,6 +43,9 @@
 
       <%= f.label :"Upload Image" %>
       <%= f.file_field :image %>
+      <% unless @deal.image_file_size.nil? %>
+        <p>(Current upload: <%= @deal.image_file_name %>)</p>
+      <% end %>
       
       <br>
       <%= f.label :"Tag" %>

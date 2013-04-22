@@ -51,7 +51,6 @@ class Deal < ActiveRecord::Base
                     :url  => "/assets/deals/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/assets/deals/:id/:style/:basename.:extension"
 
-	#validate :business_id_and_web_business_id
 	validates :title, presence: true
 	validates :startDate, presence: true
 	validates :endDate, presence: true
@@ -59,12 +58,4 @@ class Deal < ActiveRecord::Base
 	#validates :latitude, presence: true
 
   default_scope order: 'deals.created_at DESC'
-  
-  private
-  
-    '''def business_id_and_web_business_id
-      if (business_id.blank? && web_business_id.blank?)
-        errors.add("Specify either a business_id or web_business_id")
-      end
-    end'''
 end

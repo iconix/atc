@@ -1,16 +1,27 @@
 <% provide(:title, @deal.title) %>
 <div class="container row">
 	<div class="span6">
+	  <br />
+    <p>
+      <% d = Deal.find(params[:id]) %>
+      <% unless d.business_id.nil? then %>
+        <% b = Business.find(d.business_id) %>
+		  	<%= link_to "<< View all deals", business_path(b) %>
+		  <% else %>
+		    <% b = WebBusiness.find(d.web_business_id) %>
+    		<%= link_to "<< View all deals", web_business_path(b) %>
+    	<% end %>
+  	</p>
 		<h1><%= current_business.name%>: <%= @deal.title %></h1>
 		<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
 		<p>Start date: <%= @deal.startDate %></p>
 		<p>End date: <%= @deal.startDate %></p>
-		<% if @deal.imageURL %>
-			<p>Image URL: <%= image_tag @deal.imageURL %></p>
-		<% end %>
-  	<% if @deal.image %>
-			<p>Image Upload: <%= image_tag @deal.image.url %></p>
-		<% end %>
+		<p>Image URL: 
+		  <% unless @deal.imageURL.empty? %> <%= image_tag @deal.imageURL %>
+		</p> <% end %>
+		<p>Image Upload: 
+  		<% unless @deal.image_file_name.nil? %> <%= image_tag @deal.image.url %>
+	  </p> <% end %>
 		<% if @deal.shortDescription %>
 			<p>Short description: <%= @deal.shortDescription %></p>
 		<% end %>
