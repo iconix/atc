@@ -13,10 +13,12 @@
     </section>
   </aside>
 	<div class="span8">
-	  <% unless current_business.admin? then %>
+	  <% unless current_business.admin? %>
       <a href="/newdeal" class="btn btn-primary">New deal!</a>
+    <% end %>
+	  <% unless @business.admin? then %>
 		  <h3> Your Deals: </h3>
-		  <% unless @business.deals.any? %>
+		  <% if @business.deals.any? %>
 			  <ol>
 				  <% @deals.each do |d| %>
 					  <% if d.title %>
@@ -25,8 +27,8 @@
                 <%= d.title %>. 
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
                 <%= link_to "Edit", edit_deal_path(d) %>
-                <% if current_business.admin? then %>
-                  <%= link_to "Delete", deal_path(d), method: :delete,
+                <% if current_business.admin? || current_business?(@business) then %>
+                  <%= link_to "Delete", d, method: :delete,
                                                       data: { confirm: "You sure?" },
                                                       title: d.title %>
                 <% end %>

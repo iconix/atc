@@ -32,9 +32,8 @@ class DealsController < ApplicationController
     @deal = @business.deals.find(params[:id])
 	end
 
-	def destroy
-	  @deal = self.show
-	  @deal.destroy
+	def destroy   
+	  Deal.find(params[:id]).destroy
     flash[:success] = "Deal destroyed."
     redirect_to :back
 	end

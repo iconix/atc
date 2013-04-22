@@ -1,89 +1,63 @@
-<% provide(:title, 'New deal') %>
+<% provide(:title, "New deal") %> 
+<h1>Create your deal</h1>
 
-<div class="container">
-  <div class="row">
-		<div class="span12">
-			<form accept-charset="UTF-8" action="/deals" class="new_deal form-signin" id="new_deal" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="TVegYAm8AxgFJYoqvhsyPVIAb5JyboMbwrq/+lEIc2w=" /></div>
-				<h1 class="center">New Deal</h1>
-				
-				<%= render 'shared/deal_error_messages' %>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for @deal, :html => { :multipart => true } do |f| %>
+      <%= render 'shared/deal_error_messages' %>
 
-				<label for="deal_title">Title</label>
-				<input id="deal_title" name="deal[title]" type="text" class="input-block-level" />
-	
-				<label for="deal_short_description">Short Description </label>
-				<input id="deal_short_description" name="deal[shortDescription]" 
-				type="text" class="input-block-level" />
+      <%= f.label :title %>
+      <%= f.text_field :title %>
 
-				<label for="deal_long_description">Long Description</label>
-				<input id="deal_long_description" name="deal[longDescription]" 
-				type="text" class="input-block-level" />
+      <%= f.label :"Short Description" %>
+      <%= f.text_field :shortDescription %>
 
-				<label for="deal_start_date">Start Date</label>
-				<input id="deal_start_date" name="deal[startDate]" type="date" />
+      <%= f.label :"Long Description" %>
+      <%= f.text_field :longDescription %>
 
-				<label for="deal_end_date">End Date</label>
-				<input id="deal_end_date" name="deal[endDate]" type="date" />
+      <%= f.label :"Start Date" %>
+      <%= f.text_field :startDate, :type => "date" %>
 
-				<label for="deal_start_time">Start Time</label>
-				<input id="deal_start_time" name="deal[startTime]" type="time" />
+      <%= f.label :"End Date" %>
+      <%= f.text_field :endDate, :type => "date" %>
 
-				<label for="deal_end_time">End Time</label>
-				<input id="deal_end_time" name="deal[endTime]" type="time" />
+      <%= f.label :"Start Time" %>
+      <%= f.text_field :startTime, :type => "time" %>
 
-				<p>Days</p>
-				<label class="nowrap">
-					<input name="deal[sunday]" type="checkbox" checked>Sunday
-				</label>
-				<label class="nowrap">
-					<input name="deal[monday]" type="checkbox" checked>Monday
-				</label>
-				<label class="nowrap">
-					<input name="deal[tuesday]" type="checkbox" checked>Tuesday
-				</label>
-				<label class="nowrap">
-					<input name="deal[wednesday]" type="checkbox" checked>Wednesday
-				</label>
-				<label class="nowrap">
-					<input name="deal[thursday]" type="checkbox" checked>Thursday
-				</label>
-				<label class="nowrap">
-					<input name="deal[friday]" type="checkbox" checked>Friday
-				</label>
-				<label class="nowrap">
-					<input name="deal[saturday]" type="checkbox" checked>Saturday
-				</label>
+      <%= f.label :"End Time" %>
+      <%= f.text_field :endTime, :type => "time" %>
 
-				<label for="deal_image_url">Image URL</label>
-				<input id="deal_image_url" name="deal[imageURL]" type="text" 
-				class="input-block-level"/>
+      <br>
+      <p>Days</p>
+      <%= f.check_box :sunday %> Sunday <br>
+      <%= f.check_box :monday %> Monday <br>
+      <%= f.check_box :tuesday %> Tuesday <br>
+      <%= f.check_box :wednesday %> Wednesday <br>
+      <%= f.check_box :thursday %> Thursday <br>
+      <%= f.check_box :friday %> Friday <br>
+      <%= f.check_box :saturday %> Saturday <br>
+      
+      <br>
+      <%= f.label :"Image URL" %>
+      <%= f.text_field :imageURL %>
 
-				<label for="deal_image_upload">Upload Image</label>
-				<input id="deal_image_upload" name="deal[imageUpload]" 
-				type="file" />
+      <%= f.label :"Upload Image" %>
+      <%= f.file_field :image %>
+      
+      <br>
+      <%= f.label :"Tag" %>
+      <%= f.text_field :firstTag %>
 
-				<label for="deal_first_tag">Tag</label>
-				<input id="deal_first_tag" name="deal[firstTag]" type="text" 
-				class="input-block-level"/>
+      <%= f.label :"Tag" %>
+      <%= f.text_field :secondTag %>
 
-				<label for="deal_second_tag">Tag</label>
-				<input id="deal_second_tag" name="deal[secondTag]" type="text" 
-				class="input-block-level" />
+      <%= f.label :"Tag" %>
+      <%= f.text_field :thirdTag %>
 
-				<label for="deal_third_tag">Tag</label>
-				<input id="deal_third_tag" name="deal[thirdTag]" type="text" 
-				class="input-block-level" />
+      <br>
+      <%= f.submit "Create Deal", class: "btn btn-small btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-small btn-primary", style: "margin-left: 20px;" %>
+    <% end %>
 
-				<!--
-				<label for="deal_longitude">Longitude</label>
-				<input id="deal_longitude" name="deal[longitude]" type="number" step="any" min="-180" max="180" />
-
-				<label for="deal_latitude">Latitude</label>
-				<input id="deal_latitude" name="deal[latitude]" type="number" step="any" min="-90" max="90" />
-				-->
-
-        <input class="btn btn-large btn-primary center" name="commit" type="submit" value="Create Deal" />
-			</form>
-		</div>
-	</div>
+  </div>
 </div>
