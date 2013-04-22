@@ -1,4 +1,7 @@
 <% provide(:title, 'All web businesses') %>
+<% if current_business.admin? then %>
+  <%= link_to "<< View profile", current_business %>
+<% end %>
 <h1>All web businesses</h1>
 
 <ul class="businesses">

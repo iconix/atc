@@ -1,6 +1,9 @@
 <% provide(:title, @business.name) %>
 <div class="jumbotron row">
   <aside class="span4">
+    <% if current_business.admin? && !current_business?(@business) then %>
+      <%= link_to "<< View all businesses", businesses_path %>
+    <% end %>
     <section>
       <h1>
         <!-- <%= gravatar_for @business %> -->

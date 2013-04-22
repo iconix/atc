@@ -18,15 +18,18 @@ class DealsController < ApplicationController
 	def show
 	  if current_business.admin? then
 	    if (params[:controller] == 'businesses') then
-  	    b = Business.find(params[:id])
+  	    @business = Business.find(params[:id])
+  	    @control = 'businesses'
   	  else
-  	    b = WebBusiness.find(params[:id])
+  	    @business = WebBusiness.find(params[:id])
+  	    @control = 'web_businesses'
   	  end
 	  else
-  		b = current_business
+  		@business = current_business
+  		@control = 'businesses'
     end
     
-    @deal = b.deals.find(params[:id])
+    @deal = @business.deals.find(params[:id])
 	end
 
 	def destroy
