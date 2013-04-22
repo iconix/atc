@@ -1,0 +1,12 @@
+<% provide(:title, 'Site Statistics') %>
+<div class="container jumbotron">
+  <% if current_business.admin? %>
+    <%= link_to "<< View profile", current_business %>
+	  <h1>Site Statistics</h1>
+    <br />
+    <h4>Total number of businesses: <%= Business.all.size + WebBusiness.all.size %></h4>
+	  <h4>Number of businesses unique to site: <%= Business.all.size %></h4>
+    <h4>Number of businesses pulled from web APIs: <%= WebBusiness.all.size %></h4>
+    <h4>Total number of deals: <%= Deal.all.size %></h4>    
+  <% end %>
+</div>
