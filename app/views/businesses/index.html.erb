@@ -8,7 +8,9 @@
   <% @businesses.each do |business| %>
     <li>
       <%= link_to business.name, business %>
+      (<%= business.deals.all.size %>)
       <% if current_business.admin? && !current_business?(business) %>
+        | (<%= business.deals.all.size %> deals)
         | <%= link_to "delete", business, method: :delete,
                                       data: { confirm: "You sure?" } %>
       <% end %>
