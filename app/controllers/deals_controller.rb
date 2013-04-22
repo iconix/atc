@@ -33,6 +33,10 @@ class DealsController < ApplicationController
 	end
 
 	def destroy
+	  @deal = self.show
+	  @deal.destroy
+    flash[:success] = "Deal destroyed."
+    redirect_to :back
 	end
 
   def edit
