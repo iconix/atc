@@ -32,7 +32,6 @@
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toLeftOf="@+id/promotion_list_view_row_distance"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="test"
         android:textColor="#040404"
         android:textIsSelectable="false"
         android:textSize="15sp"
@@ -67,7 +66,6 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/promotion_list_view_row_description"
         android:layout_alignTop="@+id/promotion_list_view_row_title"
-        android:text="2.14mi"
         android:textColor="#ff0000"/>
 
 </RelativeLayout>

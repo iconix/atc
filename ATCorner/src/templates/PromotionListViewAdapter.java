@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.text.TextUtils;
 
 
 public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
@@ -63,8 +64,15 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 			holder.imageIcon = (ImageView) convertView.findViewById(R.id.promotion_list_view_row_image);
 			convertView.setTag(holder);
 		} else holder = (ViewHolder) convertView.getTag();
+		
+		holder.title.setSingleLine();
+		holder.title.setEllipsize(TextUtils.TruncateAt.END);	
 		holder.title.setText(promotionRowItem.getTitle());
+		
+		holder.description.setMaxLines(2);
+		holder.description.setEllipsize(TextUtils.TruncateAt.END);
 		holder.description.setText(promotionRowItem.getDescription());
+		
 		holder.distance.setText(promotionRowItem.getDistance());
 		/*Bitmap bitmap = null;
 		try {
