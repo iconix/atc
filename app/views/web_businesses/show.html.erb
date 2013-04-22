@@ -23,8 +23,8 @@
               <%= d.title %>. 
               <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
               <%= link_to "Edit", edit_deal_path(d) %>
-              <% if current_business.admin? then %>
-                <%= link_to "Delete", deal_path(d), method: :delete,
+              <% if current_business.admin? || current_business?(@business) then %>
+                <%= link_to "Delete", d, method: :delete,
                                                     data: { confirm: "You sure?" },
                                                     title: d.title %>
               <% end %>

@@ -1,5 +1,5 @@
 class BusinessesController < ApplicationController
-  before_filter :signed_in_business
+  before_filter :signed_in_business, only: [:show, :edit, :update, :index, :destroy]
 
   def show
     @business = Business.find(params[:id])

@@ -1,11 +1,6 @@
 <% provide(:title, @deal.title) %>
 <div class="container row">
 	<div class="span6">
-	  <p><% if @control == 'businesses' then %>
-			<%= link_to "<< View all deals", business_path(@business) %>
-		<% else %>
-  		<%= link_to "<< View all deals", web_business_path(@business) %>
-  	<% end %></p><br />
 		<h1><%= current_business.name%>: <%= @deal.title %></h1>
 		<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
 		<p>Start date: <%= @deal.startDate %></p>
