@@ -97,7 +97,7 @@ namespace :db do
       deal_address = "#{address1}\n#{address2}\n#{city}, #{state} #{zipCode}"
       
       # Rails call
-      business.deals.create!(business_id: business.id,
+      business.deals.create!(web_business_id: business.id,
                              latitude: deal_latitude,
                              longitude: deal_longitude,
                              startDate: deal_startDate,
