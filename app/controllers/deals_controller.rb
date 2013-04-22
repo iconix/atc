@@ -16,20 +16,7 @@ class DealsController < ApplicationController
 	end
 
 	def show
-	  if current_business.admin? then
-	    if (params[:controller] == 'businesses') then
-  	    @business = Business.find(params[:id])
-  	    @control = 'businesses'
-  	  else
-  	    @business = WebBusiness.find(params[:id])
-  	    @control = 'web_businesses'
-  	  end
-	  else
-  		@business = current_business
-  		@control = 'businesses'
-    end
-    
-    @deal = @business.deals.find(params[:id])
+	  @deal = Deal.find(params[:id])
 	end
 
 	def destroy   
@@ -39,7 +26,7 @@ class DealsController < ApplicationController
 	end
 
   def edit
-    @deal = self.show
+    @deal = Deal.find(params[:id])
   end
 
   def update
@@ -48,7 +35,7 @@ class DealsController < ApplicationController
       return
     end
     
-    @deal = self.show
+    @deal = Deal.find(params[:id])
     
     if @deal.update_attributes(params[:deal])
       flash[:success] = "Deal updated"
