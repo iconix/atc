@@ -1,0 +1,14 @@
+<% provide(:title, 'All web businesses') %>
+<h1>All web businesses</h1>
+
+<ul class="businesses">
+  <% @web_businesses.each do |web_business| %>
+    <li>
+      <%= link_to web_business.name, web_business %>
+      <% if current_business.admin? %>
+        | <%= link_to "delete", web_business, method: :delete,
+                                      data: { confirm: "You sure?" } %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

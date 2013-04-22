@@ -28,17 +28,20 @@ namespace :db do
       business_url = deal["homepage"] # optional field
       business_url = deal["storeURL"] unless (business_url.is_a? String and !business_url.empty?)
       
-      r = 1 + rand(999)
-      business_email = "email#{r}@#{get_host_without_www(business_url)}" unless business_url.nil?
+      #r = 1 + rand(999)
+      #business_email = "email#{r}@#{get_host_without_www(business_url)}" unless business_url.nil?
       
-      business_password = "password"
+      #business_password = "password"
       
       # Rails call
-      business = Business.create!(name: business_name,
+      '''business = Business.create!(name: business_name,
                                   email: business_email,
                                   websiteURL: business_url,
                                   password: business_password,
-                                  password_confirmation: business_password)
+                                  password_confirmation: business_password)'''
+      business = WebBusiness.create!(name: business_name,
+                                       websiteURL: business_url,
+                                       web_source: "8coupons")
       
       deal_title = deal["dealTitle"]
       deal_imageURL = deal["showImage"]

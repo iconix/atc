@@ -3,7 +3,7 @@ namespace :db do
   task admins: :environment do
 
     business = Business.create!(name: "SAPenguins",
-                     email: "admin@aroundthecorner.com",
+                     email: "admin@atc.com",
                      password: "sapenguins",
                      password_confirmation: "sapenguins")
     business.toggle!(:admin)

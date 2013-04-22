@@ -9,7 +9,7 @@ class CreateBusinesses < ActiveRecord::Migration
 			t.integer		:imageOption
 			t.string		:imageURL
 			t.string		:shortDescription
-			t.string		:longDescription, limit: 1024
+			t.text		  :longDescription
 			t.time			:sundayOpenTime
 			t.time			:sundayCloseTime
 			t.time			:mondayOpenTime
@@ -27,7 +27,7 @@ class CreateBusinesses < ActiveRecord::Migration
 			t.decimal		:latitude, precision: 15, scale: 10
 			t.decimal		:longitude, precision: 15, scale: 10
 			t.text			:address
-			t.integer		:phoneNumber
+			t.string		:phoneNumber
 			
       t.timestamps
     end

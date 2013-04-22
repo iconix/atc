@@ -10,7 +10,6 @@
 #  websiteURL         :string(255)
 #  imageOption        :integer
 #  imageURL           :string(255)
-#  imageUpload        :binary(2097152)
 #  shortDescription   :string(255)
 #  longDescription    :string(1024)
 #  sundayOpenTime     :time
@@ -33,6 +32,7 @@
 #  phoneNumber        :integer
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  admin              :boolean          default(FALSE)
 #
 
 class Business < ActiveRecord::Base

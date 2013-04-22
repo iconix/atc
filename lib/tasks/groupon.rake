@@ -33,17 +33,20 @@ namespace :db do
         
         # TODO what is business_email if business_url is nil?
         
-        r = 1 + rand(999)
-        business_email = "email#{r}@#{get_host_without_www(business_url)}" unless business_url.nil?
+        #r = 1 + rand(999)
+        #business_email = "email#{r}@#{get_host_without_www(business_url)}" unless business_url.nil?
         
-        business_password = "password"
+        #business_password = "password"
         
         # Rails call
-        business = Business.create!(name: business_name,
+        '''business = Business.create!(name: business_name,
                                     email: business_email,
                                     websiteURL: business_url,
                                     password: business_password,
-                                    password_confirmation: business_password)
+                                    password_confirmation: business_password)'''
+        business = WebBusiness.create!(name: business_name,
+                                         websiteURL: business_url,
+                                         web_source: "Groupon")
         
         deal_title = deal["title"]
         deal_imageURL = deal["largeImageUrl"]

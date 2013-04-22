@@ -1,0 +1,2 @@
+module WebBusinessesHelper
+end

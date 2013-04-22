@@ -2,34 +2,37 @@
 #
 # Table name: deals
 #
-#  id               :integer          not null, primary key
-#  business_id      :integer
-#  longitude        :decimal(15, 10)
-#  latitude         :decimal(15, 10)
-#  startDate        :date
-#  endDate          :date
-#  title            :string(255)
-#  imageOption      :integer
-#  imageURL         :string(255)
-#  imageUpload      :binary(2097152)
-#  shortDescription :string(255)
-#  longDescription  :text(1024)
-#  firstTag         :string(255)
-#  secondTag        :string(255)
-#  thirdTag         :string(255)
-#  startTime        :time
-#  endTime          :time
-#  sunday           :boolean
-#  monday           :boolean
-#  tuesday          :boolean
-#  wednesday        :boolean
-#  thursday         :boolean
-#  friday           :boolean
-#  saturday         :boolean
-#  address          :text
-#  promotionOrEvent :boolean
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                 :integer          not null, primary key
+#  business_id        :integer
+#  longitude          :decimal(15, 10)
+#  latitude           :decimal(15, 10)
+#  startDate          :date
+#  endDate            :date
+#  title              :string(255)
+#  imageOption        :integer
+#  imageURL           :string(255)
+#  shortDescription   :string(255)
+#  longDescription    :text(1024)
+#  firstTag           :string(255)
+#  secondTag          :string(255)
+#  thirdTag           :string(255)
+#  startTime          :time
+#  endTime            :time
+#  sunday             :boolean
+#  monday             :boolean
+#  tuesday            :boolean
+#  wednesday          :boolean
+#  thursday           :boolean
+#  friday             :boolean
+#  saturday           :boolean
+#  address            :text
+#  promotionOrEvent   :boolean
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
 #
 
 class Deal < ActiveRecord::Base
@@ -41,6 +44,7 @@ class Deal < ActiveRecord::Base
 									:saturday, :address, :promotionOrEvent, :business_id
 
   belongs_to :business
+  belongs_to :web_businesses
   
   attr_accessible :image
   has_attached_file :image, 

@@ -16,25 +16,37 @@ class DealsController < ApplicationController
 	end
 
 	def show
-		@deal = current_business.deals.find(params[:id])
+	  if current_business.admin? then
+	    if (params[:controller] == 'businesses') then
+  	    b = Business.find(params[:id])
+  	  else
+  	    b = WebBusiness.find(params[:id])
+  	  end
+	  else
+  		b = current_business
+    end
+    
+    @deal = b.deals.find(params[:id])
 	end
 
 	def destroy
 	end
 
   def edit
-    @deal = current_business.deals.find(params[:id])
+    @deal = self.show
   end
 
   def update
     unless params[:cancel].blank?
-      redirect_to current_business
+      redirect_to :action => "show"
       return
     end
-    @deal = current_business.deals.find(params[:id])
+    
+    @deal = self.show
+    
     if @deal.update_attributes(params[:deal])
       flash[:success] = "Deal updated"
-      redirect_to current_business
+      redirect_to :action => "show"
     else
       render 'edit'
     end

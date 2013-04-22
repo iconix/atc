@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421214413) do
+ActiveRecord::Schema.define(:version => 20130421232035) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(:version => 20130421214413) do
     t.integer  "imageOption"
     t.string   "imageURL"
     t.string   "shortDescription"
-    t.string   "longDescription",    :limit => 1024
+    t.text     "longDescription"
     t.time     "sundayOpenTime"
     t.time     "sundayCloseTime"
     t.time     "mondayOpenTime"
@@ -37,13 +37,13 @@ ActiveRecord::Schema.define(:version => 20130421214413) do
     t.time     "fridayCloseTime"
     t.time     "saturdayOpenTime"
     t.time     "saturdayCloseTime"
-    t.decimal  "latitude",                           :precision => 15, :scale => 10
-    t.decimal  "longitude",                          :precision => 15, :scale => 10
+    t.decimal  "latitude",           :precision => 15, :scale => 10
+    t.decimal  "longitude",          :precision => 15, :scale => 10
     t.text     "address"
-    t.integer  "phoneNumber"
-    t.datetime "created_at",                                                                            :null => false
-    t.datetime "updated_at",                                                                            :null => false
-    t.boolean  "admin",                                                              :default => false
+    t.string   "phoneNumber"
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
+    t.boolean  "admin",                                              :default => false
   end
 
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20130421214413) do
 
   create_table "deals", :force => true do |t|
     t.integer  "business_id"
+    t.integer  "web_business_id"
     t.decimal  "longitude",                          :precision => 15, :scale => 10
     t.decimal  "latitude",                           :precision => 15, :scale => 10
     t.date     "startDate"
@@ -82,6 +83,19 @@ ActiveRecord::Schema.define(:version => 20130421214413) do
     t.datetime "image_updated_at"
   end
 
-  add_index "deals", ["business_id", "created_at"], :name => "index_deals_on_business_id_and_created_at"
+  add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals_on_business_id_and_web_business_id_and_created_at"
+
+  create_table "web_businesses", :force => true do |t|
+    t.string   "name"
+    t.string   "websiteURL"
+    t.integer  "imageOption"
+    t.string   "imageURL"
+    t.string   "shortDescription"
+    t.text     "longDescription"
+    t.string   "phoneNumber"
+    t.string   "web_source"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
 
 end

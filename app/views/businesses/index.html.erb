@@ -4,7 +4,6 @@
 <ul class="businesses">
   <% @businesses.each do |business| %>
     <li>
-      <%= gravatar_for business, size: 52 %>
       <%= link_to business.name, business %>
       <% if current_business.admin? && !current_business?(business) %>
         | <%= link_to "delete", business, method: :delete,

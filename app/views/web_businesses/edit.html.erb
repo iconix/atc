@@ -1,0 +1,37 @@
+<% provide(:title, "Edit profile") %> 
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <!-- %= gravatar_for @web_business %>
+    <a href="http://gravatar.com/emails">change avatar</a>
+    <br><br><br --!>
+
+    <%= form_for(@web_business) do |f| %>
+      <%= render 'shared/_web_business_error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :websiteURL %>
+      <%= f.text_field :websiteURL %>
+
+      <%= f.label :imageURL %>
+      <%= f.text_field :imageURL %>
+      
+      <%= f.label :shortDescription %>
+      <%= f.text_field :shortDescription %>
+      
+      <%= f.label :longDescription %>
+      <%= f.text_field :longDescription %>
+      
+      <%= f.label :phoneNumber %>
+      <%= f.text_field :phoneNumber %>
+
+      <br>
+      <%= f.submit "Save changes", class: "btn btn-small btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-small btn-primary", style: "margin-left: 20px;" %>
+    <% end %>
+
+  </div>
+</div>
