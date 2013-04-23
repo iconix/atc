@@ -10,16 +10,16 @@
 
 /* Custom CSS. */
 
+body {
+  color: #5a5a5a;
+	background-color: black;
+}
+
 label.nowrap { white-space:nowrap; }
 
 input[type=date],
 input[type=time] {
 	width: 287px;
-}
-
-body {
-  padding-bottom: 40px;
-  color: #5a5a5a;
 }
 
 aside {
@@ -124,17 +124,19 @@ input {
   padding: 15px 0px 0px 0px;
 }
 
-footer a {
-  color: #555;
-}  
-
-footer a:hover { 
-  color: #222;
+/*
+a:link { 
+  color: black;
 }
-
-footer {
-  padding-top: 20px; 
+a:visited { 
+  color: black;
 }
+a:hover { 
+  color: black;
+}
+a:active { 
+  color: black;
+}*/
 
 /* Custom CSS end. */
 
@@ -4744,10 +4746,14 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li > a {
   float: none;
-  padding: 10px 15px 10px;
-  color: #777777;
+	font-family: Lucida Sans Unicode;
+  padding: 20px 0px 10px;
+  /*padding: 10px 15px 10px;*/
+	color: black;
+	font-size: large;
+  /*color: #777777;*/
   text-decoration: none;
-  text-shadow: 0 1px 0 #ffffff;
+  /*text-shadow: 0 1px 0 #ffffff;*/
 }
 
 .navbar .nav .dropdown-toggle .caret {

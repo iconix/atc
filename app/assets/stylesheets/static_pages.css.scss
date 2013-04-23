@@ -8,9 +8,9 @@ $header_text_color: #FFFFFF;
 $min_container_width: 980px;
 
 #header {
-	height: 100px;
+	height: 80px;
 	/*min-width: $min_container_width;*/
-	background-color: $header_bkcolor;
+	background-color: #e5e5e5 /*white #C0C0C0$header_bkcolor*/;
 	
 	box-shadow: inset 0 -8px 6px -6px rgba(0,0,0,.3);
 	/* http://www.css3.info/preview/box-shadow/ */
@@ -19,22 +19,23 @@ $min_container_width: 980px;
 
 #header-logo {
 	/*margin-left: 10px;*/
+	margin-top: -2px;
 	float: left;
 }
 
 #header-navbar {
-	margin-top: 15px;
+	margin-top: 12px;
 	/*margin-right: 10px;*/
 }
 .new-account {
 	float: right;
 	margin-top: 10px;
 	/*margin-right: 10px;*/
-	color: $header_text_color;
+	color: #dcdcdc/*$header_text_color*/;
 }
 
 $dynamic_panel_top_color: $header_bkcolor;
-$dynamic_panel_bottom_color: /*#FF4F4A*/#FF9693;
+$dynamic_panel_bottom_color: $header_bkcolor/*#FF4F4A #FF9693*/;
 $dynamic_panel_text_color: $header_text_color;
 
 #dynamic-panel {
@@ -66,6 +67,10 @@ $dynamic_panel_text_color: $header_text_color;
 	text-align: left;
 }
 
+footer a{
+	color: black;
+}
+
 .dynamic-panel-image {
 	//float: right;
 	margin-top: 20px;
@@ -92,7 +97,9 @@ $dynamic_panel_text_color: $header_text_color;
 }
 
 #footer {
-	height: 70px;
+	padding-top: 30px; 
+	height: 50px;
+	width: 100%;
 	background-color: rgb(242,242,242);
 	box-shadow: inset 0 8px 6px -6px rgba(0,0,0,.3);
 }

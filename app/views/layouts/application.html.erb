@@ -8,14 +8,14 @@
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
   </head>
-  <body>
+  <body style="font-family: Lucida Sans Unicode">
     <%= render 'layouts/header' %>
-    <div class="container">
+    <!--<div class="container">-->
 			<% flash.each do |key, value| %>
         <div class="alert alert-<%= key %>"><%= value %></div>
       <% end %>
       <%= yield %>
-    </div>
+    <!--</div>-->
     <%= render 'layouts/footer' %>
   </body>
 </html>
