@@ -49,6 +49,7 @@ class DealsController < ApplicationController
 	private
 		def correct_user
 			@deal = current_business.deals.find_by_id(params[:id])
-			redirect_to :back if @deal.nil?
+		rescue
+			redirect_to :back
 		end
 end
