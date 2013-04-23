@@ -1,5 +1,6 @@
 class BusinessesController < ApplicationController
   before_filter :signed_in_business, only: [:show, :edit, :update, :index, :destroy]
+	before_filter :correct_business, only: [:edit, :update, :destroy, :index]
 
   def show
     @business = Business.find(params[:id])
@@ -22,12 +23,9 @@ class BusinessesController < ApplicationController
   end
 
   def edit
-    @business = Business.find(params[:id])
   end
 
   def update
-    @business = Business.find(params[:id])
-
     unless params[:cancel].blank?
       redirect_to @business
       return
@@ -61,4 +59,10 @@ class BusinessesController < ApplicationController
     flash[:success] = "Business destroyed."
     redirect_to businesses_url
 	end
+
+	private
+		def correct_business
+			@business = Business.find(params[:id])
+			redirect_to(root_path) unless current_business?(@business)
+		end
 end
