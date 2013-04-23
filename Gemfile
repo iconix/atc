@@ -40,7 +40,9 @@ group :test do
   gem 'rb-inotify', '0.8.8'
   gem 'libnotify', '0.5.9'
 end
+
 group :production do
-  gem 'sqlite3'
+  gem 'mysql2'
+	#gem 'sqlite3'
   #gem 'pg'
 end
