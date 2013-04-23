@@ -1,6 +1,6 @@
 class BusinessesController < ApplicationController
   before_filter :signed_in_business, only: [:show, :edit, :update, :index, :destroy]
-	before_filter :correct_business, only: [:edit, :update, :destroy, :index]
+	before_filter :correct_business, only: [:show, :edit, :update, :destroy, :index]
 
   def show
     @business = Business.find(params[:id])
@@ -64,5 +64,7 @@ class BusinessesController < ApplicationController
 		def correct_business
 			@business = Business.find(params[:id])
 			redirect_to(root_path) unless current_business?(@business)
+		rescue
+			redirect_to(root_path) if @business.nil?
 		end
 end

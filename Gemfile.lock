@@ -62,7 +62,7 @@ GEM
       multi_json (~> 1.0)
     faker (1.0.1)
       i18n (~> 0.4)
-    ffi (1.7.0)
+    ffi (1.8.1)
     formatador (0.2.4)
     guard (1.7.0)
       formatador (>= 0.2.4)
@@ -94,7 +94,6 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     multi_json (1.7.2)
-    mysql2 (0.3.11)
     nokogiri (1.5.9)
     paperclip (3.4.1)
       activemodel (>= 3.0.0)
@@ -195,7 +194,6 @@ DEPENDENCIES
   guard-spork (= 1.2.0)
   jquery-rails
   libnotify (= 0.5.9)
-  mysql2
   paperclip (~> 3.0)
   rails (= 3.2.12)
   rb-inotify (= 0.8.8)

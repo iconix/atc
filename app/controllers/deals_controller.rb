@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
 	before_filter :signed_in_business
-	before_filter :correct_user only :destroy
+	before_filter :correct_user,	only: :destroy
 	
 	def new
 		@deal = current_business.deals.build if signed_in?
@@ -47,7 +47,6 @@ class DealsController < ApplicationController
   end
 
 	private
-	
 		def correct_user
 			@deal = current_business.deals.find_by_id(params[:id])
 			redirect_to :back if @deal.nil?
