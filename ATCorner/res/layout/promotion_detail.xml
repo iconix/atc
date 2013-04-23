@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff" >
+
+        <!-- Header Starts -->
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bg"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <!-- Company Thumbnail Starts -->
+
+            <LinearLayout
+                android:id="@+id/thumbnail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/image_bg"
+                android:padding="3dip" >
+
+                <ImageView
+                    android:id="@+id/promotion_detail_image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+            <!-- Company Thumbnail Ends -->
+
+
+            <!-- Company Name Start -->
+
+            <TextView
+                android:id="@+id/promotion_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/thumbnail"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/thumbnail"
+                android:textColor="#372c24"
+                android:textSize="25dip"
+                tools:ignore="HardcodedText" />
+            <!-- Company Name End -->
+
+
+            <!-- Distance Start -->
+
+            <TextView
+                android:id="@+id/promotion_detail_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@id/promotion_detail_title"
+                android:layout_marginRight="5dip"
+                android:gravity="right"
+                android:textColor="#372c24"
+                android:textSize="10dip"
+                android:textStyle="bold" />
+            <!-- Distance End -->
+
+        </RelativeLayout>
+        <!-- Header Ends -->
+
+
+        <!-- Information Start -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:text="\nDescription"
+                android:textStyle="bold"
+                android:textColor="#372c24" />
+
+            <LinearLayout
+                android:id="@+id/descriptionBoxId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/text_container"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/promotion_detail_description"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:textColor="#372c24" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Information Ends -->
+
+    </RelativeLayout>
+
+</ScrollView>

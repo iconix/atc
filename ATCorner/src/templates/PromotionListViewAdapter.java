@@ -22,10 +22,12 @@ import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.sapenguins.atc.PromotionDetailActivity;
 import com.sapenguins.atc.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -110,6 +112,23 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 		if (bitmap != null)	{
 			holder.imageIcon.setImageBitmap(bitmap);
 		} else holder.imageIcon.setImageResource(R.drawable.no_photo_icon);*/
+		
+		final String promotionTitle = promotionRowItem.getTitle();
+		final String promotionDescription = promotionRowItem.getDescription();
+		final String promotionDistance = promotionRowItem.getDistance();
+		final String promotionImageUrl = promotionRowItem.getImageUrl();
+				
+		convertView.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				Intent i = new Intent(context, PromotionDetailActivity.class);
+				i.putExtra("promotionTitle", promotionTitle);
+				i.putExtra("promotionDescription", promotionDescription);
+				i.putExtra("promotionDistance", promotionDistance);
+				i.putExtra("promotionImageUrl", promotionImageUrl);
+				context.startActivity(i);
+			}
+		});
+		
 		return convertView;
 	}
 	
