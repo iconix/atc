@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import com.google.android.gms.maps.model.LatLng;
 
 import objects.BasicPromotion;
+import objects.PinMarkerObj;
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
 import supports.AppHttpClient;
@@ -20,13 +21,19 @@ import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 import objects.*;
 
 public class PromotionListFragment extends ListFragment {
+	
+	private static final double METERS_IN_MILE = 1609.344;
+	
 	ArrayList<BasicPromotion> basicPromotionObjects;
 	ArrayList<PromotionRowItem> promotionRowItems;
 	Context context;
@@ -43,7 +50,6 @@ public class PromotionListFragment extends ListFragment {
         if (provider == null) onProviderDisabled(provider); 
         
 	    getBasicPromotionsFromDB();
-	    //displayPromotion();
 	}
 	
 	/**
@@ -76,20 +82,10 @@ public class PromotionListFragment extends ListFragment {
     }
 	
 	
-	private void displayPromotion() {
-		new AsyncTask<Void, Void, String>() {
-			@Override
-			protected String doInBackground(Void... params) {
-				PromotionListViewAdapter adapter = new PromotionListViewAdapter(context, R.layout.promotion_list_row, promotionRowItems);
-				setListAdapter(adapter);
-				return null;
-			}
-		}.execute();
-	}
-	
-	
-
-	
+	/**
+	 * Get the basic information on promotions from the DB
+	 * Input these promotions into BasicPromotion array
+	 */
 	private void getBasicPromotionsFromDB() {
 		new AsyncTask<Void, Void, String>() {
 
@@ -121,13 +117,17 @@ public class PromotionListFragment extends ListFragment {
 		}.execute();
 	}
 	
+	/**
+	 * Get the list view row and display it in the list view
+	 */
 	private void getPromotionListViewRows() {
 		promotionRowItems = new ArrayList<PromotionRowItem>();
 		Location lastKnown = locationManager.getLastKnownLocation(provider);
-        LatLng latLng = new LatLng(lastKnown.getLatitude(), lastKnown.getLongitude());
 		for (BasicPromotion promotion : basicPromotionObjects) {
-			double distance = GpsDistance.calculateDistance(latLng.latitude, latLng.longitude,
-					promotion.getLatitude(), promotion.getLatitude());
+			Location promotionLocation = new Location(provider);
+			promotionLocation.setLatitude(promotion.getLatitude());
+			promotionLocation.setLongitude(promotion.getLongitude());
+			double distance = lastKnown.distanceTo(promotionLocation)/METERS_IN_MILE;	
 			String displayDistance = String.format("%.2f", distance) + " mi";
 			PromotionRowItem promotionRowItem = new PromotionRowItem(promotion.getTitle(),
 					promotion.getShortDescription(), 
@@ -136,5 +136,12 @@ public class PromotionListFragment extends ListFragment {
 		}
 		PromotionListViewAdapter adapter = new PromotionListViewAdapter(context, R.layout.promotion_list_row, promotionRowItems);
 		setListAdapter(adapter);
+	}
+	
+	public void onListItemClick(ListView l, View v, int position, long id) {
+	    BasicPromotion promotion = basicPromotionObjects.get(position);
+	    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
+		startActivity(intent);
 	}
 }
