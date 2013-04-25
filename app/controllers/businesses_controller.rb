@@ -1,6 +1,8 @@
 class BusinessesController < ApplicationController
-  before_filter :signed_in_business, only: [:show, :edit, :update, :index, :destroy]
-	before_filter :correct_business, only: [:show, :edit, :update, :destroy, :index]
+  before_filter :signed_in_business, 	only: [:show, :edit, :update, :index, :destroy]
+	before_filter :correct_business, 		only: [:edit, :update, :destroy]
+	#May be dangerous to allow all users to destroy?
+	#before_filter :admin_user,					only: :destroy 
 
   def show
     @business = Business.find(params[:id])
@@ -55,6 +57,7 @@ class BusinessesController < ApplicationController
   end
   
   def destroy
+		# ADD CODE TO PREVENT ADMIN FROM DELETING HIMSELF OR OTHER ADMIN
 	  Business.find(params[:id]).destroy
     flash[:success] = "Business destroyed."
     redirect_to businesses_url
@@ -63,8 +66,12 @@ class BusinessesController < ApplicationController
 	private
 		def correct_business
 			@business = Business.find(params[:id])
-			redirect_to(root_path) unless current_business?(@business)
+			redirect_to(root_path) unless (current_business?(@business) || current_business.admin?)
 		rescue
-			redirect_to(root_path) if @business.nil?
+			redirect_to(root_path)
 		end
+
+		def admin_user
+      redirect_to(root_path) unless current_business.admin?
+    end
 end
