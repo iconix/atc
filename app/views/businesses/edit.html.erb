@@ -1,31 +1,43 @@
 <% provide(:title, "Edit profile") %> 
-<h1>Update your profile</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <!-- %= gravatar_for @business %>
-    <a href="http://gravatar.com/emails">change avatar</a>
-    <br><br><br --!>
+<div class="business-update container">
+	<h1>Update your profile</h1>
+	<br>
 
-    <%= form_for(@business) do |f| %>
-      <%= render 'shared/business_error_messages' %>
+	<div class="row">
+		<div class="span6">
+		  <!-- %= gravatar_for @business %>
+		  <a href="http://gravatar.com/emails">change avatar</a>
+		  <br><br><br --!>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
+		  <%= form_for(@business) do |f| %>
+		    <%= render 'shared/business_error_messages' %>
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+		    <%= f.label :name %>
+		    <%= f.text_field :name %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+		    <%= f.label :email %>
+		    <%= f.text_field :email %>
 
-      <%= f.label :password_confirmation, "Confirm Password" %>
-      <%= f.password_field :password_confirmation %>
+		    <%= f.label :password %>
+		    <%= f.password_field :password %>
 
-      <br>
-      <%= f.submit "Save changes", class: "btn btn-small btn-primary" %>
-      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-small btn-primary", style: "margin-left: 20px;" %>
-    <% end %>
+		    <%= f.label :password_confirmation, "Confirm Password" %>
+		    <%= f.password_field :password_confirmation %>
 
-  </div>
+		    <br>
+		    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+		    <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-large btn-primary", style: "margin-left: 20px;" %>
+		  <% end %>
+
+		</div>
+		<div span6>
+			<h3> Current profile </h3>
+			<h1>
+        <!-- <%= gravatar_for @business %> -->
+        <%= @business.name %>
+      </h1>
+      <p> <%= @business.email %> </p>
+		</div>
+	</div>
 </div>

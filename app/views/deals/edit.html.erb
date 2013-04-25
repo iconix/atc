@@ -1,4 +1,73 @@
 <% provide(:title, "Edit deal") %> 
+
+<div class="deal-update container">
+	<h1>Update your deal</h1>
+	<br>
+	
+	<div class="row">
+		<%= form_for @deal, :html => { :multipart => true } do |f| %>
+			<%= render 'shared/deal_error_messages' %>
+			<div class="span4">
+		    <%= f.label :title %>
+		    <%= f.text_field :title %>
+
+		    <%= f.label :"Short Description (max 30 words)" %>
+		    <%= f.text_area :shortDescription, :rows => "3" %>
+
+		    <%= f.label :"Long Description" %>
+		    <%= f.text_area :longDescription, :rows => "4" %>
+		    
+		    <%= f.label :"Tags (separated by comma)" %>
+		    <%= f.text_field :firstTag %>
+				<!--
+		    <%= f.label :"Tag" %>
+		    <%= f.text_field :secondTag %>
+
+		    <%= f.label :"Tag" %>
+		    <%= f.text_field :thirdTag %>
+				-->
+		  </div>
+			<div class="span4">
+		    <%= f.label :"Start Date and time" %>
+		    <%= f.text_field :startDate, :type => "datetime-local" %>
+
+		    <%= f.label :"End Date and time" %>
+		    <%= f.text_field :endDate, :type => "datetime-local" %>
+				<!--
+		    <%= f.label :"Start Time" %>
+		    <%= f.text_field :startTime, :type => "time" %>
+
+		    <%= f.label :"End Time" %>
+		    <%= f.text_field :endTime, :type => "time" %>
+				-->
+		    <br><br>
+		    <p>Days of week</p>
+		    <%= f.check_box :sunday %> Sunday <br>
+		    <%= f.check_box :monday %> Monday <br>
+		    <%= f.check_box :tuesday %> Tuesday <br>
+		    <%= f.check_box :wednesday %> Wednesday <br>
+		    <%= f.check_box :thursday %> Thursday <br>
+		    <%= f.check_box :friday %> Friday <br>
+		    <%= f.check_box :saturday %> Saturday <br>
+		  </div>  
+		  <div class="span4">
+		    <%= f.label :"Image URL" %>
+		    <%= f.text_field :imageURL %>
+
+		    <%= f.label :"Or Upload Image" %>
+		    <%= f.file_field :image %>
+		    
+		    <br><br><br>
+		    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-large btn-primary", style: "margin-left: 20px;" %>
+			</div>
+		<% end %>
+	</div>
+</div>
+
+
+
+<!--
 <h1>Update your deal</h1>
 
 <div class="row">
@@ -64,3 +133,5 @@
 
   </div>
 </div>
+
+-->
