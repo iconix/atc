@@ -7,6 +7,11 @@ class DealsController < ApplicationController
 	end
 
 	def create
+		unless params[:cancel].blank?
+      redirect_to current_business
+      return
+    end
+    
 		@deal = current_business.deals.build(params[:deal])
     if @deal.save
       flash[:success] = "Deal created!"

@@ -42,7 +42,7 @@ group :test do
 end
 
 group :production do
-  gem 'mysql2'
-	#gem 'sqlite3'
+  #gem 'mysql2'
+	gem 'sqlite3'
   #gem 'pg'
 end
