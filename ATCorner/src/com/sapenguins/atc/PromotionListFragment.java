@@ -12,7 +12,6 @@ import objects.PinMarkerObj;
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
 import supports.AppHttpClient;
-import supports.GpsDistance;
 import templates.PromotionListViewAdapter;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -140,8 +139,22 @@ public class PromotionListFragment extends ListFragment {
 	
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	    BasicPromotion promotion = basicPromotionObjects.get(position);
-	    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+	    /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
-		startActivity(intent);
+		startActivity(intent);*/
+		final String promotionTitle = promotion.getTitle();
+		final String promotionDescription = promotion.getShortDescription();
+		final String promotionDistance = "1mi";
+		final String promotionImageUrl = promotion.getImageUrl();
+			
+	
+			Intent i = new Intent(context, PromotionDetailActivity.class);
+			i.putExtra("promotionTitle", promotionTitle);
+			i.putExtra("promotionDescription", promotionDescription);
+			i.putExtra("promotionDistance", promotionDistance);
+			i.putExtra("promotionImageUrl", promotionImageUrl);
+			context.startActivity(i);
+		
 	}
+	
 }

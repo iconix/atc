@@ -101,33 +101,6 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 		holder.distance.setText(promotionRowItem.getDistance());
 		
 		imageLoader.displayImage(promotionRowItem.getImageUrl(), holder.imageIcon, options, animateFirstListener);
-		/*Bitmap bitmap = null;
-		try {
-			bitmap = BitmapFactory.decodeStream((InputStream)new URL(promotionRowItem.getImageUrl()).getContent());
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		if (bitmap != null)	{
-			holder.imageIcon.setImageBitmap(bitmap);
-		} else holder.imageIcon.setImageResource(R.drawable.no_photo_icon);*/
-		
-		final String promotionTitle = promotionRowItem.getTitle();
-		final String promotionDescription = promotionRowItem.getDescription();
-		final String promotionDistance = promotionRowItem.getDistance();
-		final String promotionImageUrl = promotionRowItem.getImageUrl();
-				
-		convertView.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View view) {
-				Intent i = new Intent(context, PromotionDetailActivity.class);
-				i.putExtra("promotionTitle", promotionTitle);
-				i.putExtra("promotionDescription", promotionDescription);
-				i.putExtra("promotionDistance", promotionDistance);
-				i.putExtra("promotionImageUrl", promotionImageUrl);
-				context.startActivity(i);
-			}
-		});
 		
 		return convertView;
 	}
