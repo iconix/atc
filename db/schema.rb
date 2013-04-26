@@ -81,7 +81,8 @@ ActiveRecord::Schema.define(:version => 20130426030739) do
     t.datetime "image_updated_at"
   end
 
-  add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals_on_business_id_and_web_business_id_and_created_at"
+  #add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals_on_business_id_and_web_business_id_and_created_at"
+	add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals"
 
   create_table "web_businesses", :force => true do |t|
     t.string   "name"
