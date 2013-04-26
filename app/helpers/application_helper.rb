@@ -8,4 +8,8 @@ module ApplicationHelper
       "#{base_title} | #{page_title}"
     end
   end
+
+	def full_subtitle(page_subtitle)
+		page_subtitle
+	end
 end

@@ -1,8 +1,11 @@
-<% provide(:title, "Edit deal") %> 
+<% provide(:title, "Edit Deal") %> 
+<% provide(:subtitle, "Update Your Deal") %>
 
 <div class="deal-update container">
+	<!--
 	<h1>Update your deal</h1>
 	<br>
+	-->
 	
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
@@ -33,13 +36,6 @@
 
 		    <%= f.label :"End Date and time" %>
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
-				<!--
-		    <%= f.label :"Start Time" %>
-		    <%= f.text_field :startTime, :type => "time" %>
-
-		    <%= f.label :"End Time" %>
-		    <%= f.text_field :endTime, :type => "time" %>
-				-->
 		    <br><br>
 		    <p>Days of week</p>
 		    <%= f.check_box :sunday %> Sunday <br>
@@ -56,6 +52,9 @@
 
 		    <%= f.label :"Or Upload Image" %>
 		    <%= f.file_field :image %>
+		    <% unless @deal.image_file_size.nil? %>
+          <p>(Current upload: <%= @deal.image_file_name %>)</p>
+        <% end %>
 		    
 		    <br><br><br>
 		    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
@@ -89,12 +88,6 @@
 
       <%= f.label :"End Date" %>
       <%= f.text_field :endDate, :type => "date" %>
-
-      <%= f.label :"Start Time" %>
-      <%= f.text_field :startTime, :type => "time" %>
-
-      <%= f.label :"End Time" %>
-      <%= f.text_field :endTime, :type => "time" %>
 
       <br>
       <p>Days</p>

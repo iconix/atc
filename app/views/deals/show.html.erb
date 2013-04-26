@@ -1,4 +1,6 @@
 <% provide(:title, @deal.title) %>
+<% provide(:subtitle, "Deal: " + @deal.title)
+
 <div class="container row">
 	<div class="span6">
 	  <br />
@@ -12,21 +14,21 @@
     		<%= link_to "<< View all deals", web_business_path(b) %>
     	<% end %>
   	</p>
-		<h1><%= current_business.name%>: <%= @deal.title %></h1>
+		<h1><%= @deal.title %></h1>
 		<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
 		<p>Start date: <%= @deal.startDate %></p>
 		<p>End date: <%= @deal.startDate %></p>
 		<p>Image URL: 
-		  <% unless @deal.imageURL.empty? %> <%= image_tag @deal.imageURL %>
+		  <% unless @deal.imageURL.empty? %> <p><%= image_tag @deal.imageURL %></p>
 		</p> <% end %>
 		<p>Image Upload: 
-  		<% unless @deal.image_file_name.nil? %> <%= image_tag @deal.image.url %>
+  		<% unless @deal.image_file_name.nil? %> <p><%= image_tag @deal.image.url(:medium) %></p>
 	  </p> <% end %>
 		<% if @deal.shortDescription %>
-			<p>Short description: <%= @deal.shortDescription %></p>
+			<p>Short description: <%= raw(@deal.shortDescription) %></p>
 		<% end %>
 		<% if @deal.longDescription %>
-			<p>Long description: <%= @deal.longDescription %></p>
+			<p>Long description: <%= raw(@deal.longDescription) %></p>
 		<% end %>
 		<% if @deal.address %>
 			<p>Address: <%= @deal.address %>
@@ -41,10 +43,6 @@
 		<% end %>
 		<% if @deal.thirdTag %>
 			<p>Tag: <%= @deal.thirdTag %></p>
-		<% end %>
-		<% if @deal.startTime && @deal.endTime %>
-			<p>Start time: <%= @deal.startTime %></p>
-			<p>End time: <%= @deal.endTime %></p>
 		<% end %>
 	</div>
 </div>

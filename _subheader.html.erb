@@ -1,0 +1,11 @@
+<% if !(yield(:subtitle).empty?) %>
+	<div id="subheader">
+		<div class="container">
+			<div class="row">
+				<div class="subheader-text span12">
+					<h1><%= full_subtitle(yield(:subtitle)) %></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+<% end %>

@@ -1,8 +1,11 @@
-<% provide(:title, "New deal") %> 
+<% provide(:title, "New Deal") %> 
+<% provide(:subtitle, "Create Your Deal" %>
 
 <div class="deal-creation container">
+	<!--
 	<h1>Create your deal</h1>
 	<br>
+	-->
 
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
@@ -33,13 +36,6 @@
 
 		    <%= f.label :"End Date and time" %>
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
-				<!--
-		    <%= f.label :"Start Time" %>
-		    <%= f.text_field :startTime, :type => "time" %>
-
-		    <%= f.label :"End Time" %>
-		    <%= f.text_field :endTime, :type => "time" %>
-				-->
 		    <br><br>
 		    <p>Days of week</p>
 		    <%= f.check_box :sunday %> Sunday <br>
@@ -87,12 +83,6 @@
 
       <%= f.label :"End Date" %>
       <%= f.text_field :endDate, :type => "date" %>
-
-      <%= f.label :"Start Time" %>
-      <%= f.text_field :startTime, :type => "time" %>
-
-      <%= f.label :"End Time" %>
-      <%= f.text_field :endTime, :type => "time" %>
 
       <br>
       <p>Days</p>
