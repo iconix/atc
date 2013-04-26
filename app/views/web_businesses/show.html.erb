@@ -1,4 +1,6 @@
 <% provide(:title, @web_business.name) %>
+<% provide(:subtitle, @web_business.name + "'s Dashboard") %>
+
 <div class="jumbotron row">
   <aside class="span4">
     <% if current_business.admin? && !current_business?(@business) then %>

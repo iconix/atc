@@ -1,4 +1,7 @@
 <% provide(:title, @business.name) %>
+<% provide(:subtitle, "Dashboard") %>
+
+<div class="container">
 <div class="jumbotron row">
   <aside class="span4">
     <% if current_business.admin? && !current_business?(@business) then %>
@@ -23,8 +26,7 @@
 				  <% @deals.each do |d| %>
 					  <% if d.title %>
 						  <li>
-							  <%= link_to d.title, deal_path(d) %>
-                <%= d.title %>. 
+							  <%= link_to d.title, deal_path(d) %>.
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
                 <%= link_to "Edit", edit_deal_path(d) %>
                 <% if current_business.admin? || current_business?(@business) then %>
@@ -44,4 +46,5 @@
 		   <h4><%= link_to "Site statistics", stats_path %></h4>
 		<% end %>
 	</div>
+</div>
 </div>
