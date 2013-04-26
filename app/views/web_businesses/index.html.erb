@@ -1,10 +1,11 @@
 <% provide(:title, 'All Web Businesses') %>
 <% provide(:subtitle, 'All Web Businesses') %>
 
+<div class="container">
+
 <% if current_business.admin? then %>
   <%= link_to "<< View profile", current_business %>
 <% end %>
-<!-- <h1>All web businesses</h1> -->
 
 <ul class="businesses">
   <% @web_businesses.each do |web_business| %>
@@ -18,3 +19,5 @@
     </li>
   <% end %>
 </ul>
+
+</div>

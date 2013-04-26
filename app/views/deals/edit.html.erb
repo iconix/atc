@@ -2,11 +2,6 @@
 <% provide(:subtitle, "Update Your Deal") %>
 
 <div class="deal-update container">
-	<!--
-	<h1>Update your deal</h1>
-	<br>
-	-->
-	
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
@@ -22,13 +17,6 @@
 		    
 		    <%= f.label :"Tags (separated by comma)" %>
 		    <%= f.text_field :firstTag %>
-				<!--
-		    <%= f.label :"Tag" %>
-		    <%= f.text_field :secondTag %>
-
-		    <%= f.label :"Tag" %>
-		    <%= f.text_field :thirdTag %>
-				-->
 		  </div>
 			<div class="span4">
 		    <%= f.label :"Start Date and time" %>

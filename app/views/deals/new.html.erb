@@ -1,12 +1,7 @@
 <% provide(:title, "New Deal") %> 
-<% provide(:subtitle, "Create Your Deal" %>
+<% provide(:subtitle, "Create Your Deal") %>
 
 <div class="deal-creation container">
-	<!--
-	<h1>Create your deal</h1>
-	<br>
-	-->
-
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
