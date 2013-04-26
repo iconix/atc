@@ -46,10 +46,22 @@ class Deal < ActiveRecord::Base
   belongs_to :business
   belongs_to :web_businesses
   
+  ACCESS_KEY_ID = 'AKIAJRSEOF4RPP2YEXPA'
+  SECRET_ACCESS_KEY = '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'
+  BUCKET = 'rails-img-manager'
+  
   attr_accessible :image
-  has_attached_file :image, 
-                    :url  => "/assets/deals/:id/:style/:basename.:extension",
-                    :path => ":rails_root/public/assets/deals/:id/:style/:basename.:extension"
+  has_attached_file :image,
+                    :storage => "s3",
+                    :bucket => BUCKET,
+                    :path => "uploads/:attachment/:id/:styles.:extension",
+                    :styles => {
+                      :medium => "300x300>",
+                      :thumb => "100x100>" },
+                    :s3_credentials => {
+                      :access_key_id => ACCESS_KEY_ID,
+                      :secret_access_key => SECRET_ACCESS_KEY },
+                    :s3_permissions => "public-read"
 
 	validates :title, presence: true
 	validates :startDate, presence: true

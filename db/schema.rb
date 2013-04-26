@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421232035) do
+ActiveRecord::Schema.define(:version => 20130426030739) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(:version => 20130421232035) do
     t.integer  "web_business_id"
     t.decimal  "longitude",          :precision => 15, :scale => 10
     t.decimal  "latitude",           :precision => 15, :scale => 10
-    t.date     "startDate"
-    t.date     "endDate"
+    t.datetime "startDate"
+    t.datetime "endDate"
     t.string   "title"
     t.integer  "imageOption"
     t.string   "imageURL"
@@ -64,8 +64,6 @@ ActiveRecord::Schema.define(:version => 20130421232035) do
     t.string   "firstTag"
     t.string   "secondTag"
     t.string   "thirdTag"
-    t.time     "startTime"
-    t.time     "endTime"
     t.boolean  "sunday"
     t.boolean  "monday"
     t.boolean  "tuesday"
@@ -83,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20130421232035) do
     t.datetime "image_updated_at"
   end
 
-  add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals_on_business_id_and_web_business_id_and_created_at"
+  add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals"
 
   create_table "web_businesses", :force => true do |t|
     t.string   "name"

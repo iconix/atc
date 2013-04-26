@@ -8,6 +8,8 @@ gem 'faker', '1.0.1'
 #gem 'bootstrap-will_paginate'
 gem 'jquery-rails'
 gem "paperclip", "~> 3.0"
+gem "right_aws", "~> 3.0.5"
+gem "aws-sdk"
 
 group :development, :test do
   gem 'sqlite3'
@@ -43,6 +45,4 @@ end
 
 group :production do
   gem 'mysql2'
-	#gem 'sqlite3'
-  #gem 'pg'
 end
