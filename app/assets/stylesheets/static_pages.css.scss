@@ -141,9 +141,62 @@ footer a{
 /*
  * Signup page
  */
+#dynamic-panel-non-home {
+	height: 100px;
+	
+	/* IE10 Consumer Preview */ 
+	background-image: -ms-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Mozilla Firefox */ 
+	background-image: -moz-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Opera */ 
+	background-image: -o-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* Webkit (Safari/Chrome 10) */ 
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, $dynamic_panel_bottom_color), color-stop(1, $dynamic_panel_top_color));
+
+	/* Webkit (Chrome 11+) */ 
+	background-image: -webkit-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+
+	/* W3C Markup, IE10 Release Preview */ 
+	background-image: linear-gradient(to top, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
+}
+.dynamic-panel-non-home-text {
+	color: $dynamic_panel_text_color;
+	padding-top: 20px;
+}
+.dynamic-panel-non-home-image {
+	
+}
+
 #business-plan {
-	width: 400px;
+	width: 350px;
 	height: 400px;
 	margin-top: 50px;
+	padding-left: 20px;
 	//border: 1px solid;
+	.li-level1 {
+    font-size: 16pt;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    list-style-type: none;
+		background: url("/assets/bullet_red.png") no-repeat;
+		height: 32px;
+		padding-left: 40px;
+		margin-left: -25px;
+  }
+  .li-level2 {
+    font-size: 16pt;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    list-style-type: none;
+		background: url("/assets/bullet_green.png") no-repeat;
+		height: 32px;
+		padding-left: 40px;
+		margin-left: -25px;
+  }
+  img {
+   //border:1px solid;
+  }
 }

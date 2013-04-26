@@ -2,24 +2,42 @@
 <% provide(:subtitle, 'Sign Up') %>
 
 
+<div id="dynamic-panel-non-home">
+	<div class="container">
+		<div class="row">
+			<div class="dynamic-panel-non-home-text span8">
+				<h1>Never miss any potential customers</h1>
+		  </div>
+			<div class="dynamic-panel-non-home-image span4">
+				<img src="/assets/potential_mobile_customer.png" width="200px">
+				<!-- http://blog.livehelpnow.net/wp-content/uploads/2013/01/Mobile_customer_support2-300x216.jpg -->
+			</div>
+		</div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
+  
   	<div id="business-plan" class="span6 pull-left">
-  		<img src="/assets/business.jpg">
+  		<h1> Business </h1>
+  		<!--img src="/assets/business.jpg" width="300px">
   		<h4>Free 30-day trial</h4>
-  		<p>$10/month after trial</p>
+  		<p>$10/month after trial</p-->
   		<br>
   		<ul>
-  			<li>Unlimited catalogs listing</li>
-  			<li>Unlimited deals listing</li>
-  			<li>Smart dashboard analytics
-  				<ul>
-						<li>Clicks tracking</li>
-						<li>Customers feedback</li>
+  			<li class="li-level1">Unlimited deals listing</li>
+  			<li class="li-level1">Unlimited catalogs listing</li>
+  			<li class="li-level1">Smart dashboard analytics
+  				<ul style="padding-top:10px;">
+						<li class="li-level2">Number of clicks</li>
+						<li class="li-level2">Number of views</li>
+						<li class="li-level2">Customers feedback</li>
 					</ul>
   			</li>
   		</ul>
 		</div>
+		
     <div class="span6">
       <form accept-charset="UTF-8" action="/businesses" class="new_business form-signin" id="new_business" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="ciUWLuIlrDyJVuatqhrwopZidOBUn3XcW4oJaI+aZ5k=" /></div>
         <!-- <h1 class="center">Sign up</h1> -->
@@ -33,10 +51,10 @@
         <label for="business_email">Email</label>
         <input id="business_email" name="business[email]" size="30" type="text" class="input-block-level" />
 
-        <label for="business_password">Password</label>
+        <label for="business_password">Password (at least 6 characters)</label>
         <input id="business_password" name="business[password]" size="30" type="password" class="input-block-level" />
 
-        <label for="business_password_confirmation">Confirmation</label>
+        <label for="business_password_confirmation">Confirmation Password</label>
         <input id="business_password_confirmation" name="business[password_confirmation]" size="30" type="password" class="input-block-level" />
 
         <input class="btn btn-large btn-primary center" name="commit" type="submit" value="Create Account" />
