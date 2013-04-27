@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item 
+        android:id="@+id/action_bar_home_button"
+        android:icon="@drawable/action_bar_home_icon_32"
+        android:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/action_bar_pin_button"
+        android:icon="@drawable/action_bar_pin_icon_32"
+        android:showAsAction="always"/>
+    
+    <item 
+        android:id="@+id/action_bar_preference_button"
+        android:icon="@drawable/action_bar_preference_icon_32"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_bar_preference_item"/>
+
+</menu>
