@@ -67,6 +67,11 @@
             android:label="Promotion">
         </activity>
         
+        <activity
+            android:name="com.sapenguins.atc.PreferenceActivity"
+            android:label="Promotion">
+        </activity>
+        
         <service 
             android:name="com.sapenguins.atc.RecordGpsLocationsService"
             android:enabled="true">

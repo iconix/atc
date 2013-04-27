@@ -1,8 +1,7 @@
 package com.sapenguins.atc;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-
-import objects.DropDownNavigationMenuItem;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -16,7 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.widget.ArrayAdapter;
+import android.view.ViewConfiguration;
 
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
@@ -26,6 +25,8 @@ import staticVariables.*;
 
 public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener  {
 
+	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
+	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
 	MenuItem homeButton;
 	MenuItem pinButton;
 	MenuItem preferenceButton;
@@ -53,11 +54,21 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
   
 	
 	private void initActionBar() {
-		int sdkVersion = android.os.Build.VERSION.SDK_INT;
-		if (sdkVersion > 11)
-			setTheme(R.style.Theme_Sherlock_Light);
-		else setTheme(R.style.Theme_Sherlock);
-		//requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
+		setTheme(R.style.Theme_Sherlock);
+		
+		if (DEVICE_VERSION >= HONEYCOMB_VERSION) {
+			try {
+		        ViewConfiguration config = ViewConfiguration.get(this);
+		        Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+		        if(menuKeyField != null) {
+		            menuKeyField.setAccessible(true);
+		            menuKeyField.setBoolean(config, false);
+		        }
+		    } catch (Exception ex) {
+		        // Ignore
+		    }
+		}
+
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
@@ -101,19 +112,15 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		});
 		
 		preferenceButton = menu.findItem(R.id.action_bar_preference_button);
+		preferenceButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+				return true;
+			}
+		});
         return true; 
 	}
-	
-	/*
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (item.getItemId() == R.id.action_bar_home_button) {
-			startActivity(new Intent(getApplicationContext(), MainMenu.class));
-		}
-		return true;
-	}*/
-
-
 
 
 	//---------------------------------------
@@ -139,6 +146,8 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) { 
         if (keyCode == KeyEvent.KEYCODE_MENU) {
+        	if (DEVICE_VERSION < HONEYCOMB_VERSION) 
+        		openOptionsMenu();
             doMenu();
             if (actionBar.isShowing()) actionBar.hide();
             else actionBar.show();
