@@ -123,6 +123,15 @@ public class MapFragment extends Fragment implements LocationListener{
 	}
 	
 	/**
+	 * add pin to the current location
+	 */
+	public void addPinToCurrentLocation() {
+		Location lastKnown = locationManager.getLastKnownLocation(provider);
+        LatLng latLng = new LatLng(lastKnown.getLatitude(), lastKnown.getLongitude());
+        displayAddingPinLocation(latLng);
+	}
+	
+	/**
 	 * move the camera to a specific coordinate
 	 * @param the coordinate
 	 */
@@ -174,35 +183,43 @@ public class MapFragment extends Fragment implements LocationListener{
      */
     private void addPinLocationOption() {
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-
         	@Override
             public void onMapLongClick(final LatLng latlng) {
-                LayoutInflater li = LayoutInflater.from(context);
-                final View v = li.inflate(R.layout.inputpin, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setView(v);
-                builder.setTitle("Mark The Location");
-                builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText title = (EditText)v.findViewById(R.id.pin_title);
-                        EditText description = (EditText)v.findViewById(R.id.pin_description);
-                        addPin(title.getText().toString(), description.getText().toString(), latlng, false);
-                        addPinToDB(title.getText().toString(), description.getText().toString(), latlng);
-                    }
-                });
-                
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                AlertDialog alert = builder.create();
-                alert.show();
-                      
+                displayAddingPinLocation(latlng);
             }
         });
+    }
+    
+    /**
+     * Display the alert dialog for the user to input informatioin
+     * in case he/she want to add pin
+     * @param the coordinate of the pin
+     */
+    private void displayAddingPinLocation(LatLng latLng) {
+    	final LatLng latlng = latLng;
+    	LayoutInflater li = LayoutInflater.from(context);
+        final View v = li.inflate(R.layout.inputpin, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(v);
+        builder.setTitle("Mark The Location");
+        builder.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                EditText title = (EditText)v.findViewById(R.id.pin_title);
+                EditText description = (EditText)v.findViewById(R.id.pin_description);
+                addPin(title.getText().toString(), description.getText().toString(), latlng, false);
+                addPinToDB(title.getText().toString(), description.getText().toString(), latlng);
+            }
+        });
+        
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();                 
     }
     
     /**

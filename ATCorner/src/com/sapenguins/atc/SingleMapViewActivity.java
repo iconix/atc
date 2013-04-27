@@ -2,8 +2,12 @@ package com.sapenguins.atc;
 
 import java.util.ArrayList;
 
+import objects.DropDownNavigationMenuItem;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -17,39 +21,52 @@ import android.widget.ArrayAdapter;
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
 import templates.CustomMenu;
+import templates.DropDownNavigationMenuAdapter;
 import staticVariables.*;
 
 public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener  {
 
+	MenuItem homeButton;
+	MenuItem pinButton;
+	MenuItem preferenceButton;
+	
 	MapFragment mapFragment;
 	ActionBar actionBar;
+	Context context;
+	int[] dropdownIconResources = {R.drawable.settings, R.drawable.map_icon};
+	String[] dropdownText = {"Setting", "Map"};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.single_map);
+		context = this;
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_single_fragment);
 		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
-
+		
 		initMenubar();		
 		reloadMapType();
 		
-		//init action bar?
 		initActionBar();
 		actionBar.hide();
 	}
-    
+  
+	
 	private void initActionBar() {
-		setTheme(R.style.Theme_Sherlock);
+		int sdkVersion = android.os.Build.VERSION.SDK_INT;
+		if (sdkVersion > 11)
+			setTheme(R.style.Theme_Sherlock_Light);
+		else setTheme(R.style.Theme_Sherlock);
 		//requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		actionBar = getSupportActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		Context context = getSupportActionBar().getThemedContext();
-        ArrayAdapter<CharSequence> list = ArrayAdapter.createFromResource(context, R.array.dropDownMapMenu, R.layout.sherlock_spinner_item);
-        list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-        actionBar.setListNavigationCallbacks(list, this);
+		DropDownNavigationMenuAdapter navigationDropdown = new DropDownNavigationMenuAdapter(context, dropdownIconResources, dropdownText);
+		 
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(navigationDropdown, this);
+        
         
 	}
 	
@@ -58,7 +75,48 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         return true;
     }
     
-    //---------------------------------------
+    /* (non-Javadoc)
+	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate( R.menu.action_bar_menu, menu );
+		homeButton = menu.findItem(R.id.action_bar_home_button);
+		
+		homeButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+				return true;
+			}
+		});
+		
+		pinButton = menu.findItem(R.id.action_bar_pin_button);
+		pinButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				mapFragment.addPinToCurrentLocation();
+				return true;
+			}
+		});
+		
+		preferenceButton = menu.findItem(R.id.action_bar_preference_button);
+        return true; 
+	}
+	
+	/*
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_bar_home_button) {
+			startActivity(new Intent(getApplicationContext(), MainMenu.class));
+		}
+		return true;
+	}*/
+
+
+
+
+	//---------------------------------------
     //--------CREATE MENU BAR ---------------
     //---------------------------------------
     private CustomMenu mMenu;
