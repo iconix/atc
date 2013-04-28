@@ -6,6 +6,7 @@ import com.sapenguins.atc.R.id;
 import com.sapenguins.atc.R.layout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -161,6 +162,7 @@ public class CustomMenu {
                         iv.setMinimumHeight(32);
                         iv.setMinimumWidth(32);
     			iv.setImageResource(cmi.getImageResourceId());
+    			if (cmi.isCurrent()) itemLayout.setBackgroundColor(Color.GRAY);//tv.setTextColor(Color.RED);
     			itemLayout.setOnClickListener( new OnClickListener() {
 				   @Override
 				   public void onClick(View v) {

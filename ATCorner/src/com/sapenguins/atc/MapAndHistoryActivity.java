@@ -1,26 +1,45 @@
 package com.sapenguins.atc;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.model.LatLng;
 import com.sapenguins.atc.HistoryListFragment.OnCoordinatePass;
 
 import staticVariables.PreferenceValue;
 import staticVariables.SharedPreference;
 import templates.CustomMenu;
+import templates.DropDownNavigationMenuAdapter;
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
+import android.view.ViewConfiguration;
 
-public class MapAndHistoryActivity extends FragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass{
+public class MapAndHistoryActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass, ActionBar.OnNavigationListener {
+	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
+	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
+	MenuItem homeButton;
+	MenuItem pinButton;
+	MenuItem preferenceButton;
 	MapFragment mapFragment;
+	
+	ActionBar actionBar;
+	Context context;
+	int[] dropdownIconResources = {R.drawable.settings, R.drawable.map_icon};
+	String[] dropdownText = {"Setting", "Map"};
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,6 +48,10 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
 		setCurrentView(PreferenceValue.VIEW_MAP_AND_HISTORY);
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
 		initMenubar();
+		
+		initActionBar();
+		actionBar.hide();
+		
 		reloadMapType();
 	}
 	
@@ -40,15 +63,83 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
 	    mapFragment.moveCamera(coordinate);
 	}
     
+	private void initActionBar() {
+		setTheme(R.style.Theme_Sherlock);
+		
+		if (DEVICE_VERSION >= HONEYCOMB_VERSION) {
+			try {
+		        ViewConfiguration config = ViewConfiguration.get(this);
+		        Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+		        if(menuKeyField != null) {
+		            menuKeyField.setAccessible(true);
+		            menuKeyField.setBoolean(config, false);
+		        }
+		    } catch (Exception ex) {
+		        // Ignore
+		    }
+		}
+
+		actionBar = getSupportActionBar();
+		actionBar.setDisplayShowHomeEnabled(false);
+		actionBar.setDisplayShowTitleEnabled(false);
+		Context context = getSupportActionBar().getThemedContext();
+		DropDownNavigationMenuAdapter navigationDropdown = new DropDownNavigationMenuAdapter(context, dropdownIconResources, dropdownText);
+		 
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+		actionBar.setListNavigationCallbacks(navigationDropdown, this);
+        
+        
+	}
+	
+    @Override
+    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+        return true;
+    }
     
-    //---------------------------------------
+    /* (non-Javadoc)
+	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getSupportMenuInflater().inflate( R.menu.action_bar_menu, menu );
+		homeButton = menu.findItem(R.id.action_bar_home_button);
+		
+		homeButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+				return true;
+			}
+		});
+		
+		pinButton = menu.findItem(R.id.action_bar_pin_button);
+		pinButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				mapFragment.addPinToCurrentLocation();
+				return true;
+			}
+		});
+		
+		preferenceButton = menu.findItem(R.id.action_bar_preference_button);
+		preferenceButton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				startActivity(new Intent(getApplicationContext(), PreferenceActivity.class));
+				return true;
+			}
+		});
+        return true; 
+	}
+
+
+	//---------------------------------------
     //--------CREATE MENU BAR ---------------
     //---------------------------------------
     private CustomMenu mMenu;
-    public static final int MAIN_MENU_ITEM = 1;
-    public static final int MAP_STYLE_ITEM = 2;
-    public static final int PREFERENCE_ITEM = 3;
-    public static final int MAP_ITEM = 4;
+    public static final int MAP_ITEM = 1;
+    public static final int LIST_ITEM = 2;
+    public static final int DETAIL_ITEM = 3;
     
     private void initMenubar() {
         mMenu = new CustomMenu(this, this, getLayoutInflater());
@@ -64,6 +155,8 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
      */
     public boolean onKeyDown(int keyCode, KeyEvent event) { 
         if (keyCode == KeyEvent.KEYCODE_MENU) {
+        	if (DEVICE_VERSION < HONEYCOMB_VERSION) 
+        		openOptionsMenu();
             doMenu();
             return true; //always eat it!
         }
@@ -77,29 +170,24 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
         //This is kind of a tedious way to load up the menu items.
         //Am sure there is room for improvement.
         ArrayList<CustomMenuItem> menuItems = new ArrayList<CustomMenuItem>();
-        
+     
         CustomMenuItem cmi = new CustomMenuItem();
-        cmi.setCaption("Menu");
-        cmi.setImageResourceId(R.drawable.home);
-        cmi.setId(MAIN_MENU_ITEM);
-        menuItems.add(cmi);
-        
-        cmi = new CustomMenuItem();
-        cmi.setCaption("Map Style");
-        cmi.setImageResourceId(R.drawable.map_menu_icon);
-        cmi.setId(MAP_STYLE_ITEM);
-        menuItems.add(cmi);
-        
-        cmi = new CustomMenuItem();
-        cmi.setCaption("Preference");
-        cmi.setImageResourceId(R.drawable.settings);
-        cmi.setId(PREFERENCE_ITEM);
-        menuItems.add(cmi);
-        
-        cmi = new CustomMenuItem();
         cmi.setCaption("Full Map");
-        cmi.setImageResourceId(R.drawable.map_icon);
+        cmi.setImageResourceId(R.drawable.map_menu_icon);
         cmi.setId(MAP_ITEM);
+        menuItems.add(cmi);
+        
+        cmi = new CustomMenuItem();
+        cmi.setCaption("List & Map");
+        cmi.setImageResourceId(R.drawable.settings);
+        cmi.setId(LIST_ITEM);
+        cmi.setCurrent(true);
+        menuItems.add(cmi);
+        
+        cmi = new CustomMenuItem();
+        cmi.setCaption("List & Detail");
+        cmi.setImageResourceId(R.drawable.history);
+        cmi.setId(DETAIL_ITEM);
         menuItems.add(cmi);
         
         if (!mMenu.isShowing())
@@ -118,10 +206,12 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
      */
     private void doMenu() {
         if (mMenu.isShowing()) {
+        	actionBar.hide();
             mMenu.hide();
         } else {
             //Note it doesn't matter what widget you send the menu as long as it gets view.
             mMenu.show(findViewById(R.id.single_map_fragment));
+            actionBar.show();
         }
     }
 
@@ -130,16 +220,14 @@ public class MapAndHistoryActivity extends FragmentActivity implements OnMenuIte
      */
     public void MenuItemSelectedEvent(CustomMenuItem selection) {
         switch (selection.getId()) {
-            case MAIN_MENU_ITEM:
-				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+            case MAP_ITEM:
+				startActivity(new Intent(getApplicationContext(), SingleMapViewActivity.class));
 				break;
-            case MAP_STYLE_ITEM:
+            case DETAIL_ITEM:
             	onMapStyleMenuButtonPressed();
             	break;
-            case MAP_ITEM:
-            	startActivity(new Intent(getApplicationContext(), SingleMapViewActivity.class));
-            	break;
         }
+        if (actionBar.isShowing()) actionBar.hide();
     }
       
     //Map type view

@@ -18,6 +18,7 @@ public class CustomMenuItem {
 	private String mCaption = null;
 	private int mImageResourceId = -1;
 	private int mId = -1;
+	private boolean current = false;
 	
 	/**
 	 * Use this method to set the caption displayed under the icon for a menu item.
@@ -59,5 +60,21 @@ public class CustomMenuItem {
 	 * @return int id
 	 */
 	public int getId() { return mId; }
+
+	/**
+	 * @return the current
+	 */
+	public boolean isCurrent() {
+		return current;
+	}
+
+	/**
+	 * @param current the current to set
+	 */
+	public void setCurrent(boolean current) {
+		this.current = current;
+	}
+	
+	
 	
 }

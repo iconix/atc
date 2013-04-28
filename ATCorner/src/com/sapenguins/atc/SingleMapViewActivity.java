@@ -127,10 +127,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     //--------CREATE MENU BAR ---------------
     //---------------------------------------
     private CustomMenu mMenu;
-    public static final int MAIN_MENU_ITEM = 1;
-    public static final int MAP_STYLE_ITEM = 2;
-    public static final int PREFERENCE_ITEM = 3;
-    public static final int HISTORY_ITEM = 4;
+    public static final int MAP_ITEM = 1;
+    public static final int LIST_ITEM = 2;
+    public static final int DETAIL_ITEM = 3;
     
     private void initMenubar() {
         mMenu = new CustomMenu(this, this, getLayoutInflater());
@@ -149,8 +148,6 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         	if (DEVICE_VERSION < HONEYCOMB_VERSION) 
         		openOptionsMenu();
             doMenu();
-            if (actionBar.isShowing()) actionBar.hide();
-            else actionBar.show();
             return true; //always eat it!
         }
         return super.onKeyDown(keyCode, event); 
@@ -163,29 +160,24 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         //This is kind of a tedious way to load up the menu items.
         //Am sure there is room for improvement.
         ArrayList<CustomMenuItem> menuItems = new ArrayList<CustomMenuItem>();
-        
+     
         CustomMenuItem cmi = new CustomMenuItem();
-        cmi.setCaption("Menu");
-        cmi.setImageResourceId(R.drawable.home);
-        cmi.setId(MAIN_MENU_ITEM);
-        menuItems.add(cmi);
-        
-        cmi = new CustomMenuItem();
-        cmi.setCaption("Map Style");
+        cmi.setCaption("Full Map");
         cmi.setImageResourceId(R.drawable.map_menu_icon);
-        cmi.setId(MAP_STYLE_ITEM);
+        cmi.setId(MAP_ITEM);
+        cmi.setCurrent(true);
         menuItems.add(cmi);
         
         cmi = new CustomMenuItem();
-        cmi.setCaption("Preference");
+        cmi.setCaption("List & Map");
         cmi.setImageResourceId(R.drawable.settings);
-        cmi.setId(PREFERENCE_ITEM);
+        cmi.setId(LIST_ITEM);
         menuItems.add(cmi);
         
         cmi = new CustomMenuItem();
-        cmi.setCaption("History");
+        cmi.setCaption("List & Detail");
         cmi.setImageResourceId(R.drawable.history);
-        cmi.setId(HISTORY_ITEM);
+        cmi.setId(DETAIL_ITEM);
         menuItems.add(cmi);
         
         if (!mMenu.isShowing())
@@ -204,10 +196,12 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
      */
     private void doMenu() {
         if (mMenu.isShowing()) {
+        	actionBar.hide();
             mMenu.hide();
         } else {
             //Note it doesn't matter what widget you send the menu as long as it gets view.
             mMenu.show(findViewById(R.id.single_map_fragment));
+            actionBar.show();
         }
     }
 
@@ -216,16 +210,14 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
      */
     public void MenuItemSelectedEvent(CustomMenuItem selection) {
         switch (selection.getId()) {
-        	case HISTORY_ITEM:
-        		startActivity(new Intent(getApplicationContext(), MapAndHistoryActivity.class));
-        		break;
-            case MAIN_MENU_ITEM:
-				startActivity(new Intent(getApplicationContext(), MainMenu.class));
+            case LIST_ITEM:
+				startActivity(new Intent(getApplicationContext(), MapAndHistoryActivity.class));
 				break;
-            case MAP_STYLE_ITEM:
+            case DETAIL_ITEM:
             	onMapStyleMenuButtonPressed();
             	break;
         }
+        if (actionBar.isShowing()) actionBar.hide();
     }
       
     //Map type view

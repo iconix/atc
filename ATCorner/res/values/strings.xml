@@ -6,7 +6,8 @@
     <string name="hello_world">Hello world!</string>
 	<string name="action_bar_preference_item">Preference</string>
 	<string name="action_bar_home_item">Home</string>
-	
+	<string name="time_navigation_from">From</string>
+	<string name="time_navigation_to">To</string>
 	
 	
 	<string name="inline_preferences">In-line preferences</string>
