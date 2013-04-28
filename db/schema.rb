@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130428195723) do
+ActiveRecord::Schema.define(:version => 20130428204651) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -61,9 +61,7 @@ ActiveRecord::Schema.define(:version => 20130428195723) do
     t.string   "imageURL"
     t.text     "shortDescription"
     t.text     "longDescription"
-    t.string   "firstTag"
-    t.string   "secondTag"
-    t.string   "thirdTag"
+    t.string   "tags"
     t.boolean  "sunday"
     t.boolean  "monday"
     t.boolean  "tuesday"

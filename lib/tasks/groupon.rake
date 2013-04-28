@@ -80,6 +80,8 @@ namespace :db do
         zipCode = deal["options"][0]["redemptionLocations"][0]["postalCode"]
 
         deal_address = "#{address1}\n#{address2}\n#{city}, #{state} #{zipCode}"
+
+        deal_tags = "#{deal_firstTag}, #{deal_secondTag}, #{deal_thirdTag}"
         
         # Rails call
         business.deals.create!(web_business_id: business.id,
@@ -91,9 +93,7 @@ namespace :db do
                                imageURL: deal_imageURL,
                                shortDescription: deal_shortDesc,
                                longDescription: deal_longDesc,
-                               firstTag: deal_firstTag,
-                               secondTag: deal_secondTag,
-                               thirdTag: deal_thirdTag,
+                               tags: deal_tags,
                                address: deal_address)
       end
     end

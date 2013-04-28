@@ -9,7 +9,7 @@
 				<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
 				<%= f.radio_button :isEvent, 1 %> Event<br><br>
 
-		    <%= f.label :title %>
+		    <%= f.label :"Title (required)" %>
 		    <%= f.text_field :title %>
 
 		    <%= f.label :"Short Description (max 30 words)" %>
@@ -22,10 +22,10 @@
 		    <%= f.label :"Tags (separated by comma)" %>
 		    <%= f.text_field :firstTag %>
 
-		    <%= f.label :"Start Date and time" %>
+		    <%= f.label :"Start Date and time (required)" %>
 		    <%= f.text_field :startDate, :type => "datetime-local" %>
 
-		    <%= f.label :"End Date and time" %>
+		    <%= f.label :"End Date and time (required)" %>
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
 		    <br><br>
 		    <p>Days of week</p>
