@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem "paperclip", "~> 3.0"
 gem "right_aws", "~> 3.0.5"
 gem "aws-sdk"
+gem 'geocoder'
 
 group :development, :test do
   gem 'sqlite3'

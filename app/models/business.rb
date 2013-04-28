@@ -46,6 +46,9 @@ class Business < ActiveRecord::Base
 									:saturdayOpenTime, :saturdayCloseTime, :latitude,
 									:longitude, :address, :phoneNumber
 
+	geocoded_by :address
+	after_validation :geocode, :if => :address_changed?
+
 	has_secure_password
   has_many :deals, dependent: :destroy
 

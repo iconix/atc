@@ -38,6 +38,9 @@
 				<%= f.check_box :saturday %> S<br>
 		  </div>  
 		  <div class="span4">
+				<%= f.label :address %>
+				<%= f.text_area :address, :rows => "3" %>
+
 		    <%= f.label :"Image URL" %>
 		    <%= f.text_field :imageURL %>
 
