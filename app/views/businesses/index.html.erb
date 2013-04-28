@@ -1,7 +1,7 @@
 <% provide(:title, 'All Businesses') %>
 <% provide(:subtitle, 'All Businesses') %>
 
-<div class="container">
+<div class="container jumbotron">
 
 <% if current_business.admin? then %>
   <%= link_to "<< View profile", current_business %>

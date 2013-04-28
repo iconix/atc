@@ -1,7 +1,7 @@
 <% provide(:title, "Edit Deal") %> 
 <% provide(:subtitle, "Update Your Deal") %>
 
-<div class="deal-update container">
+<div class="container jumbotron">
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>

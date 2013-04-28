@@ -39,7 +39,7 @@ $dynamic_panel_bottom_color: $header_bkcolor/*#FF4F4A #FF9693*/;
 $dynamic_panel_text_color: $header_text_color;
 
 #dynamic-panel {
-	height: 280px;
+	height: 300px;
 	
 	/* IE10 Consumer Preview */ 
 	background-image: -ms-linear-gradient(bottom, $dynamic_panel_bottom_color 0%, $dynamic_panel_top_color 100%);
@@ -67,9 +67,13 @@ $dynamic_panel_text_color: $header_text_color;
 	text-align: left;
 }
 
+.dynamic-panel-text h1 {
+	padding-bottom: 6px;
+}
+
 .dynamic-panel-image {
 	//float: right;
-	margin-top: 25px;
+	margin-top: 20px;
 	//margin-right: 200px;
 }
 

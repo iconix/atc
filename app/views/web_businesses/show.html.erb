@@ -1,7 +1,8 @@
 <% provide(:title, @web_business.name) %>
 <% provide(:subtitle, "Dashboard") %>
 
-<div class="jumbotron row">
+<div class="container jumbotron">
+<div class="row">
   <aside class="span4">
     <% if current_business.admin? && !current_business?(@business) then %>
       <%= link_to "<< View all web businesses", web_businesses_path %>
@@ -36,4 +37,5 @@
 		  </ol>
 	  <% end %>
 	</div>
+</div>
 </div>
