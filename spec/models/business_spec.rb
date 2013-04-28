@@ -10,8 +10,8 @@
 #  websiteURL         :string(255)
 #  imageOption        :integer
 #  imageURL           :string(255)
-#  shortDescription   :string(255)
-#  longDescription    :string(1024)
+#  shortDescription   :text
+#  longDescription    :text
 #  sundayOpenTime     :time
 #  sundayCloseTime    :time
 #  mondayOpenTime     :time
@@ -29,7 +29,7 @@
 #  latitude           :decimal(15, 10)
 #  longitude          :decimal(15, 10)
 #  address            :text
-#  phoneNumber        :integer
+#  phoneNumber        :string(255)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  admin              :boolean          default(FALSE)

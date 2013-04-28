@@ -6,8 +6,8 @@
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
 			<div class="span4">
-				<%= f.radio_button :promotionOrEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
-				<%= f.radio_button :promotionOrEvent, 1 %> Event<br><br>
+				<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
+				<%= f.radio_button :isEvent, 1 %> Event<br><br>
 
 		    <%= f.label :title %>
 		    <%= f.text_field :title %>

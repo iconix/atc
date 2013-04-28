@@ -7,7 +7,7 @@
 #  websiteURL       :string(255)
 #  imageOption      :integer
 #  imageURL         :string(255)
-#  shortDescription :string(255)
+#  shortDescription :text
 #  longDescription  :text
 #  phoneNumber      :string(255)
 #  web_source       :string(255)

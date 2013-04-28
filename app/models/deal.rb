@@ -4,20 +4,19 @@
 #
 #  id                 :integer          not null, primary key
 #  business_id        :integer
+#  web_business_id    :integer
 #  longitude          :decimal(15, 10)
 #  latitude           :decimal(15, 10)
-#  startDate          :date
-#  endDate            :date
+#  startDate          :datetime
+#  endDate            :datetime
 #  title              :string(255)
 #  imageOption        :integer
 #  imageURL           :string(255)
-#  shortDescription   :string(255)
-#  longDescription    :text(1024)
+#  shortDescription   :text
+#  longDescription    :text
 #  firstTag           :string(255)
 #  secondTag          :string(255)
 #  thirdTag           :string(255)
-#  startTime          :time
-#  endTime            :time
 #  sunday             :boolean
 #  monday             :boolean
 #  tuesday            :boolean
@@ -26,7 +25,7 @@
 #  friday             :boolean
 #  saturday           :boolean
 #  address            :text
-#  promotionOrEvent   :boolean
+#  isEvent            :boolean
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string(255)
@@ -41,7 +40,7 @@ class Deal < ActiveRecord::Base
 									:shortDescription, :longDescription, :firstTag,
 									:secondTag, :thirdTag, :startTime, :endTime, :sunday,
 									:monday, :tuesday, :wednesday, :thursday, :friday,
-									:saturday, :address, :promotionOrEvent, :business_id, :web_business_id
+									:saturday, :address, :isEvent, :business_id, :web_business_id
 
 	geocoded_by :address
 	after_validation :geocode, :if => :address_changed?

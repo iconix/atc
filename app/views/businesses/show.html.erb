@@ -21,7 +21,7 @@
 		  <% if @business.deals.any? %>
 			  <ol>
 				  <% @deals.each do |d| %>
-					  <% if d.title && !d.promotionOrEvent then %>
+					  <% if d.title && !d.isEvent then %>
 						  <li>
 							  <%= link_to d.title, deal_path(d) %>.
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
@@ -40,7 +40,7 @@
 		  <% if @business.deals.any? %>
 			  <ol>
 				  <% @deals.each do |d| %>
-					  <% if d.title && d.promotionOrEvent then %>
+					  <% if d.title && d.isEvent then %>
 						  <li>
 							  <%= link_to d.title, deal_path(d) %>.
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>

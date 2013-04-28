@@ -1,5 +1,5 @@
 <% provide(:title, @deal.title) %>
-<% if @deal.promotionOrEvent then %>
+<% if @deal.isEvent then %>
 	<% provide(:subtitle, "Event") %>
 <% else %>
 	<% provide(:subtitle, "Deal") %>
