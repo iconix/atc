@@ -1,5 +1,10 @@
 package com.sapenguins.atc;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -15,8 +20,13 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import staticVariables.*;
+import supports.TimeFrame;
 
 public class MainActivity extends FragmentActivity {
+	
+	long toTime;
+	long timeGap;
+	long fromTime;
 	
 	public static final String RECORD_GPS_LOCATION_SERVICE = "com.sapenguins.atc.RecordGpsLocationsService";
     @Override
@@ -28,6 +38,7 @@ public class MainActivity extends FragmentActivity {
         	checkGpsService();
         	recordingGpsLocationService();
         	goToLastSavedActivity();
+        	updateTimePreference();
         }
     }
 
@@ -94,16 +105,49 @@ public class MainActivity extends FragmentActivity {
     }
     
     /**
-     * Get the preference for the time gap
-     * @return time gap
+     * Update the time preference setting
      */
-    private long getTimeGap() {
-    	return getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, 240000); //24hr
+    private void updateTimePreference() {
+    	setTimeGap();
+    	setToTime();
+    	setFromTime();
     }
     
     /**
-     * Set 
+     * Get the preference for the time gap
+     * @return time gap
      */
+    private void setTimeGap() {
+    	timeGap = getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, 240000); //24hr
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, timeGap);
+    }
+    
+    /**
+     * Set the 'to time' to the current time 
+     */
+    private void setToTime() {
+    	toTime = Long.valueOf(getTimeStamp());
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_TO_PREFERENCE, toTime);
+    }
+    
+    /**
+     * Set the 'from time' to be the time that is 'time gap' away from the current time
+     */
+    private void setFromTime() {
+    	fromTime = TimeFrame.computePriorTime(toTime, timeGap);
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_FROM_PREFERENCE, fromTime);
+    }
+    
+    /**
+     * Get the current time when the new coordinate was taken.
+     * The current time is recorded as UTC
+     * @return the current time represent in the format yyyyMMdd_HHmmss
+     */
+    private String getTimeStamp() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        return sdf.format(new Date());
+    }
     
     /**
      * Get the preference value of a given key stored in a given preference list
@@ -127,4 +171,16 @@ public class MainActivity extends FragmentActivity {
         return settings.getLong(key, defaultTime);
     }
     
+    /**
+     * Modify the information stored in the shared preferences
+     * @param the ID associate with the preference
+     * @param the key string of a field in the preference
+     * @param the value of above key
+     */
+    private void updateSystemPreferences(String preferenceID, String key, long value) {
+        SharedPreferences settings = getSharedPreferences(preferenceID, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(key, value);
+        editor.commit();
+    }
 }
