@@ -9,6 +9,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +18,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
@@ -37,6 +41,27 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	int[] dropdownIconResources = {R.drawable.settings, R.drawable.map_icon};
 	String[] dropdownText = {"Setting", "Map"};
 	
+	TextView fromDate;
+	TextView fromTime;
+	TextView toDate;
+	TextView toTime;
+	
+	int fromDay;
+	int fromMonth;
+	int fromYear;
+	
+	int toDay;
+	int toMonth;
+	int toYear;
+	
+	long fromTimePeriod;
+	long toTimePeriod;
+	
+	private static final int FROM_DATE_DIALOG_ID = 0;
+	private static final int FROM_TIME_DIALOG_ID = 1;
+	private static final int TO_DATE_DIALOG_ID = 2;
+	private static final int TO_TIME_DIALOG_ID = 3;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +77,23 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		actionBar.hide();
 	}
   
+	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear,
+					int dayOfMonth) {
+				// TODO Auto-generated method stub
+				
+			}
+		    };
+	    
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch(id) {
+			case FROM_DATE_DIALOG_ID:
+				
+		}
+		return null;
+	}
 	
 	private void initActionBar() {
 		setTheme(R.style.Theme_Sherlock);

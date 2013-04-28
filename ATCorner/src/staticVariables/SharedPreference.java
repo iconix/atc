@@ -8,4 +8,12 @@ public class SharedPreference {
     
     //check for the preferences in the view type of map
     public static final String MAP_TYPE_VIEW = "mapViewType";
+    
+    //check for the preferences which give you the from time
+    public static final String TIME_FROM_PREFERENCE = "fromTime";
+    //check for the preferences which give you the to time
+    public static final String TIME_TO_PREFERENCE = "toTime";
+    //check for the preferences which give you the time gap
+    public static final String TIME_GAP_PREFERENCE = "gapTime";
+    
 }

@@ -94,6 +94,18 @@ public class MainActivity extends FragmentActivity {
     }
     
     /**
+     * Get the preference for the time gap
+     * @return time gap
+     */
+    private long getTimeGap() {
+    	return getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, 240000); //24hr
+    }
+    
+    /**
+     * Set 
+     */
+    
+    /**
      * Get the preference value of a given key stored in a given preference list
      * @param preference
      * @param key
@@ -102,6 +114,17 @@ public class MainActivity extends FragmentActivity {
     private String getPreferenceValue(String preference, String key) {
         SharedPreferences settings = getSharedPreferences(preference, 0);
         return settings.getString(key, "");
+    }
+    
+    /**
+     * Get the preference value of a given key stored in a given preference list
+     * @param preference
+     * @param key
+     * @return the time value of the key
+     */
+    private long getPreferenceTimeValue(String preference, String key, long defaultTime) {
+        SharedPreferences settings = getSharedPreferences(preference, 0);
+        return settings.getLong(key, defaultTime);
     }
     
 }
