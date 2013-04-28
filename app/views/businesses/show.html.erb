@@ -3,28 +3,44 @@
 
 <div class="container jumbotron">
 <div class="row">
-  <aside class="span4">
+  <aside class="span5">
     <% if current_business.admin? && !current_business?(@business) then %>
       <%= link_to "<< View all businesses", businesses_path %>
     <% end %>
     <section>
-      <h1>
-        <!-- <%= gravatar_for @business %> -->
-        <%= @business.name %>
-      </h1>
+      <h1><%= @business.name %></h1>
 	    <%= link_to "Edit profile", edit_business_path(@business) %>	
     </section>
   </aside>
-	<div class="span8">
+	<div class="span7">
 	  <% unless current_business.admin? %>
-      <a href="/newdeal" class="btn btn-primary">New deal!</a>
+      <a href="/newdeal" class="btn btn-primary btn-large">Create new promotion!</a>
     <% end %>
 	  <% unless @business.admin? then %>
 		  <h3> Your Deals: </h3>
 		  <% if @business.deals.any? %>
 			  <ol>
 				  <% @deals.each do |d| %>
-					  <% if d.title %>
+					  <% if d.title && !d.promotionOrEvent then %>
+						  <li>
+							  <%= link_to d.title, deal_path(d) %>.
+                <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+                <%= link_to "Edit", edit_deal_path(d) %>
+                <% if current_business.admin? || current_business?(@business) then %>
+                  <%= link_to "Delete", d, method: :delete,
+                                                      data: { confirm: "You sure?" },
+                                                      title: d.title %>
+                <% end %>
+              </li>
+					  <% end %>
+				  <% end %>
+			  </ol>
+		  <% end %>
+		  <h3> Your Events: </h3>
+		  <% if @business.deals.any? %>
+			  <ol>
+				  <% @deals.each do |d| %>
+					  <% if d.title && d.promotionOrEvent then %>
 						  <li>
 							  <%= link_to d.title, deal_path(d) %>.
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>

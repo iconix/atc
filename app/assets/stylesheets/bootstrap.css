@@ -111,10 +111,6 @@ input {
   font-size: 24px;
   line-height: 1;
 }
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 10px 24px;
-}
 
 .center {
   text-align: center;
@@ -1238,7 +1234,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  width: 206px;
+  width: 240px;
 }
 
 textarea {

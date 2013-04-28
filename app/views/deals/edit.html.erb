@@ -6,6 +6,9 @@
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
 			<div class="span4">
+				<%= f.radio_button :promotionOrEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
+				<%= f.radio_button :promotionOrEvent, 1 %> Event<br><br>
+
 		    <%= f.label :title %>
 		    <%= f.text_field :title %>
 
@@ -14,11 +17,11 @@
 
 		    <%= f.label :"Long Description" %>
 		    <%= f.text_area :longDescription, :rows => "4" %>
-		    
-		    <%= f.label :"Tags (separated by comma)" %>
-		    <%= f.text_field :firstTag %>
 		  </div>
 			<div class="span4">
+		    <%= f.label :"Tags (separated by comma)" %>
+		    <%= f.text_field :firstTag %>
+
 		    <%= f.label :"Start Date and time" %>
 		    <%= f.text_field :startDate, :type => "datetime-local" %>
 
@@ -26,13 +29,13 @@
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
 		    <br><br>
 		    <p>Days of week</p>
-		    <%= f.check_box :sunday %> Sunday <br>
-		    <%= f.check_box :monday %> Monday <br>
-		    <%= f.check_box :tuesday %> Tuesday <br>
-		    <%= f.check_box :wednesday %> Wednesday <br>
-		    <%= f.check_box :thursday %> Thursday <br>
-		    <%= f.check_box :friday %> Friday <br>
-		    <%= f.check_box :saturday %> Saturday <br>
+				<%= f.check_box :sunday %> Sn&nbsp;
+				<%= f.check_box :monday %> M&nbsp;
+				<%= f.check_box :tuesday %> T&nbsp;
+				<%= f.check_box :wednesday %> W&nbsp;
+				<%= f.check_box :thursday %> Th&nbsp;
+				<%= f.check_box :friday %> F&nbsp;
+				<%= f.check_box :saturday %> S<br>
 		  </div>  
 		  <div class="span4">
 		    <%= f.label :"Image URL" %>
@@ -44,75 +47,11 @@
           <p>(Current upload: <%= @deal.image_file_name %>)</p>
         <% end %>
 		    
-		    <br><br><br>
-		    <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
-      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-large btn-primary", style: "margin-left: 20px;" %>
+		    <br><br>
+		    <%= f.submit "Save changes", class: "btn btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-primary", style: "margin-left: 20px;" %>
 			</div>
 		<% end %>
 	</div>
 </div>
 
-
-
-<!--
-<h1>Update your deal</h1>
-
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for @deal, :html => { :multipart => true } do |f| %>
-      <%= render 'shared/deal_error_messages' %>
-
-      <%= f.label :title %>
-      <%= f.text_field :title %>
-
-      <%= f.label :"Short Description" %>
-      <%= f.text_field :shortDescription %>
-
-      <%= f.label :"Long Description" %>
-      <%= f.text_field :longDescription %>
-
-      <%= f.label :"Start Date" %>
-      <%= f.text_field :startDate, :type => "date" %>
-
-      <%= f.label :"End Date" %>
-      <%= f.text_field :endDate, :type => "date" %>
-
-      <br>
-      <p>Days</p>
-      <%= f.check_box :sunday %> Sunday <br>
-      <%= f.check_box :monday %> Monday <br>
-      <%= f.check_box :tuesday %> Tuesday <br>
-      <%= f.check_box :wednesday %> Wednesday <br>
-      <%= f.check_box :thursday %> Thursday <br>
-      <%= f.check_box :friday %> Friday <br>
-      <%= f.check_box :saturday %> Saturday <br>
-      
-      <br>
-      <%= f.label :"Image URL" %>
-      <%= f.text_field :imageURL %>
-
-      <%= f.label :"Upload Image" %>
-      <%= f.file_field :image %>
-      <% unless @deal.image_file_size.nil? %>
-        <p>(Current upload: <%= @deal.image_file_name %>)</p>
-      <% end %>
-      
-      <br>
-      <%= f.label :"Tag" %>
-      <%= f.text_field :firstTag %>
-
-      <%= f.label :"Tag" %>
-      <%= f.text_field :secondTag %>
-
-      <%= f.label :"Tag" %>
-      <%= f.text_field :thirdTag %>
-
-      <br>
-      <%= f.submit "Save changes", class: "btn btn-small btn-primary" %>
-      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-small btn-primary", style: "margin-left: 20px;" %>
-    <% end %>
-
-  </div>
-</div>
-
--->
