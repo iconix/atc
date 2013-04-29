@@ -22,11 +22,15 @@
 		    <%= f.label :tags, "Tags (separated by comma)" %>
 		    <%= f.text_field :tags %>
 
+				<% startDate = @deal.startDate.strftime("%Y-%m-%d") %>
+				<% startTime = @deal.startDate.strftime("%H:%M:%S") %>
 		    <%= f.label :startDate, "Start Date and time (required)" %>
-		    <%= f.text_field :startDate, :type => "datetime-local" %>
+		    <%= f.text_field :startDate, :type => "datetime-local", :value => startDate+"T"+startTime %>
 
+				<% endDate = @deal.endDate.strftime("%Y-%m-%d") %>
+				<% endTime = @deal.endDate.strftime("%H:%M:%S") %>
 		    <%= f.label :endDate, "End Date and time (required)" %>
-		    <%= f.text_field :endDate, :type => "datetime-local" %>
+		    <%= f.text_field :endDate, :type => "datetime-local", :value => endDate+"T"+endTime %>
 		    <br><br>
 		    <p>Days of week</p>
 				<%= f.check_box :sunday %> Sn&nbsp;

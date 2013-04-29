@@ -9,6 +9,8 @@
     <% end %>
     <section>
       <h1><%= @business.name %></h1>
+      <img src=<%= @business.imageURL %> width="200px", height="200px">
+      <br><br>
 	    <%= link_to "Edit profile", edit_business_path(@business) %>	
     </section>
   </aside>

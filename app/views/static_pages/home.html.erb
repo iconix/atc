@@ -10,7 +10,9 @@
 				<h1>auto-delivered to</h1>
 				<h1>customer hands</h1>
 				<!--p class="btn btn-large"> <%= link_to "Sign up", signup_path %></p-->
-				<a href="/signup"><button class="btn btn-primary btn-large">Sign up</button></a>
+				<% if !signed_in? %>
+					<a href="/signup"><button class="btn btn-primary btn-large">Sign up</button></a>
+		  	<% end %>
 		  </div>
 			<div class="dynamic-panel-image span5 pull-right">
 				<img src="/assets/street_corner.png" width="380">

@@ -36,6 +36,9 @@ class BusinessesController < ApplicationController
     if params[:business][:password].blank?
       @business.update_attribute(:name, params[:business][:name])
       @business.update_attribute(:email, params[:business][:email])
+      @business.update_attribute(:address, params[:business][:address])
+      @business.update_attribute(:phoneNumber, params[:business][:phoneNumber])
+      @business.update_attribute(:imageURL, params[:business][:imageURL])
       flash[:success] = "Profile updated"
       sign_in @business
       redirect_to @business
