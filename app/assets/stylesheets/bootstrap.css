@@ -4742,7 +4742,7 @@ input[type="submit"].btn.btn-mini {
 
 .navbar .nav > li > a {
   float: none;
-	font-family: Lucida Sans Unicode;
+	font-family: 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;
   padding: 20px 0px 10px;
   /*padding: 10px 15px 10px;*/
 	color: black;
