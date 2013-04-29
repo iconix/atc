@@ -3,18 +3,22 @@
 
 <div class="container jumbotron">
 <div class="row">
-  <aside class="span6">
+  <aside class="span4">
     <% if current_business.admin? && !current_business?(@business) then %>
       <%= link_to "<< View all businesses", businesses_path %>
     <% end %>
     <section>
       <h1><%= @business.name %></h1>
+			<!--
 	    <%= link_to "Edit profile", edit_business_path(@business) %>	
+			<br>-->
+			<% unless current_business.admin? then %>
+				<a href="/newdeal" class="btn btn-primary">Create promotion</a>
+			<% end %>
     </section>
   </aside>
 	<% unless current_business.admin? then %>
-		<div class="span3">
-     	<a href="/newdeal" class="btn btn-primary">Create promotion</a>
+		<div class="span4">
 		 	<h3> Your Deals: </h3>
 		 	<% if @business.deals.any? %>
 		  	<ol>
@@ -35,7 +39,7 @@
 		  	</ol>
 		 	<% end %>
 		</div>
-		<div class="span3">
+		<div class="span4">
 		  <h3> Your Events: </h3>
 		  <% if @business.deals.any? %>
 			  <ol>
