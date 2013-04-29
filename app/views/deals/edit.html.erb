@@ -1,13 +1,22 @@
 <% provide(:title, "Edit Deal") %> 
-<% provide(:subtitle, "Update Your Deal") %>
+<% if @deal.isEvent then %>
+	<% provide(:subtitle, "Update Your Event") %>
+<% else %>
+	<% provide(:subtitle, "Update Your Deal") %>
+<% end %>
 
 <div class="container jumbotron">
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
 			<div class="span4">
-				<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
-				<%= f.radio_button :isEvent, 1 %> Event<br><br>
+				<% if @deal.isEvent then %>
+					<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
+					<%= f.radio_button :isEvent, 1, :checked => true %> Event<br><br>
+				<% else %>
+					<%= f.radio_button :isEvent, 0, :checked => true %> Deal&nbsp;&nbsp;&nbsp;
+					<%= f.radio_button :isEvent, 1 %> Event<br><br>
+				<% end %>
 
 		    <%= f.label :title, "Title (required)" %>
 		    <%= f.text_field :title %>
