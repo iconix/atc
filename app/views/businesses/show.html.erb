@@ -3,7 +3,7 @@
 
 <div class="container jumbotron">
 <div class="row">
-  <aside class="span5">
+  <aside class="span4">
     <% if current_business.admin? && !current_business?(@business) then %>
       <%= link_to "<< View all businesses", businesses_path %>
     <% end %>
@@ -12,32 +12,35 @@
       <img src=<%= @business.imageURL %> width="200px", height="200px">
       <br><br>
 	    <%= link_to "Edit profile", edit_business_path(@business) %>	
+			<br>
+			<% unless current_business.admin? then %>
+				<a href="/newdeal" class="btn btn-primary">Create promotion</a>
+			<% end %>
     </section>
   </aside>
-	<div class="span7">
-	  <% unless current_business.admin? %>
-      <a href="/newdeal" class="btn btn-primary btn-large">Create new promotion!</a>
-    <% end %>
-	  <% unless @business.admin? then %>
-		  <h3> Your Deals: </h3>
-		  <% if @business.deals.any? %>
-			  <ol>
-				  <% @deals.each do |d| %>
-					  <% if d.title && !d.isEvent then %>
-						  <li>
-							  <%= link_to d.title, deal_path(d) %>.
-                <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
-                <%= link_to "Edit", edit_deal_path(d) %>
-                <% if current_business.admin? || current_business?(@business) then %>
-                  <%= link_to "Delete", d, method: :delete,
-                                                      data: { confirm: "You sure?" },
-                                                      title: d.title %>
-                <% end %>
-              </li>
-					  <% end %>
-				  <% end %>
-			  </ol>
-		  <% end %>
+	<% unless current_business.admin? then %>
+		<div class="span4">
+		 	<h3> Your Deals: </h3>
+		 	<% if @business.deals.any? %>
+		  	<ol>
+			  	<% @deals.each do |d| %>
+				  	<% if d.title && !d.isEvent then %>
+					  	<li>
+						  	<%= link_to d.title, deal_path(d) %>.
+               	<i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+               	<%= link_to "Edit", edit_deal_path(d) %>
+               	<% if current_business.admin? || current_business?(@business) then %>
+                 	<%= link_to "Delete", d, method: :delete,
+                   	                                  data: { confirm: "You sure?" },
+                     	                                title: d.title %>
+               	<% end %>
+             	</li>
+				  	<% end %>
+			  	<% end %>
+		  	</ol>
+		 	<% end %>
+		</div>
+		<div class="span4">
 		  <h3> Your Events: </h3>
 		  <% if @business.deals.any? %>
 			  <ol>
@@ -57,12 +60,14 @@
 				  <% end %>
 			  </ol>
 		  <% end %>
-		<% else %>  
+		</div>
+	<% else %>  
+		<div class="span6"
 		  <h3> Administrative Console </h3>
-		   <h4><%= link_to "Manage businesses unique to site", businesses_path %></h4>
-		   <h4><%= link_to "Manage businesses pulled from web APIs", web_businesses_path %></h4>
-		   <h4><%= link_to "Site statistics", stats_path %></h4>
-		<% end %>
-	</div>
+		  <h4><%= link_to "Manage businesses unique to site", businesses_path %></h4>
+		  <h4><%= link_to "Manage businesses pulled from web APIs", web_businesses_path %></h4>
+		  <h4><%= link_to "Site statistics", stats_path %></h4>
+		</div>
+	<% end %>
 </div>
 </div>

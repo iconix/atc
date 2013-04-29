@@ -10,11 +10,6 @@
 
 /* Custom CSS. */
 
-body {
-  color: #5a5a5a;
-	background-color: black;
-}
-
 label.nowrap { white-space:nowrap; }
 
 input[type=date],
