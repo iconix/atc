@@ -18,7 +18,7 @@
 			<% end %>
     </section>
   </aside>
-	<% unless current_business.admin? then %>
+	<% unless @business.admin? then %>
 		<div class="span4">
 		 	<h3> Your Deals: </h3>
 		 	<% if @business.deals.any? %>
