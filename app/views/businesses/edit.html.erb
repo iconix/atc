@@ -32,7 +32,6 @@
 		<div span6>
 			<h3> Current profile </h3>
 			<h1>
-        <!-- <%= gravatar_for @business %> -->
         <%= @business.name %> <% if current_business.admin? %> (admin) <% end %>
       </h1>
       <p> <%= @business.email %> </p>

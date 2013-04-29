@@ -9,23 +9,23 @@
 				<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
 				<%= f.radio_button :isEvent, 1 %> Event<br><br>
 
-		    <%= f.label :"Title (required)" %>
+		    <%= f.label :title, "Title (required)" %>
 		    <%= f.text_field :title %>
 
-		    <%= f.label :"Short Description (max 30 words)" %>
+		    <%= f.label :shortDescription, "Short Description (max 30 words)" %>
 		    <%= f.text_area :shortDescription, :rows => "3" %>
 
-		    <%= f.label :"Long Description" %>
+		    <%= f.label :longDescription, "Long Description" %>
 		    <%= f.text_area :longDescription, :rows => "4" %>
 		  </div>
 			<div class="span4">
-		    <%= f.label :"Tags (separated by comma)" %>
+		    <%= f.label :tags, "Tags (separated by comma)" %>
 		    <%= f.text_field :tags %>
 
-		    <%= f.label :"Start Date and time (required)" %>
+		    <%= f.label :startDate, "Start Date and time (required)" %>
 		    <%= f.text_field :startDate, :type => "datetime-local" %>
 
-		    <%= f.label :"End Date and time (required)" %>
+		    <%= f.label :endDate, "End Date and time (required)" %>
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
 		    <br><br>
 		    <p>Days of week</p>
@@ -41,10 +41,10 @@
 				<%= f.label :address %>
 				<%= f.text_area :address, :rows => "3" %>
 
-		    <%= f.label :"Image URL" %>
+		    <%= f.label :imageURL, "Image URL" %>
 		    <%= f.text_field :imageURL %>
 
-		    <%= f.label :"Or Upload Image" %>
+		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
 		    <% unless @deal.image_file_size.nil? %>
           <p>(Current upload: <%= @deal.image_file_name %>)</p>
