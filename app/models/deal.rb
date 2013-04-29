@@ -37,10 +37,11 @@
 class Deal < ActiveRecord::Base
   attr_accessible :longitude, :latitude, :startDate, 
 									:endDate, :title, :imageOption, :imageURL,
-									:shortDescription, :longDescription, :firstTag,
-									:secondTag, :thirdTag, :startTime, :endTime, :sunday,
-									:monday, :tuesday, :wednesday, :thursday, :friday,
-									:saturday, :address, :isEvent, :business_id, :web_business_id
+									:shortDescription, :longDescription, :tags,
+									:startTime, :endTime, :sunday, :monday, 
+									:tuesday, :wednesday, :thursday, :friday,
+									:saturday, :address, :isEvent, :business_id, 
+									:web_business_id
 
 	geocoded_by :address
 	after_validation :geocode, :if => :address_changed?
