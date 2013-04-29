@@ -49,16 +49,19 @@
         
         <activity
             android:name="com.sapenguins.atc.MapAndHistoryActivity"
+            android:icon="@drawable/action_bar_map_icon_48"
             android:label="History">
         </activity>
         
         <activity
             android:name="com.sapenguins.atc.SingleMapViewActivity"
+            android:icon="@drawable/action_bar_map_icon_48"
             android:label="Map View">
         </activity>
         
         <activity
             android:name="com.sapenguins.atc.PromotionListActivity"
+           	android:icon="@drawable/action_bar_promotion_icon_48"	
             android:label="Promotions">
         </activity>
         

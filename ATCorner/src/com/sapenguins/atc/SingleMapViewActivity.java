@@ -38,8 +38,8 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	MapFragment mapFragment;
 	ActionBar actionBar;
 	Context context;
-	int[] dropdownIconResources = {R.drawable.settings, R.drawable.map_icon};
-	String[] dropdownText = {"Setting", "Map"};
+	int[] dropdownIconResources = {R.drawable.action_bar_map_icon_48, R.drawable.action_bar_promotion_icon_48};
+	String[] dropdownText = {"History", "Promotion"};
 	
 	TextView fromDate;
 	TextView fromTime;
@@ -95,6 +95,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		return null;
 	}
 	
+	/**
+	 * Create the action bar whenever the menu button is clicked
+	 */
 	private void initActionBar() {
 		setTheme(R.style.Theme_Sherlock);
 		
@@ -112,7 +115,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		}
 
 		actionBar = getSupportActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
+		//actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		Context context = getSupportActionBar().getThemedContext();
 		DropDownNavigationMenuAdapter navigationDropdown = new DropDownNavigationMenuAdapter(context, dropdownIconResources, dropdownText);
@@ -125,6 +128,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+    	if (itemPosition == 1) {
+    		startActivity(new Intent(getApplicationContext(), PromotionListActivity.class));
+    	}
         return true;
     }
     

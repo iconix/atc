@@ -26,7 +26,9 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import objects.*;
 
 public class PromotionListFragment extends ListFragment {
@@ -49,6 +51,20 @@ public class PromotionListFragment extends ListFragment {
         if (provider == null) onProviderDisabled(provider); 
         
 	    getBasicPromotionsFromDB();
+	    
+	    getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+	    	/* (non-Javadoc)
+	    	 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick(android.widget.AdapterView, android.view.View, int, long)
+	    	 */
+	    	@Override
+	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
+	    		BasicPromotion promotion = basicPromotionObjects.get(position);
+	    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+	   	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
+	    		startActivity(intent);
+	        	return false;
+	    	}
+	    });
 	}
 	
 	/**

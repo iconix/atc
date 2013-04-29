@@ -37,8 +37,8 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 	
 	ActionBar actionBar;
 	Context context;
-	int[] dropdownIconResources = {R.drawable.settings, R.drawable.map_icon};
-	String[] dropdownText = {"Setting", "Map"};
+	int[] dropdownIconResources = {R.drawable.action_bar_map_icon_48, R.drawable.action_bar_promotion_icon_48};
+	String[] dropdownText = {"History", "Promotion"};
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -91,10 +91,13 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
         
 	}
 	
-    @Override
-    public boolean onNavigationItemSelected(int itemPosition, long itemId) {
-        return true;
-    }
+	@Override
+	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
+		if (itemPosition == 1) {
+			startActivity(new Intent(getApplicationContext(), PromotionListActivity.class));
+		}
+		return true;
+	}
     
     /* (non-Javadoc)
 	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
@@ -131,6 +134,7 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 		});
         return true; 
 	}
+	
 
 
 	//---------------------------------------

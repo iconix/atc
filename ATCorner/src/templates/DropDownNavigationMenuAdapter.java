@@ -46,6 +46,7 @@ public class DropDownNavigationMenuAdapter extends BaseAdapter{
 		TextView title;
 	}
 	
+	
 	/**
 	 * Get the history item for the given position
 	 */
@@ -56,11 +57,11 @@ public class DropDownNavigationMenuAdapter extends BaseAdapter{
 			convertView = inflator.inflate(R.layout.menu_navigation_item, null);
 			holder = new ViewHolder();
 			holder.title = (TextView) convertView.findViewById(R.id.dropdown_menu_text);
-			holder.imageIcon = (ImageView) convertView.findViewById(R.id.dropdown_menu_image);
+			//holder.imageIcon = (ImageView) convertView.findViewById(R.id.dropdown_menu_image);
 			convertView.setTag(holder);
 		} else holder = (ViewHolder) convertView.getTag();
 		holder.title.setText(titles[position]);
-		holder.imageIcon.setImageResource(icons[position]);
+		//holder.imageIcon.setImageResource(icons[position]);
 		return convertView;
 	}
 	
