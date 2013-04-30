@@ -14,7 +14,7 @@
 	    <%= link_to "Edit profile", edit_business_path(@business) %>	
 			<br>
 			<% unless current_business.admin? then %>
-				<a href="/newdeal" class="btn btn-primary">Create promotion</a>
+				<a href="/newpromo" class="btn btn-primary">Create promotion</a>
 			<% end %>
     </section>
   </aside>

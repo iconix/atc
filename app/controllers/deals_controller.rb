@@ -14,7 +14,7 @@ class DealsController < ApplicationController
     
 		@deal = current_business.deals.build(params[:deal])
     if @deal.save
-      flash[:success] = "Deal created!"
+      flash[:success] = "Promotion created!"
 			redirect_to current_business
     else
 			render 'new'
@@ -27,7 +27,7 @@ class DealsController < ApplicationController
 
 	def destroy   
 	  Deal.find(params[:id]).destroy
-    flash[:success] = "Deal destroyed."
+    flash[:success] = "Promotion destroyed."
     redirect_to :back
 	end
 
@@ -44,7 +44,7 @@ class DealsController < ApplicationController
     @deal = Deal.find(params[:id])
     
     if @deal.update_attributes(params[:deal])
-      flash[:success] = "Deal updated"
+      flash[:success] = "Promotion updated"
       redirect_to :action => "show"
     else
       render 'edit'

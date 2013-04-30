@@ -1,5 +1,10 @@
-<% provide(:title, "New Deal") %> 
-<% provide(:subtitle, "Create Your Deal") %>
+<% if @deal.isEvent then %>
+	<% provide(:title, "New Event") %> 
+	<% provide(:subtitle, "Create Your Event") %>
+<% else %>
+	<% provide(:title, "New Deal") %> 
+	<% provide(:subtitle, "Create Your Deal") %>
+<% end %>
 
 <div class="container jumbotron">
 	<div class="row">

@@ -1,7 +1,8 @@
-<% provide(:title, "Edit Deal") %> 
 <% if @deal.isEvent then %>
+	<% provide(:title, "Edit Event") %>
 	<% provide(:subtitle, "Update Your Event") %>
 <% else %>
+	<% provide(:title, "Edit Deal") %>
 	<% provide(:subtitle, "Update Your Deal") %>
 <% end %>
 

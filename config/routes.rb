@@ -5,7 +5,7 @@ BusinessApp::Application.routes.draw do
   resources :deals
   resources :web_businesses
 
-	match '/newdeal', to: 'deals#new'
+	match '/newpromo', to: 'deals#new'
  
   match '/signup',  to: 'businesses#new'
 

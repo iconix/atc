@@ -1,7 +1,8 @@
-<% provide(:title, "Deal") %>
 <% if @deal.isEvent then %>
+	<% provide(:title, "Event") %>
 	<% provide(:subtitle, "Event") %>
 <% else %>
+	<% provide(:title, "Deal") %>
 	<% provide(:subtitle, "Deal") %>
 <% end %>
 
@@ -12,16 +13,16 @@
       	<% d = Deal.find(params[:id]) %>
       	<% unless d.business_id.nil? then %>
         	<% b = Business.find(d.business_id) %>
-		  		<%= link_to "<< View all deals", business_path(b) %>
+		  		<%= link_to "<< View all promotions", business_path(b) %>
 		  	<% else %>
 		    	<% b = WebBusiness.find(d.web_business_id) %>
-    			<%= link_to "<< View all deals", web_business_path(b) %>
+    			<%= link_to "<< View all promotions", web_business_path(b) %>
     		<% end %>
   		</p>
 			<h1><%= @deal.title %></h1>
 			<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
 			<p>Start date: <%= @deal.startDate %></p>
-			<p>End date: <%= @deal.startDate %></p>
+			<p>End date: <%= @deal.endDate %></p>
 			<p>Image URL: 
 		  	<% unless @deal.imageURL.empty? %> 
 					<p><%= image_tag @deal.imageURL %></p>
