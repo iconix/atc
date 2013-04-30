@@ -9,7 +9,7 @@
     <h4>Total number of businesses: <%= Business.all.size + WebBusiness.all.size %></h4>
 	  <h4>Number of businesses unique to site: <%= Business.all.size %></h4>
     <h4>Number of businesses pulled from web APIs: <%= WebBusiness.all.size %></h4>
-    <h4>Total number of deals: <%= Deal.find(:all, :conditions => ["isEvent = 'FALSE' or isEvent is null"]).size %></h4>
-    <h4>Total number of events: <%= Deal.find(:all, :conditions => ["isEvent = 'TRUE'"]).size %></h4>
+    <h4>Total number of deals: <%= Deal.find(:all, :conditions => {:isEvent => [nil, false]}).size %></h4>
+    <h4>Total number of events: <%= Deal.find(:all, :conditions => {:isEvent => true}).size %></h4>
   <% end %>
 </div>
