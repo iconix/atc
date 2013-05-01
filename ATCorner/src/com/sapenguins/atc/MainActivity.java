@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivity {
      * @return time gap
      */
     private void setTimeGap() {
-    	timeGap = getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, 240000); //24hr
+    	timeGap = getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, TimeFrame.ONE_DAY); //24hr
     	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, timeGap);
     }
     

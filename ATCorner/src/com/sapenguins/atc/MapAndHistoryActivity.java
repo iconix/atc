@@ -80,7 +80,6 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 		}
 
 		actionBar = getSupportActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		Context context = getSupportActionBar().getThemedContext();
 		DropDownNavigationMenuAdapter navigationDropdown = new DropDownNavigationMenuAdapter(context, dropdownIconResources, dropdownText);
