@@ -1,7 +1,11 @@
 package com.sapenguins.atc;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -18,7 +22,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import templates.CustomMenu.OnMenuItemSelectedListener;
@@ -26,11 +32,14 @@ import templates.CustomMenuItem;
 import templates.CustomMenu;
 import templates.DropDownNavigationMenuAdapter;
 import staticVariables.*;
+import supports.TimeFrame;
 
 public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener  {
 
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
+	
+	
 	MenuItem homeButton;
 	MenuItem pinButton;
 	MenuItem preferenceButton;
@@ -41,18 +50,14 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	int[] dropdownIconResources = {R.drawable.action_bar_map_icon_48, R.drawable.action_bar_promotion_icon_48};
 	String[] dropdownText = {"History", "Promotion"};
 	
+	Spinner period; 
+	
 	TextView fromDate;
 	TextView fromTime;
-	TextView toDate;
-	TextView toTime;
 	
 	int fromDay;
 	int fromMonth;
 	int fromYear;
-	
-	int toDay;
-	int toMonth;
-	int toYear;
 	
 	long fromTimePeriod;
 	long toTimePeriod;
@@ -75,7 +80,30 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		
 		initActionBar();
 		actionBar.hide();
+		
+		initTimeNavigationBar();
 	}
+	
+	private void initTimeNavigationBar() {
+		
+		initTimeNavigationPeriodSpinner();
+				
+	}
+	
+	private void initTimeNavigationPeriodSpinner() {
+		//get the saved period setting from the session.
+		
+		period = (Spinner) findViewById(R.id.map_time_navigation_time_gap_selection);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		        R.array.time_navigation_dropdown, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		period.setAdapter(adapter);
+	}
+	
+	
   
 	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
 			@Override
@@ -262,70 +290,11 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 				startActivity(new Intent(getApplicationContext(), MapAndHistoryActivity.class));
 				break;
             case DETAIL_ITEM:
-            	onMapStyleMenuButtonPressed();
+            	
             	break;
         }
         if (actionBar.isShowing()) actionBar.hide();
     }
-      
-    //Map type view
-    public static final int NORMAL_VIEW = 0;
-    public static final int HYBRID_VIEW = 1;
-    public static final int SATELLITE_VIEW = 2;
-    public static final int TERRAIN_VIEW = 3;
-    /**
-     * build an alert dialog to display the option for map style
-     */
-    private void onMapStyleMenuButtonPressed() {
-    	String currentMapType = getMapViewType();
-    	int mapID = 0;
-    	if (currentMapType.equals(PreferenceValue.MAP_VIEW_HYBRID)) mapID = 1;
-    	else if (currentMapType.equals(PreferenceValue.MAP_VIEW_SATELLITE)) mapID = 2;
-    	else if (currentMapType.equals(PreferenceValue.MAP_VIEW_TERRAIN)) mapID = 3;
-    	
-    	CharSequence[] mapOptions = {"Normal", "Hybrid", "Satellite", "Terrain"};
-    	AlertDialog.Builder builder = new AlertDialog.Builder(SingleMapViewActivity.this);
-    	builder.setTitle("Select Map Style")
-    	.setSingleChoiceItems(mapOptions, mapID, new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				if (which == TERRAIN_VIEW) setMapViewType(PreferenceValue.MAP_VIEW_TERRAIN);
-				else if (which == HYBRID_VIEW) setMapViewType(PreferenceValue.MAP_VIEW_HYBRID);
-				else if (which == SATELLITE_VIEW) setMapViewType(PreferenceValue.MAP_VIEW_SATELLITE);
-				else setMapViewType(PreferenceValue.MAP_VIEW_NORMAL);
-			}
-		})
-    	.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				reloadMapType();
-				dialog.cancel();
-			}
-		})
-		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		});
-    	AlertDialog alert = builder.create();
-    	alert.show();
-    }
-    
-    /**
-     * Set the map type to fit with the preferences
-     */
-    private void reloadMapType() {
-    	String mapViewType = getMapViewType();
-    	mapFragment.updateMapType(mapViewType);
-    }
-    
-    //---------------------------------------------
-    //--------------GET PREFERENCES ---------------
-    //---------------------------------------------
     
     /**
      * Get the map view type. 
@@ -352,6 +321,77 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     }
     
     /**
+     * Get the current time period option
+     * @return time period option
+     */
+    private int getTimePeriodOption() {
+    	return getPreferenceIntValue(SharedPreference.PREFERENCE, SharedPreference.TIME_PERIOD_PREFERENCE);
+    }
+    
+    /**
+     * Set the current time period option
+     * @param time period option
+     */
+    private void setTimePeriodOption(int periodOption) {
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_PERIOD_PREFERENCE, periodOption);
+    }
+    
+    /**
+     * Get the begin time
+     * @return begin time
+     */
+    private long getBeginTime() {
+    	long beginTime = getPreferenceLongValue(SharedPreference.PREFERENCE, SharedPreference.TIME_BEGIN_PREFERENCE);
+    	if (beginTime == 0) { // no preference for the begin time is set yet
+    		long currentTime = Long.valueOf(getCurrentTime());
+    		int timePeriodOption = getTimePeriodOption();
+    		long timePeriod = getTimePeriod(timePeriodOption);
+    		beginTime = TimeFrame.computePriorTime(currentTime, timePeriod);
+    		setBeginTime(beginTime);
+    	}
+    	return beginTime;
+    }
+    
+    /**
+     * Set the begin time
+     * @param begin time
+     */
+    private void setBeginTime(long beginTime) {
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_BEGIN_PREFERENCE, beginTime);
+    }
+    
+    /**
+     * Get the time period from the time period option
+     * @param time period option
+     * @return time period
+     */
+    private long getTimePeriod(int periodOption) {
+    	switch(periodOption) {
+    		case PreferenceValue.SPINNER_ONE_YEAR:
+    			return TimeFrame.ONE_YEAR;
+    		case PreferenceValue.SPINNER_THREE_MONTHS:
+    			return TimeFrame.THREE_MONTHS;
+    		case PreferenceValue.SPINNER_ONE_MONTH:
+    			return TimeFrame.ONE_MONTH;
+    		case PreferenceValue.SPINNER_ONE_WEEK:
+    			return TimeFrame.ONE_WEEK;
+    		case PreferenceValue.SPINNER_ONE_DAY:
+    			return TimeFrame.ONE_DAY;
+    		case PreferenceValue.SPINNER_SIX_HOURS:
+    			return TimeFrame.SIX_HOURS;
+    		case PreferenceValue.SPINNER_THREE_HOURS:
+    			return TimeFrame.THREE_HOURS;
+    		case PreferenceValue.SPINNER_ONE_HOUR:
+    			return TimeFrame.ONE_HOUR;
+    		case PreferenceValue.SPINNER_FIFTEEN_MINUTES:
+    			return TimeFrame.FIFTEEN_MINUTES;
+    		case PreferenceValue.SPINNER_FIVE_MINUTES:
+    			return TimeFrame.FIVE_MINUTES;
+    	}
+    	return TimeFrame.ONE_DAY;
+    }
+    
+    /**
      * Get the preference value of a given key stored in a given preference list
      * @param preference
      * @param key
@@ -360,6 +400,28 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     private String getPreferenceValue(String preference, String key) {
         SharedPreferences settings = getSharedPreferences(preference, 0);
         return settings.getString(key, "");
+    }
+    
+    /**
+     * Get the preference value of a given key stored in a given preference list
+     * @param preference
+     * @param key
+     * @return the long value of the key
+     */
+    private long getPreferenceLongValue(String preference, String key) {
+        SharedPreferences settings = getSharedPreferences(preference, 0);
+        return settings.getLong(key, 0);
+    }
+    
+    /**
+     * Get the preference value of a given key stored in a given preference list
+     * @param preference
+     * @param key
+     * @return the int value of the key
+     */
+    private int getPreferenceIntValue(String preference, String key) {
+        SharedPreferences settings = getSharedPreferences(preference, 0);
+        return settings.getInt(key, 0);
     }
     
     /**
@@ -373,6 +435,43 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(key, value);
         editor.commit();
+    }
+    
+    /**
+     * Modify the information stored in the shared preferences
+     * @param the ID associate with the preference
+     * @param the key string of a field in the preference
+     * @param the value of above key
+     */
+    private void updateSystemPreferences(String preferenceID, String key, long value) {
+        SharedPreferences settings = getSharedPreferences(preferenceID, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putLong(key, value);
+        editor.commit();
+    }
+    
+    /**
+     * Modify the information stored in the shared preferences
+     * @param the ID associate with the preference
+     * @param the key string of a field in the preference
+     * @param the value of above key
+     */
+    private void updateSystemPreferences(String preferenceID, String key, int value) {
+        SharedPreferences settings = getSharedPreferences(preferenceID, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(key, value);
+        editor.commit();
+    }
+    
+    /**
+     * Get the current time when the new coordinate was taken.
+     * The current time is recorded as UTC
+     * @return the current time represent in the format yyyyMMdd_HHmmss
+     */
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+        return sdf.format(new Date());
     }
 }
 

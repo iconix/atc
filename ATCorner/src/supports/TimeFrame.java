@@ -123,6 +123,12 @@ public class TimeFrame {
 		return originalTime - timeGap;
 	}
 	
+	/**
+	 * Compute the time end time
+	 * @param originalTime
+	 * @param timeGap
+	 * @return
+	 */
 	public static final long computeEndTime(long originalTime, long timeGap) {
 		int originalYear = getYear(originalTime);
 		int originalMonth = getMonth(originalTime);
@@ -208,27 +214,57 @@ public class TimeFrame {
 		return originalTime + timeGap;
 	}
 	
+	/**
+	 * Get the year in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return the year
+	 */
 	public static final int getYear(long time) {
 		//time is in format yyyyMMddHHmmss
 		return Integer.valueOf((String.valueOf(time)).substring(0, 4));
 	}
 	
+	/**
+	 * Get the month in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return the month
+	 */
 	public static final int getMonth(long time) {
 		return Integer.valueOf((String.valueOf(time)).substring(4, 6));
 	}
 	
+	/**
+	 * Get the day in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return the day
+	 */
 	public static final int getDay(long time) {
 		return Integer.valueOf((String.valueOf(time)).substring(6, 8));
 	}
 	
+	/**
+	 * Get the hour in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return the hour
+	 */
 	public static final int getHour(long time) {
 		return Integer.valueOf((String.valueOf(time)).substring(8, 10));
 	}
 	
+	/**
+	 * Get the minute in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return minute
+	 */
 	public static final int getMinute(long time) {
 		return Integer.valueOf((String.valueOf(time)).substring(10, 12));
 	}
 	
+	/**
+	 * Get the second in a time that was written in the expression yyyyMMddHHmmss
+	 * @param time
+	 * @return second
+	 */
 	public static final int getSecond(long time) {
 		return Integer.valueOf((String.valueOf(time)).substring(12));
 	}

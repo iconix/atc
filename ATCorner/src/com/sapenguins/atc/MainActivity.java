@@ -38,7 +38,6 @@ public class MainActivity extends FragmentActivity {
         	checkGpsService();
         	recordingGpsLocationService();
         	goToLastSavedActivity();
-        	updateTimePreference();
         }
     }
 
@@ -85,6 +84,11 @@ public class MainActivity extends FragmentActivity {
      * Go to the last saved activity. If none is found, then go to the main menu
      */
     private void goToLastSavedActivity() {
+    	//set the time period option back to 1 day
+    	//and force reset the begin time
+    	setTimePeriodOption(PreferenceValue.SPINNER_ONE_DAY);
+    	setBeginTime(0);
+    	
         String activity = getLastSavedActivity();
         Intent activityIntent = null;
         if (activity.equals(PreferenceValue.VIEW_SINGLE_MAP))
@@ -105,51 +109,6 @@ public class MainActivity extends FragmentActivity {
     }
     
     /**
-     * Update the time preference setting
-     */
-    private void updateTimePreference() {
-    	setTimeGap();
-    	setToTime();
-    	setFromTime();
-    }
-    
-    /**
-     * Get the preference for the time gap
-     * @return time gap
-     */
-    private void setTimeGap() {
-    	timeGap = getPreferenceTimeValue(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, TimeFrame.ONE_DAY); //24hr
-    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_GAP_PREFERENCE, timeGap);
-    }
-    
-    /**
-     * Set the 'to time' to the current time 
-     */
-    private void setToTime() {
-    	toTime = Long.valueOf(getTimeStamp());
-    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_TO_PREFERENCE, toTime);
-    }
-    
-    /**
-     * Set the 'from time' to be the time that is 'time gap' away from the current time
-     */
-    private void setFromTime() {
-    	fromTime = TimeFrame.computePriorTime(toTime, timeGap);
-    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_FROM_PREFERENCE, fromTime);
-    }
-    
-    /**
-     * Get the current time when the new coordinate was taken.
-     * The current time is recorded as UTC
-     * @return the current time represent in the format yyyyMMdd_HHmmss
-     */
-    private String getTimeStamp() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
-        sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-        return sdf.format(new Date());
-    }
-    
-    /**
      * Get the preference value of a given key stored in a given preference list
      * @param preference
      * @param key
@@ -161,14 +120,32 @@ public class MainActivity extends FragmentActivity {
     }
     
     /**
-     * Get the preference value of a given key stored in a given preference list
-     * @param preference
-     * @param key
-     * @return the time value of the key
+     * Set the current time period option
+     * @param time period option
      */
-    private long getPreferenceTimeValue(String preference, String key, long defaultTime) {
-        SharedPreferences settings = getSharedPreferences(preference, 0);
-        return settings.getLong(key, defaultTime);
+    private void setTimePeriodOption(int periodOption) {
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_PERIOD_PREFERENCE, periodOption);
+    }
+    
+    /**
+     * Set the begin time
+     * @param begin time
+     */
+    private void setBeginTime(long beginTime) {
+    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_BEGIN_PREFERENCE, beginTime);
+    }
+    
+    /**
+     * Modify the information stored in the shared preferences
+     * @param the ID associate with the preference
+     * @param the key string of a field in the preference
+     * @param the value of above key
+     */
+    private void updateSystemPreferences(String preferenceID, String key, int value) {
+        SharedPreferences settings = getSharedPreferences(preferenceID, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt(key, value);
+        editor.commit();
     }
     
     /**

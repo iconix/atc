@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#808080" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -18,37 +19,15 @@
                 android:id="@+id/time_navigation_left_arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#c6c6c6"
+                android:padding="7dp"
                 android:src="@drawable/arrow_left" />
 
-            <TextView
+            <Spinner
+                android:id="@+id/map_time_navigation_time_gap_selection"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="Period: "
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:id="@+id/time_navigation_time_gap_selection"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/text_container"
-                android:padding="3dp" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="3 months" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp"
-                    android:src="@drawable/control_bottom_right" />
-            </LinearLayout>
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:text="From: "
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -99,10 +78,12 @@
                 android:id="@+id/time_navigation_right_arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_marginLeft="7dp"
+                android:background="#c6c6c6"
+                android:padding="7dp"
                 android:src="@drawable/arrow_right" />
         </LinearLayout>
-    </RelativeLayout>  
+    </RelativeLayout>
 
     <fragment
         android:id="@+id/map_single_fragment"

@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="#808080">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -15,46 +16,27 @@
             android:orientation="horizontal" >
 
             <ImageView
-                android:id="@+id/time_navigation_left_arrow_icon"
+                android:id="@+id/map_time_navigation_left_arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="4dp"
                 android:paddingTop="13dp"
+                android:paddingBottom="12dp"
+                android:background="#c6c6c6"
                 android:src="@drawable/arrow_left" />
 
-            <LinearLayout
+           <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical" >
 
-                <TextView
+                <Spinner
+                    android:id="@+id/map_time_navigation_time_gap_selection"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:text="Period: "
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
+                    android:layout_height="wrap_content"/>
 
-                <LinearLayout
-                    android:id="@+id/time_navigation_time_gap_selection"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/text_container"
-                    android:padding="3dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3 months" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp"
-                        android:src="@drawable/control_bottom_right" />
-                </LinearLayout>
+                   
             </LinearLayout>
         </LinearLayout>
 
@@ -91,7 +73,7 @@
                         android:padding="3dp" >
 
                         <TextView
-                            android:id="@+id/time_navigation_from_day_selection"
+                            android:id="@+id/map_time_navigation_from_day_selection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="02/14/2013" />
@@ -102,11 +84,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:layout_marginLeft="4dp"
+                        android:layout_marginRight="3dp"
                         android:background="@drawable/text_container"
                         android:padding="3dp" >
 
                         <TextView
-                            android:id="@+id/time_navigation_from_time_selection"
+                            android:id="@+id/map_time_navigation_from_time_selection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="10:56 pm" />
@@ -115,11 +98,13 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/time_navigation_right_arrow_icon"
+                android:id="@+id/map_time_navigation_right_arrow_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="4dp"
                 android:paddingTop="13dp"
+                android:paddingBottom="12dp"
+                android:background="#c6c6c6"
                 android:src="@drawable/arrow_right" />
         </LinearLayout>
     </RelativeLayout>

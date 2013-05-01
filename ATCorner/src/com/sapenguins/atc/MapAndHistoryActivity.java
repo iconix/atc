@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 public class MapAndHistoryActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass, ActionBar.OnNavigationListener {
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
@@ -40,6 +42,8 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 	int[] dropdownIconResources = {R.drawable.action_bar_map_icon_48, R.drawable.action_bar_promotion_icon_48};
 	String[] dropdownText = {"History", "Promotion"};
 	
+	Spinner period;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,7 +56,20 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 		initActionBar();
 		actionBar.hide();
 		
+		initTimeNavigationBar();
+		
 		reloadMapType();
+	}
+	
+	private void initTimeNavigationBar() {
+		period = (Spinner) findViewById(R.id.listmap_time_navigation_time_gap_selection);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+		        R.array.time_navigation_dropdown, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Apply the adapter to the spinner
+		period.setAdapter(adapter);
 	}
 	
 	//---------------------------------------
