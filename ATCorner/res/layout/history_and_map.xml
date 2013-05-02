@@ -82,8 +82,7 @@
                         <TextView
                             android:id="@+id/listmap_time_navigation_from_day_selection"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="02/14/2013" />
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -98,8 +97,7 @@
                         <TextView
                             android:id="@+id/listmap_time_navigation_from_time_selection"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="10:56 pm" />
+                            android:layout_height="wrap_content"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -116,6 +114,21 @@
         </LinearLayout>
     </RelativeLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c8c8ff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ffffff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#c8c8ff" />
+    
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
