@@ -24,16 +24,23 @@ public class HistoryListFragment extends ListFragment{
 	Context context;
 	PinMarkerDataSource pinMarkerDataSource;
 	ArrayList<PinMarkerObj> pinMarkerObjects;
-	ArrayList<HistoryRowItem> historyRowItems;
 	
 	@Override
-	 public void onActivityCreated(Bundle savedInstanceState) {
+	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    context = getActivity();
 	    pinMarkerDataSource = new PinMarkerDataSource(context);
 		pinMarkerDataSource.open();
 	    addPinFromDB();
-	    getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+	    setListViewLongClickListener();	    
+	}
+	
+	/**
+	 * Set a long click listener to the item list view. On long click, the user
+	 * can choose to delete or modify the current information
+	 */
+	private void setListViewLongClickListener() {
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 	    	/* (non-Javadoc)
 	    	 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick(android.widget.AdapterView, android.view.View, int, long)
 	    	 */
@@ -66,8 +73,11 @@ public class HistoryListFragment extends ListFragment{
 	    });
 	}
 	
+	/**
+	 * Add pin from the database to the list view
+	 */
 	private void addPinFromDB() {
-		historyRowItems = new ArrayList<HistoryRowItem>();
+		ArrayList<HistoryRowItem> historyRowItems = new ArrayList<HistoryRowItem>();
 		pinMarkerObjects = pinMarkerDataSource.getPins();
 		for (PinMarkerObj pinObj : pinMarkerObjects) {
 			HistoryRowItem rowItem = new HistoryRowItem(R.drawable.pin_history_icon, pinObj.getTitle(), pinObj.getDescription(), String.valueOf(pinObj.getTime()));

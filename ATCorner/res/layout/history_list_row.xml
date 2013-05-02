@@ -4,65 +4,68 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector"
     android:orientation="horizontal"
-    android:padding="5dip" >
- 
-    <!--  ListRow Left Side Thumbnail image -->
-    <LinearLayout android:id="@+id/thumbnail"
+    android:padding="3dip" >
+
+    <!-- ListRow Left Side Thumbnail image -->
+
+    <LinearLayout
+        android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="3dip"
         android:layout_alignParentLeft="true"
+        android:layout_marginRight="5dip"
         android:background="@drawable/image_bg"
-        android:layout_marginRight="5dip">
- 
+        android:padding="2dip" >
+
         <ImageView
             android:id="@+id/history_list_view_row_image"
-            android:layout_width="48dip"
-            android:layout_height="48dip"/>
- 
+            android:layout_width="32dip"
+            android:layout_height="32dip" />
     </LinearLayout>
- 
-    <!-- Title of Ad-->
+
+    <!-- Title of Ad -->
+
     <TextView
         android:id="@+id/history_list_view_row_title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/history_list_view_row_date"
         android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#040404"
-        android:typeface="sans"
-        android:textSize="15dip"
-        android:textStyle="bold"/>
- 
+        android:textIsSelectable="false"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
     <!-- Company -->
-    <TextView
-        android:id="@+id/history_list_view_row_date"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/history_list_view_row_title"
-        android:textColor="#343434"
-        android:textSize="10dip"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail" />
- 
-    <!-- Distance -->
- 
-     <!-- Company -->
+
     <TextView
         android:id="@+id/history_list_view_row_description"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/history_list_view_row_date"
+        android:layout_alignBottom="@+id/thumbnail"
+        android:layout_below="@id/history_list_view_row_title"
+        android:layout_toLeftOf="@+id/history_list_view_row_arrow_icon"
+        android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#343434"
-        android:textSize="10dip"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail" />
+        android:textSize="12sp" />
 
-     <ImageView
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentRight="true"
-         android:layout_centerVertical="true"
-         android:src="@drawable/arrow" />
- 
+    <ImageView
+        android:id="@+id/history_list_view_row_arrow_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/history_list_view_row_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/history_list_view_row_description"
+        android:layout_alignBottom="@+id/history_list_view_row_description"
+        android:layout_alignTop="@+id/history_list_view_row_title"
+        android:textColor="#b2b2b2"/>
+
 </RelativeLayout>

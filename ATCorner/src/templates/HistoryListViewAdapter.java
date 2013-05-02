@@ -3,11 +3,13 @@ package templates;
 import java.util.List;
 
 import objects.HistoryRowItem;
+import supports.TimeFrame;
 
 import com.sapenguins.atc.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,10 +54,19 @@ public class HistoryListViewAdapter extends ArrayAdapter<HistoryRowItem>{
 			holder.imageIcon = (ImageView) convertView.findViewById(R.id.history_list_view_row_image);
 			convertView.setTag(holder);
 		} else holder = (ViewHolder) convertView.getTag();
+		
+		holder.title.setSingleLine();
+		holder.title.setEllipsize(TextUtils.TruncateAt.END);
 		holder.title.setText(historyRowItem.getTitle());
+		
+		holder.description.setSingleLine();
+		holder.description.setEllipsize(TextUtils.TruncateAt.END);
 		holder.description.setText(historyRowItem.getDescription());
-		holder.timeStamp.setText(historyRowItem.getTimeStamp());
-		holder.imageIcon.setImageResource(historyRowItem.getImageId());
+		
+		holder.timeStamp.setText(TimeFrame.getDateInString(Long.valueOf(historyRowItem.getTimeStamp())));
+		
+		holder.imageIcon.setImageResource(historyRowItem.getImageId());	
+		
 		return convertView;
 	}
 }

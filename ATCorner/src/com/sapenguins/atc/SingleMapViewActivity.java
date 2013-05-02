@@ -19,7 +19,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,7 +41,7 @@ import templates.DropDownNavigationMenuAdapter;
 import staticVariables.*;
 import supports.TimeFrame;
 
-public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener  {
+public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener {
 
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -73,9 +72,6 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	long beginPeriod;
 	long endPeriod;
 	int timePeriodOption;
-	
-	private static final int DATE_DIALOG_ID = 0;
-	private static final int TIME_DIALOG_ID = 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -137,6 +133,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 					int periodOption, long arg3) {
 				timePeriodOption = periodOption;
 				endPeriod = computeEndTime(beginPeriod, timePeriodOption);
+				setTimePeriodOption(timePeriodOption);
 				displayMapInCurrentTimePeriod();
 			}
 
@@ -228,7 +225,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         displayMapInCurrentTimePeriod();
         
         //update the from day text view
-        fromDate.setText(TimeFrame.getDateInString(beginPeriod));		    
+        fromDate.setText(TimeFrame.getDateInString(beginPeriod));	
+        //set the begin period in the preference
+        setBeginTime(beginPeriod);
     }
 	
 	/**
@@ -261,7 +260,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         endPeriod = computeEndTime(beginPeriod, timePeriodOption);
         displayMapInCurrentTimePeriod();
         //update the from day text view
-        fromTime.setText(TimeFrame.getTimeInString(beginPeriod));		    
+        fromTime.setText(TimeFrame.getTimeInString(beginPeriod));		
+        //set the begin period in the preference
+        setBeginTime(beginPeriod);
 	}
 	
 	/**
@@ -337,7 +338,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	private void displayMapInCurrentTimePeriod() {
 		mapFragment.clearMap();
 		mapFragment.displayVisitedLocation(beginPeriod, endPeriod);
-		mapFragment.displayPinnedLocation(beginPeriod, endPeriod);
+		mapFragment.displayPinnedLocation();
 	}
 	
 	/**
@@ -371,6 +372,12 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         
 	}
 	
+	/**
+	 * Handle event when the an navigating item in the action bar is selected 
+	 * @param item position
+	 * @param item id
+	 * @return true if successfully carried out
+	 */
     @Override
     public boolean onNavigationItemSelected(int itemPosition, long itemId) {
     	if (itemPosition == 1) {
@@ -379,7 +386,8 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         return true;
     }
     
-    /* (non-Javadoc)
+    /**
+     * Create action bar on top of the activity and implement click listener for each of its items
 	 * @see com.actionbarsherlock.app.SherlockFragmentActivity#onCreateOptionsMenu(com.actionbarsherlock.view.Menu)
 	 */
 	@Override
@@ -424,6 +432,9 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     public static final int LIST_ITEM = 2;
     public static final int DETAIL_ITEM = 3;
     
+    /**
+     * Init the view navigation bar
+     */
     private void initMenubar() {
         mMenu = new CustomMenu(this, this, getLayoutInflater());
         mMenu.setHideOnSelect(true);
@@ -447,7 +458,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     } 
 
     /**
-     * Load up our menu.
+     * Load up our menu. This menu display the viewing option of a given functionality
      */
     private void loadMenuItems() {
         //This is kind of a tedious way to load up the menu items.
@@ -512,23 +523,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         }
         if (actionBar.isShowing()) actionBar.hide();
     }
-    
-    /**
-     * Get the map view type. 
-     * @return the type of map
-     */
-    private String getMapViewType() {
-    	return getPreferenceValue(SharedPreference.PREFERENCE, SharedPreference.MAP_TYPE_VIEW);
-    }
-    
-    /**
-     * Set the map view type
-     * @param mapViewType
-     */
-    private void setMapViewType(String mapViewType) {
-    	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.MAP_TYPE_VIEW, mapViewType);
-    }
-    
+
     /**
      * Set the current view
      * @param currentView
@@ -622,17 +617,6 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
     			return TimeFrame.FIVE_MINUTES;
     	}
     	return TimeFrame.ONE_DAY;
-    }
-    
-    /**
-     * Get the preference value of a given key stored in a given preference list
-     * @param preference
-     * @param key
-     * @return the string value of the key
-     */
-    private String getPreferenceValue(String preference, String key) {
-        SharedPreferences settings = getSharedPreferences(preference, 0);
-        return settings.getString(key, "");
     }
     
     /**

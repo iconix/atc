@@ -70,8 +70,6 @@ public class MapFragment extends Fragment implements LocationListener{
 		
 		initProvider();
 		initMap();
-		addPinsFromDB();
-		addVisitedPathFromDB();
 		addPinLocationOption();
 		
 		return view;
@@ -135,8 +133,8 @@ public class MapFragment extends Fragment implements LocationListener{
 	 * @param begin Time
 	 * @param end Time
 	 */
-	public void displayPinnedLocation(long beginTime, long endTime) {
-		pinMarkerObjects = pinMarkerDataSource.getPins(beginTime, endTime);
+	public void displayPinnedLocation() {
+		pinMarkerObjects = pinMarkerDataSource.getPins();
     	if (pinMarkerObjects == null) return;
     	for (PinMarkerObj pin : pinMarkerObjects) {
     		addPin(pin.getTitle(), pin.getDescription(), new LatLng(pin.getLatitude(), pin.getLongitude()), false);
@@ -201,20 +199,6 @@ public class MapFragment extends Fragment implements LocationListener{
 	        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 18);
 	        googleMap.moveCamera(cameraUpdate);
         }
-    }
-	
-    /**
-     * Display the visited locations directly from the DB
-     */
-    private void addVisitedPathFromDB() {
-    	ArrayList<GpsLocationObj> visitedLocations = gpsLocationDataSource.getGpsLocations();
-    	PolylineOptions lineOptions = new PolylineOptions();
-    	lineOptions.color(Color.RED);
-    	lineOptions.width(3);
-    	for (GpsLocationObj location : visitedLocations) {
-    		lineOptions.add(new LatLng(location.getLatitude(), location.getLongitude()));
-    	}
-    	Polyline polyline = googleMap.addPolyline(lineOptions);
     }
     
     /**
@@ -289,17 +273,6 @@ public class MapFragment extends Fragment implements LocationListener{
     private void addPinToDB(String title, String description, LatLng latlng) {
         PinMarkerObj pin = new PinMarkerObj(title, description, latlng.longitude, latlng.latitude, getTimeStamp(), SQLTablesHelper.PIN_TYPE_MARK);
     	pinMarkerDataSource.addPin(pin);
-    }
-    
-    /**
-     * Add the pins stored in DB to the map
-     */
-    private void addPinsFromDB() {
-    	pinMarkerObjects = pinMarkerDataSource.getPins();
-    	if (pinMarkerObjects == null) return;
-    	for (PinMarkerObj pin : pinMarkerObjects) {
-    		addPin(pin.getTitle(), pin.getDescription(), new LatLng(pin.getLatitude(), pin.getLongitude()), false);
-    	}	
     }
     
     /**
