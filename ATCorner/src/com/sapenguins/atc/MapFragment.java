@@ -50,6 +50,7 @@ public class MapFragment extends Fragment implements LocationListener{
 	PinMarkerDataSource pinMarkerDataSource;
 	GpsLocationDataSource gpsLocationDataSource;
 	ArrayList<PinMarkerObj> pinMarkerObjects;
+	ArrayList<GpsLocationObj> visitedLocations;
 	LocationManager locationManager;
 	String provider;
 	/* (non-Javadoc)
@@ -105,6 +106,44 @@ public class MapFragment extends Fragment implements LocationListener{
 		gpsLocationDataSource.open();
 		super.onResume();
 	}
+	
+	/**
+	 * Clear the everything on the map
+	 */
+	public void clearMap() {
+		googleMap.clear();
+	}
+	
+	/**
+	 * Display the visited location in the given time frame
+	 * @param begin time
+	 * @peram end time
+	 */
+	public void displayVisitedLocation(long beginTime, long endTime) {
+		visitedLocations = gpsLocationDataSource.getGpsLocations(beginTime, endTime);
+    	PolylineOptions lineOptions = new PolylineOptions();
+    	lineOptions.color(Color.RED);
+    	lineOptions.width(3);
+    	for (GpsLocationObj location : visitedLocations) {
+    		lineOptions.add(new LatLng(location.getLatitude(), location.getLongitude()));
+    	}
+    	Polyline polyline = googleMap.addPolyline(lineOptions);
+	}
+	
+	/**
+	 * Display the pin location in the given time frame
+	 * @param begin Time
+	 * @param end Time
+	 */
+	public void displayPinnedLocation(long beginTime, long endTime) {
+		pinMarkerObjects = pinMarkerDataSource.getPins(beginTime, endTime);
+    	if (pinMarkerObjects == null) return;
+    	for (PinMarkerObj pin : pinMarkerObjects) {
+    		addPin(pin.getTitle(), pin.getDescription(), new LatLng(pin.getLatitude(), pin.getLongitude()), false);
+    	}	
+	}
+	
+	
 	
 	/**
 	 * Update the map view type

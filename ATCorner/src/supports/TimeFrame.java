@@ -204,7 +204,7 @@ public class TimeFrame {
 		if ((timeGap == ONE_HOUR) && (originalHour == 23)) 
 			return computeEndTime(originalTime, ONE_DAY) - 230000; //minus 23 hours
 		
-		if ((timeGap == FIFTEEN_MINUTES) && (originalMinute < 15))  
+		if ((timeGap == FIFTEEN_MINUTES) && (originalMinute >= 45))  
 			return computeEndTime(originalTime, ONE_HOUR) - 4500; //minus 45 minutes
 		
 		if ((timeGap == FIVE_MINUTES) && (originalMinute >= 55)) 
@@ -291,7 +291,11 @@ public class TimeFrame {
 		int minute = getMinute(time);
 		if (hour > 12) hour = hour - 12;
 		else isPm = " am";
-		String timeString = hour + ":" + minute + isPm;
+		String hourStr = String.valueOf(hour);
+		if (hour < 10) hourStr = "0" + hourStr;
+		String minuteStr = String.valueOf(minute);
+		if (minute < 10) minuteStr = "0" + minuteStr;
+		String timeString = hourStr + ":" + minuteStr + isPm;
 		return timeString;
 	}
 	

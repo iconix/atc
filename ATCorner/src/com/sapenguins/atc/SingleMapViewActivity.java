@@ -14,20 +14,26 @@ import com.actionbarsherlock.view.MenuItem;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import templates.CustomMenu.OnMenuItemSelectedListener;
 import templates.CustomMenuItem;
@@ -36,7 +42,7 @@ import templates.DropDownNavigationMenuAdapter;
 import staticVariables.*;
 import supports.TimeFrame;
 
-public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener  {
+public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener  {
 
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -58,19 +64,18 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	ImageView leftTimeArrow;
 	ImageView rightTimeArrow;
 	
-	
-	int fromDay;
-	int fromMonth;
 	int fromYear;
+	int fromMonth;
+	int fromDay;
+	int fromHour;
+	int fromMinute;
 	
 	long beginPeriod;
 	long endPeriod;
 	int timePeriodOption;
 	
-	private static final int FROM_DATE_DIALOG_ID = 0;
-	private static final int FROM_TIME_DIALOG_ID = 1;
-	private static final int TO_DATE_DIALOG_ID = 2;
-	private static final int TO_TIME_DIALOG_ID = 3;
+	private static final int DATE_DIALOG_ID = 0;
+	private static final int TIME_DIALOG_ID = 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,11 +97,11 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	 * Initiate the values in time navigation bar when the
 	 * activity is created
 	 */
-	private void initTimeNavigationBar() {
-		
+	private void initTimeNavigationBar() {		
 		initTimeNavigationPeriodSpinner();
 		initTimeNavigationDateAndTime();
 		initTimeNavigationArrowButtons();
+		displayMapInCurrentTimePeriod();
 	}
 	
 	/**
@@ -118,6 +123,28 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		// Apply the adapter to the spinner
 		period.setAdapter(adapter);
 		period.setSelection(timePeriodOption, true);
+		setTimeNavigationPeriodSpinnerListener();
+	}
+	
+	/**
+	 * Add the listener for the time navigation period spinner
+	 */
+	private void setTimeNavigationPeriodSpinnerListener() {
+		period.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int periodOption, long arg3) {
+				timePeriodOption = periodOption;
+				endPeriod = computeEndTime(beginPeriod, timePeriodOption);
+				displayMapInCurrentTimePeriod();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+			}
+		});
 	}
 	
 	/**
@@ -135,6 +162,106 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		
 		//save the begin to the preferences
 		setBeginTime(beginPeriod);
+		
+		setFromDateClickListener();
+		setFromTimeClickListener();
+	}
+	
+	/**
+	 * Set the click listener for the from date text field
+	 */
+	private void setFromDateClickListener() {
+		fromDate.setOnClickListener(new TextView.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				fromYear = TimeFrame.getYear(beginPeriod);
+				fromMonth = TimeFrame.getMonth(beginPeriod);
+				fromDay = TimeFrame.getDay(beginPeriod);
+				DialogFragment dateFragment = new DatePickerFragment();
+				dateFragment.show(getSupportFragmentManager(), "Date Picker");
+			}
+		});
+	}
+	
+	/**
+	 * Set the click listener for the from time text field
+	 */
+	private void setFromTimeClickListener() {
+		fromTime.setOnClickListener(new TextView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				fromHour = TimeFrame.getHour(beginPeriod);
+				fromMinute = TimeFrame.getMinute(beginPeriod);
+				DialogFragment timeFragment = new TimePickerFragment();
+				timeFragment.show(getSupportFragmentManager(), "Time Picker");
+			}		
+		});
+	}
+	
+	/**
+	 * Create a new date picker fragment. 
+	 * Display this fragment whenever the date text field is selected
+	 */
+	public class DatePickerFragment extends DialogFragment{
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Create a new instance of DatePickerDialog and return it
+	    	// Month start with 0. Weird, but nothing we can do
+	        return new DatePickerDialog(getActivity(), (SingleMapViewActivity)getActivity(), fromYear, fromMonth -1, fromDay);
+	    }
+	}
+	
+	/**
+	 * When the date is set, the map should change and the date in 
+	 * the time navigation bar should also change accordingly
+	 */
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		String yearStr = String.valueOf(year);
+    	String monthStr = String.valueOf(monthOfYear + 1);
+    	if (monthOfYear < 9) monthStr = "0" + monthStr;
+    	String dayStr = String.valueOf(dayOfMonth);
+    	if (dayOfMonth < 10) dayStr = "0" + dayStr;
+    	String timeStr = String.valueOf(beginPeriod).substring(8);
+        String newBeginPeriod = yearStr + monthStr + dayStr + timeStr;
+        beginPeriod = Long.valueOf(newBeginPeriod);
+        endPeriod = computeEndTime(beginPeriod, timePeriodOption);
+        displayMapInCurrentTimePeriod();
+        
+        //update the from day text view
+        fromDate.setText(TimeFrame.getDateInString(beginPeriod));		    
+    }
+	
+	/**
+	 * Create a new time picker fragment. 
+	 * Display this fragment whenever the date text field is selected
+	 */
+	public class TimePickerFragment extends DialogFragment{
+	    @Override
+	    public Dialog onCreateDialog(Bundle savedInstanceState) {
+	        // Create a new instance of DatePickerDialog and return it
+	    	// Month start with 0. Weird, but nothing we can do
+	        return new TimePickerDialog(getActivity(), (SingleMapViewActivity)getActivity(), fromHour, fromMinute, false);
+	    }
+	}
+	
+	/**
+	 * When the time is set, the map should change and the time in 
+	 * the time navigation bar should also change accordingly
+	 */
+	public void onTimeSet(TimePicker view, int hour, int minute) {
+		String hourStr = String.valueOf(hour);
+		if(hour < 10) hourStr = "0"+ hourStr;
+    	String minuteStr = String.valueOf(minute);
+    	if (minute < 10) minuteStr = "0" + minuteStr;
+ 
+    	String dayStr = String.valueOf(beginPeriod).substring(0, 8);
+    	String secondStr = String.valueOf(beginPeriod).substring(12);
+        String newBeginPeriod = dayStr + hourStr + minuteStr + secondStr;
+        beginPeriod = Long.valueOf(newBeginPeriod);
+        endPeriod = computeEndTime(beginPeriod, timePeriodOption);
+        displayMapInCurrentTimePeriod();
+        //update the from day text view
+        fromTime.setText(TimeFrame.getTimeInString(beginPeriod));		    
 	}
 	
 	/**
@@ -165,6 +292,8 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 				
 				//save the begin to the preferences
 				setBeginTime(beginPeriod);
+				//display new information
+				displayMapInCurrentTimePeriod();
 			}	
 		});
 	}
@@ -194,30 +323,21 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 					
 					//save the begin to the preferences
 					setBeginTime(beginPeriod);
+					//display new information
+					displayMapInCurrentTimePeriod();
 				}
 			}
 			
 		});
 	}
 	
-	
-  
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear,
-					int dayOfMonth) {
-				// TODO Auto-generated method stub
-				
-			}
-		    };
-	    
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		switch(id) {
-			case FROM_DATE_DIALOG_ID:
-				
-		}
-		return null;
+	/**
+	 * Display map in the current time period
+	 */
+	private void displayMapInCurrentTimePeriod() {
+		mapFragment.clearMap();
+		mapFragment.displayVisitedLocation(beginPeriod, endPeriod);
+		mapFragment.displayPinnedLocation(beginPeriod, endPeriod);
 	}
 	
 	/**
