@@ -36,7 +36,7 @@ GEM
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
     bcrypt-ruby (3.0.1)
-    bootstrap-sass (2.3.1.1)
+    bootstrap-sass (2.3.1.0)
       sass (~> 3.2)
     builder (3.0.4)
     capybara (1.1.2)
@@ -196,7 +196,7 @@ DEPENDENCIES
   annotate (= 2.5.0)
   aws-sdk
   bcrypt-ruby (= 3.0.1)
-  bootstrap-sass
+  bootstrap-sass (= 2.3.1.0)
   capybara (= 1.1.2)
   childprocess (= 0.3.6)
   coffee-rails (~> 3.2.2)
@@ -209,7 +209,6 @@ DEPENDENCIES
   mysql2
   paperclip (~> 3.0)
   rails (= 3.2.12)
-  rake (= 10.0.4)
   rb-inotify (= 0.8.8)
   right_aws (~> 3.0.5)
   rspec-rails (= 2.11.0)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130428204651) do
+ActiveRecord::Schema.define(:version => 20130502065626) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -44,6 +44,10 @@ ActiveRecord::Schema.define(:version => 20130428204651) do
     t.datetime "created_at",                                                            :null => false
     t.datetime "updated_at",                                                            :null => false
     t.boolean  "admin",                                              :default => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true

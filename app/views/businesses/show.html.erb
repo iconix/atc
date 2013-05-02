@@ -9,12 +9,17 @@
     <% end %>
     <section>
       <h1><%= @business.name %></h1>
-      <img src=<%= @business.imageURL %> width="200px", height="200px">
-      <br><br>
-	    <%= link_to "Edit profile", edit_business_path(@business) %>	
-			<br>
+	  <% unless @business.imageURL.empty? %> 
+		<img src=<%= @business.imageURL %> width="200px", height="200px">
+		<br><br>
+	  <% end %>
+	  <% unless @business.image_file_name.nil? %> 
+		<%= image_tag @business.image.url(:medium) %>
+		<br><br>
+	  <% end %>
+	  <p><%= link_to "Edit profile", edit_business_path(@business) %></p>
 			<% unless current_business.admin? then %>
-				<a href="/newpromo" class="btn btn-primary">Create promotion</a>
+				<p><a href="/newpromo" class="btn btn-primary">Create promotion</a></p>
 			<% end %>
     </section>
   </aside>

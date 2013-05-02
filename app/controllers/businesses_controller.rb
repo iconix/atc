@@ -39,6 +39,8 @@ class BusinessesController < ApplicationController
       @business.update_attribute(:address, params[:business][:address])
       @business.update_attribute(:phoneNumber, params[:business][:phoneNumber])
       @business.update_attribute(:imageURL, params[:business][:imageURL])
+      @business.update_attribute(:image, params[:business][:image])
+      @business.update_attribute(:image_delete, params[:business][:image_delete])
       flash[:success] = "Profile updated"
       sign_in @business
       redirect_to @business

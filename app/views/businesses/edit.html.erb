@@ -3,7 +3,7 @@
 
 <div class="container jumbotron">
 	<div class="row">
-		<%= form_for(@business) do |f| %>
+		<%= form_for @business, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/business_error_messages' %>
 			<div class="span4">
 		    <%= f.label :name %>
@@ -29,13 +29,14 @@
 				<%= f.label :imageURL, "Image URL" %>
 		    <%= f.text_field :imageURL %>
 
-				<% if false %>
 		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
-		    <% unless @business.image_file_size.nil? %>
-          <p>(Current upload: <%= @business.image_file_name %>)</p>
-        <% end %>
-				<% end %>
+			<% unless @business.image_file_size.nil? %>
+	          <p>
+	          	(Current upload -- Check box to delete:<br />
+	          	<%= f.check_box :image_delete %> <%= @business.image_file_name %>)
+	          </p>
+	        <% end %>
 				
 		    <br><br>
 		    <%= f.submit "Save changes", class: "btn btn-primary" %>

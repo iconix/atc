@@ -61,8 +61,11 @@
 		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
 		    <% unless @deal.image_file_size.nil? %>
-          <p>(Current upload: <%= @deal.image_file_name %>)</p>
-        <% end %>
+	          <p>
+	          	(Current upload -- Check box to delete:<br />
+	          	<%= f.check_box :image_delete %> <%= @deal.image_file_name %>)
+	          </p>
+	        <% end %>
 		    
 		    <br><br>
 		    <%= f.submit "Save changes", class: "btn btn-primary" %>
