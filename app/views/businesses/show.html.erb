@@ -9,7 +9,7 @@
     <% end %>
     <section>
       <h1><%= @business.name %></h1>
-	  <% unless @business.imageURL.empty? %> 
+	  <% unless @business.imageURL.nil? %> 
 		<img src=<%= @business.imageURL %> width="200px", height="200px">
 		<br><br>
 	  <% end %>
