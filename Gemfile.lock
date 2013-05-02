@@ -209,6 +209,7 @@ DEPENDENCIES
   mysql2
   paperclip (~> 3.0)
   rails (= 3.2.12)
+  rake (= 10.0.4)
   rb-inotify (= 0.8.8)
   right_aws (~> 3.0.5)
   rspec-rails (= 2.11.0)
