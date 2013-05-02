@@ -11,6 +11,8 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.android.gms.maps.model.LatLng;
+import com.sapenguins.atc.HistoryListFragment.OnDetailPass;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -41,7 +43,7 @@ import templates.DropDownNavigationMenuAdapter;
 import staticVariables.*;
 import supports.TimeFrame;
 
-public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener {
+public class SingleMapViewActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, OnDetailPass, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener {
 
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -518,7 +520,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 				startActivity(new Intent(getApplicationContext(), MapAndHistoryActivity.class));
 				break;
             case DETAIL_ITEM:
-            	
+            	startActivity(new Intent(getApplicationContext(), DetailAndHistoryActivity.class));
             	break;
         }
         if (actionBar.isShowing()) actionBar.hide();
@@ -690,6 +692,14 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
         sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         return sdf.format(new Date());
     }
+    
+    //---------------------------------------
+  	//--HANDLE INTERACTIONS BETWEEN FRAGMENT-
+  	//---------------------------------------
+  	@Override
+  	public void onDetailPass(String title, String description, long time, String imgSrc) {
+  		//do nothing
+  	}
 }
 
 

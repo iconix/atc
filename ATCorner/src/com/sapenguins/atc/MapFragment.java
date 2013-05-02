@@ -53,6 +53,7 @@ public class MapFragment extends Fragment implements LocationListener{
 	ArrayList<GpsLocationObj> visitedLocations;
 	LocationManager locationManager;
 	String provider;
+	
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */

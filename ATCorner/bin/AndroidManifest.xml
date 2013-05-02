@@ -54,6 +54,12 @@
         </activity>
         
         <activity
+            android:name="com.sapenguins.atc.DetailAndHistoryActivity"
+            android:icon="@drawable/action_bar_map_icon_48"
+            android:label="History">
+        </activity>
+        
+        <activity
             android:name="com.sapenguins.atc.SingleMapViewActivity"
             android:icon="@drawable/action_bar_map_icon_48"
             android:label="Map View">

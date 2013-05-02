@@ -32,6 +32,10 @@ public class HistoryListFragment extends ListFragment{
 	    pinMarkerDataSource = new PinMarkerDataSource(context);
 		pinMarkerDataSource.open();
 	    addPinFromDB();
+	    if (pinMarkerObjects.size() > 0) {
+	    	PinMarkerObj pinObj = pinMarkerObjects.get(0); 
+	    	passDetail(pinObj.getTitle(), pinObj.getDescription(), pinObj.getTime(), null);
+	    }
 	    setListViewLongClickListener();	    
 	}
 	
@@ -91,6 +95,7 @@ public class HistoryListFragment extends ListFragment{
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	    PinMarkerObj pinObj = pinMarkerObjects.get(position);
 	    passCoordinate(new LatLng(pinObj.getLatitude(), pinObj.getLongitude()));
+	    passDetail(pinObj.getTitle(), pinObj.getDescription(), pinObj.getTime(), null);
 	}
 
 	/**
@@ -112,6 +117,7 @@ public class HistoryListFragment extends ListFragment{
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 		coordinatePasser = (OnCoordinatePass) activity;
+		detailPasser = (OnDetailPass) activity;
 	}
 	
 	/**
@@ -120,6 +126,25 @@ public class HistoryListFragment extends ListFragment{
 	 */
 	public void passCoordinate(LatLng coordinate) {
 	    coordinatePasser.onCoordinatePass(coordinate);
+	}
+	
+	/**
+	 * Interface to pass the information (coordinate) of selected item back to activity 
+	 * containing it
+	 * @author minhthaonguyen
+	 */
+	public interface OnDetailPass {
+	    public void onDetailPass(String title, String description, long time, String imgSrc);
+	}
+	
+	OnDetailPass detailPasser;
+	
+	/**
+	 * Passing the coordinate from the fragment to activity
+	 * @param coordinate
+	 */
+	public void passDetail(String title, String description, long time, String imgSrc) {
+	    detailPasser.onDetailPass(title, description, time, imgSrc);
 	}
 
 	

@@ -13,6 +13,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.model.LatLng;
 import com.sapenguins.atc.HistoryListFragment.OnCoordinatePass;
+import com.sapenguins.atc.HistoryListFragment.OnDetailPass;
 
 import staticVariables.PreferenceValue;
 import staticVariables.SharedPreference;
@@ -33,7 +34,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -45,7 +45,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class MapAndHistoryActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener {
+public class MapAndHistoryActivity extends SherlockFragmentActivity implements OnMenuItemSelectedListener, OnCoordinatePass, OnDetailPass, ActionBar.OnNavigationListener, OnDateSetListener, OnTimeSetListener {
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
 	MenuItem homeButton;
@@ -79,7 +79,6 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history_and_map);
-		//TODO change the view
 		setCurrentView(PreferenceValue.VIEW_MAP_AND_HISTORY);
 		mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.map_history_fragment);
 		
@@ -521,6 +520,7 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 			startActivity(new Intent(getApplicationContext(), SingleMapViewActivity.class));
 			break;
 		case DETAIL_ITEM:
+			startActivity(new Intent(getApplicationContext(), DetailAndHistoryActivity.class));
 			break;
 		}
 		if (actionBar.isShowing()) actionBar.hide();
@@ -701,6 +701,11 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 	@Override
 	public void onCoordinatePass(LatLng coordinate) {
 		mapFragment.moveCamera(coordinate);
+	}
+	
+	@Override
+	public void onDetailPass(String title, String description, long time, String imgSrc) {
+		//do nothing
 	}
 }
 

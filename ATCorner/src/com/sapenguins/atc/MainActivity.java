@@ -1,10 +1,5 @@
 package com.sapenguins.atc;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -20,7 +15,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 import staticVariables.*;
-import supports.TimeFrame;
 
 public class MainActivity extends FragmentActivity {
 	
@@ -95,6 +89,8 @@ public class MainActivity extends FragmentActivity {
         	activityIntent = new Intent(this, SingleMapViewActivity.class);
         else if (activity.equals(PreferenceValue.VIEW_MAP_AND_HISTORY))
         	activityIntent = new Intent(this, MapAndHistoryActivity.class);
+        else if (activity.equals(PreferenceValue.VIEW_DETAIL_AND_HISTORY))
+        	activityIntent = new Intent(this, DetailAndHistoryActivity.class);
         else activityIntent = new Intent(this, MainMenu.class);
         finish();
         startActivity(activityIntent);
