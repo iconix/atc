@@ -269,6 +269,32 @@ public class TimeFrame {
 		return Integer.valueOf((String.valueOf(time)).substring(12));
 	}
 	
+	/**
+	 * Get the string expression of the day from yyyyMMddHHmmss
+	 * @param time
+	 * @return the time 
+	 */
+	public static final String getDateInString(long time) {
+		String timeString = String.valueOf(time);
+		String dateString = timeString.substring(4, 6) + "/" + timeString.substring(6, 8) + "/" + timeString.substring(0, 4);
+		return dateString;
+	}
+	
+	/**
+	 * Get the string expression of the time from yyyyMMddHHmmss
+	 * @param time
+	 * @return the time 
+	 */
+	public static final String getTimeInString(long time) {
+		String isPm = " pm";
+		int hour = getHour(time);
+		int minute = getMinute(time);
+		if (hour > 12) hour = hour - 12;
+		else isPm = " am";
+		String timeString = hour + ":" + minute + isPm;
+		return timeString;
+	}
+	
 	public static final long getDateInLong(String date) {
 		//TODO date will have the form mm/dd/yyyy, transform it to yyyymmdd000000 with six 0
 		return 0;

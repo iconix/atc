@@ -21,9 +21,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,16 +53,19 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	String[] dropdownText = {"History", "Promotion"};
 	
 	Spinner period; 
-	
 	TextView fromDate;
 	TextView fromTime;
+	ImageView leftTimeArrow;
+	ImageView rightTimeArrow;
+	
 	
 	int fromDay;
 	int fromMonth;
 	int fromYear;
 	
-	long fromTimePeriod;
-	long toTimePeriod;
+	long beginPeriod;
+	long endPeriod;
+	int timePeriodOption;
 	
 	private static final int FROM_DATE_DIALOG_ID = 0;
 	private static final int FROM_TIME_DIALOG_ID = 1;
@@ -76,7 +81,6 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		setCurrentView(PreferenceValue.VIEW_SINGLE_MAP);
 		
 		initMenubar();		
-		reloadMapType();
 		
 		initActionBar();
 		actionBar.hide();
@@ -84,14 +88,26 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		initTimeNavigationBar();
 	}
 	
+	/** 
+	 * Initiate the values in time navigation bar when the
+	 * activity is created
+	 */
 	private void initTimeNavigationBar() {
 		
 		initTimeNavigationPeriodSpinner();
-				
+		initTimeNavigationDateAndTime();
+		initTimeNavigationArrowButtons();
 	}
 	
+	/**
+	 * Set up the time period spinner. If the user is in the session
+	 * then keep that session information.
+	 */
 	private void initTimeNavigationPeriodSpinner() {
 		//get the saved period setting from the session.
+		timePeriodOption = getTimePeriodOption();
+		beginPeriod = getBeginTime();
+		endPeriod = computeEndTime(beginPeriod, timePeriodOption);
 		
 		period = (Spinner) findViewById(R.id.map_time_navigation_time_gap_selection);
 		// Create an ArrayAdapter using the string array and a default spinner layout
@@ -101,6 +117,87 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
 		period.setAdapter(adapter);
+		period.setSelection(timePeriodOption, true);
+	}
+	
+	/**
+	 * Set up the date and time text field
+	 */
+	private void initTimeNavigationDateAndTime() {
+		fromDate = (TextView) findViewById(R.id.map_time_navigation_from_day_selection);
+		fromTime = (TextView) findViewById(R.id.map_time_navigation_from_time_selection);
+		
+		String fromDateString = TimeFrame.getDateInString(beginPeriod);
+		String fromTimeString = TimeFrame.getTimeInString(beginPeriod);
+		
+		fromDate.setText(fromDateString);
+		fromTime.setText(fromTimeString);
+		
+		//save the begin to the preferences
+		setBeginTime(beginPeriod);
+	}
+	
+	/**
+	 * Set up the listener for the arrow button in the time navigation bar
+	 */
+	private void initTimeNavigationArrowButtons() {
+		leftTimeArrow = (ImageView) findViewById(R.id.map_time_navigation_left_arrow_icon);
+		rightTimeArrow = (ImageView) findViewById(R.id.map_time_navigation_right_arrow_icon);
+		setLeftTimeArrowClickListener();
+		setRightTimeArrowClickListener();
+	}
+	
+	/**
+	 * Set the listener for the left time arrow
+	 */
+	private void setLeftTimeArrowClickListener() {
+		leftTimeArrow.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				endPeriod = beginPeriod;
+				beginPeriod = computePriorTime(endPeriod, timePeriodOption);
+				
+				String fromDateString = TimeFrame.getDateInString(beginPeriod);
+				String fromTimeString = TimeFrame.getTimeInString(beginPeriod);
+				
+				fromDate.setText(fromDateString);
+				fromTime.setText(fromTimeString);
+				
+				//save the begin to the preferences
+				setBeginTime(beginPeriod);
+			}	
+		});
+	}
+	
+	/**
+	 * Set the listener for the right time arrow
+	 * The only distinction is that for the right time arrow.
+	 * If the begin time of period is already greater than the current time
+	 * Then the action is ignored, and make the background of image lighter to say this
+	 */
+	private void setRightTimeArrowClickListener() {
+		rightTimeArrow.setOnClickListener(new ImageView.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				long currentTime = Long.valueOf(getCurrentTime());
+				if (currentTime <= endPeriod) return;
+				else {
+					beginPeriod = endPeriod;
+					endPeriod = computeEndTime(beginPeriod, timePeriodOption);
+					
+					String fromDateString = TimeFrame.getDateInString(beginPeriod);
+					String fromTimeString = TimeFrame.getTimeInString(beginPeriod);
+					
+					fromDate.setText(fromDateString);
+					fromTime.setText(fromTimeString);
+					
+					//save the begin to the preferences
+					setBeginTime(beginPeriod);
+				}
+			}
+			
+		});
 	}
 	
 	
@@ -358,6 +455,22 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
      */
     private void setBeginTime(long beginTime) {
     	updateSystemPreferences(SharedPreference.PREFERENCE, SharedPreference.TIME_BEGIN_PREFERENCE, beginTime);
+    }
+    
+    /**
+     * Extend compute prior time in TimeFrame to accept the option as
+     * argument for time gap
+     */
+    private long computePriorTime(long currentTime, int periodOption) {
+    	return TimeFrame.computePriorTime(currentTime, getTimePeriod(periodOption));
+    }
+    
+    /**
+     * Extend compute next time in TimeFrame to accept the option as
+     * argument for time gap
+     */
+    private long computeEndTime(long currentTime, int periodOption) {
+    	return TimeFrame.computeEndTime(currentTime, getTimePeriod(periodOption));
     }
     
     /**
