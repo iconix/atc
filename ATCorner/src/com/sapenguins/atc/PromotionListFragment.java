@@ -6,9 +6,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import objects.BasicPromotion;
+import objects.PinMarkerObj;
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
 import supports.AppHttpClient;
+import supports.SwipeGestureDetector;
 import templates.PromotionListViewAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -37,10 +39,17 @@ public class PromotionListFragment extends ListFragment {
 	Context context;
 	LocationManager locationManager; 
 	String provider;
+	SwipeGestureDetector swipeDetector; 
+	ListView listView;
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    context = getActivity();
+	    
+	    listView = getListView();
+	    swipeDetector = new SwipeGestureDetector();
+	    listView.setOnTouchListener(swipeDetector);
 	    
 	    //get last known location to calculate the bird-eye distance
 	    locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -49,16 +58,42 @@ public class PromotionListFragment extends ListFragment {
         
 	    getBasicPromotionsFromDB();
 	    
-	    getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+	    listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    	/* (non-Javadoc)
 	    	 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick(android.widget.AdapterView, android.view.View, int, long)
 	    	 */
 	    	@Override
 	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
-	    		BasicPromotion promotion = basicPromotionObjects.get(position);
-	    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-	   	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
-	    		startActivity(intent);
+	    		if (swipeDetector.swipeDetected()) {
+	        		if (swipeDetector.getAction() == SwipeGestureDetector.Action.LR) {
+	        			BasicPromotion promotion = basicPromotionObjects.get(position);
+	        		    Location lastKnown = locationManager.getLastKnownLocation(provider);
+	        		    Location promotionLocation = new Location(provider);
+	        			promotionLocation.setLatitude(promotion.getLatitude());
+	        			promotionLocation.setLongitude(promotion.getLongitude());
+	        			double distance = lastKnown.distanceTo(promotionLocation)/METERS_IN_MILE;	
+	        			String displayDistance = String.format("%.2f", distance) + " mi";
+	        			passDetail(promotion.getTitle(), promotion.getShortDescription(), displayDistance, promotion.getImageUrl());
+	        			final String promotionTitle = promotion.getTitle();
+	        			final String promotionDescription = promotion.getShortDescription();
+	        			final String promotionDistance = displayDistance;
+	        			final String promotionImageUrl = promotion.getImageUrl();
+	        				
+	        		
+        				Intent i = new Intent(context, PromotionDetailActivity.class);
+        				i.putExtra("promotionTitle", promotionTitle);
+        				i.putExtra("promotionDescription", promotionDescription);
+        				i.putExtra("promotionDistance", promotionDistance);
+        				i.putExtra("promotionImageUrl", promotionImageUrl);
+        				context.startActivity(i);
+	        		} else if (swipeDetector.getAction() == SwipeGestureDetector.Action.RL) {
+	        		}
+	        	} else {
+		    		BasicPromotion promotion = basicPromotionObjects.get(position);
+		    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+		   	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
+		    		startActivity(intent);
+	        	}
 	        	return false;
 	    	}
 	    });
