@@ -7,15 +7,24 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import objects.PinMarkerObj;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import dataSources.PinMarkerDataSource;
+import dataSources.SQLTablesHelper;
+
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
@@ -29,9 +38,13 @@ import staticVariables.*;
 
 public class PhotoRecordingService extends Service{
 
-	private String pictureDirectory;
-	private String screenshotDirectory;
+	private String photoDirectory;
 	FileObserver observer;
+	PinMarkerDataSource pinMarkerDataSource;
+	Context context;
+	LocationManager locationManager;
+	String provider;
+	
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -41,16 +54,24 @@ public class PhotoRecordingService extends Service{
 
 	@Override
 	public void onCreate() {
-		Toast.makeText(this, "Screenshot Service Create", Toast.LENGTH_SHORT).show();
-		Log.i("Screenshot", "Directory Watcher Starts");
+		pinMarkerDataSource = new PinMarkerDataSource(this);
+		pinMarkerDataSource.open();
 		
-		//location the directory of the screenshot
-		pictureDirectory = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
-		screenshotDirectory = pictureDirectory + "/Camera";
+		locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        provider = locationManager.getBestProvider(new Criteria(), true);
 		
-		//init the watching function of screenshot directory
-		observer = initSingleDirectoryObserver(screenshotDirectory);
+		photoDirectory = android.os.Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath() + "/Camera";
+		
+		//init the watching function of photo directory
+		observer = initSingleDirectoryObserver(photoDirectory);
 		observer.startWatching();
+	}
+	
+	@Override
+	public void onDestroy() {
+		pinMarkerDataSource.close();
+		observer.stopWatching();
+		super.onDestroy();
 	}
 	
 	/**
@@ -64,11 +85,13 @@ public class PhotoRecordingService extends Service{
 			public void onEvent(int event, String file) {
 				String filePath = dirPath + "/" + file;
 				if (event == FileObserver.CREATE) {
-					
-					//TODO record the file to our database;	
+					Location lastKnown = locationManager.getLastKnownLocation(provider);
+					PinMarkerObj pin = new PinMarkerObj(0, file, "empty description", lastKnown.getLongitude(), 
+							lastKnown.getLatitude(), getTimeStamp(), SQLTablesHelper.PIN_TYPE_PICTURE, filePath, -1);
+					pinMarkerDataSource.addPin(pin);
 				} if (event == FileObserver.DELETE) {
+					pinMarkerDataSource.removePinWithImgSrc(filePath);
 					
-					//TODO remove the file from our db
 				}
 			}
 		};
@@ -85,16 +108,4 @@ public class PhotoRecordingService extends Service{
 		return sdf.format(new Date());
 	}
     
-	/**
-	 * Function: onDestroy
-	 * -----------------------------------
-	 * Override the onDestroy function in the service interface.
-	 * When the service is terminate, it must sever the binding with the aslService.
-	 * Also, any components that tie with the service need to be destroy
-	 */
-	@Override
-	public void onDestroy() {
-		observer.stopWatching();
-	}
-	
 }

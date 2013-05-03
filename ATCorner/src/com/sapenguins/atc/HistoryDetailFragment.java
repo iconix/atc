@@ -1,7 +1,13 @@
 package com.sapenguins.atc;
 
+import java.io.File;
+
+import dataSources.SQLTablesHelper;
+
+import objects.PinMarkerObj;
 import supports.TimeFrame;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +20,7 @@ public class HistoryDetailFragment extends Fragment {
 	
 	Context context;
 	View view;
+	TextView type;
 	TextView title;
 	TextView fulltime;
 	TextView description;
@@ -32,6 +39,7 @@ public class HistoryDetailFragment extends Fragment {
 	 * Set up the view components
 	 */
 	private void initViewComponents() {
+		type = (TextView)view.findViewById(R.id.history_detail_type);
 		title = (TextView)view.findViewById(R.id.history_detail_title);
 		fulltime = (TextView)view.findViewById(R.id.history_detail_time);
 		description = (TextView)view.findViewById(R.id.history_detail_description);
@@ -40,18 +48,22 @@ public class HistoryDetailFragment extends Fragment {
 	
 	/**
 	 * display detail information of the time/event. Call from the activity container
-	 * @param mtitle
-	 * @param mdescription
-	 * @param mtime
-	 * @param mImgSrc
+	 * @param PinMarkerObj
 	 */
-	public void dislayHistoryDetail(String mtitle, String mdescription, long mtime, String mImgSrc) {
-		title.setText(mtitle);
-		description.setText(mdescription);
-		String date = TimeFrame.getDateInString(mtime);
-		String time = TimeFrame.getTimeInString(mtime);
-		String dateAndTime = date + " " + time;
-		fulltime.setText(dateAndTime);
-		img.setImageResource(R.drawable.history);
+	public void dislayHistoryDetail(PinMarkerObj pinObj) {
+		title.setText(pinObj.getTitle());
+		description.setText(pinObj.getDescription());
+		String time = TimeFrame.getTimeInString(pinObj.getTime());
+		fulltime.setText(time);
+		if (pinObj.getPinType().equals(SQLTablesHelper.PIN_TYPE_MARK)) { 
+			//no image
+			type.setText("Check-in");
+		}
+		else {
+			BitmapDrawable drawable = new BitmapDrawable(getResources(), pinObj.getImageUrl());
+			img.setImageDrawable(drawable);
+			type.setText("My Photo");
+		}
+		
 	}
 }

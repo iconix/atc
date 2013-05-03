@@ -152,6 +152,26 @@ public class PinMarkerDataSource {
 	}
 	
 	/**
+	 * get the pin with a given id
+	 * @param pin id
+	 * @return PinMarkerObj
+	 */
+	public PinMarkerObj getPin(int pinId) {
+		Cursor cursor = db.query(SQLTablesHelper.PIN_TABLE_NAME, columns, 
+				SQLTablesHelper.PIN_ID + " = ?", 
+				new String[] {String.valueOf(pinId)}, 
+				null, null, SQLTablesHelper.PIN_TIME);
+		cursor.moveToFirst();
+		if (!cursor.isAfterLast()) {
+			PinMarkerObj pin = cursorToPin(cursor);
+			cursor.close();
+			return pin;
+		}
+		cursor.close();
+		return null;
+	}
+	
+	/**
 	 * Transform the result from the cursor to the PinMarkerObj
 	 * @param Cursor
 	 * @return PinMarkerObj
@@ -160,5 +180,21 @@ public class PinMarkerDataSource {
 		return new PinMarkerObj(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
 				cursor.getDouble(3), cursor.getDouble(4), cursor.getLong(5), 
 				cursor.getString(6), cursor.getString(7), cursor.getInt(8));
+	}
+	
+	/**
+	 * Remove a pinMarkerObj with a given imagesrc from the Db
+	 * @param imageSrc
+	 */
+	public void removePinWithImgSrc(String imgSrc) {
+		db.delete(SQLTablesHelper.PIN_TABLE_NAME, SQLTablesHelper.PIN_IMG_URL + "=?", new String [] {imgSrc});
+	}
+	
+	/**
+	 * Remove a pinMarkerObj with a given id from the db
+	 * @param id of the pinMarkerObj
+	 */
+	public void removePinWithId(int id) {
+		db.delete(SQLTablesHelper.PIN_TABLE_NAME, SQLTablesHelper.PIN_ID + "=?", new String[] {String.valueOf(id)});
 	}
 }

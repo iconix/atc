@@ -25,19 +25,21 @@ public class MainActivity extends FragmentActivity {
 	long fromTime;
 	
 	public static final String RECORD_GPS_LOCATION_SERVICE = "com.sapenguins.atc.RecordGpsLocationsService";
-    @Override
+    public static final String RECORD_PHOTO_SERVICE = "com.sapenguins.atc.PhotoRecordingService";
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         if (isGooglePlay()) {
         	setContentView(R.layout.activity_main);
         	checkGpsService();
+        	recordingPhotoService();
         	recordingGpsLocationService();
         	goToLastSavedActivity();
         }
         
-        SQLTablesHelper tableHelper = new SQLTablesHelper(this);
-        tableHelper.onCreate(tableHelper.getReadableDatabase());
+        //SQLTablesHelper tableHelper = new SQLTablesHelper(this);  //need for when table change
+        //tableHelper.onCreate(tableHelper.getReadableDatabase());
     }
 
     /**
@@ -77,6 +79,17 @@ public class MainActivity extends FragmentActivity {
             if (RECORD_GPS_LOCATION_SERVICE.equals(srv.service.getClassName())) return;
          }
          startService(new Intent(MainActivity.this, RecordGpsLocationsService.class));
+    }
+    
+    /**
+     * Check if the photo recording service is turned on. 
+     */
+    private void recordingPhotoService() {
+    	 ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+         for (RunningServiceInfo srv : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (RECORD_PHOTO_SERVICE.equals(srv.service.getClassName())) return;
+         }
+         startService(new Intent(MainActivity.this, PhotoRecordingService.class));
     }
     
     /**

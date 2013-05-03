@@ -6,13 +6,16 @@ import objects.HistoryRowItem;
 import objects.PinMarkerObj;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import supports.*;
 import templates.HistoryListViewAdapter;
 
 import dataSources.PinMarkerDataSource;
+import dataSources.SQLTablesHelper;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -24,6 +27,10 @@ public class HistoryListFragment extends ListFragment{
 	Context context;
 	PinMarkerDataSource pinMarkerDataSource;
 	ArrayList<PinMarkerObj> pinMarkerObjects;
+	SwipeGestureDetector swipeDetector; 
+	HistoryListViewAdapter adapter;
+	ListView listView;
+
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -36,42 +43,53 @@ public class HistoryListFragment extends ListFragment{
 	    	PinMarkerObj pinObj = pinMarkerObjects.get(0); 
 	    	passDetail(pinObj);
 	    }
+	    
+	    
+	    //here is the added gesture listener
+	    listView = getListView();
+	    swipeDetector = new SwipeGestureDetector();
+	    listView.setOnTouchListener(swipeDetector);
 	    setListViewLongClickListener();	    
 	}
 	
+	
+	@Override
+	public void onDestroyView() {
+		pinMarkerDataSource.close();
+		super.onDestroyView();
+	}
+
+
+
 	/**
 	 * Set a long click listener to the item list view. On long click, the user
 	 * can choose to delete or modify the current information
 	 */
 	private void setListViewLongClickListener() {
-		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
-	    	/* (non-Javadoc)
-	    	 * @see android.widget.AdapterView.OnItemLongClickListener#onItemLongClick(android.widget.AdapterView, android.view.View, int, long)
-	    	 */
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    	@Override
 	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
-	        	CharSequence[] mapOptions = {"Remove Marked Event", "Get To Marked Event"};
-	        	AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	        	builder.setTitle("Would you like to:")
-	        	.setSingleChoiceItems(mapOptions, -1, new DialogInterface.OnClickListener() {
-	    			@Override
-	    			public void onClick(DialogInterface dialog, int which) {
-	    				if (which == 1) {
-	    					//TODO invoke gmap to get to the current coordinate
-	    				} else {
-	    					//TODO remove the marked event, change the map and update the list view
-	    				}
-	    			}
-	    		})
-	    		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-	    			
-	    			@Override
-	    			public void onClick(DialogInterface dialog, int which) {
-	    				dialog.cancel();
-	    			}
-	    		});
-	        	AlertDialog alert = builder.create();
-	        	alert.show();
+	        	if (swipeDetector.swipeDetected()) {
+	        		PinMarkerObj pinObj = pinMarkerObjects.get(position);
+	        		if (swipeDetector.getAction() == SwipeGestureDetector.Action.LR) {
+	        			//action from left to right then open the view with detail
+	        			Intent intent = new Intent(context, PinDetailActivity.class);
+	        			intent.putExtra("pinId", pinObj.getPinID());
+	        			startActivity(intent);
+	        		} else if (swipeDetector.getAction() == SwipeGestureDetector.Action.RL) {
+	        			//if the gesture move from right to left. It mean delete
+	        			pinMarkerDataSource.removePinWithId(pinObj.getPinID());
+	        			pinMarkerObjects.remove(position);
+	        			adapter.notifyDataSetChanged();
+	        			listView.removeAllViewsInLayout();
+	        			listView.refreshDrawableState();
+	        		}
+	        	} else {
+	        		PinMarkerObj pinObj = pinMarkerObjects.get(position);
+	        		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+	   	   	    		 Uri.parse("google.navigation:q=" + pinObj.getLatitude() + "," + pinObj.getLongitude()));
+	        		startActivity(intent);
+	        	}
 	        	return false;
 	    	}
 	    });
@@ -84,18 +102,35 @@ public class HistoryListFragment extends ListFragment{
 		ArrayList<HistoryRowItem> historyRowItems = new ArrayList<HistoryRowItem>();
 		pinMarkerObjects = pinMarkerDataSource.getPins();
 		for (PinMarkerObj pinObj : pinMarkerObjects) {
-			HistoryRowItem rowItem = new HistoryRowItem(R.drawable.pin_history_icon, pinObj.getTitle(), pinObj.getDescription(), String.valueOf(pinObj.getTime()));
-			historyRowItems.add(rowItem);
+			if (pinObj.getPinType().equals(SQLTablesHelper.PIN_TYPE_MARK)) {
+				HistoryRowItem rowItem = new HistoryRowItem(R.drawable.pin_history_icon, pinObj.getTitle(), pinObj.getDescription(), String.valueOf(pinObj.getTime()));
+				historyRowItems.add(rowItem);
+			} else {
+				HistoryRowItem rowItem = new HistoryRowItem(R.drawable.photo_history_icon, pinObj.getTitle(), pinObj.getDescription(), String.valueOf(pinObj.getTime()));
+				historyRowItems.add(rowItem);
+			}
 		}
-		HistoryListViewAdapter adapter = new HistoryListViewAdapter(context, R.layout.history_list_row, historyRowItems);
+		adapter = new HistoryListViewAdapter(context, R.layout.history_list_row, historyRowItems);
 		setListAdapter(adapter);
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-	    PinMarkerObj pinObj = pinMarkerObjects.get(position);
-	    passCoordinate(new LatLng(pinObj.getLatitude(), pinObj.getLongitude()));
-	    passDetail(pinObj);
+		if (swipeDetector.swipeDetected()) {
+    		if (swipeDetector.getAction() == SwipeGestureDetector.Action.LR) {
+    			//if the gesture is from left to right
+    			//take them to detail view
+    			//TODO create that detail view
+    		} else if (swipeDetector.getAction().equals(SwipeGestureDetector.Action.RL)) {
+    			//if the gesture move from right to left. It mean delete
+    			PinMarkerObj pinObj = pinMarkerObjects.get(position);
+    			pinMarkerDataSource.removePinWithId(pinObj.getPinID());
+    		}
+    	} else {
+		    PinMarkerObj pinObj = pinMarkerObjects.get(position);
+		    passCoordinate(new LatLng(pinObj.getLatitude(), pinObj.getLongitude()));
+		    passDetail(pinObj);
+    	}
 	}
 
 	/**

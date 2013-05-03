@@ -270,7 +270,7 @@ public class DetailAndHistoryActivity extends SherlockFragmentActivity implement
 	//---------------------------------------
 	@Override
 	public void onDetailPass(PinMarkerObj pinObj) {
-		detailFragment.dislayHistoryDetail(pinObj.getTitle(), pinObj.getDescription(), pinObj.getTime(), pinObj.getImageUrl());
+		detailFragment.dislayHistoryDetail(pinObj);
 	}
 
 

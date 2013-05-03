@@ -72,6 +72,12 @@
         </activity>
         
         <activity
+            android:name="com.sapenguins.atc.PinDetailActivity"
+           	android:theme="@android:style/Theme.NoTitleBar.Fullscreen"	
+            android:label="Pin Details">
+        </activity>
+        
+        <activity
             android:name="com.sapenguins.atc.PromotionDetailActivity"
             android:label="Promotion">
         </activity>
@@ -83,6 +89,11 @@
         
         <service 
             android:name="com.sapenguins.atc.RecordGpsLocationsService"
+            android:enabled="true">
+        </service>
+        
+         <service 
+            android:name="com.sapenguins.atc.PhotoRecordingService"
             android:enabled="true">
         </service>
     </application>
