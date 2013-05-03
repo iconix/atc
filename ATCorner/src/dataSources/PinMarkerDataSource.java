@@ -13,8 +13,9 @@ public class PinMarkerDataSource {
 	SQLTablesHelper pinTableHelper;
 	SQLiteDatabase db;
 	
-	String[] columns = {SQLTablesHelper.PIN_TITLE, SQLTablesHelper.PIN_DESCRIPTION,
-			SQLTablesHelper.PIN_LONGITUDE, SQLTablesHelper.PIN_LATITUDE, SQLTablesHelper.PIN_TIME, SQLTablesHelper.PIN_TYPE};
+	String[] columns = {SQLTablesHelper.PIN_ID, SQLTablesHelper.PIN_TITLE, SQLTablesHelper.PIN_DESCRIPTION,
+			SQLTablesHelper.PIN_LONGITUDE, SQLTablesHelper.PIN_LATITUDE, SQLTablesHelper.PIN_TIME, 
+			SQLTablesHelper.PIN_TYPE, SQLTablesHelper.PIN_IMG_URL, SQLTablesHelper.PIN_NEARBY_LOC};
 	
 	public PinMarkerDataSource(Context context) {
 		pinTableHelper = new SQLTablesHelper(context);
@@ -40,6 +41,8 @@ public class PinMarkerDataSource {
 		contents.put(SQLTablesHelper.PIN_LATITUDE, pin.getLatitude());
 		contents.put(SQLTablesHelper.PIN_TIME, pin.getTime());
 		contents.put(SQLTablesHelper.PIN_TYPE, pin.getPinType());
+		contents.put(SQLTablesHelper.PIN_IMG_URL, pin.getImageUrl());
+		contents.put(SQLTablesHelper.PIN_NEARBY_LOC, pin.getNearbyLoc());
 		db.insert(SQLTablesHelper.PIN_TABLE_NAME, null, contents);
 	}
 	
@@ -154,7 +157,8 @@ public class PinMarkerDataSource {
 	 * @return PinMarkerObj
 	 */
 	private PinMarkerObj cursorToPin(Cursor cursor) {
-		return new PinMarkerObj(cursor.getString(0), cursor.getString(1),
-				cursor.getDouble(2), cursor.getDouble(3), cursor.getLong(4), cursor.getString(5));
+		return new PinMarkerObj(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+				cursor.getDouble(3), cursor.getDouble(4), cursor.getLong(5), 
+				cursor.getString(6), cursor.getString(7), cursor.getInt(8));
 	}
 }

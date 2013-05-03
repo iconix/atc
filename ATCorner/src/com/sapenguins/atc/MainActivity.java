@@ -3,6 +3,8 @@ package com.sapenguins.atc;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import dataSources.SQLTablesHelper;
+
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -33,6 +35,9 @@ public class MainActivity extends FragmentActivity {
         	recordingGpsLocationService();
         	goToLastSavedActivity();
         }
+        
+        SQLTablesHelper tableHelper = new SQLTablesHelper(this);
+        tableHelper.onCreate(tableHelper.getReadableDatabase());
     }
 
     /**

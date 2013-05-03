@@ -34,7 +34,7 @@ public class HistoryListFragment extends ListFragment{
 	    addPinFromDB();
 	    if (pinMarkerObjects.size() > 0) {
 	    	PinMarkerObj pinObj = pinMarkerObjects.get(0); 
-	    	passDetail(pinObj.getTitle(), pinObj.getDescription(), pinObj.getTime(), null);
+	    	passDetail(pinObj);
 	    }
 	    setListViewLongClickListener();	    
 	}
@@ -95,7 +95,7 @@ public class HistoryListFragment extends ListFragment{
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	    PinMarkerObj pinObj = pinMarkerObjects.get(position);
 	    passCoordinate(new LatLng(pinObj.getLatitude(), pinObj.getLongitude()));
-	    passDetail(pinObj.getTitle(), pinObj.getDescription(), pinObj.getTime(), null);
+	    passDetail(pinObj);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public class HistoryListFragment extends ListFragment{
 	 * @author minhthaonguyen
 	 */
 	public interface OnDetailPass {
-	    public void onDetailPass(String title, String description, long time, String imgSrc);
+	    public void onDetailPass(PinMarkerObj pinObj);
 	}
 	
 	OnDetailPass detailPasser;
@@ -143,8 +143,8 @@ public class HistoryListFragment extends ListFragment{
 	 * Passing the coordinate from the fragment to activity
 	 * @param coordinate
 	 */
-	public void passDetail(String title, String description, long time, String imgSrc) {
-	    detailPasser.onDetailPass(title, description, time, imgSrc);
+	public void passDetail(PinMarkerObj pinObj) {
+	    detailPasser.onDetailPass(pinObj);
 	}
 
 	

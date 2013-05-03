@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import objects.PinMarkerObj;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -697,7 +699,7 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
   	//--HANDLE INTERACTIONS BETWEEN FRAGMENT-
   	//---------------------------------------
   	@Override
-  	public void onDetailPass(String title, String description, long time, String imgSrc) {
+  	public void onDetailPass(PinMarkerObj pinObj) {
   		//do nothing
   	}
 }

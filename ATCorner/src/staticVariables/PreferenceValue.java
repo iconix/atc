@@ -24,4 +24,6 @@ public class PreferenceValue {
  	public static final int SPINNER_ONE_HOUR = 7;
  	public static final int SPINNER_FIFTEEN_MINUTES = 8;
  	public static final int SPINNER_FIVE_MINUTES = 9;
+ 	
+ 	
 }

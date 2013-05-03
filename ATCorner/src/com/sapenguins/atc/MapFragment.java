@@ -272,7 +272,8 @@ public class MapFragment extends Fragment implements LocationListener{
      * @param the longitude and latitude of the location of the pin
      */
     private void addPinToDB(String title, String description, LatLng latlng) {
-        PinMarkerObj pin = new PinMarkerObj(title, description, latlng.longitude, latlng.latitude, getTimeStamp(), SQLTablesHelper.PIN_TYPE_MARK);
+        PinMarkerObj pin = new PinMarkerObj(0, title, description, latlng.longitude, latlng.latitude, getTimeStamp(), 
+        		SQLTablesHelper.PIN_TYPE_MARK, SQLTablesHelper.PIN_MARK_IMG, -1);
     	pinMarkerDataSource.addPin(pin);
     }
     

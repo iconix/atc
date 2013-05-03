@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff" >
+
+        <!-- Header Starts -->
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bg"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" >
+
+            <!-- Company Thumbnail Starts -->
+
+
+            <!-- Company Thumbnail Ends -->
+
+
+            <!-- Company Name Start -->
+
+            <TextView
+                android:id="@+id/history_detail_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:textColor="#372c24"
+                android:textSize="25dip"
+                tools:ignore="HardcodedText" />
+            <!-- Company Name End -->
+
+
+            <!-- Distance Start -->
+
+            <TextView
+                android:id="@+id/history_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/history_detail_title"
+                android:layout_marginLeft="15dip"
+                android:textColor="#ff0000"
+                android:textSize="15dip"
+                android:textStyle="bold" />
+            <!-- Distance End -->
+
+        </RelativeLayout>
+        <!-- Header Ends -->
+
+        <LinearLayout
+            android:id="@+id/thumbnail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/image_bg"
+            android:layout_centerHorizontal="true"
+            android:padding="10dip"
+            android:layout_below="@id/header" >
+
+            <ImageView
+                android:id="@+id/history_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <!-- Description Start -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/thumbnail"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:text="Description"
+                android:textColor="#372c24"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/historyBoxId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/text_container"
+                android:padding="10dip" >
+
+                <TextView
+                    android:id="@+id/history_detail_description"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="10"
+                    android:textColor="#372c24" />
+            </LinearLayout>
+        </LinearLayout>
+        <!-- Information Ends -->
+
+    </RelativeLayout>
+
+</ScrollView>

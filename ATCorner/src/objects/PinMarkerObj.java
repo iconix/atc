@@ -1,12 +1,16 @@
 package objects;
 
 public class PinMarkerObj {
-	private String title;
-	private String description;
-	private double latitude;
-	private double longitude;
-	private long time;
-	private String pinType;
+	
+	int pinID;
+	String title;
+	String description;
+	double latitude;
+	double longitude;
+	long time;
+	String pinType;
+	String imageUrl;
+	int nearbyLoc;
 	
 	/**
 	 * Empty constructor for PinMarkerObj
@@ -15,20 +19,26 @@ public class PinMarkerObj {
 	
 	/**
 	 * Constructor of new PinMarkerObj
+	 * @param pinID
 	 * @param time
 	 * @param title
 	 * @param description
 	 * @param latitude
 	 * @param longitude
 	 * @param pinType
+	 * @param imageUrl
+	 * @param nearbyLoc //this is actually the business ID number
 	 */
-	public PinMarkerObj(String title, String description, double longitude, double latitude, long time, String pinType){
+	public PinMarkerObj(int pinID, String title, String description, double longitude, double latitude, long time, String pinType, String imageUrl, int nearbyLoc){
+		this.pinID = pinID;
 		this.title = title;
 		this.description = description;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = time;
 		this.pinType = pinType;
+		this.imageUrl = imageUrl;
+		this.nearbyLoc = nearbyLoc;
 	}
 	
 	/**
@@ -40,31 +50,32 @@ public class PinMarkerObj {
 	 * @param longitude
 	 * @param pinType
 	 */
-	public PinMarkerObj(String title, String description, double longitude, double latitude, String time, String pinType){
+	public PinMarkerObj(int pinID, String title, String description, double longitude, double latitude, String time, String pinType, String imageUrl, int nearbyLoc){
+		this.pinID = pinID;
 		this.title = title;
 		this.description = description;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.time = Long.valueOf(time);
 		this.pinType = pinType;
+		this.imageUrl = imageUrl;
+		this.nearbyLoc = nearbyLoc;
 	}
 	
+	
+	
 	/**
-	 * Constructor of new PinMarkerObj
-	 * @param time
-	 * @param title
-	 * @param description
-	 * @param latitude
-	 * @param longitude
-	 * @param pinType
+	 * @return the pinID
 	 */
-	public PinMarkerObj(String title, String description, String longitude, String latitude, String time, String pinType){
-		this.title = title;
-		this.description = description;
-		this.latitude = Double.valueOf(latitude);
-		this.longitude = Double.valueOf(longitude);
-		this.time = Long.valueOf(time);
-		this.pinType = pinType;
+	public int getPinID() {
+		return pinID;
+	}
+
+	/**
+	 * @param pinID the pinID to set
+	 */
+	public void setPinID(int pinID) {
+		this.pinID = pinID;
 	}
 
 	/**
@@ -171,4 +182,45 @@ public class PinMarkerObj {
 	public void setPinType(String pinType) {
 		this.pinType = pinType;
 	}
+
+	/**
+	 * @return the imageUrl
+	 */
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	/**
+	 * @param imageUrl the imageUrl to set
+	 */
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	/**
+	 * @return the nearbyLoc
+	 */
+	public int getNearbyLoc() {
+		return nearbyLoc;
+	}
+
+	/**
+	 * @param nearbyLoc the nearbyLoc to set
+	 */
+	public void setNearbyLoc(int nearbyLoc) {
+		this.nearbyLoc = nearbyLoc;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "PinMarkerObj [pinID=" + pinID + ", title=" + title
+				+ ", description=" + description + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", time=" + time + ", pinType="
+				+ pinType + ", imageUrl=" + imageUrl + ", nearbyLoc="
+				+ nearbyLoc + "]";
+	}
+	
 }
