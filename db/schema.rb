@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(:version => 20130502065626) do
     t.string   "websiteURL"
     t.integer  "imageOption"
     t.string   "imageURL"
-    t.text     "shortDescription"
-    t.text     "longDescription"
+    t.binary   "imageUpload",        :limit => 2097152
+    t.string   "shortDescription"
+    t.string   "longDescription",    :limit => 1024
     t.time     "sundayOpenTime"
     t.time     "sundayCloseTime"
     t.time     "mondayOpenTime"
@@ -37,13 +38,13 @@ ActiveRecord::Schema.define(:version => 20130502065626) do
     t.time     "fridayCloseTime"
     t.time     "saturdayOpenTime"
     t.time     "saturdayCloseTime"
-    t.decimal  "latitude",           :precision => 15, :scale => 10
-    t.decimal  "longitude",          :precision => 15, :scale => 10
+    t.decimal  "latitude",                              :precision => 15, :scale => 10
+    t.decimal  "longitude",                             :precision => 15, :scale => 10
     t.text     "address"
-    t.string   "phoneNumber"
-    t.datetime "created_at",                                                            :null => false
-    t.datetime "updated_at",                                                            :null => false
-    t.boolean  "admin",                                              :default => false
+    t.integer  "phoneNumber"
+    t.datetime "created_at",                                                                               :null => false
+    t.datetime "updated_at",                                                                               :null => false
+    t.boolean  "admin",                                                                 :default => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -55,16 +56,16 @@ ActiveRecord::Schema.define(:version => 20130502065626) do
 
   create_table "deals", :force => true do |t|
     t.integer  "business_id"
-    t.integer  "web_business_id"
-    t.decimal  "longitude",          :precision => 15, :scale => 10
-    t.decimal  "latitude",           :precision => 15, :scale => 10
+    t.decimal  "longitude",                             :precision => 15, :scale => 10
+    t.decimal  "latitude",                              :precision => 15, :scale => 10
     t.datetime "startDate"
     t.datetime "endDate"
     t.string   "title"
     t.integer  "imageOption"
     t.string   "imageURL"
-    t.text     "shortDescription"
-    t.text     "longDescription"
+    t.binary   "imageUpload",        :limit => 2097152
+    t.string   "shortDescription"
+    t.text     "longDescription",    :limit => 1024
     t.string   "tags"
     t.boolean  "sunday"
     t.boolean  "monday"
@@ -75,22 +76,22 @@ ActiveRecord::Schema.define(:version => 20130502065626) do
     t.boolean  "saturday"
     t.text     "address"
     t.boolean  "isEvent"
-    t.datetime "created_at",                                         :null => false
-    t.datetime "updated_at",                                         :null => false
+    t.datetime "created_at",                                                            :null => false
+    t.datetime "updated_at",                                                            :null => false
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
 
-  add_index "deals", ["business_id", "web_business_id", "created_at"], :name => "index_deals"
+  add_index "deals", ["business_id", "created_at"], :name => "index_deals_on_business_id_and_created_at"
 
   create_table "web_businesses", :force => true do |t|
     t.string   "name"
     t.string   "websiteURL"
     t.integer  "imageOption"
     t.string   "imageURL"
-    t.text     "shortDescription"
+    t.string   "shortDescription"
     t.text     "longDescription"
     t.string   "phoneNumber"
     t.string   "web_source"

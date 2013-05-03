@@ -4,6 +4,11 @@ class BusinessesController < ApplicationController
 	#May be dangerous to allow all users to destroy?
 	#before_filter :admin_user,					only: :destroy 
 
+	def stats
+		@business = Business.find(params[:id])
+		@deals = @business.deals
+	end
+
   def show
     @business = Business.find(params[:id])
 		@deals = @business.deals
