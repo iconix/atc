@@ -383,7 +383,7 @@ public class MapAndHistoryActivity extends SherlockFragmentActivity implements O
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		if (itemPosition == 1) {
-			startActivity(new Intent(getApplicationContext(), PromotionListActivity.class));
+			startActivity(new Intent(getApplicationContext(), PromotionListAndDetailActivity.class));
 		}
 		return true;
 	}

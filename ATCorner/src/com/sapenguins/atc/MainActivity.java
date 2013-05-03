@@ -109,6 +109,8 @@ public class MainActivity extends FragmentActivity {
         	activityIntent = new Intent(this, MapAndHistoryActivity.class);
         else if (activity.equals(PreferenceValue.VIEW_DETAIL_AND_HISTORY))
         	activityIntent = new Intent(this, DetailAndHistoryActivity.class);
+        else if (activity.equals(PreferenceValue.VIEW_DETAIL_AND_PROMOTION))
+        	activityIntent = new Intent(this, PromotionListAndDetailActivity.class);
         else activityIntent = new Intent(this, MainMenu.class);
         finish();
         startActivity(activityIntent);

@@ -5,14 +5,12 @@ import java.util.ArrayList;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import objects.BasicPromotion;
-import objects.PinMarkerObj;
 import staticVariables.ServerVariables;
 import staticVariables.SpecialCharacters;
 import supports.AppHttpClient;
 import templates.PromotionListViewAdapter;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -24,7 +22,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -155,10 +152,14 @@ public class PromotionListFragment extends ListFragment {
 	
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	    BasicPromotion promotion = basicPromotionObjects.get(position);
-	    /*Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
-		startActivity(intent);*/
-		final String promotionTitle = promotion.getTitle();
+	    Location lastKnown = locationManager.getLastKnownLocation(provider);
+	    Location promotionLocation = new Location(provider);
+		promotionLocation.setLatitude(promotion.getLatitude());
+		promotionLocation.setLongitude(promotion.getLongitude());
+		double distance = lastKnown.distanceTo(promotionLocation)/METERS_IN_MILE;	
+		String displayDistance = String.format("%.2f", distance) + " mi";
+		passDetail(promotion.getTitle(), promotion.getShortDescription(), displayDistance, promotion.getImageUrl());
+		/*final String promotionTitle = promotion.getTitle();
 		final String promotionDescription = promotion.getShortDescription();
 		final String promotionDistance = "1mi";
 		final String promotionImageUrl = promotion.getImageUrl();
@@ -169,8 +170,33 @@ public class PromotionListFragment extends ListFragment {
 			i.putExtra("promotionDescription", promotionDescription);
 			i.putExtra("promotionDistance", promotionDistance);
 			i.putExtra("promotionImageUrl", promotionImageUrl);
-			context.startActivity(i);
-		
+			context.startActivity(i);*/
+	}
+	
+	/**
+	 * Interface to pass the information (coordinate) of selected item back to activity 
+	 * containing it
+	 * @author minhthaonguyen
+	 */
+	public interface OnDetailPass {
+	    public void onDetailPass(String title, String description, String distance, String imageUrl);
+	}
+	
+	OnDetailPass detailPasser;
+	
+	/**
+	 * Passing the coordinate from the fragment to activity
+	 * @param coordinate
+	 */
+	public void passDetail(String title, String description, String distance, String imageUrl) {
+	    detailPasser.onDetailPass(title, description, distance, imageUrl);
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		detailPasser = (OnDetailPass) activity;
 	}
 	
 }

@@ -14,6 +14,23 @@
         android:layout_weight="1"
         tools:layout="@layout/promotion_detail" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c8c8ff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#ffffff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:background="#c8c8ff" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -22,13 +39,12 @@
 
         <fragment
             android:id="@+id/list_promotion_fragment"
-            android:name="com.sapenguins.atc.PromotionListFragmentTest"
+            android:name="com.sapenguins.atc.PromotionListFragment"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             tools:layout="@layout/promotion_list" />
-
     </RelativeLayout>
 
 </LinearLayout>
