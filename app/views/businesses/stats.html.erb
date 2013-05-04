@@ -1,0 +1,23 @@
+<% provide(:title, @business.name) %>
+<% provide(:subtitle, "Customer Statistics") %>
+
+<div class="container jumbotron">
+<div class="row">
+  <aside class="span4">
+    <h1><%= @business.name %></h1>
+	  <% unless @business.imageURL.nil? %> 
+		<img src=<%= @business.imageURL %> width="200px", height="200px">
+		<br><br>
+	  <% end %>
+	  <% unless @business.image_file_name.nil? %> 
+		<%= image_tag @business.image.url(:medium) %>
+		<br><br>
+	  <% end %>
+	</aside>
+	<div class="span4" style="padding-top:20px">
+		<img src="/assets/click_chart.png" width="300px", height="300px">
+	</div>
+	<div class="span4" style="padding-top:20px">
+		<img src="/assets/demographics.png" width="300px", height="300px">
+	</div>
+</div>

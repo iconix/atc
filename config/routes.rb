@@ -6,7 +6,9 @@ BusinessApp::Application.routes.draw do
   resources :web_businesses
 
 	match '/newpromo', to: 'deals#new'
- 
+ 	match 'businesses/:id/stats' => 'businesses#stats', :as => :stats_business
+ 	# http://stackoverflow.com/questions/6759831/rails-3-how-to-create-a-path
+ 	
   match '/signup',  to: 'businesses#new'
 
   match '/signin',  to: 'sessions#new'
