@@ -13,6 +13,7 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 import com.google.android.gms.maps.model.LatLng;
 import com.sapenguins.atc.HistoryListFragment.OnDetailPass;
 
@@ -350,7 +351,6 @@ public class SingleMapViewActivity extends SherlockFragmentActivity implements O
 	 */
 	private void initActionBar() {
 		setTheme(R.style.Theme_Sherlock);
-		
 		if (DEVICE_VERSION >= HONEYCOMB_VERSION) {
 			try {
 		        ViewConfiguration config = ViewConfiguration.get(this);

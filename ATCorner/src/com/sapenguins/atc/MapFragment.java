@@ -215,7 +215,7 @@ public class MapFragment extends Fragment implements LocationListener{
     }
     
     /**
-     * Display the alert dialog for the user to input informatioin
+     * Display the alert dialog for the user to input information
      * in case he/she want to add pin
      * @param the coordinate of the pin
      */
