@@ -4,7 +4,6 @@
 #
 #  id                 :integer          not null, primary key
 #  business_id        :integer
-#  web_business_id    :integer
 #  longitude          :decimal(15, 10)
 #  latitude           :decimal(15, 10)
 #  startDate          :datetime
@@ -14,9 +13,7 @@
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
-#  firstTag           :string(255)
-#  secondTag          :string(255)
-#  thirdTag           :string(255)
+#  tags               :string(255)
 #  sunday             :boolean
 #  monday             :boolean
 #  tuesday            :boolean
@@ -25,7 +22,7 @@
 #  friday             :boolean
 #  saturday           :boolean
 #  address            :text
-#  isEvent            :boolean
+#  isEvent            :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string(255)
@@ -41,13 +38,12 @@ class Deal < ActiveRecord::Base
 									:startTime, :endTime, :sunday, :monday, 
 									:tuesday, :wednesday, :thursday, :friday,
 									:saturday, :address, :isEvent, :business_id, 
-									:web_business_id, :image_delete
+									:image_delete
 
 	geocoded_by :address
 	after_validation :geocode, :if => :address_changed?
 
   belongs_to :business
-  belongs_to :web_businesses
   
   ACCESS_KEY_ID = 'AKIAJRSEOF4RPP2YEXPA'
   SECRET_ACCESS_KEY = '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'

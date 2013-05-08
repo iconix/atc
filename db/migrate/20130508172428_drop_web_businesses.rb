@@ -1,6 +1,10 @@
-class CreateWebBusinesses < ActiveRecord::Migration
-  def change
-    create_table :web_businesses do |t|
+class DropWebBusinesses < ActiveRecord::Migration
+  def up
+  	drop_table :web_businesses if table_exists?
+  end
+
+  def down
+  	create_table :web_businesses do |t|
       t.string :name
       t.string :websiteURL
       t.integer :imageOption

@@ -3,7 +3,6 @@ BusinessApp::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 	#resources :deals, only: [:new, :create, :destroy]
   resources :deals
-  resources :web_businesses
 
 	match '/newpromo', to: 'deals#new'
  	match 'businesses/:id/stats' => 'businesses#stats', :as => :stats_business

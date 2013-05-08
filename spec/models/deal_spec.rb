@@ -4,7 +4,6 @@
 #
 #  id                 :integer          not null, primary key
 #  business_id        :integer
-#  web_business_id    :integer
 #  longitude          :decimal(15, 10)
 #  latitude           :decimal(15, 10)
 #  startDate          :datetime
@@ -14,9 +13,7 @@
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
-#  firstTag           :string(255)
-#  secondTag          :string(255)
-#  thirdTag           :string(255)
+#  tags               :string(255)
 #  sunday             :boolean
 #  monday             :boolean
 #  tuesday            :boolean
@@ -25,7 +22,7 @@
 #  friday             :boolean
 #  saturday           :boolean
 #  address            :text
-#  isEvent            :boolean
+#  isEvent            :boolean          default(FALSE)
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  image_file_name    :string(255)

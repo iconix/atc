@@ -10,14 +10,9 @@
 	<div class="row">
 		<div class="span6">
     	<p>
-      	<% d = Deal.find(params[:id]) %>
-      	<% unless d.business_id.nil? then %>
-        	<% b = Business.find(d.business_id) %>
-		  		<%= link_to "<< View all promotions", business_path(b) %>
-		  	<% else %>
-		    	<% b = WebBusiness.find(d.web_business_id) %>
-    			<%= link_to "<< View all promotions", web_business_path(b) %>
-    		<% end %>
+	      	<% d = Deal.find(params[:id]) %>
+	        <% b = Business.find(d.business_id) %>
+			<%= link_to "<< View all promotions", business_path(b) %>
   		</p>
 			<h1><%= @deal.title %></h1>
 			<p><%= link_to "Edit", edit_deal_path(@deal) %></p>
