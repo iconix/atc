@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508174310) do
+ActiveRecord::Schema.define(:version => 20130508182512) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -19,24 +19,9 @@ ActiveRecord::Schema.define(:version => 20130508174310) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.string   "websiteURL"
-    t.integer  "imageOption"
     t.string   "imageURL"
     t.text     "shortDescription"
     t.text     "longDescription"
-    t.time     "sundayOpenTime"
-    t.time     "sundayCloseTime"
-    t.time     "mondayOpenTime"
-    t.time     "mondayCloseTime"
-    t.time     "tuesdayOpenTime"
-    t.time     "tuesayCloseTime"
-    t.time     "wednesdayOpenTime"
-    t.time     "wednesdayCloseTime"
-    t.time     "thursdayOpenTime"
-    t.time     "thursdayCloseTime"
-    t.time     "fridayOpenTime"
-    t.time     "fridayCloseTime"
-    t.time     "saturdayOpenTime"
-    t.time     "saturdayCloseTime"
     t.decimal  "latitude",           :precision => 15, :scale => 10
     t.decimal  "longitude",          :precision => 15, :scale => 10
     t.text     "address"
@@ -60,18 +45,10 @@ ActiveRecord::Schema.define(:version => 20130508174310) do
     t.datetime "startDate"
     t.datetime "endDate"
     t.string   "title"
-    t.integer  "imageOption"
     t.string   "imageURL"
     t.text     "shortDescription"
     t.text     "longDescription"
     t.string   "tags"
-    t.boolean  "sunday"
-    t.boolean  "monday"
-    t.boolean  "tuesday"
-    t.boolean  "wednesday"
-    t.boolean  "thursday"
-    t.boolean  "friday"
-    t.boolean  "saturday"
     t.text     "address"
     t.boolean  "isEvent",                                            :default => false
     t.datetime "created_at",                                                            :null => false

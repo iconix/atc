@@ -8,24 +8,10 @@
 #  password_digest    :string(255)
 #  remember_token     :string(255)
 #  websiteURL         :string(255)
-#  imageOption        :integer
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
-#  sundayOpenTime     :time
-#  sundayCloseTime    :time
-#  mondayOpenTime     :time
-#  mondayCloseTime    :time
-#  tuesdayOpenTime    :time
 #  tuesayCloseTime    :time
-#  wednesdayOpenTime  :time
-#  wednesdayCloseTime :time
-#  thursdayOpenTime   :time
-#  thursdayCloseTime  :time
-#  fridayOpenTime     :time
-#  fridayCloseTime    :time
-#  saturdayOpenTime   :time
-#  saturdayCloseTime  :time
 #  latitude           :decimal(15, 10)
 #  longitude          :decimal(15, 10)
 #  address            :text

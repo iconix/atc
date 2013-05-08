@@ -9,18 +9,10 @@
 #  startDate          :datetime
 #  endDate            :datetime
 #  title              :string(255)
-#  imageOption        :integer
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
 #  tags               :string(255)
-#  sunday             :boolean
-#  monday             :boolean
-#  tuesday            :boolean
-#  wednesday          :boolean
-#  thursday           :boolean
-#  friday             :boolean
-#  saturday           :boolean
 #  address            :text
 #  isEvent            :boolean          default(FALSE)
 #  created_at         :datetime         not null
@@ -33,11 +25,9 @@
 
 class Deal < ActiveRecord::Base
   attr_accessible :longitude, :latitude, :startDate, 
-									:endDate, :title, :imageOption, :imageURL,
+									:endDate, :title, :imageURL,
 									:shortDescription, :longDescription, :tags,
-									:startTime, :endTime, :sunday, :monday, 
-									:tuesday, :wednesday, :thursday, :friday,
-									:saturday, :address, :isEvent, :business_id, 
+									:startTime, :endTime, :address, :isEvent, :business_id, 
 									:image_delete
 
 	geocoded_by :address

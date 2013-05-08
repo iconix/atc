@@ -9,18 +9,10 @@
 #  startDate          :datetime
 #  endDate            :datetime
 #  title              :string(255)
-#  imageOption        :integer
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
 #  tags               :string(255)
-#  sunday             :boolean
-#  monday             :boolean
-#  tuesday            :boolean
-#  wednesday          :boolean
-#  thursday           :boolean
-#  friday             :boolean
-#  saturday           :boolean
 #  address            :text
 #  isEvent            :boolean          default(FALSE)
 #  created_at         :datetime         not null

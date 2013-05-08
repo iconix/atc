@@ -8,24 +8,10 @@
 #  password_digest    :string(255)
 #  remember_token     :string(255)
 #  websiteURL         :string(255)
-#  imageOption        :integer
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
-#  sundayOpenTime     :time
-#  sundayCloseTime    :time
-#  mondayOpenTime     :time
-#  mondayCloseTime    :time
-#  tuesdayOpenTime    :time
 #  tuesayCloseTime    :time
-#  wednesdayOpenTime  :time
-#  wednesdayCloseTime :time
-#  thursdayOpenTime   :time
-#  thursdayCloseTime  :time
-#  fridayOpenTime     :time
-#  fridayCloseTime    :time
-#  saturdayOpenTime   :time
-#  saturdayCloseTime  :time
 #  latitude           :decimal(15, 10)
 #  longitude          :decimal(15, 10)
 #  address            :text
@@ -41,13 +27,8 @@
 
 class Business < ActiveRecord::Base
   attr_accessible :email, :name, :password, :password_confirmation,
-									:websiteURL, :imageOption, :imageURL, :imageUpload,
-									:shortDescription, :longDescription, :sundayOpenTime,
-									:sundayCloseTime, :mondayOpenTime, :mondayCloseTime,
-									:tuesdayOpenTime, :tuesdayCloseTime, :wednesdayOpenTime,
-									:wednesdayCloseTime, :thursdayOpenTime,
-									:thursdayCloseTime, :fridayOpenTime, :fridayCloseTime,
-									:saturdayOpenTime, :saturdayCloseTime, :latitude,
+									:websiteURL, :imageURL, :imageUpload,
+									:shortDescription, :longDescription, :latitude,
 									:longitude, :address, :phoneNumber, :image_delete
 
 	geocoded_by :address
