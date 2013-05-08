@@ -1,6 +1,6 @@
 class DropWebBusinesses < ActiveRecord::Migration
   def up
-  	drop_table :web_businesses if table_exists?
+  	drop_table :web_businesses if table_exists?(:web_businesses)
   end
 
   def down
