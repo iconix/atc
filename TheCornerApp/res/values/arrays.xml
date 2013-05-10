@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="distances">
+        <item >Distance</item>
         <item >&lt; 0.5 mi</item>
         <item >&lt; 1 mi</item>
         <item >&lt; 2 mi</item>

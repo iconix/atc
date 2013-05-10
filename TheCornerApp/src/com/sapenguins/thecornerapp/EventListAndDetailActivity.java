@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.sapenguins.thecornerapp.EventDetailFragment.OnClickPass;
 import com.sapenguins.thecornerapp.EventListFragment.OnDetailPass;
 import com.sapenguins.thecornerapp.constants.MenuSpinnerItems;
 
@@ -17,7 +18,7 @@ import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 
-public class EventListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, ActionBar.OnNavigationListener{
+public class EventListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, OnClickPass, ActionBar.OnNavigationListener{
 
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -29,6 +30,14 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 	String[] maximumDistances;
 	
 	MenuItem homeItem;
+	
+	int eventId;
+	String eventTitle;
+	String eventImg;
+	String eventDesc;
+	String eventDistance;
+	double eventLongitude;
+	double eventLatitude;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +87,7 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 			}
 		}
 		actionbar = getSupportActionBar();
+		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_bg_black));
         maximumDistances = getResources().getStringArray(R.array.distances);
         Context actionbarContext = actionbar.getThemedContext();
@@ -107,8 +117,27 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 	//--HANDLE INTERACTIONS BETWEEN FRAGMENT-
 	//---------------------------------------
 	//@Override
-	public void onDetailPass(int eventId, String title, String imageUrl) {
+	public void onDetailPass(int id, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
 		detailFragment.dislayEventDetail(eventId, title, imageUrl);
+		eventId = id;
+		eventTitle = title;
+		eventImg = imageUrl;
+		eventDesc = desc;
+		eventLongitude = longitude;
+		eventLatitude = latitude;
+		eventDistance = distance;	
+	}
+	
+	public void onClickPass() {
+		Intent intent = new Intent(context, EventFullDetailActivity.class);	
+		intent.putExtra("eventId", eventId);
+		intent.putExtra("eventTitle", eventTitle);
+		intent.putExtra("eventImg", eventImg);
+		intent.putExtra("eventDesc", eventDesc);
+		intent.putExtra("eventLongitude", eventLongitude);
+		intent.putExtra("eventLatitude", eventLatitude);
+		intent.putExtra("eventDistance", eventDistance);
+		startActivity(intent);
 	}
 
 	@Override

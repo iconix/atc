@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ public class EventDetailFragment extends Fragment {
 	TextView title;
 	ImageView img;
 	int eventId;
+	String eventTitle;
+	String eventImg;
 	
 	DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
@@ -40,10 +43,9 @@ public class EventDetailFragment extends Fragment {
 		context = getActivity();
 		view = inflater.inflate(R.layout.event_detail, container, false);
 		initViewComponents();
-		
+		setViewOnClickListener();
 		return view;
 	}
-	
 	
 	/**
 	 * Set up the view components
@@ -54,6 +56,18 @@ public class EventDetailFragment extends Fragment {
 	}
 	
 	/**
+	 * Set the click listener for the view
+	 */
+	private void setViewOnClickListener() {
+		view.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				passClick();
+			}
+		});
+	}
+	
+	/**
 	 * display detail information of the Event. Call from the activity container
 	 * @param eventId
 	 * @param mtitle
@@ -61,6 +75,8 @@ public class EventDetailFragment extends Fragment {
 	 */
 	public void dislayEventDetail(int mEventId, String mtitle, String mImgSrc) {
 		eventId = mEventId;
+		eventTitle = mtitle;
+		eventImg = mImgSrc;
 		title.setText(mtitle);
 		options = new DisplayImageOptions.Builder()
 		.showStubImage(R.drawable.no_photo_icon)
@@ -91,5 +107,29 @@ public class EventDetailFragment extends Fragment {
 				}
 			}
 		}
+	}
+	
+	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////	
+	/**
+	 * Interface to pass the click to the activity
+	 */
+	public interface OnClickPass {
+	    public void onClickPass();
+	}
+	
+	OnClickPass clickPasser;
+	
+	/**
+	 * Passing the click to the activity
+	 */
+	public void passClick() {
+	    clickPasser.onClickPass();
+	}
+	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		clickPasser = (OnClickPass) activity;
 	}
 }

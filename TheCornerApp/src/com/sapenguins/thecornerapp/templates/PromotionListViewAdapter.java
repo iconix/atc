@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.text.Html;
 import android.text.TextUtils;
 
 
@@ -82,7 +83,7 @@ public class PromotionListViewAdapter extends ArrayAdapter<PromotionRowItem>{
 		
 		holder.description.setMaxLines(2);
 		holder.description.setEllipsize(TextUtils.TruncateAt.END);
-		holder.description.setText(promotionRowItem.getDescription());
+		holder.description.setText(Html.fromHtml(promotionRowItem.getDescription()));
 		
 		holder.distance.setText(promotionRowItem.getDistance());
 		

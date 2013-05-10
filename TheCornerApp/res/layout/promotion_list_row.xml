@@ -20,7 +20,8 @@
         <ImageView
             android:id="@+id/promotion_list_view_row_image"
             android:layout_width="48dip"
-            android:layout_height="48dip" />
+            android:layout_height="48dip" 
+            android:contentDescription="@string/ad_image_description"/>
     </LinearLayout>
 
     <!-- Title of Ad -->
@@ -50,7 +51,8 @@
         android:layout_toLeftOf="@+id/promotion_list_view_row_arrow_icon"
         android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#343434"
-        android:textSize="12sp" />
+        android:textSize="12sp" 
+        android:textIsSelectable="false"/>
 
     <ImageView
         android:id="@+id/promotion_list_view_row_arrow_icon"
@@ -58,7 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/arrow" />
+        android:src="@drawable/arrow" 
+        android:contentDescription="@string/ad_list_arrow"/>
 
     <TextView
         android:id="@+id/promotion_list_view_row_distance"
@@ -66,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/promotion_list_view_row_description"
         android:layout_alignTop="@+id/promotion_list_view_row_title"
-        android:textColor="#ff0000"/>
+        android:textColor="#ff0000"
+        android:textIsSelectable="false"/>
 
 </RelativeLayout>

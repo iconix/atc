@@ -11,7 +11,6 @@ import com.sapenguins.thecornerapp.constants.SpecialCharacters;
 import com.sapenguins.thecornerapp.objects.BasicEvent;
 import com.sapenguins.thecornerapp.objects.EventRowItem;
 import com.sapenguins.thecornerapp.supports.GeoLocation;
-import com.sapenguins.thecornerapp.supports.SwipeGestureDetector;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
 import com.sapenguins.thecornerapp.templates.EventListViewAdapter;
 
@@ -39,7 +38,6 @@ public class EventListFragment extends ListFragment {
 	Context context;
 	LocationManager locationManager; 
 	String provider;
-	SwipeGestureDetector swipeDetector; 
 	ListView listView;
 	
 	@Override
@@ -49,8 +47,6 @@ public class EventListFragment extends ListFragment {
 	    
 	    //add swipe gesture to our list view
 	    listView = getListView();
-	    swipeDetector = new SwipeGestureDetector();
-	    listView.setOnTouchListener(swipeDetector);
 	    
 	    //get last known location to calculate the bird-eye distance
 	    locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -71,19 +67,30 @@ public class EventListFragment extends ListFragment {
 	private void setListViewLongClickListener() {
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    	@Override
-	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
-	    		if (swipeDetector.swipeDetected()) {
-	        		if (swipeDetector.getAction() == SwipeGestureDetector.Action.LR) {
-	        			BasicEvent event = basicEventObjects.get(position);
-	        			passDetail(event.getId(), event.getTitle(), event.getImageUrl());
-	        		} else if (swipeDetector.getAction() == SwipeGestureDetector.Action.RL) {
-	        		}
-	        	} else {
-		    		BasicEvent event = basicEventObjects.get(position);
-		    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-		   	    		 Uri.parse("google.navigation:q=" + event.getLatitude() + "," + event.getLongitude()));
-		    		startActivity(intent);
-	        	}
+	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {   		
+        		final int mposition = position;
+        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+			    builder.setTitle("Would you like to get to this location?")
+			    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+				    		BasicEvent event = basicEventObjects.get(mposition);
+				    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+				   	    		 Uri.parse("google.navigation:q=" + event.getLatitude() + "," + event.getLongitude()));
+				    		startActivity(intent);
+						}
+					})
+					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+		    	AlertDialog alert = builder.create();
+		    	alert.show();	
+	        	
 	        	return false;
 	    	}
 	    });
@@ -167,9 +174,14 @@ public class EventListFragment extends ListFragment {
 					for (String event : myEvents) {
 						String[] eventDetails = event.split(SpecialCharacters.delimiter);
 						//check if the event detail is valid
-						if (eventDetails.length == 6)
+						if (eventDetails.length == 6) {
+							//check if the shortDescription is empty. If it is then make it empty
+							String shortDescription = eventDetails[5];
+							if (shortDescription.equals(SpecialCharacters.empty))
+								shortDescription = ""; // set it back to empty
 							basicEventObjects.add(new BasicEvent(eventDetails[0], eventDetails[1],
-									eventDetails[2], eventDetails[3], eventDetails[4], eventDetails[5]));
+									eventDetails[2], eventDetails[3], eventDetails[4], shortDescription));
+						}
 					}
 					getEventListViewRows();
 				}
@@ -195,7 +207,9 @@ public class EventListFragment extends ListFragment {
 			 //display the first item on the list 
 		    if (basicEventObjects.size() > 0) {
 		    	BasicEvent event = basicEventObjects.get(0);
-		    	passDetail(event.getId(), event.getTitle(), event.getImageUrl());
+		    	double distance = computeDistanceToEvent(event);
+		 		String displayDistance = String.format("%.2f", distance) + " mi";
+		    	passDetail(event.getId(), event.getTitle(), event.getImageUrl(), event.getShortDescription(), event.getLongitude(), event.getLatitude(), displayDistance);
 		    }
 		}
 		EventListViewAdapter adapter = new EventListViewAdapter(context, R.layout.event_list_row, eventRowItems);
@@ -207,7 +221,9 @@ public class EventListFragment extends ListFragment {
 	 */
 	public void onListItemClick(ListView l, View v, int position, long id) {
 	    BasicEvent event = basicEventObjects.get(position);
-		passDetail(event.getId(), event.getTitle(), event.getImageUrl());
+	    double distance = computeDistanceToEvent(event);
+		String displayDistance = String.format("%.2f", distance) + " mi";
+		passDetail(event.getId(), event.getTitle(), event.getImageUrl(), event.getShortDescription(), event.getLongitude(), event.getLatitude(), displayDistance);
 	}
 	
 	
@@ -224,7 +240,7 @@ public class EventListFragment extends ListFragment {
 		eventLocation.setLongitude(event.getLongitude());
 		return lastKnown.distanceTo(eventLocation)/Global.METERS_IN_MILE;	
 	}
-	
+
 	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////
 	/**
 	 * Interface to pass the information (coordinate) of selected item back to activity 
@@ -232,7 +248,7 @@ public class EventListFragment extends ListFragment {
 	 * @author minhthaonguyen
 	 */
 	public interface OnDetailPass {
-	    public void onDetailPass(int dealId, String title, String imageUrl);
+	    public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
 	}
 	
 	OnDetailPass detailPasser;
@@ -241,8 +257,8 @@ public class EventListFragment extends ListFragment {
 	 * Passing the coordinate from the fragment to activity
 	 * @param coordinate
 	 */
-	public void passDetail(int dealId, String title, String imageUrl) {
-	    detailPasser.onDetailPass(dealId, title, imageUrl);
+	public void passDetail(int eventId, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
+	    detailPasser.onDetailPass(eventId, title, imageUrl, desc, longitude, latitude, distance);
 	}
 	
 	@Override

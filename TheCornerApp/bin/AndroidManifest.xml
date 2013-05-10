@@ -32,7 +32,8 @@
         
         <activity
             android:name="com.sapenguins.thecornerapp.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,30 +42,37 @@
         </activity>
         
         <activity
-            android:name="com.sapenguins.thecornerapp.HomeActivity"
-            android:label="Home"
-            android:screenOrientation="portrait"
+            android:name="com.sapenguins.thecornerapp.HomeActivity"       
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         
         <activity
             android:name="com.sapenguins.thecornerapp.AdsMapActivity"
-            android:label="Select distance:">
+            android:icon="@drawable/map_icon">
         </activity>
         
         <activity
             android:name="com.sapenguins.thecornerapp.PromotionListAndDetailActivity"
-            android:label="Select distance:">
+            android:icon="@drawable/promotion_icon">
         </activity>
         
-         <activity
+        <activity
             android:name="com.sapenguins.thecornerapp.EventListAndDetailActivity"
-            android:label="Select distance:">
+            android:icon="@drawable/event_icon">
+        </activity>
+        
+        <activity
+            android:name="com.sapenguins.thecornerapp.EventFullDetailActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+        </activity>
+        
+        <activity
+            android:name="com.sapenguins.thecornerapp.PromotionFullDetailActivity"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
         </activity>
         
         <activity
             android:name="com.sapenguins.thecornerapp.PromotionDetailActivity"
-            android:label="Promotion"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
         

@@ -18,6 +18,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings.Secure;
 
 
 public class SendGpsLocationsService extends Service implements LocationListener{
@@ -29,6 +30,7 @@ public class SendGpsLocationsService extends Service implements LocationListener
 	Criteria criteria;
 	int updateInterval;
 	int updateDistance;
+	String deviceId;
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -38,11 +40,20 @@ public class SendGpsLocationsService extends Service implements LocationListener
 	@Override
 	public void onCreate() {
 		context = this;
+		deviceId = getDeviceID();
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		criteria = new Criteria();
 		locationManager.requestLocationUpdates(DEFAULT_UPDATE_TIME_INTERVAL, DEFAULT_UPDATE_DISTANCE, criteria, this, null);
 	}
 
+	/**
+     * Get the device unique ID
+     * @return the device ID
+     */
+    private String getDeviceID() {
+    	return Secure.getString(getBaseContext().getContentResolver(),
+                Secure.ANDROID_ID); 
+    }
 
 	/**
 	 * When the location is updated/changed, the new coordinate is send to the server
@@ -58,7 +69,7 @@ public class SendGpsLocationsService extends Service implements LocationListener
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
 					postParameters.add(new BasicNameValuePair("longitude", String.valueOf(longitude)));
 					postParameters.add(new BasicNameValuePair("latitude", String.valueOf(latitude)));
-
+					postParameters.add(new BasicNameValuePair("deviceID", deviceId));
 					AppHttpClient.executeHttpPost(ServerVariables.URL, postParameters);
 				} catch (Exception e) {
 					e.printStackTrace();

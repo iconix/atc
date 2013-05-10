@@ -12,6 +12,7 @@ import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -23,34 +24,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class PromotionDetailFragment extends Fragment {
-	
+
 	Context context;
 	View view;
 	TextView title;
 	ImageView img;
 	int dealId;
-	
+
 	DisplayImageOptions options;
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	ImageLoader imageLoader;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		context = getActivity();
 		view = inflater.inflate(R.layout.promotion_detail, container, false);
 		initViewComponents();
-		
+		setViewOnClickListener();
 		return view;
 	}
-	
-	
+
+
 	/**
 	 * Set up the view components
 	 */
 	private void initViewComponents() {
 		title = (TextView)view.findViewById(R.id.promotion_detail_title);	
 		img = (ImageView) view.findViewById(R.id.promotion_detail_image);
+	}
+
+	/**
+	 * Set the click listener for the view
+	 */
+	private void setViewOnClickListener() {
+		view.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				passClick();
+			}
+		});
 	}
 	
 	/**
@@ -72,7 +85,7 @@ public class PromotionDetailFragment extends Fragment {
 		.build();
 		imageLoader = ImageLoader.getInstance();
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-		
+
 		imageLoader.displayImage(mImgSrc, img, options, animateFirstListener);
 	}
 
@@ -91,5 +104,29 @@ public class PromotionDetailFragment extends Fragment {
 				}
 			}
 		}
+	}
+
+	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////	
+	/**
+	 * Interface to pass the click to the activity
+	 */
+	public interface OnClickPass {
+		public void onClickPass();
+	}
+
+	OnClickPass clickPasser;
+
+	/**
+	 * Passing the click to the activity
+	 */
+	public void passClick() {
+		clickPasser.onClickPass();
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		clickPasser = (OnClickPass) activity;
 	}
 }

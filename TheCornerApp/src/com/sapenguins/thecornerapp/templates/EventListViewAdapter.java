@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.text.Html;
 import android.text.TextUtils;
 
 
@@ -82,7 +83,7 @@ public class EventListViewAdapter extends ArrayAdapter<EventRowItem>{
 		
 		holder.description.setMaxLines(2);
 		holder.description.setEllipsize(TextUtils.TruncateAt.END);
-		holder.description.setText(eventRowItem.getDescription());
+		holder.description.setText(Html.fromHtml(eventRowItem.getDescription()));
 		
 		holder.distance.setText(eventRowItem.getDistance());
 		

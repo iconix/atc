@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.sapenguins.thecornerapp.PromotionDetailFragment.OnClickPass;
 import com.sapenguins.thecornerapp.PromotionListFragment.OnDetailPass;
 import com.sapenguins.thecornerapp.constants.MenuSpinnerItems;
 
@@ -17,7 +18,7 @@ import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 
-public class PromotionListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, ActionBar.OnNavigationListener {
+public class PromotionListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, OnClickPass, ActionBar.OnNavigationListener {
 	
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -29,6 +30,14 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 	String[] maximumDistances;
 	
 	MenuItem homeItem;
+	
+	int promotionId;
+	String promotionTitle;
+	String promotionImg;
+	String promotionDesc;
+	String promotionDistance;
+	double promotionLongitude;
+	double promotionLatitude;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +87,7 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 			}
 		}
 		actionbar = getSupportActionBar();
+		actionbar.setDisplayShowTitleEnabled(false);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(R.drawable.ab_bg_black));
         maximumDistances = getResources().getStringArray(R.array.distances);
         Context actionbarContext = actionbar.getThemedContext();
@@ -106,8 +116,27 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 	//--HANDLE INTERACTIONS BETWEEN FRAGMENT-
 	//---------------------------------------
 	//@Override
-	public void onDetailPass(int dealId, String title, String imageUrl) {
-		detailFragment.dislayPromotionDetail(dealId, title, imageUrl);
+	public void onDetailPass(int id, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
+		detailFragment.dislayPromotionDetail(id, title, imageUrl);
+		promotionId = id;
+		promotionTitle = title;
+		promotionImg = imageUrl;
+		promotionDesc = desc;
+		promotionLongitude = longitude;
+		promotionLatitude = latitude;
+		promotionDistance = distance;	
+	}
+	
+	public void onClickPass() {
+		Intent intent = new Intent(context, PromotionFullDetailActivity.class);	
+		intent.putExtra("promotionId", promotionId);
+		intent.putExtra("promotionTitle", promotionTitle);
+		intent.putExtra("promotionImg", promotionImg);
+		intent.putExtra("promotionDesc", promotionDesc);
+		intent.putExtra("promotionLongitude", promotionLongitude);
+		intent.putExtra("promotionLatitude", promotionLatitude);
+		intent.putExtra("promotionDistance", promotionDistance);
+		startActivity(intent);
 	}
 
 	@Override
