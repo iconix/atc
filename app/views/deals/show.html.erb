@@ -18,8 +18,8 @@
 			<p>
 				<a href="/promo/<%= @deal.id %>/edit">Edit</a>
 			</p>
-			<p>Start date: <%= @deal.startDate %></p>
-			<p>End date: <%= @deal.endDate %></p>
+			<p>Start date: <%= display_time(@deal.startDate.to_s) %></p>
+			<p>End date: <%= display_time(@deal.endDate.to_s) %></p>
 			<p>Image URL: 
 		  	<% unless @deal.imageURL.empty? %> 
 					<p><%= image_tag @deal.imageURL %></p>
