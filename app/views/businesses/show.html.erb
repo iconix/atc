@@ -27,27 +27,6 @@
   </aside>
 	<% unless @business.admin? then %>
 		<div class="span4">
-		 	<h3> Your Deals: </h3>
-		 	<% if @business.deals.any? %>
-		  	<ol>
-			  	<% @deals.each do |d| %>
-				  	<% if d.title && !d.isEvent then %>
-					  	<li>
-								<a href="/promo/<%= d.id %>"><%= d.title %></a>
-               	<i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
-								<a href="/promo/<%= d.id %>/edit">Edit</a>
-               	<% if current_business.admin? || current_business?(@business) then %>
-                 	<%= link_to "Delete", d, method: :delete,
-                   	                                  data: { confirm: "You sure?" },
-                     	                                title: d.title %>
-               	<% end %>
-             	</li>
-				  	<% end %>
-			  	<% end %>
-		  	</ol>
-		 	<% end %>
-		</div>
-		<div class="span4">
 		  <h3> Your Events: </h3>
 		  <% if @business.deals.any? %>
 			  <ol>
@@ -67,6 +46,27 @@
 				  <% end %>
 			  </ol>
 		  <% end %>
+		</div>
+		<div class="span4">
+		 	<h3> Your Deals: </h3>
+		 	<% if @business.deals.any? %>
+		  	<ol>
+			  	<% @deals.each do |d| %>
+				  	<% if d.title && !d.isEvent then %>
+					  	<li>
+								<a href="/promo/<%= d.id %>"><%= d.title %></a>
+               	<i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+								<a href="/promo/<%= d.id %>/edit">Edit</a>
+               	<% if current_business.admin? || current_business?(@business) then %>
+                 	<%= link_to "Delete", d, method: :delete,
+                   	                                  data: { confirm: "You sure?" },
+                     	                                title: d.title %>
+               	<% end %>
+             	</li>
+				  	<% end %>
+			  	<% end %>
+		  	</ol>
+		 	<% end %>
 		</div>
 	<% else %>  
 		<div class="span6"
