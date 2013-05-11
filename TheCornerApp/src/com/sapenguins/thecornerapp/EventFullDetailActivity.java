@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,6 +16,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -25,20 +26,27 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.sapenguins.thecornerapp.constants.ServerVariables;
 import com.sapenguins.thecornerapp.constants.SpecialCharacters;
+import com.sapenguins.thecornerapp.datasources.AdsDataSource;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
 import com.sapenguins.thecornerapp.supports.TimeFrame;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class EventFullDetailActivity extends SherlockFragmentActivity{
+public class EventFullDetailActivity extends FragmentActivity{
 
 	TextView title;
 	TextView shortDescription;
@@ -61,15 +69,67 @@ public class EventFullDetailActivity extends SherlockFragmentActivity{
 	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	ImageLoader imageLoader;
 	
+	MenuItem favorite;
+	AdsDataSource dataSource;
+	Context context;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_full_detail);
+		context = this;
+		dataSource = new AdsDataSource(this);
+		dataSource.open();
 		initViewComponents();
 		displayBasicInfo();
 		displayDetailInfo();
 	}
 	
+	@Override
+	public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance().activityStart(this); // Add this method.
+	}
+
+	@Override
+	protected void onDestroy() {
+		dataSource.close();
+		EasyTracker.getInstance().activityStop(this);
+		super.onDestroy();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.full_detail_menu, menu);
+		favorite = (MenuItem) findViewById(R.id.favorite);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		//if (item.equals(favorite)) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+		    builder.setTitle("Would you like to add this event to your favorites?")
+		    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						dataSource.addAdToFavorite(eventId);
+					}
+				})
+				.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+	    	AlertDialog alert = builder.create();
+	    	alert.show();	
+			//return false;
+		//}
+		return super.onOptionsItemSelected(item);
+	}
+
 	/**
 	 * Display the event basic info
 	 */
@@ -192,12 +252,18 @@ public class EventFullDetailActivity extends SherlockFragmentActivity{
 		.showStubImage(R.drawable.no_photo_icon)
 		.showImageForEmptyUri(R.drawable.no_photo_icon)
 		.showImageOnFail(R.drawable.no_photo_icon)
-		.cacheInMemory()
 		.cacheOnDisc()
 		.displayer(new RoundedBitmapDisplayer(20))
+		.resetViewBeforeLoading()
 		.build();
 		imageLoader = ImageLoader.getInstance();
-		imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+		
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+		.memoryCache(new WeakMemoryCache())
+		.denyCacheImageMultipleSizesInMemory()
+		.build();
+		
+		imageLoader.init(config);
 		
 		imageLoader.displayImage(mImgSrc, img, options, animateFirstListener);
 	}

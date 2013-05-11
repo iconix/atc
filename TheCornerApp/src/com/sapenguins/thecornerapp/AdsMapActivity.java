@@ -16,6 +16,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -114,6 +116,21 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 		setInfoWindowClickListener();
 	}
 	
+	@Override
+	public void onStart() {
+	    super.onStart();
+	    EasyTracker.getInstance().activityStart(this); // Add this method.
+	}
+
+	
+	@Override
+	protected void onDestroy() {
+		EasyTracker.getInstance().activityStop(this);
+		super.onDestroy();
+	}
+
+
+
 	/**
 	 * Set the listener when the user click on the info window that was 
 	 * initiated when he/she press on the marker on map
@@ -426,6 +443,7 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 			
 			@Override
 			protected void onPreExecute() {
+				googleMap.clear();
 				GeoLocation currentLoc = GeoLocation.fromDegrees(adsLocation.latitude, adsLocation.longitude);
 				GeoLocation[] boundingCoors = currentLoc.boundingCoordinates(distance, Global.EARTH_RADIUS_IN_MILES);
 				minLng = boundingCoors[0].getLongitudeInDegrees();
@@ -438,8 +456,8 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 			protected String doInBackground(Void... params) {
 				try {
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-					if (mIsEvent) postParameters.add(new BasicNameValuePair("event", "all"));
-					else postParameters.add(new BasicNameValuePair("deal", "all"));
+					if (mIsEvent) postParameters.add(new BasicNameValuePair("event", "map_view"));
+					else postParameters.add(new BasicNameValuePair("deal", "map_view"));
 					postParameters.add(new BasicNameValuePair("minLng", String.valueOf(minLng)));
 					postParameters.add(new BasicNameValuePair("maxLng", String.valueOf(maxLng)));
 					postParameters.add(new BasicNameValuePair("minLat", String.valueOf(minLat)));
@@ -463,8 +481,12 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 							String shortDescription = adDetails[5];
 							if (shortDescription.equals(SpecialCharacters.empty))
 								shortDescription = ""; // set it back to empty
+							//check if the url is empty
+							String imageUrl = adDetails[4];
+							if (imageUrl.equals(SpecialCharacters.empty))
+								imageUrl = ""; // set it back to empty
 							basicAdObjects.add(new BasicAd(adDetails[0], adDetails[1],
-									adDetails[2], adDetails[3], adDetails[4], shortDescription));
+									adDetails[2], adDetails[3], imageUrl, shortDescription));
 						}
 					}
 				}
@@ -474,7 +496,6 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 	}
 	
 	private void addAdsToMap() {
-		googleMap.clear();
 		markers = new HashMap<Marker, Integer>();
 		for (int i = 0; i < basicAdObjects.size(); i++) {//BasicAd basicAd : basicAdObjects) {
 			final int index = i;
@@ -483,12 +504,17 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 			.showStubImage(R.drawable.no_photo_icon)
 			.showImageForEmptyUri(R.drawable.no_photo_icon)
 			.showImageOnFail(R.drawable.no_photo_icon)
-			.cacheInMemory()
 			.cacheOnDisc()
 			.displayer(new RoundedBitmapDisplayer(20))
+			.resetViewBeforeLoading()
 			.build();
 			imageLoader = ImageLoader.getInstance();
-			imageLoader.init(ImageLoaderConfiguration.createDefault(context));
+			
+			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+			.memoryCache(new WeakMemoryCache())
+			.denyCacheImageMultipleSizesInMemory()
+			.build();
+			imageLoader.init(config);
 			imageLoader.loadImage(myAd.getImageUrl(), options, new SimpleImageLoadingListener() {
 				final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
 
@@ -509,7 +535,6 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 					}
 				}
 			});
-			
 		}
 	}
 
@@ -535,27 +560,27 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 	 * @param provider
 	 */
 	public void onProviderDisabled(String provider) {
-	        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	        builder.setTitle("GPS is disable");
-	        builder.setCancelable(false);
-	        
-	        //take user to turn on the GPS setting
-	        builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int which) {
-	               Intent startGps = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	               startActivity(startGps);
-	           } 
-	        });
-	        
-	        //close
-	        builder.setNegativeButton("Leave GPS off", new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int which) {
-	                dialog.cancel();
-	            }
-	        });
-	        
-	        //display the alert
-	        AlertDialog alert = builder.create();
-	        alert.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("GPS is disable");
+        builder.setCancelable(false);
+        
+        //take user to turn on the GPS setting
+        builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int which) {
+               Intent startGps = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+               startActivity(startGps);
+           } 
+        });
+        
+        //close
+        builder.setNegativeButton("Leave GPS off", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        
+        //display the alert
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

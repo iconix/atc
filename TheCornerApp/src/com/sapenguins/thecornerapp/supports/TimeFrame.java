@@ -16,7 +16,7 @@ public class TimeFrame {
 			if (hr != 12) hr = hr - 12;
 		}
 		if (hr == 0) hr = 12;
-		String timeInDay = day + " " + hr + time.substring(13, 16) + "   " + amPm;
+		String timeInDay = day + "   " + hr + time.substring(13, 16) + " " + amPm;
 		return timeInDay;
 	}
 }

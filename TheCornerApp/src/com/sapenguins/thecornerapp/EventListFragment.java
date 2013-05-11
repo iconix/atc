@@ -39,6 +39,8 @@ public class EventListFragment extends ListFragment {
 	LocationManager locationManager; 
 	String provider;
 	ListView listView;
+	String category;
+	double distance;
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,7 +56,9 @@ public class EventListFragment extends ListFragment {
         if (provider == null) onProviderDisabled(provider); 
         
         //when it first create, query everything in 0.5 miles radius
-        getBasicEventsFromDB(0.5);
+        distance = 0.5;
+        category = "All";
+        getBasicEventsFromDB(distance);
         
 	    //add long click listener to list view
 	    setListViewLongClickListener();
@@ -97,6 +101,31 @@ public class EventListFragment extends ListFragment {
 	} 
 	
 	/**
+	 * Main activity use this to send the category for the search down
+	 */
+	public void setSearchCategory(String cat) {
+		category = cat;
+		getBasicEventsFromDB(distance);
+	}
+	
+	/**
+	 * Main activity use this to send the distance for the search down
+	 */
+	public void setSearchDistance(double d) {
+		distance = d;
+		getBasicEventsFromDB(distance);
+	}
+	
+	/**
+	 * Main activity use this to send the distance and category for the search down
+	 */
+	public void setSearchDistanceAndCategory(double d, String cat) {
+		distance = d;
+		category = cat;
+		getBasicEventsFromDB(distance);
+	}
+	
+	/**
 	 * Execute to attempt to connect to the provider
 	 * @param provider
 	 */
@@ -124,7 +153,6 @@ public class EventListFragment extends ListFragment {
 	        AlertDialog alert = builder.create();
 	        alert.show();
     }
-	
 	
 	/**
 	 * Get the basic information on events from the DB
@@ -155,7 +183,7 @@ public class EventListFragment extends ListFragment {
 			protected String doInBackground(Void... params) {
 				try {
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-					postParameters.add(new BasicNameValuePair("event", "category"));
+					postParameters.add(new BasicNameValuePair("event", category));
 					postParameters.add(new BasicNameValuePair("minLng", String.valueOf(minLng)));
 					postParameters.add(new BasicNameValuePair("maxLng", String.valueOf(maxLng)));
 					postParameters.add(new BasicNameValuePair("minLat", String.valueOf(minLat)));
@@ -179,8 +207,12 @@ public class EventListFragment extends ListFragment {
 							String shortDescription = eventDetails[5];
 							if (shortDescription.equals(SpecialCharacters.empty))
 								shortDescription = ""; // set it back to empty
+							//check if the url is empty
+							String imageUrl = eventDetails[4];
+							if (imageUrl.equals(SpecialCharacters.empty))
+								imageUrl = ""; // set it back to empty
 							basicEventObjects.add(new BasicEvent(eventDetails[0], eventDetails[1],
-									eventDetails[2], eventDetails[3], eventDetails[4], shortDescription));
+									eventDetails[2], eventDetails[3], imageUrl, shortDescription));
 						}
 					}
 					getEventListViewRows();

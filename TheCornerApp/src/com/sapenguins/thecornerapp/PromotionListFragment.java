@@ -39,6 +39,8 @@ public class PromotionListFragment extends ListFragment {
 	LocationManager locationManager; 
 	String provider;
 	ListView listView;
+	String category;
+	double distance;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -53,8 +55,11 @@ public class PromotionListFragment extends ListFragment {
 		provider = locationManager.getBestProvider(new Criteria(), true);
 		if (provider == null) onProviderDisabled(provider); 
 
-		//when it first create, query everything in 0.5 miles radius
-		getBasicPromotionsFromDB(0.5);
+		category = "All";
+        
+        //when it first create, query everything in 0.5 miles radius
+        distance = 0.5;
+		getBasicPromotionsFromDB(distance);
 
 		//add long click listener to list view
 		setListViewLongClickListener();
@@ -94,6 +99,31 @@ public class PromotionListFragment extends ListFragment {
 			}
 		});
 	} 
+	
+	/**
+	 * Main activity use this to send the category for the search down
+	 */
+	public void setSearchCategory(String cat) {
+		category = cat;
+		getBasicPromotionsFromDB(distance);
+	}
+	
+	/**
+	 * Main activity use this to send the distance for the search down
+	 */
+	public void setSearchDistance(double d) {
+		distance = d;
+		getBasicPromotionsFromDB(distance);
+	}
+	
+	/**
+	 * Main activity use this to send the distance and category for the search down
+	 */
+	public void setSearchDistanceAndCategory(double d, String cat) {
+		distance = d;
+		category = cat;
+		getBasicPromotionsFromDB(distance);
+	}
 
 	/**
 	 * Execute to attempt to connect to the provider
@@ -153,7 +183,7 @@ public class PromotionListFragment extends ListFragment {
 			protected String doInBackground(Void... params) {
 				try {
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-					postParameters.add(new BasicNameValuePair("deal", "category"));
+					postParameters.add(new BasicNameValuePair("deal", category));
 					postParameters.add(new BasicNameValuePair("minLng", String.valueOf(minLng)));
 					postParameters.add(new BasicNameValuePair("maxLng", String.valueOf(maxLng)));
 					postParameters.add(new BasicNameValuePair("minLat", String.valueOf(minLat)));
@@ -176,9 +206,13 @@ public class PromotionListFragment extends ListFragment {
 							//check if the shortDescription is empty. If it is then make it empty
 							String shortDescription = promotionDetails[5];
 							if (shortDescription.equals(SpecialCharacters.empty))
-								shortDescription = ""; // set it back to empty						}
+								shortDescription = ""; // set it back to empty						
+							//check if the url is empty
+							String imageUrl = promotionDetails[4];
+							if (imageUrl.equals(SpecialCharacters.empty))
+								imageUrl = ""; // set it back to empty
 							basicPromotionObjects.add(new BasicPromotion(promotionDetails[0], promotionDetails[1],
-									promotionDetails[2], promotionDetails[3], promotionDetails[4], shortDescription));
+									promotionDetails[2], promotionDetails[3], imageUrl, shortDescription));
 						}
 					}
 					getPromotionListViewRows();

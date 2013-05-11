@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -79,13 +80,18 @@ public class PromotionDetailFragment extends Fragment {
 		.showStubImage(R.drawable.no_photo_icon)
 		.showImageForEmptyUri(R.drawable.no_photo_icon)
 		.showImageOnFail(R.drawable.no_photo_icon)
-		.cacheInMemory()
 		.cacheOnDisc()
 		.displayer(new RoundedBitmapDisplayer(20))
+		.resetViewBeforeLoading()
 		.build();
 		imageLoader = ImageLoader.getInstance();
-		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
-
+		
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+		.memoryCache(new WeakMemoryCache())
+		.denyCacheImageMultipleSizesInMemory()
+		.build();
+		
+		imageLoader.init(config);
 		imageLoader.displayImage(mImgSrc, img, options, animateFirstListener);
 	}
 

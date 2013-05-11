@@ -1,5 +1,7 @@
 package com.sapenguins.thecornerapp;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -21,6 +23,7 @@ public class MainActivity extends Activity {
 		sendGpsLocationService();
 		Intent intent = new Intent(context, HomeActivity.class);
 		startActivity(intent);
+		EasyTracker.getInstance().activityStart(this);
 		finish();
 	}
 
@@ -29,6 +32,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onDestroy() {
+		EasyTracker.getInstance().activityStop(this);
+		super.onDestroy();
 	}
 
 	/**
