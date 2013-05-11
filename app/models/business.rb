@@ -57,6 +57,7 @@ class Business < ActiveRecord::Base
 	before_save :destroy_image?
 	before_save { |business| business.email = email.downcase }
 	before_save :create_remember_token
+	before_save :remove_tildes
 
 	validates :name, presence: true, length: { maximum: 100 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -75,11 +76,19 @@ class Business < ActiveRecord::Base
 
 	private
 
-	def create_remember_token
-		self.remember_token = SecureRandom.urlsafe_base64
-	end
+		def create_remember_token
+			self.remember_token = SecureRandom.urlsafe_base64
+		end
 
-	def destroy_image?
-	    self.image.clear if @image_delete == "1" and !image.dirty?
+		def destroy_image?
+	  	  self.image.clear if @image_delete == "1" and !image.dirty?
   	end
+
+		def remove_tildes
+			self.name = self.name.gsub("~", "-")
+			if self.address
+				self.address = self.address.gsub("~", "-")
+			end
+		end
+
 end

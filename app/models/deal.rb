@@ -53,13 +53,16 @@ class Deal < ActiveRecord::Base
                     :s3_permissions => "public-read"
 
   before_save :destroy_image?
+	before_save :short_description_format
+	before_save :remove_tildes
 
 	validates :title, presence: true
 	validates :startDate, presence: true
 	validates :endDate, presence: true
   validates_attachment_content_type :image, :content_type => ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
-	#validates :longitude, presence: true
-	#validates :latitude, presence: true
+	validates :address, presence: true
+	validates :shortDescription, presence: true
+	validates :shortDescription, :length => { :maximum => 255 }
 
   default_scope order: 'deals.created_at DESC'
 
@@ -75,4 +78,16 @@ private
   def destroy_image?
     self.image.clear if @image_delete == "1" and !image.dirty?
   end
+
+	def short_description_format
+		self.shortDescription = self.shortDescription.gsub("\n", ' ').squeeze(' ')
+	end
+
+	def remove_tildes
+		self.title = self.title.gsub("~", '-')
+		self.shortDescription = self.shortDescription.gsub("~", "-")
+		self.longDescription = self.longDescription.gsub("~", "-")
+		self.address = self.address.gsub("~", "-")
+	end
+
 end
