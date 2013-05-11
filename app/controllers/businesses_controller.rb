@@ -1,6 +1,7 @@
 class BusinessesController < ApplicationController
   before_filter :signed_in_business, 	only: [:show, :edit, :update, :index, :destroy]
-	before_filter :correct_business, 		only: [:edit, :update, :destroy]
+	before_filter :correct_business, 		only: [:show, :edit, :update, :destroy]
+	before_filter :session_created, only: [:new, :create]
 	#May be dangerous to allow all users to destroy?
 	#before_filter :admin_user,					only: :destroy 
 

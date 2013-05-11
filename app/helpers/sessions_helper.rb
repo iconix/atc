@@ -41,4 +41,10 @@ module SessionsHelper
 	def store_location
 		session[:return_to] = request.url
 	end
+
+	def session_created
+		if signed_in? then
+			redirect_to current_business
+		end
+	end
 end
