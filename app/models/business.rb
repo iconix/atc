@@ -11,7 +11,6 @@
 #  imageURL           :string(255)
 #  shortDescription   :text
 #  longDescription    :text
-#  tuesayCloseTime    :time
 #  latitude           :decimal(15, 10)
 #  longitude          :decimal(15, 10)
 #  address            :text
@@ -58,6 +57,7 @@ class Business < ActiveRecord::Base
 	before_save { |business| business.email = email.downcase }
 	before_save :create_remember_token
 	before_save :remove_tildes
+	before_save :empty_to_nil
 
 	validates :name, presence: true, length: { maximum: 100 }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -91,4 +91,27 @@ class Business < ActiveRecord::Base
 			end
 		end
 
+		def empty_to_nil
+			if self.websiteURL.blank? then
+				self.websiteURL = nil
+			end
+			if self.imageURL.blank? then
+				self.imageURL = nil
+			end
+			if self.shortDescription.blank? then
+				self.shortDescription = nil
+			end
+			if self.address.blank? then
+				self.address = nil
+			end
+			if self.phoneNumber.blank? then
+				self.phoneNumber = nil
+			end
+			if self.image_file_name.blank? then
+				self.image_file_name = nil
+				self.image_content_type = nil
+				self.image_file_size = nil
+				self.image_updated_at = nil
+			end
+		end
 end

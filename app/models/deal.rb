@@ -55,13 +55,13 @@ class Deal < ActiveRecord::Base
   before_save :destroy_image?
 	before_save :short_description_format
 	before_save :remove_tildes
+	before_save :empty_to_nil
 
 	validates :title, presence: true
 	validates :startDate, presence: true
 	validates :endDate, presence: true
   validates_attachment_content_type :image, :content_type => ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']
 	validates :address, presence: true
-	validates :shortDescription, presence: true
 	validates :shortDescription, :length => { :maximum => 255 }
 
   default_scope order: 'deals.created_at DESC'
@@ -88,6 +88,27 @@ private
 		self.shortDescription = self.shortDescription.gsub("~", "-")
 		self.longDescription = self.longDescription.gsub("~", "-")
 		self.address = self.address.gsub("~", "-")
+	end
+
+	def empty_to_nil
+		if self.imageURL.blank? then
+			self.imageURL = nil
+		end	
+		if self.shortDescription.blank? then
+			self.shortDescription = nil
+		end
+		if self.longDescription.blank? then
+			self.longDescription = nil
+		end
+		if self.tags.blank? then
+			self.tags = nil
+		end
+		if self.image_file_name.blank? then
+			self.image_file_name = nil
+			self.image_content_type = nil
+			self.image_file_size = nil
+			self.image_updated_at = nil
+		end
 	end
 
 end
