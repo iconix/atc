@@ -10,6 +10,17 @@
 			$('#deal_startDate').datetimepicker( {stepMinute: 10} );
 		});
   </script>
+  
+  <script type="text/javascript">
+	  $(function(){
+      $("form").submit(function() {
+        $(this).submit(function() {
+            return false;
+        });
+        return true;
+      });
+    });
+  </script>
 <% end %>
 
 
@@ -77,7 +88,7 @@
 				<%= f.label :address %>
 				<%= f.text_area :address, :rows => "3" %>
 				
-		    <%= f.label :image, "Or Upload Image" %>
+		    <%= f.label :image, "Upload Image" %>
 		    <%= f.file_field :image %>
 		    <% unless @deal.image_file_size.blank? %>
 	          <p>
