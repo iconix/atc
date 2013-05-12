@@ -1,7 +1,21 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+		$(function(){
+			$('#deal_endDate').datetimepicker( {stepMinute: 10} );
+		});
+	</script>
+	
+	<script type="text/javascript">
+	  $(function(){
+			$('#deal_startDate').datetimepicker( {stepMinute: 10} );
+		});
+  </script>
+<% end %>
+
 <% provide(:title, "New Promotion") %> 
 <% provide(:subtitle, "Create Your Promotion") %>
 
-<div class="container jumbotron">
+<div class="container jumbotron">  		  
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
@@ -22,11 +36,20 @@
 		    <%= f.label :tags, "Tags (separated by comma)" %>
 		    <%= f.text_field :tags %>
 
+        <br><br><br>
+		    <%= f.label :startDate, "Start Date and time (required)" %>
+		    <%= f.text_field :startDate, :name => "deal[startDate]", :id => "deal_startDate" %>
+
+		    <%= f.label :endDate, "End Date and time (required)" %>
+		    <%= f.text_field :endDate, :name => "deal[endDate]", :id => "deal_endDate" %>
+		    
+		    <% if false %>
 		    <%= f.label :startDate, "Start Date and time (required)" %>
 		    <%= f.text_field :startDate, :type => "datetime-local" %>
 
 		    <%= f.label :endDate, "End Date and time (required)" %>
 		    <%= f.text_field :endDate, :type => "datetime-local" %>
+		    <% end %>
 		    <br>
 		  </div>  
 		  <div class="span4">

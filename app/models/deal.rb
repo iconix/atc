@@ -55,7 +55,8 @@ class Deal < ActiveRecord::Base
   before_save :destroy_image?
 	before_save :short_description_format
 	before_save :remove_tildes
-	before_save :empty_to_nil
+	before_save :empty_to_nil	
+	
 
 	validates :title, presence: true
 	validates :startDate, presence: true

@@ -1,3 +1,18 @@
+<% content_for :head do %>
+  <script type="text/javascript">
+		$(function(){
+			$('#deal_endDate').datetimepicker( {stepMinute: 10} );
+		});
+	</script>
+	
+	<script type="text/javascript">
+	  $(function(){
+			$('#deal_startDate').datetimepicker( {stepMinute: 10} );
+		});
+  </script>
+<% end %>
+
+
 <% if @deal.isEvent then %>
 	<% provide(:title, "Edit Event") %>
 	<% provide(:subtitle, "Update Your Event") %>
@@ -30,9 +45,25 @@
 		  </div>
 			<div class="span4">
 		    <%= f.label :tags, "Tags (separated by comma)" %>
-		    <%= f.text_field :tags %>
+ 		    <%= f.text_field :tags %>
+        <br><br><br>
 
 				<% startDate = @deal.startDate.strftime("%Y-%m-%d") %>
+				<% year, month, day = startDate.split('-') %>
+				<% formatDate = month + '/' + day + '/' + year %>
+				<% startTime = @deal.startDate.strftime("%H:%M") %>
+		    <%= f.label :startDate, "Start Date and time (required)" %>
+		    <%= f.text_field :startDate, :name => "deal[startDate]", :id => "deal_startDate", :value => formatDate+" "+startTime %>
+
+				<% endDate = @deal.endDate.strftime("%Y-%m-%d") %>
+				<% year, month, day = startDate.split('-') %>
+				<% formatDate = month + '/' + day + '/' + year %>
+				<% endTime = @deal.endDate.strftime("%H:%M") %>
+		    <%= f.label :endDate, "End Date and time (required)" %>
+		    <%= f.text_field :endDate, :name => "deal[endDate]", :id => "deal_endDate", :value => formatDate+" "+endTime %>
+		    
+		    <% if false %>
+		    <% startDate = @deal.startDate.strftime("%Y-%m-%d") %>
 				<% startTime = @deal.startDate.strftime("%H:%M:%S") %>
 		    <%= f.label :startDate, "Start Date and time (required)" %>
 		    <%= f.text_field :startDate, :type => "datetime-local", :value => startDate+"T"+startTime %>
@@ -41,6 +72,7 @@
 				<% endTime = @deal.endDate.strftime("%H:%M:%S") %>
 		    <%= f.label :endDate, "End Date and time (required)" %>
 		    <%= f.text_field :endDate, :type => "datetime-local", :value => endDate+"T"+endTime %>
+		    <% end %>
 		    <br>
 		  </div>  
 		  <div class="span4">

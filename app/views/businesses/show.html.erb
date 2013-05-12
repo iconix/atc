@@ -18,10 +18,9 @@
 		<br><br>
 	  <% end %>
 	  <p><%= link_to "Edit profile", edit_business_path(@business) %></p>
-	  <!--p><a href="/businessstats">Business statistics</a></p-->
-	  <p><%= link_to "Customer statistics", stats_business_path(@business) %></p>
+	  <!-- <p><%= link_to "Customer statistics", stats_business_path(@business) %></p> -->
 			<% unless current_business.admin? then %>
-				<p><a href="/newpromo" class="btn btn-primary">Create promotion</a></p>
+				<p><a href="/newpromo" class="btn btn-primary btn-large">Create promotion</a></p>
 			<% end %>
     </section>
   </aside>

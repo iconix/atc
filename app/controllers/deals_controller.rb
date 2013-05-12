@@ -12,7 +12,8 @@ class DealsController < ApplicationController
       return
     end
     
-		@deal = current_business.deals.build(params[:deal])
+	  format_params = format_params(params[:deal])
+		@deal = current_business.deals.build(format_params)
     if @deal.save
       flash[:success] = "Promotion created!"
 			redirect_to current_business
@@ -43,7 +44,8 @@ class DealsController < ApplicationController
     
     @deal = Deal.find(params[:id])
     
-    if @deal.update_attributes(params[:deal])
+    format_params = format_params(params[:deal])
+    if @deal.update_attributes(format_params)
       flash[:success] = "Promotion updated"
       redirect_to :action => "show"
     else
@@ -57,5 +59,19 @@ class DealsController < ApplicationController
 			redirect_to(root_path) if (@deal.nil? || current_business.admin?)
 		rescue
 			redirect_to :back
+		end
+		
+		def format_params(params)
+		  params[:endDate] = format_datetime(params[:endDate])
+		  params[:startDate] = format_datetime(params[:startDate])
+	    return params
+		end
+		
+		def format_datetime(datetime)
+		  date, time = datetime.split
+		  month, day, year = date.split('/')
+		  format_date = year + '-' + month + '-' + day
+		  format_datetime = format_date + 'T' + time
+		  return format_datetime
 		end
 end
