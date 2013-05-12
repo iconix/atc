@@ -31,7 +31,7 @@
 
 		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
-			<% unless @business.image_file_size.nil? %>
+			<% unless @business.image_file_size.blank? %>
 	          <p>
 	          	(Current upload -- Check box to delete:<br />
 	          	<%= f.check_box :image_delete %> <%= @business.image_file_name %>)

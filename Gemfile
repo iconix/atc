@@ -4,8 +4,8 @@ gem 'rails', '3.2.12'
 gem 'bootstrap-sass', '2.3.1.0'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
-#gem 'will_paginate'
-#gem 'bootstrap-will_paginate'
+gem 'will_paginate', '3.0.3'
+gem 'bootstrap-will_paginate', '0.0.6'
 gem 'jquery-rails'
 gem "paperclip", "~> 3.0"
 gem "right_aws", "~> 3.0.5"

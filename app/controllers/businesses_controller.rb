@@ -12,7 +12,8 @@ class BusinessesController < ApplicationController
 
   def show
     @business = Business.find(params[:id])
-		@deals = @business.deals
+		@deals = @business.deals.find(:all, conditions: {isEvent: false}).paginate(page: params[:deals_page], per_page: 5)
+    @events = @business.deals.find(:all, conditions: {isEvent: true}).paginate(page: params[:events_page], per_page: 5)
   end
 
   def new
