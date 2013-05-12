@@ -57,6 +57,7 @@
 		<div class="span4">
 		 	<h3> Your Deals: </h3>
 		 	<% if @business.deals.any? %>
+		 	<ol>
 			  	<% @deals.each do |d| %>
 				  	<% if d.title && !d.isEvent then %>
 					  	<li>
