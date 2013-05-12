@@ -5,11 +5,11 @@
 <div class="row">
   <aside class="span4">
     <h1><%= @business.name %></h1>
-	  <% unless @business.imageURL.nil? %> 
+	  <% unless @business.imageURL.blank? %> 
 		<img src=<%= @business.imageURL %> width="200px", height="200px">
 		<br><br>
 	  <% end %>
-	  <% unless @business.image_file_name.nil? %> 
+	  <% unless @business.image_file_name.blank? %> 
 		<%= image_tag @business.image.url(:medium) %>
 		<br><br>
 	  <% end %>

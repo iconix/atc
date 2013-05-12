@@ -29,7 +29,7 @@
 		  <h3> Your Events: </h3>
 		  <% if @business.deals.any? %>
 			  <ol>
-				  <% @deals.each do |d| %>
+				  <% @events.each do |d| %>
 					  <% if d.title && d.isEvent then %>
 						  <li>
 								<a href="/promo/<%= d.id %>"><%= d.title %></a>
@@ -44,12 +44,17 @@
 					  <% end %>
 				  <% end %>
 			  </ol>
+			  <% if @events.total_pages > 1 %>
+				<p>Page <%= @events.current_page %>/<%= @events.total_pages %></p>
+			  <% end %>
+			  <%= render(partial: 'shared/business_page_nav', 
+		  	  	locals: {page: @events, param_name: :events_page}) %>
 		  <% end %>
 		</div>
 		<div class="span4">
 		 	<h3> Your Deals: </h3>
 		 	<% if @business.deals.any? %>
-		  	<ol>
+		 	<ol>
 			  	<% @deals.each do |d| %>
 				  	<% if d.title && !d.isEvent then %>
 					  	<li>
@@ -65,6 +70,11 @@
 				  	<% end %>
 			  	<% end %>
 		  	</ol>
+		  	<% if @deals.total_pages > 1 %>
+				<p>Page <%= @deals.current_page %>/<%= @deals.total_pages %></p>
+			  <% end %>
+		  	<%= render(partial: 'shared/business_page_nav', 
+		  	  	locals: {page: @deals, param_name: :deals_page}) %>
 		 	<% end %>
 		</div>
 	<% else %>  

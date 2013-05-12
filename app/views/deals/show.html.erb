@@ -21,12 +21,12 @@
 			<p>Start date: <%= display_time(@deal.startDate.to_s) %></p>
 			<p>End date: <%= display_time(@deal.endDate.to_s) %></p>
 			<p>Image URL: 
-		  	<% unless @deal.imageURL.empty? %> 
+		  	<% unless @deal.imageURL.blank? %> 
 					<p><%= image_tag @deal.imageURL %></p>
 				<% end %>
 			</p>
 			<p>Image Upload: 
-  			<% unless @deal.image_file_name.nil? %> 
+  			<% unless @deal.image_file_name.blank? %> 
 					<p><%= image_tag @deal.image.url(:medium) %></p>
 				<% end %>
 	  	</p>

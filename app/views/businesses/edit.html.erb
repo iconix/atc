@@ -5,7 +5,7 @@
 	<div class="row">
 		<%= form_for @business, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/business_error_messages' %>
-			<div class="span4">
+			<div class="span6">
 		    <%= f.label :name %>
 		    <%= f.text_field :name %>
 
@@ -18,20 +18,16 @@
 		    <%= f.label :password_confirmation, "Confirm Password" %>
 		    <%= f.password_field :password_confirmation %>
 			</div>
-			<div class="span4">
+			<div class="span6">
 				<%= f.label :address %>
-				<%= f.text_area :address, :rows => "3" %>
+				<%= f.text_area :address, :rows => "2" %>
 				
 				<%= f.label :"Phone Number" %>
 				<%= f.text_field :phoneNumber %>
-			</div>
-			<div class="span4">	
-				<%= f.label :imageURL, "Image URL" %>
-		    <%= f.text_field :imageURL %>
 
 		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
-			<% unless @business.image_file_size.nil? %>
+			<% unless @business.image_file_size.blank? %>
 	          <p>
 	          	(Current upload -- Check box to delete:<br />
 	          	<%= f.check_box :image_delete %> <%= @business.image_file_name %>)
@@ -41,7 +37,13 @@
 		    <br><br>
 		    <%= f.submit "Save changes", class: "btn btn-primary" %>
 		    <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-primary", style: "margin-left: 20px;" %>
-		  </div>
+			</div>
+			<!--
+			<div class="span4">	
+				<%= f.label :imageURL, "Image URL" %>
+		    <%= f.text_field :imageURL %>
+
+		  </div>-->
 		<% end %>
 	</div>
 </div>

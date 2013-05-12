@@ -25,7 +25,7 @@
 	<div class="row">
 		<%= form_for @deal, :html => { :multipart => true } do |f| %>
 			<%= render 'shared/deal_error_messages' %>
-			<div class="span4">
+			<div class="span6">
 				<% if @deal.isEvent then %>
 					<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
 					<%= f.radio_button :isEvent, 1, :checked => true %> Event<br><br>
@@ -38,16 +38,15 @@
 		    <%= f.text_field :title %>
 
 		    <%= f.label :shortDescription, "Short Description (max 30 words)" %>
-		    <%= f.text_area :shortDescription, :rows => "3" %>
+		    <%= f.text_area :shortDescription, :rows => "2" %>
 
 		    <%= f.label :longDescription, "Long Description" %>
-		    <%= f.text_area :longDescription, :rows => "4" %>
-		  </div>
-			<div class="span4">
-		    <%= f.label :tags, "Tags (separated by comma)" %>
- 		    <%= f.text_field :tags %>
-        <br><br><br>
+		    <%= f.text_area :longDescription, :rows => "3" %>
 
+		    <%= f.label :tags, "Tags (separated by comma)" %>
+		    <%= f.text_field :tags %>
+		  </div>
+			<div class="span6">
 				<% startDate = @deal.startDate.strftime("%Y-%m-%d") %>
 				<% year, month, day = startDate.split('-') %>
 				<% formatDate = month + '/' + day + '/' + year %>
@@ -74,17 +73,13 @@
 		    <%= f.text_field :endDate, :type => "datetime-local", :value => endDate+"T"+endTime %>
 		    <% end %>
 		    <br>
-		  </div>  
-		  <div class="span4">
+
 				<%= f.label :address %>
 				<%= f.text_area :address, :rows => "3" %>
-
-		    <%= f.label :imageURL, "Image URL" %>
-		    <%= f.text_field :imageURL %>
-
+				
 		    <%= f.label :image, "Or Upload Image" %>
 		    <%= f.file_field :image %>
-		    <% unless @deal.image_file_size.nil? %>
+		    <% unless @deal.image_file_size.blank? %>
 	          <p>
 	          	(Current upload -- Check box to delete:<br />
 	          	<%= f.check_box :image_delete %> <%= @deal.image_file_name %>)
@@ -94,7 +89,15 @@
 		    <br><br>
 		    <%= f.submit "Save changes", class: "btn btn-primary" %>
       <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-primary", style: "margin-left: 20px;" %>
+		  </div>  
+			<!--
+		  <div class="span4">
+
+		    <%= f.label :imageURL, "Image URL" %>
+		    <%= f.text_field :imageURL %>
+
 			</div>
+			-->
 		<% end %>
 	</div>
 </div>

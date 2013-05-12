@@ -1,0 +1,18 @@
+<% if page.total_pages > 1 %>
+	<hr />
+	<% if page.current_page == 1 %>
+	  <%= link_to '<< First', :action => 'show', param_name => 1 %> | 
+	  <%= link_to '< Prev', :action => 'show', param_name => 1 %> || 
+	<% else %>
+	  <%= link_to '<< First', :action => 'show', param_name => 1 %> | 
+	  <%= link_to '< Prev', :action => 'show', param_name => page.current_page - 1 %> || 
+	<% end %>
+	<% if page.current_page == page.total_pages %>
+	  <%= link_to 'Next >', :action => 'show', param_name => page.total_pages %> | 
+	  <%= link_to 'Last >>', :action => 'show', param_name => page.total_pages %>
+	<% else %>
+		  <%= link_to 'Next >', :action => 'show', param_name => page.current_page + 1 %> | 
+	  <%= link_to 'Last >>', :action => 'show', param_name => page.total_pages %>
+	<% end %>
+	<hr />
+<% end %>
