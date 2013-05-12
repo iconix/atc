@@ -55,12 +55,6 @@
 		<div class="span4">
 		 	<h3> Your Deals: </h3>
 		 	<% if @business.deals.any? %>
-		 	<%= render(partial: 'shared/business_page_nav', 
-		  	  	locals: {page: @deals, param_name: :deals_page}) %>
-		  	<% if @deals.total_pages > 1 %>
-				<p>Page <%= @deals.current_page %>/<%= @deals.total_pages %></p>
-			  <% end %>
-		  	<ol>
 			  	<% @deals.each do |d| %>
 				  	<% if d.title && !d.isEvent then %>
 					  	<li>
@@ -76,6 +70,9 @@
 				  	<% end %>
 			  	<% end %>
 		  	</ol>
+		  	<% if @deals.total_pages > 1 %>
+				<p>Page <%= @deals.current_page %>/<%= @deals.total_pages %></p>
+			  <% end %>
 		  	<%= render(partial: 'shared/business_page_nav', 
 		  	  	locals: {page: @deals, param_name: :deals_page}) %>
 		 	<% end %>
