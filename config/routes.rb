@@ -5,8 +5,8 @@ BusinessApp::Application.routes.draw do
   resources :deals
 
 	match '/newpromo', to: 'deals#new'
-	match 'promo/:id', to: 'deals#show'
-	match 'promo/:id/edit', to: 'deals#edit'
+	match 'promos/:id', to: 'deals#show'
+	match 'promos/:id/edit', to: 'deals#edit'
 
  	match 'businesses/:id/stats' => 'businesses#stats', :as => :stats_business
  	# http://stackoverflow.com/questions/6759831/rails-3-how-to-create-a-path

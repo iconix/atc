@@ -55,8 +55,10 @@ class DealsController < ApplicationController
 
 	private
 		def correct_user
-			@deal = current_business.deals.find_by_id(params[:id])
-			redirect_to(root_path) if (@deal.nil? || current_business.admin?)
+			unless current_business.admin?
+				@deal = current_business.deals.find_by_id(params[:id])
+				redirect_to(root_path) if (@deal.nil?)
+			end
 		rescue
 			redirect_to :back
 		end

@@ -32,9 +32,9 @@
 				  <% @events.each do |d| %>
 					  <% if d.title && d.isEvent then %>
 						  <li>
-								<a href="/promo/<%= d.id %>"><%= d.title %></a>
+								<a href="/promos/<%= d.id %>"><%= d.title %></a>
                 <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
-								<a href="/promo/<%= d.id %>/edit">Edit</a>
+								<a href="/promos/<%= d.id %>/edit">Edit</a>
                 <% if current_business.admin? || current_business?(@business) then %>
                   <%= link_to "Delete", d, method: :delete,
                                                       data: { confirm: "You sure?" },
@@ -58,9 +58,9 @@
 			  	<% @deals.each do |d| %>
 				  	<% if d.title && !d.isEvent then %>
 					  	<li>
-								<a href="/promo/<%= d.id %>"><%= d.title %></a>
+								<a href="/promos/<%= d.id %>"><%= d.title %></a>
                	<i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
-								<a href="/promo/<%= d.id %>/edit">Edit</a>
+								<a href="/promos/<%= d.id %>/edit">Edit</a>
                	<% if current_business.admin? || current_business?(@business) then %>
                  	<%= link_to "Delete", d, method: :delete,
                    	                                  data: { confirm: "You sure?" },
