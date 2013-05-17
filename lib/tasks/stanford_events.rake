@@ -142,7 +142,11 @@ namespace :populate do
 				address[:street] = address_regex_result[0]
 			else
 				# utilize campus-map
-				res = get_campus_map_address(location)
+				begin
+					res = get_campus_map_address(location)
+				rescue
+					next
+				end
 				if res[:error] then
 					errors.puts event
 					errors.puts
