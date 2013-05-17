@@ -10,13 +10,11 @@ public class Ads {
 	public static final String START_DATE = "startDate";
 	public static final String END_DATE = "endDate";
 	public static final String TITLE = "title";
-	public static final String IMAGE_OPTION = "imageOption";
 	public static final String IMAGE_URL = "imageUrl";
 	public static final String SHORT_DESCRIPTION = "shortDescription";
 	public static final String LONG_DESCRIPTION = "longDescription";
 	public static final String TAG = "tags";
-	public static final String START_TIME = "startTime";
-	public static final String END_TIME = "endTime";
 	public static final String ADDRESS = "address";
 	public static final String IMAGE_CONTENT_TYPE = "image_content_type";
+	public static final String IMAGE_FILE_NAME = "image_file_name";
 }

@@ -133,7 +133,7 @@ public class BasicAdvertisement {
 	 * Get basic concatenated string of Basic Advertisement
 	 * @return parsable Basic Advertisement String
 	 */
-	public String getBasicPromotionString() {
+	public String getBasicAdString() {
 		return id + SpecialCharacters.delimiter + 
 				title + SpecialCharacters.delimiter + 
 				latitude + SpecialCharacters.delimiter + 
