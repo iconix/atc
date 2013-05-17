@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-       <LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
@@ -24,12 +24,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#666666"
                 android:padding="5dp"
                 android:text="@string/favorite_tab_bar_ongoing_text"
+                android:textColor="#666666"
                 android:textIsSelectable="false"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <View
                 android:id="@+id/favorite_tab_bar_ongoing_text_underline"
@@ -48,70 +48,78 @@
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/tabbar_gradient_bg" 
-            android:orientation="vertical">
+            android:background="@drawable/tabbar_gradient_bg"
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/favorite_tab_bar_past_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="#666666"
                 android:padding="5dp"
                 android:text="@string/favorite_tab_bar_past_text"
+                android:textColor="#666666"
                 android:textIsSelectable="false"
                 android:textSize="14sp" />
-            
-             <View
+
+            <View
                 android:id="@+id/favorite_tab_bar_past_text_underline"
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="#cfcfcf" />
         </LinearLayout>
     </LinearLayout>
-      <View
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#a2a2ff" />
+
+    <LinearLayout
+        android:id="@+id/favorite_detail_fragment_container"
+        android:layout_width="match_parent"
+       	android:layout_height="175dp"
+        android:layout_weight="1" >
 
         <fragment
             android:id="@+id/favorite_detail_fragment"
             android:name="com.sapenguins.thecornerapp.FavoriteDetailFragment"
             android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:layout_weight="1"
+            android:layout_height="match_parent"
             tools:layout="@layout/favorite_detail" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#c8c8ff" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="2dp"
-            android:background="#ffffff" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginBottom="5dp"
-            android:background="#c8c8ff" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
-
-            <fragment
-                android:id="@+id/list_favorite_fragment"
-                android:name="com.sapenguins.thecornerapp.FavoriteListFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                tools:layout="@layout/favorite_list" />
-        </RelativeLayout>
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#c8c8ff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="2dp"
+        android:background="#ffffff" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="5dp"
+        android:background="#c8c8ff" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <fragment
+            android:id="@+id/list_favorite_fragment"
+            android:name="com.sapenguins.thecornerapp.FavoriteListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            tools:layout="@layout/favorite_list" />
+    </RelativeLayout>
+
+</LinearLayout>

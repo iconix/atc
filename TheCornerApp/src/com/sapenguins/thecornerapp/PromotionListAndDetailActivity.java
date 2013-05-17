@@ -8,20 +8,21 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.sapenguins.thecornerapp.PromotionDetailFragment.OnClickPass;
 import com.sapenguins.thecornerapp.PromotionListFragment.OnDetailPass;
+import com.sapenguins.thecornerapp.PromotionListFragment.Swipe;
 import com.sapenguins.thecornerapp.constants.MenuSpinnerItems;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class PromotionListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, OnClickPass, ActionBar.OnNavigationListener {
+public class PromotionListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, Swipe, ActionBar.OnNavigationListener {
 	
 	private static final String[] CONTENT = new String[] { "All", "Food", "Shopping", "Entertainment"};
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
@@ -49,6 +50,8 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 	TextView itemTwoText;
 	View itemThree;
 	TextView itemThreeText;
+	
+	View promotionDetailContainer;
 	
 	String category;
 	double distance;
@@ -88,10 +91,73 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 		itemOneText = (TextView)findViewById(R.id.promotion_tab_bar_item_one_text);
 		itemTwoText = (TextView)findViewById(R.id.promotion_tab_bar_item_two_text);
 		itemThreeText = (TextView)findViewById(R.id.promotion_tab_bar_item_three_text);
+		
+		//to handle the swipe action
+		promotionDetailContainer = findViewById(R.id.promotion_detail_fragment_container);
 		category = CONTENT[0];
 		setupTab(category);
 		setupItemOneClickListener();
 		setupItemThreeClickListener();
+		setupPromotionDetailContainerSwipeListener();
+		setupPromotionDetailContainerClickListener();
+	}
+	
+	/**
+	 * Set up the listener for when the promotion detail is swiped
+	 */
+	private void setupPromotionDetailContainerSwipeListener() {
+		promotionDetailContainer.setOnTouchListener(new View.OnTouchListener() {
+			private float downX, upX;
+			private static final int MIN_DISTANCE = 150;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            downX = event.getX();
+		            return false; // allow other events like Click to be processed
+		        case MotionEvent.ACTION_UP:
+		            upX = event.getX();	
+		            float deltaX = downX - upX;
+		            // horizontal swipe detection
+		            if (Math.abs(deltaX) > MIN_DISTANCE) {
+		                // left or right
+		            	if (deltaX < 0) {    
+		                    swipeLeftToRight();
+		                    return true;
+		                }
+		                if (deltaX > 0) {    
+		                    swipeRightToLeft();
+		                    return true;
+		                }
+		            }
+		            return false;
+	        }
+	        return false;
+			}
+		});
+	}
+	
+	/**
+	 * Set up the listener for when the event detail frame clicked
+	 */
+	private void setupPromotionDetailContainerClickListener() {
+		promotionDetailContainer.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if (promotionId != -1) {
+					Intent intent = new Intent(context, PromotionFullDetailActivity.class);	
+					intent.putExtra("promotionId", promotionId);
+					intent.putExtra("promotionTitle", promotionTitle);
+					intent.putExtra("promotionImg", promotionImg);
+					intent.putExtra("promotionDesc", promotionDesc);
+					intent.putExtra("promotionLongitude", promotionLongitude);
+					intent.putExtra("promotionLatitude", promotionLatitude);
+					intent.putExtra("promotionDistance", promotionDistance);
+					startActivity(intent);
+				}
+			}
+		});
 	}
 	
 	/**
@@ -101,9 +167,7 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 		itemOne.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				category = itemOneText.getText().toString();
-				setupTab(category);
-				listFragment.setSearchCategory(category);
+				swipeLeftToRight();
 			}
 		});
 	}
@@ -115,11 +179,27 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 		itemThree.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				category = itemThreeText.getText().toString();
-				setupTab(category);
-				listFragment.setSearchCategory(category);
+				swipeRightToLeft();
 			}
 		});
+	}
+	
+	/**
+	 * Handle when the detail view is swipe from right to left. Change the category
+	 */
+	private void swipeRightToLeft() {
+		category = itemThreeText.getText().toString();
+		setupTab(category);
+		listFragment.setSearchCategory(category);
+	}
+	
+	/**
+	 * Handle when the detail view is swipe from left to right. Change the category
+	 */
+	private void swipeLeftToRight() {
+		category = itemOneText.getText().toString();
+		setupTab(category);
+		listFragment.setSearchCategory(category);
 	}
 	
 	/**
@@ -221,18 +301,6 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 		promotionDistance = distance;	
 	}
 	
-	public void onClickPass() {
-		Intent intent = new Intent(context, PromotionFullDetailActivity.class);	
-		intent.putExtra("promotionId", promotionId);
-		intent.putExtra("promotionTitle", promotionTitle);
-		intent.putExtra("promotionImg", promotionImg);
-		intent.putExtra("promotionDesc", promotionDesc);
-		intent.putExtra("promotionLongitude", promotionLongitude);
-		intent.putExtra("promotionLatitude", promotionLatitude);
-		intent.putExtra("promotionDistance", promotionDistance);
-		startActivity(intent);
-	}
-
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		if (itemPosition == MenuSpinnerItems.HALF_MILES_ITEM) {
@@ -258,4 +326,11 @@ public class PromotionListAndDetailActivity extends SherlockFragmentActivity imp
 		return false;
 	}
 	
+	@Override
+	public void triggerSwipe(boolean fromLeftToRight) {
+		if (fromLeftToRight) {
+			swipeLeftToRight();
+		} else swipeRightToLeft();
+	}
+
 }

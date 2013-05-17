@@ -12,6 +12,8 @@
 	<string name="full_detail_view_time"><b><i>Time</i></b></string>
 	<string name="full_detail_view_from_time"><b><i>From: </i></b></string>
 	<string name="full_detail_view_to_time"><b><i>To: </i></b></string>
+	<string name="detail_view_from_time"><b><i>From: </i></b></string>
+	<string name="detail_view_to_time"><b><i>To: </i></b></string>
 	<string name="full_detail_view_distance"><b><i>Distance</i></b></string>
 	<string name="full_detail_view_full_description"><b><i>Full description</i></b></string>
 	<string name="full_detail_view_address"><b><i>Location</i></b></string>

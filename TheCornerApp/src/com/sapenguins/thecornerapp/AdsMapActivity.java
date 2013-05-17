@@ -1,12 +1,16 @@
 package com.sapenguins.thecornerapp;
 
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,16 +26,15 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.sapenguins.thecornerapp.constants.Global;
 import com.sapenguins.thecornerapp.constants.MenuSpinnerItems;
 import com.sapenguins.thecornerapp.constants.ServerVariables;
@@ -39,12 +42,18 @@ import com.sapenguins.thecornerapp.constants.SpecialCharacters;
 import com.sapenguins.thecornerapp.objects.BasicAd;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
 import com.sapenguins.thecornerapp.supports.GeoLocation;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
+import com.sapenguins.thecornerapp.supports.TimeFrame;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.DatePickerDialog.OnDateSetListener;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.location.Criteria;
@@ -52,13 +61,17 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class AdsMapActivity extends SherlockFragmentActivity implements ActionBar.OnNavigationListener{
+public class AdsMapActivity extends SherlockFragmentActivity implements ActionBar.OnNavigationListener, OnDateSetListener{
 	
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
@@ -71,8 +84,9 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 	LocationManager locationManager; 
 	String provider;
 	
-	DisplayImageOptions options;
+	ImageLoading imageLoading;
 	ImageLoader imageLoader;
+	DisplayImageOptions options;
 	
 	MenuItem homeItem;
 	MenuItem mapTypeItem;
@@ -94,12 +108,24 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 	boolean currentIsEvent; 
 	int mapType;
 	
+	//Time navigation
+	ImageView leftArrow;
+	ImageView rightArrow;
+	TextView dateOfAds;
+	String currentDate;
+	String displayDate;
+	float mapCurrentZoom;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
 		setContentView(R.layout.ads_map);
 		context = this;
+		
+		imageLoading = new ImageLoading(context);
+		imageLoader = imageLoading.getImageLoader();
+		options = imageLoading.getDisplayImagesOption();
 		
 		 //get last known location to calculate the bird-eye distance
 	    locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
@@ -114,6 +140,8 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 		currentIsEvent = true;
 		getBasicAdsFromDB(currentIsEvent);
 		setInfoWindowClickListener();
+		setMapOnLongClickListener();
+		setMapZoomIn();
 	}
 	
 	@Override
@@ -122,14 +150,87 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 	    EasyTracker.getInstance().activityStart(this); // Add this method.
 	}
 
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
+	}
 	
 	@Override
 	protected void onDestroy() {
-		EasyTracker.getInstance().activityStop(this);
+		//EasyTracker.getInstance().activityStop(this);
 		super.onDestroy();
 	}
-
-
+	
+	/**
+	 * Set map so that when it zoom in, then the view change to add as much tilt angle
+	 * as possible
+	 */
+	private void setMapZoomIn() {
+		googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {			
+			@Override
+			public void onCameraChange(CameraPosition position) {
+				if (position.zoom != mapCurrentZoom) {
+					mapCurrentZoom = position.zoom;
+					CameraPosition cameraPosition = new CameraPosition.Builder()
+						.target(position.target)
+						.zoom(mapCurrentZoom)
+						.bearing(position.bearing)
+						.tilt((float)89)
+						.build();
+					CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+					googleMap.moveCamera(cameraUpdate);
+				}
+			}
+		});
+	}
+	
+	/**
+	 * Set long click listener for the map. On long click, the map will
+	 * display the deals/events around that location
+	 */
+	private void setMapOnLongClickListener() {
+		googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {			
+			@Override
+			public void onMapLongClick(LatLng point) {
+				final LatLng mPoint = point;
+				String title = "Would you like to view the events around this area?";
+				if (!currentIsEvent) title = "Would you like to view deals around this area?";
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			    builder.setTitle(title)
+			    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+							adsLocation = mPoint;
+							getBasicAdsFromDB(currentIsEvent);
+						}
+					})
+					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+		    	AlertDialog alert = builder.create();
+		    	alert.show();	
+			}
+		});
+	}
+	
+	/**
+	 * Add circle to map to let the user know from which location are they viewing the deal
+	 */
+	private void addCircleOnMapAtCurrentViewLocation() {
+		// Instantiates a new CircleOptions object and defines the center and radius
+		CircleOptions circleOptions = new CircleOptions()
+		    .center(adsLocation)
+		    .radius(10)
+		    .fillColor(Color.RED)
+		    .strokeColor(Color.RED); // In meters
+		googleMap.addCircle(circleOptions);
+		
+	}
 
 	/**
 	 * Set the listener when the user click on the info window that was 
@@ -191,8 +292,98 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 		tabPromotion = findViewById(R.id.map_tab_bar_promotion);
 		promotionText = (TextView) findViewById(R.id.map_tab_bar_promotion_text);
 		promotionUnderline = findViewById(R.id.map_tab_bar_promotion_text_underline);
+		
+		//and the time navigation bar
+		leftArrow = (ImageView) findViewById(R.id.map_view_left_arrow_button);
+		rightArrow = (ImageView) findViewById(R.id.map_view_right_arrow_button);
+		dateOfAds = (TextView) findViewById(R.id.map_view_time_selection);
+		
+		//display the current date
+		currentDate = getCurrentDate();
+		displayDate = currentDate;
+		dateOfAds.setText(TimeFrame.getDisplayDate(currentDate));
+		
 		setTabEventClickListener();
 		setTabPromotionClickListener();
+		setLeftArrowClickListener();
+		setRightArrowClickListener();
+		setDisplayDateClickListener();
+	}
+	
+	/**
+	 * handle the action when the left arrow in the time navigation bar is clicked
+	 */
+	private void setLeftArrowClickListener() {
+		leftArrow.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (!currentDate.equals(displayDate)) {
+					displayDate = TimeFrame.getDatePriorToCurrentDisplayDate(displayDate);
+					if (displayDate.equals(currentDate))
+						leftArrow.setBackground(getResources().getDrawable(R.drawable.map_left_arrow_unselected));
+					dateOfAds.setText(TimeFrame.getDisplayDate(displayDate));
+					getBasicAdsFromDB(currentIsEvent);
+				}
+			}			
+		});
+	}
+	
+	/**
+	 * handle the action when the right arrow in the time navigation bar is clicked
+	 */
+	private void setRightArrowClickListener() {
+		rightArrow.setOnClickListener(new ImageView.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (currentDate.equals(displayDate)) 
+					leftArrow.setBackground(getResources().getDrawable(R.drawable.map_left_arrow));
+				displayDate = TimeFrame.getDateAfterCurrentDisplayDate(displayDate);
+				dateOfAds.setText(TimeFrame.getDisplayDate(displayDate));
+				getBasicAdsFromDB(currentIsEvent);
+			}			
+		});
+	}
+	
+	/**
+	 * Open a dialog for the user to choose the date once the date text field is clicked
+	 */
+	private void setDisplayDateClickListener() {
+		dateOfAds.setOnClickListener(new TextView.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				DialogFragment dateFragment = new DatePickerFragment();
+				dateFragment.show(getSupportFragmentManager(), "Date Picker");
+			}
+		});
+	}
+
+	/**
+	 * Create a new date picker fragment. 
+	 * Display this fragment whenever the date text field is selected
+	 */
+	public class DatePickerFragment extends DialogFragment{
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			// Create a new instance of DatePickerDialog and return it
+			// Month start with 0. Weird, but nothing we can do
+			String yMd[] = displayDate.split("-");
+			return new DatePickerDialog(getActivity(), (AdsMapActivity)getActivity(), 
+					Integer.valueOf(yMd[0]), Integer.valueOf(yMd[1]) -1, Integer.valueOf(yMd[2]));
+		}
+	}
+
+	/**
+	 * When the date is set, the map should change and the date in 
+	 * the time navigation bar should also change accordingly
+	 */
+	public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+		displayDate = TimeFrame.getDate(year, monthOfYear + 1, dayOfMonth);
+		if (displayDate.compareTo(currentDate) < 0) {
+			Toast.makeText(context, "The date " + displayDate + " is out of range", Toast.LENGTH_LONG).show();
+			displayDate = currentDate;
+		}
+		dateOfAds.setText(TimeFrame.getDisplayDate(displayDate));
+		getBasicAdsFromDB(currentIsEvent);
 	}
 	
 	/**
@@ -243,8 +434,15 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
         googleMap.setMyLocationEnabled(true);
         if (provider != null) {
 	        Location lastKnown = locationManager.getLastKnownLocation(provider);
-	        adsLocation = new LatLng(lastKnown.getLatitude(), lastKnown.getLongitude());	        
-	        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(adsLocation, 14);
+	        adsLocation = new LatLng(lastKnown.getLatitude(), lastKnown.getLongitude());
+	        CameraPosition cameraPosition = new CameraPosition.Builder()
+	        .target(adsLocation)
+	        .zoom((float) 14.5)
+	        .tilt((float) 67.5)
+	        .build();
+	        
+	        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+	        mapCurrentZoom = (float) 14.5;
 	        googleMap.moveCamera(cameraUpdate);
         }
     }
@@ -255,6 +453,14 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
      */
     private void moveMapToAds() {
     	 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(getLatLngBounds(distance), MAP_PADDING);
+	     googleMap.moveCamera(cameraUpdate);
+	     CameraPosition cameraPosition = new CameraPosition.Builder()
+	     	.target(adsLocation)
+	     	.tilt((float) 89)
+	     	.zoom(googleMap.getCameraPosition().zoom)
+	     	.bearing(googleMap.getCameraPosition().bearing)
+	     	.build();
+	     cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
 	     googleMap.moveCamera(cameraUpdate);
     }
     
@@ -444,6 +650,7 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 			@Override
 			protected void onPreExecute() {
 				googleMap.clear();
+				addCircleOnMapAtCurrentViewLocation();
 				GeoLocation currentLoc = GeoLocation.fromDegrees(adsLocation.latitude, adsLocation.longitude);
 				GeoLocation[] boundingCoors = currentLoc.boundingCoordinates(distance, Global.EARTH_RADIUS_IN_MILES);
 				minLng = boundingCoors[0].getLongitudeInDegrees();
@@ -456,8 +663,11 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 			protected String doInBackground(Void... params) {
 				try {
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-					if (mIsEvent) postParameters.add(new BasicNameValuePair("event", "map_view"));
-					else postParameters.add(new BasicNameValuePair("deal", "map_view"));
+					String dateAndTime = "\"" + currentDate + " " + getCurrentTime() + "\"";
+					if (displayDate.compareTo(currentDate) > 0) 
+						dateAndTime = "\"" + displayDate + " 00:00:00\""; 
+					if (mIsEvent) postParameters.add(new BasicNameValuePair("mapevent", dateAndTime));
+					else postParameters.add(new BasicNameValuePair("mapdeal", dateAndTime));
 					postParameters.add(new BasicNameValuePair("minLng", String.valueOf(minLng)));
 					postParameters.add(new BasicNameValuePair("maxLng", String.valueOf(maxLng)));
 					postParameters.add(new BasicNameValuePair("minLat", String.valueOf(minLat)));
@@ -500,21 +710,7 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
 		for (int i = 0; i < basicAdObjects.size(); i++) {//BasicAd basicAd : basicAdObjects) {
 			final int index = i;
 			final BasicAd myAd = basicAdObjects.get(i);
-			options = new DisplayImageOptions.Builder()
-			.showStubImage(R.drawable.no_photo_icon)
-			.showImageForEmptyUri(R.drawable.no_photo_icon)
-			.showImageOnFail(R.drawable.no_photo_icon)
-			.cacheOnDisc()
-			.displayer(new RoundedBitmapDisplayer(20))
-			.resetViewBeforeLoading()
-			.build();
-			imageLoader = ImageLoader.getInstance();
 			
-			ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-			.memoryCache(new WeakMemoryCache())
-			.denyCacheImageMultipleSizesInMemory()
-			.build();
-			imageLoader.init(config);
 			imageLoader.loadImage(myAd.getImageUrl(), options, new SimpleImageLoadingListener() {
 				final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
 
@@ -583,4 +779,24 @@ public class AdsMapActivity extends SherlockFragmentActivity implements ActionBa
         AlertDialog alert = builder.create();
         alert.show();
     }
+	
+	/**
+	 * Get the date in the given format 
+	 * @return the current date
+	 */
+	private String getCurrentDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+		return sdf.format(new Date());
+	}
+	
+	/**
+	 * Get the time in the given format 
+	 * @return the current date
+	 */
+	private String getCurrentTime() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
+		sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+		return sdf.format(new Date());
+	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/event_list_and_detail_vertical"
+    android:id="@+id/event_list_and_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -24,11 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
@@ -85,8 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
                 android:textSize="12sp" />
@@ -102,14 +102,21 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#a2a2ff" />
-    
-    <fragment
-        android:id="@+id/event_detail_fragment"
-        android:name="com.sapenguins.thecornerapp.EventDetailFragment"
+
+    <LinearLayout
+        android:id="@+id/event_detail_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="175dp"
         android:layout_weight="1"
-        tools:layout="@layout/event_detail" />
+        android:orientation="vertical" >
+
+        <fragment
+            android:id="@+id/event_detail_fragment"
+            android:name="com.sapenguins.thecornerapp.EventDetailFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/event_detail" />
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

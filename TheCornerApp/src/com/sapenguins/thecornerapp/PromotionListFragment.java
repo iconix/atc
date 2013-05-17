@@ -12,6 +12,7 @@ import com.sapenguins.thecornerapp.objects.BasicPromotion;
 import com.sapenguins.thecornerapp.objects.PromotionRowItem;
 import com.sapenguins.thecornerapp.supports.GeoLocation;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
 import com.sapenguins.thecornerapp.templates.PromotionListViewAdapter;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +35,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class PromotionListFragment extends ListFragment {
 
+	ImageLoading imageLoading;
 	ArrayList<BasicPromotion> basicPromotionObjects;
 	ArrayList<PromotionRowItem> promotionRowItems;
 	Context context;
@@ -41,12 +44,15 @@ public class PromotionListFragment extends ListFragment {
 	ListView listView;
 	String category;
 	double distance;
+	boolean isSwiping = false;
+	boolean isLongClick = false;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		context = getActivity();
 
+		imageLoading = new ImageLoading(context);
 		//add swipe gesture to our list view
 		listView = getListView();
 
@@ -63,41 +69,93 @@ public class PromotionListFragment extends ListFragment {
 
 		//add long click listener to list view
 		setListViewLongClickListener();
+		setListViewSwipeListener();
 	}
-
+	
+	/**
+	 * Set the list view swipe listener. If the swipe action is perform in the list view,
+	 * then move to the next category in the top view
+	 */
+	private void setListViewSwipeListener() {
+		listView.setOnTouchListener(new View.OnTouchListener() {
+			private float downX, upX;
+			private static final int MIN_DISTANCE = 150;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				isSwiping = true;
+				switch (event.getAction()) {
+			        case MotionEvent.ACTION_DOWN:
+			        	isLongClick = false;
+			            downX = event.getX();
+			            return false; // allow other events like Click to be processed
+			        case MotionEvent.ACTION_UP:
+			            upX = event.getX();	
+			            float deltaX = downX - upX;
+			            // horizontal swipe detection
+			            if (Math.abs(deltaX) > MIN_DISTANCE) {
+			                // left or right
+			            	if (deltaX < 0) { 
+			            		if (!isLongClick)
+			                    swipe(SWIPE_FROM_LEFT_TO_RIGHT);
+			                    isSwiping = true;
+			                    return true;
+			                }
+			                if (deltaX > 0) {   
+			                	if (!isLongClick)
+			                    swipe(SWIPE_FROM_RIGHT_TO_LEFT);
+			                    isSwiping = true;
+			                    return true;
+			                }
+			            } else {
+			            	isSwiping = false;
+			            	return false;
+			            }
+				}
+				isSwiping = false;
+				return false;
+			}
+		});
+	}
+	
 	/**
 	 * Set up the long click listener for the list view.
 	 * Also handle the case when the action is swipe
 	 */
 	private void setListViewLongClickListener() {
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
-				final int mposition = position;
-        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			    builder.setTitle("Would you like to get to this location?")
-			    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-							BasicPromotion promotion = basicPromotionObjects.get(mposition);
-							Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-									Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
-							startActivity(intent);
-						}
-					})
-					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-		    	AlertDialog alert = builder.create();
-		    	alert.show();	
-				return false;
-			}
-		});
+	    	@Override
+	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {   		
+        		if (!isSwiping) {
+		    		final int mposition = position;
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				    builder.setTitle("Would you like to get to this location?")
+				    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+					    		BasicPromotion promotion = basicPromotionObjects.get(mposition);
+					    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+					   	    		 Uri.parse("google.navigation:q=" + promotion.getLatitude() + "," + promotion.getLongitude()));
+					    		startActivity(intent);
+							}
+						})
+						.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+	
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+			    	AlertDialog alert = builder.create();
+			    	alert.show();	
+			    	isLongClick = true;
+		        	return false;
+        		}
+        		isLongClick = false;
+        		return true;
+	    	}
+	    });
 	} 
 	
 	/**
@@ -243,9 +301,9 @@ public class PromotionListFragment extends ListFragment {
 				String displayDistance = String.format("%.2f", distance) + " mi";
 				passDetail(promotion.getId(), promotion.getTitle(), promotion.getImageUrl(),
 						promotion.getShortDescription(), promotion.getLongitude(), promotion.getLatitude(), displayDistance);
-			}
+			} else passDetail(-1, null, null, null, 0, 0, null);
 		}
-		PromotionListViewAdapter adapter = new PromotionListViewAdapter(context, R.layout.promotion_list_row, promotionRowItems);
+		PromotionListViewAdapter adapter = new PromotionListViewAdapter(context, R.layout.promotion_list_row, promotionRowItems, imageLoading);
 		setListAdapter(adapter);
 	}
 
@@ -276,30 +334,40 @@ public class PromotionListFragment extends ListFragment {
 	}
 
 	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////
+	private static final boolean SWIPE_FROM_LEFT_TO_RIGHT = true;
+	private static final boolean SWIPE_FROM_RIGHT_TO_LEFT = false;
+	OnDetailPass detailPasser;
+	Swipe swiping;
 	/**
 	 * Interface to pass the information (coordinate) of selected item back to activity 
 	 * containing it
-	 * @author minhthaonguyen
 	 */
 	public interface OnDetailPass {
-		public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
+	    public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
 	}
-
-	OnDetailPass detailPasser;
-
 	/**
 	 * Passing the coordinate from the fragment to activity
 	 * @param coordinate
 	 */
-	public void passDetail(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
-		detailPasser.onDetailPass(dealId, title, imageUrl, desc, longitude, latitude, distance);
+	public void passDetail(int eventId, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
+	    detailPasser.onDetailPass(eventId, title, imageUrl, desc, longitude, latitude, distance);
 	}
-
+	
+	public interface Swipe{
+	    public void triggerSwipe(boolean fromLeftToRight);
+	}
+	
+	public void swipe(boolean fromLeftToRight) {
+		swiping.triggerSwipe(fromLeftToRight);
+	}
+	
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 		detailPasser = (OnDetailPass) activity;
+		swiping = (Swipe) activity;
 	}
 
 }

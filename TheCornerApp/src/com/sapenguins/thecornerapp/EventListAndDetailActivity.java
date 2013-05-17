@@ -8,22 +8,23 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.analytics.tracking.android.EasyTracker;
-import com.sapenguins.thecornerapp.EventDetailFragment.OnClickPass;
 import com.sapenguins.thecornerapp.EventListFragment.OnDetailPass;
+import com.sapenguins.thecornerapp.EventListFragment.Swipe;
 import com.sapenguins.thecornerapp.constants.MenuSpinnerItems;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class EventListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, OnClickPass, ActionBar.OnNavigationListener{
+public class EventListAndDetailActivity extends SherlockFragmentActivity implements OnDetailPass, Swipe, ActionBar.OnNavigationListener{
 
-	private static final String[] CONTENT = new String[] { "All", "Entertainment", "Service", "Organization", "Stanford"};
+	private static final String[] CONTENT = new String[] { "All", "Entertainment", "Education", "Service", "Organization"};
 	public static final int DEVICE_VERSION = android.os.Build.VERSION.SDK_INT;
 	public static final int HONEYCOMB_VERSION = android.os.Build.VERSION_CODES.HONEYCOMB;
 	
@@ -49,6 +50,8 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 	TextView itemTwoText;
 	View itemThree;
 	TextView itemThreeText;
+	
+	View eventDetailContainer;
 	
 	String category;
 	double distance;
@@ -87,10 +90,15 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 		itemOneText = (TextView)findViewById(R.id.event_tab_bar_item_one_text);
 		itemTwoText = (TextView)findViewById(R.id.event_tab_bar_item_two_text);
 		itemThreeText = (TextView)findViewById(R.id.event_tab_bar_item_three_text);
+		
+		//to handle the swipe action
+		eventDetailContainer = findViewById(R.id.event_detail_fragment_container);
 		category = CONTENT[0];
 		setupTab(category);
 		setupItemOneClickListener();
 		setupItemThreeClickListener();
+		setupEventDetailContainerSwipeListener();
+		setupEventDetailContainerClickListener();
 	}
 	
 	/**
@@ -100,9 +108,7 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 		itemOne.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				category = itemOneText.getText().toString();
-				setupTab(category);
-				listFragment.setSearchCategory(category);
+				swipeLeftToRight();
 			}
 		});
 	}
@@ -114,11 +120,27 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 		itemThree.setOnClickListener(new View.OnClickListener() {		
 			@Override
 			public void onClick(View v) {
-				category = itemThreeText.getText().toString();
-				setupTab(category);
-				listFragment.setSearchCategory(category);
+				swipeRightToLeft();
 			}
 		});
+	}
+	
+	/**
+	 * Handle when the detail view is swipe from right to left. Change the category
+	 */
+	private void swipeRightToLeft() {
+		category = itemThreeText.getText().toString();
+		setupTab(category);
+		listFragment.setSearchCategory(category);
+	}
+	
+	/**
+	 * Handle when the detail view is swipe from left to right. Change the category
+	 */
+	private void swipeLeftToRight() {
+		category = itemOneText.getText().toString();
+		setupTab(category);
+		listFragment.setSearchCategory(category);
 	}
 	
 	/**
@@ -141,6 +163,64 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Set up the listener for when the event detail is swiped
+	 */
+	private void setupEventDetailContainerSwipeListener() {
+		eventDetailContainer.setOnTouchListener(new View.OnTouchListener() {
+			private float downX, upX;
+			private static final int MIN_DISTANCE = 150;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				switch (event.getAction()) {
+		        case MotionEvent.ACTION_DOWN:
+		            downX = event.getX();
+		            return false; // allow other events like Click to be processed
+		        case MotionEvent.ACTION_UP:
+		            upX = event.getX();	
+		            float deltaX = downX - upX;
+		            // horizontal swipe detection
+		            if (Math.abs(deltaX) > MIN_DISTANCE) {
+		                // left or right
+		            	if (deltaX < 0) {    
+		                    swipeLeftToRight();
+		                    return true;
+		                }
+		                if (deltaX > 0) {    
+		                    swipeRightToLeft();
+		                    return true;
+		                }
+		            }
+		            return false;
+	        }
+	        return false;
+			}
+		});
+	}
+	
+	/**
+	 * Set up the listener for when the event detail frame clicked
+	 */
+	private void setupEventDetailContainerClickListener() {
+		eventDetailContainer.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if (eventId != -1) {
+					Intent intent = new Intent(context, EventFullDetailActivity.class);	
+					intent.putExtra("eventId", eventId);
+					intent.putExtra("eventTitle", eventTitle);
+					intent.putExtra("eventImg", eventImg);
+					intent.putExtra("eventDesc", eventDesc);
+					intent.putExtra("eventLongitude", eventLongitude);
+					intent.putExtra("eventLatitude", eventLatitude);
+					intent.putExtra("eventDistance", eventDistance);
+					startActivity(intent);
+				}
+			}
+		});
 	}
 	
 	/**
@@ -211,7 +291,7 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 	//---------------------------------------
 	//@Override
 	public void onDetailPass(int id, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
-		detailFragment.dislayEventDetail(eventId, title, imageUrl);
+		detailFragment.dislayEventDetail(id, title, imageUrl);
 		eventId = id;
 		eventTitle = title;
 		eventImg = imageUrl;
@@ -219,18 +299,6 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 		eventLongitude = longitude;
 		eventLatitude = latitude;
 		eventDistance = distance;	
-	}
-	
-	public void onClickPass() {
-		Intent intent = new Intent(context, EventFullDetailActivity.class);	
-		intent.putExtra("eventId", eventId);
-		intent.putExtra("eventTitle", eventTitle);
-		intent.putExtra("eventImg", eventImg);
-		intent.putExtra("eventDesc", eventDesc);
-		intent.putExtra("eventLongitude", eventLongitude);
-		intent.putExtra("eventLatitude", eventLatitude);
-		intent.putExtra("eventDistance", eventDistance);
-		startActivity(intent);
 	}
 
 	@Override
@@ -256,6 +324,13 @@ public class EventListAndDetailActivity extends SherlockFragmentActivity impleme
 			listFragment.setSearchDistance(distance);
 		}
 		return false;
+	}
+
+	@Override
+	public void triggerSwipe(boolean fromLeftToRight) {
+		if (fromLeftToRight) {
+			swipeLeftToRight();
+		} else swipeRightToLeft();
 	}
 
 }

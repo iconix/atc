@@ -12,6 +12,7 @@ import com.sapenguins.thecornerapp.objects.BasicEvent;
 import com.sapenguins.thecornerapp.objects.EventRowItem;
 import com.sapenguins.thecornerapp.supports.GeoLocation;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
 import com.sapenguins.thecornerapp.templates.EventListViewAdapter;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +35,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class EventListFragment extends ListFragment {
 	
+	ImageLoading imageLoading;
 	ArrayList<BasicEvent> basicEventObjects;
 	ArrayList<EventRowItem> eventRowItems;
 	Context context;
@@ -41,12 +44,15 @@ public class EventListFragment extends ListFragment {
 	ListView listView;
 	String category;
 	double distance;
+	boolean isSwiping = false;
+	boolean isLongClick = false;
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    context = getActivity();
 	    
+	    imageLoading = new ImageLoading(context);
 	    //add swipe gesture to our list view
 	    listView = getListView();
 	    
@@ -62,6 +68,53 @@ public class EventListFragment extends ListFragment {
         
 	    //add long click listener to list view
 	    setListViewLongClickListener();
+	    setListViewSwipeListener();
+	}
+	
+	/**
+	 * Set the list view swipe listener. If the swipe action is perform in the list view,
+	 * then move to the next category in the top view
+	 */
+	private void setListViewSwipeListener() {
+		listView.setOnTouchListener(new View.OnTouchListener() {
+			private float downX, upX;
+			private static final int MIN_DISTANCE = 150;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				isSwiping = true;
+				switch (event.getAction()) {
+			        case MotionEvent.ACTION_DOWN:
+			        	isLongClick = false;
+			            downX = event.getX();
+			            return false; // allow other events like Click to be processed
+			        case MotionEvent.ACTION_UP:
+			            upX = event.getX();	
+			            float deltaX = downX - upX;
+			            // horizontal swipe detection
+			            if (Math.abs(deltaX) > MIN_DISTANCE) {
+			                // left or right
+			            	if (deltaX < 0) { 
+			            		if (!isLongClick)
+			                    swipe(SWIPE_FROM_LEFT_TO_RIGHT);
+			                    isSwiping = true;
+			                    return true;
+			                }
+			                if (deltaX > 0) {   
+			                	if (!isLongClick)
+			                    swipe(SWIPE_FROM_RIGHT_TO_LEFT);
+			                    isSwiping = true;
+			                    return true;
+			                }
+			            } else {
+			            	isSwiping = false;
+			            	return false;
+			            }
+				}
+				isSwiping = false;
+				return false;
+			}
+		});
 	}
 	
 	/**
@@ -72,30 +125,34 @@ public class EventListFragment extends ListFragment {
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 	    	@Override
 	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {   		
-        		final int mposition = position;
-        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			    builder.setTitle("Would you like to get to this location?")
-			    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-				    		BasicEvent event = basicEventObjects.get(mposition);
-				    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-				   	    		 Uri.parse("google.navigation:q=" + event.getLatitude() + "," + event.getLongitude()));
-				    		startActivity(intent);
-						}
-					})
-					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-		    	AlertDialog alert = builder.create();
-		    	alert.show();	
-	        	
-	        	return false;
+        		if (!isSwiping) {
+		    		final int mposition = position;
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				    builder.setTitle("Would you like to get to this location?")
+				    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+					    		BasicEvent event = basicEventObjects.get(mposition);
+					    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+					   	    		 Uri.parse("google.navigation:q=" + event.getLatitude() + "," + event.getLongitude()));
+					    		startActivity(intent);
+							}
+						})
+						.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+	
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+			    	AlertDialog alert = builder.create();
+			    	alert.show();	
+			    	isLongClick = true;
+		        	return false;
+        		}
+        		isLongClick = false;
+        		return true;
 	    	}
 	    });
 	} 
@@ -130,28 +187,28 @@ public class EventListFragment extends ListFragment {
 	 * @param provider
 	 */
 	public void onProviderDisabled(String provider) {
-	        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-	        builder.setTitle("GPS is disable");
-	        builder.setCancelable(false);
-	        
-	        //take user to turn on the GPS setting
-	        builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
-	           public void onClick(DialogInterface dialog, int which) {
-	               Intent startGps = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-	               startActivity(startGps);
-	           } 
-	        });
-	        
-	        //close
-	        builder.setNegativeButton("Leave GPS off", new DialogInterface.OnClickListener() {
-	            public void onClick(DialogInterface dialog, int which) {
-	                dialog.cancel();
-	            }
-	        });
-	        
-	        //display the alert
-	        AlertDialog alert = builder.create();
-	        alert.show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("GPS is disable");
+        builder.setCancelable(false);
+        
+        //take user to turn on the GPS setting
+        builder.setPositiveButton("Enable GPS", new DialogInterface.OnClickListener() {
+           public void onClick(DialogInterface dialog, int which) {
+               Intent startGps = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+               startActivity(startGps);
+           } 
+        });
+        
+        //close
+        builder.setNegativeButton("Leave GPS off", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        
+        //display the alert
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 	
 	/**
@@ -242,9 +299,11 @@ public class EventListFragment extends ListFragment {
 		    	double distance = computeDistanceToEvent(event);
 		 		String displayDistance = String.format("%.2f", distance) + " mi";
 		    	passDetail(event.getId(), event.getTitle(), event.getImageUrl(), event.getShortDescription(), event.getLongitude(), event.getLatitude(), displayDistance);
-		    }
+		    }  else {
+				passDetail(-1, null, null, null, 0, 0, null);
+			}
 		}
-		EventListViewAdapter adapter = new EventListViewAdapter(context, R.layout.event_list_row, eventRowItems);
+		EventListViewAdapter adapter = new EventListViewAdapter(context, R.layout.event_list_row, eventRowItems, imageLoading);
 		setListAdapter(adapter);
 	}
 	
@@ -274,17 +333,18 @@ public class EventListFragment extends ListFragment {
 	}
 
 	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////
+	
+	private static final boolean SWIPE_FROM_LEFT_TO_RIGHT = true;
+	private static final boolean SWIPE_FROM_RIGHT_TO_LEFT = false;
+	OnDetailPass detailPasser;
+	Swipe swiping;
 	/**
 	 * Interface to pass the information (coordinate) of selected item back to activity 
 	 * containing it
-	 * @author minhthaonguyen
 	 */
 	public interface OnDetailPass {
 	    public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
 	}
-	
-	OnDetailPass detailPasser;
-	
 	/**
 	 * Passing the coordinate from the fragment to activity
 	 * @param coordinate
@@ -293,11 +353,21 @@ public class EventListFragment extends ListFragment {
 	    detailPasser.onDetailPass(eventId, title, imageUrl, desc, longitude, latitude, distance);
 	}
 	
+	public interface Swipe{
+	    public void triggerSwipe(boolean fromLeftToRight);
+	}
+	
+	public void swipe(boolean fromLeftToRight) {
+		swiping.triggerSwipe(fromLeftToRight);
+	}
+	
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 		detailPasser = (OnDetailPass) activity;
+		swiping = (Swipe) activity;
 	}
 	
 }

@@ -24,11 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -54,8 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
                 android:textSize="12sp"
@@ -85,8 +85,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:textColor="#666666"
                 android:textIsSelectable="false"
                 android:textSize="12sp" />
@@ -131,13 +131,19 @@
             android:layout_height="match_parent"
             android:background="#c8c8ff" />
 
-        <fragment
-             android:id="@+id/promotion_detail_fragment"
-        android:name="com.sapenguins.thecornerapp.PromotionDetailFragment"
+        <LinearLayout
+            android:id="@+id/promotion_detail_fragment_container"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            tools:layout="@layout/promotion_detail" />
+            android:layout_weight="1" >
+
+            <fragment
+                android:id="@+id/promotion_detail_fragment"
+                android:name="com.sapenguins.thecornerapp.PromotionDetailFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/promotion_detail" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

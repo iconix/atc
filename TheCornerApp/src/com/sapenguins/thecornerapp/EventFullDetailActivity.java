@@ -1,9 +1,6 @@
 package com.sapenguins.thecornerapp;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -16,25 +13,17 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.sapenguins.thecornerapp.constants.ServerVariables;
 import com.sapenguins.thecornerapp.constants.SpecialCharacters;
 import com.sapenguins.thecornerapp.datasources.AdsDataSource;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
 import com.sapenguins.thecornerapp.supports.TimeFrame;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -65,9 +54,7 @@ public class EventFullDetailActivity extends FragmentActivity{
 	String eventImg;
 	int eventId;
 	
-	DisplayImageOptions options;
-	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	ImageLoader imageLoader;
+	ImageLoading imageLoading;
 	
 	MenuItem favorite;
 	AdsDataSource dataSource;
@@ -78,6 +65,7 @@ public class EventFullDetailActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.event_full_detail);
 		context = this;
+		imageLoading = new ImageLoading(this);
 		dataSource = new AdsDataSource(this);
 		dataSource.open();
 		initViewComponents();
@@ -247,42 +235,7 @@ public class EventFullDetailActivity extends FragmentActivity{
 			.position(adLocation)
 			.draggable(false)
 			.icon(BitmapDescriptorFactory.defaultMarker()));
-		
-		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.no_photo_icon)
-		.showImageForEmptyUri(R.drawable.no_photo_icon)
-		.showImageOnFail(R.drawable.no_photo_icon)
-		.cacheOnDisc()
-		.displayer(new RoundedBitmapDisplayer(20))
-		.resetViewBeforeLoading()
-		.build();
-		imageLoader = ImageLoader.getInstance();
-		
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-		.memoryCache(new WeakMemoryCache())
-		.denyCacheImageMultipleSizesInMemory()
-		.build();
-		
-		imageLoader.init(config);
-		
-		imageLoader.displayImage(mImgSrc, img, options, animateFirstListener);
-	}
 	
-	
-	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
-
-		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
-
-		@Override
-		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-			if (loadedImage != null) {
-				ImageView imageView = (ImageView) view;
-				boolean firstDisplay = !displayedImages.contains(imageUri);
-				if (firstDisplay) {
-					FadeInBitmapDisplayer.animate(imageView, 500);
-					displayedImages.add(imageUri);
-				}
-			}
-		}
+		imageLoading.displayImage(mImgSrc, img);
 	}
 }

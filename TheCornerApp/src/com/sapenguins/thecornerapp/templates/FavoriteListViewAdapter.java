@@ -1,23 +1,13 @@
 package com.sapenguins.thecornerapp.templates;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageLoadingListener;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.sapenguins.thecornerapp.R;
 import com.sapenguins.thecornerapp.objects.FavoriteRowItem;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,30 +21,13 @@ import android.text.TextUtils;
 public class FavoriteListViewAdapter extends ArrayAdapter<FavoriteRowItem>{
 
 	Context context;
-	DisplayImageOptions options;
-	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
-	ImageLoader imageLoader;
+	ImageLoading imageLoading; 
 	
 	public FavoriteListViewAdapter(Context context, int textViewResourceId,
-			List<FavoriteRowItem> objects) {
+			List<FavoriteRowItem> objects, ImageLoading imageLoading) {
 		super(context, textViewResourceId, objects);
 		this.context = context;
-		options = new DisplayImageOptions.Builder()
-		.showStubImage(R.drawable.no_photo_icon)
-		.showImageForEmptyUri(R.drawable.no_photo_icon)
-		.showImageOnFail(R.drawable.no_photo_icon)
-		.cacheOnDisc()
-		.displayer(new RoundedBitmapDisplayer(20))
-		.resetViewBeforeLoading()
-		.build();
-		imageLoader = ImageLoader.getInstance();
-		
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-		.memoryCache(new WeakMemoryCache())
-		.denyCacheImageMultipleSizesInMemory()
-		.build();
-		
-		imageLoader.init(config);
+		this.imageLoading = imageLoading;
 	}
 
 	/**
@@ -94,26 +67,8 @@ public class FavoriteListViewAdapter extends ArrayAdapter<FavoriteRowItem>{
 		
 		holder.distance.setText(favoriteRowItem.getDistance());
 		
-		imageLoader.displayImage(favoriteRowItem.getImageUrl(), holder.imageIcon, options, animateFirstListener);
+		imageLoading.displayImage(favoriteRowItem.getImageUrl(), holder.imageIcon);
 		
 		return convertView;
-	}
-	
-	
-	private static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
-
-		static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
-
-		@Override
-		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-			if (loadedImage != null) {
-				ImageView imageView = (ImageView) view;
-				boolean firstDisplay = !displayedImages.contains(imageUri);
-				if (firstDisplay) {
-					FadeInBitmapDisplayer.animate(imageView, 500);
-					displayedImages.add(imageUri);
-				}
-			}
-		}
 	}
 }

@@ -12,6 +12,7 @@ import com.sapenguins.thecornerapp.datasources.AdsDataSource;
 import com.sapenguins.thecornerapp.objects.BasicFavorite;
 import com.sapenguins.thecornerapp.objects.FavoriteRowItem;
 import com.sapenguins.thecornerapp.supports.AppHttpClient;
+import com.sapenguins.thecornerapp.supports.ImageLoading;
 import com.sapenguins.thecornerapp.templates.FavoriteListViewAdapter;
 
 import android.app.Activity;
@@ -26,6 +27,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +35,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class FavoriteListFragment extends ListFragment {
 
+	ImageLoading imageLoading;
 	ArrayList<BasicFavorite> basicFavoriteObjects;
 	ArrayList<FavoriteRowItem> favoriteRowItems;
 	Context context;
@@ -42,12 +45,17 @@ public class FavoriteListFragment extends ListFragment {
 	
 	String favoriteIds;
 	AdsDataSource dataSource;
+	
+	boolean isSwiping = false;
+	boolean isLongClick = false;
 
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		context = getActivity();
 
+		imageLoading = new ImageLoading(context);
 		//add swipe gesture to our list view
 		listView = getListView();
 
@@ -64,48 +72,94 @@ public class FavoriteListFragment extends ListFragment {
 
 		//add long click listener to list view
 		setListViewLongClickListener();
+		setListViewSwipeListener();
 	}
 	
 	@Override
-	public void onDestroyView() {
+	public void onDestroy() {
 		dataSource.close();
-		super.onDestroyView();
+		super.onDestroy();
 	}
 
+
+	/**
+	 * Set the list view swipe listener. If the swipe action is perform in the list view,
+	 * then move to the next category in the top view
+	 */
+	private void setListViewSwipeListener() {
+		listView.setOnTouchListener(new View.OnTouchListener() {
+			private float downX, upX;
+			private static final int MIN_DISTANCE = 150;
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				isSwiping = true;
+				switch (event.getAction()) {
+			        case MotionEvent.ACTION_DOWN:
+			        	isLongClick = false;
+			            downX = event.getX();
+			            return false; // allow other events like Click to be processed
+			        case MotionEvent.ACTION_UP:
+			            upX = event.getX();	
+			            float deltaX = downX - upX;
+			            // horizontal swipe detection
+			            if (Math.abs(deltaX) > MIN_DISTANCE) {
+		            		if (!isLongClick)
+		            			swipe();
+		                    isSwiping = true;
+		                    return true;
+			               
+			            } else {
+			            	isSwiping = false;
+			            	return false;
+			            }
+				}
+				isSwiping = false;
+				return false;
+			}
+		});
+	}
+	
 	/**
 	 * Set up the long click listener for the list view.
 	 * Also handle the case when the action is swipe
 	 */
 	private void setListViewLongClickListener() {
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {
-				final int mposition = position;
-        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-			    builder.setTitle("Would you like to get to this location?")
-			    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-							BasicFavorite favorite = basicFavoriteObjects.get(mposition);
-							Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-									Uri.parse("google.navigation:q=" + favorite.getLatitude() + "," + favorite.getLongitude()));
-							startActivity(intent);
-						}
-					})
-					.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.cancel();
-						}
-					});
-		    	AlertDialog alert = builder.create();
-		    	alert.show();	
-				return false;
-			}
-		});
+	    	@Override
+	    	public boolean onItemLongClick(AdapterView<?> l, View v, int position, long id) {   		
+        		if (!isSwiping) {
+		    		final int mposition = position;
+	        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				    builder.setTitle("Would you like to get to this location?")
+				    	.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+					    		BasicFavorite favorite = basicFavoriteObjects.get(mposition);
+					    		Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+					   	    		 Uri.parse("google.navigation:q=" + favorite.getLatitude() + "," + favorite.getLongitude()));
+					    		startActivity(intent);
+							}
+						})
+						.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+	
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.cancel();
+							}
+						});
+			    	AlertDialog alert = builder.create();
+			    	alert.show();	
+			    	isLongClick = true;
+		        	return false;
+        		}
+        		isLongClick = false;
+        		return true;
+	    	}
+	    });
 	} 
+	
 	
 	/**
 	 * Execute to attempt to connect to the provider
@@ -149,8 +203,11 @@ public class FavoriteListFragment extends ListFragment {
 			protected String doInBackground(Void... params) {
 				try {
 					ArrayList<NameValuePair> postParameters = new ArrayList<NameValuePair>();
-					postParameters.add(new BasicNameValuePair("favorite", String.valueOf(isOnGoing)));
+					if (isOnGoing)
+						postParameters.add(new BasicNameValuePair("favorite", "isOnGoing"));
+					else postParameters.add(new BasicNameValuePair("favorite", "isNotOnGoing"));
 					postParameters.add(new BasicNameValuePair("id", favoriteIds));
+					//Log.i("FAVORITE", favoriteIds);
 					return AppHttpClient.executeHttpPostWithReturnValue(ServerVariables.URL, postParameters);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -163,6 +220,7 @@ public class FavoriteListFragment extends ListFragment {
 				if (result != null) {
 					String[] myFavorites = result.split(SpecialCharacters.endLn);
 					for (String favorite : myFavorites) {
+						//Log.i("MY_FAVORITE", favorite);
 						String[] favoriteDetails = favorite.split(SpecialCharacters.delimiter);
 						//check if the favorite detail is valid
 						if (favoriteDetails.length == 6) {
@@ -206,9 +264,11 @@ public class FavoriteListFragment extends ListFragment {
 				String displayDistance = String.format("%.2f", distance) + " mi";
 				passDetail(favorite.getId(), favorite.getTitle(), favorite.getImageUrl(),
 						favorite.getShortDescription(), favorite.getLongitude(), favorite.getLatitude(), displayDistance);
+			} else {
+				passDetail(-1, null, null, null, 0, 0, null);
 			}
 		}
-		FavoriteListViewAdapter adapter = new FavoriteListViewAdapter(context, R.layout.favorite_list_row, favoriteRowItems);
+		FavoriteListViewAdapter adapter = new FavoriteListViewAdapter(context, R.layout.favorite_list_row, favoriteRowItems, imageLoading);
 		setListAdapter(adapter);
 	}
 
@@ -239,30 +299,40 @@ public class FavoriteListFragment extends ListFragment {
 	}
 
 	//////////INTERACTION BETWEEN FRAGMENT AND ACTIVITY//////////////
+
+	OnDetailPass detailPasser;
+	Swipe swiping;
 	/**
 	 * Interface to pass the information (coordinate) of selected item back to activity 
 	 * containing it
-	 * @author minhthaonguyen
 	 */
 	public interface OnDetailPass {
-		public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
+	    public void onDetailPass(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance);
 	}
-
-	OnDetailPass detailPasser;
-
 	/**
 	 * Passing the coordinate from the fragment to activity
 	 * @param coordinate
 	 */
-	public void passDetail(int dealId, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
-		detailPasser.onDetailPass(dealId, title, imageUrl, desc, longitude, latitude, distance);
+	public void passDetail(int eventId, String title, String imageUrl, String desc, double longitude, double latitude, String distance) {
+	    detailPasser.onDetailPass(eventId, title, imageUrl, desc, longitude, latitude, distance);
 	}
-
+	
+	public interface Swipe{
+	    public void triggerSwipe();
+	}
+	
+	public void swipe() {
+		swiping.triggerSwipe();
+	}
+	
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 		detailPasser = (OnDetailPass) activity;
+		swiping = (Swipe) activity;
 	}
+	
 
 }

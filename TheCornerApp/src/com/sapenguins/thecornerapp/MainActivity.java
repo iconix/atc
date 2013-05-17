@@ -20,10 +20,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_activity);
 		context = this;
+		//SQLTablesHelper tableHelper = new SQLTablesHelper(this);  //need for when table change
+		//tableHelper.onCreate(tableHelper.getReadableDatabase());
 		sendGpsLocationService();
 		Intent intent = new Intent(context, HomeActivity.class);
 		startActivity(intent);
-		EasyTracker.getInstance().activityStart(this);
 		finish();
 	}
 
@@ -32,6 +33,12 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	
+	@Override
+	protected void onStart() {
+		EasyTracker.getInstance().activityStart(this);
+		super.onStart();
 	}
 	
 	@Override
