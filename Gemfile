@@ -12,6 +12,7 @@ gem "right_aws", "~> 3.0.5"
 gem "aws-sdk"
 gem 'geocoder'
 gem 'xml-simple', :require => 'xmlsimple'
+gem 'nokogiri'
 
 group :development, :test do
   gem 'sqlite3'
