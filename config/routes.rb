@@ -10,6 +10,7 @@ BusinessApp::Application.routes.draw do
 
  	match 'businesses/:id/stats' => 'businesses#stats', :as => :stats_business
  	# http://stackoverflow.com/questions/6759831/rails-3-how-to-create-a-path
+  match 'businesses/:id/stats_update' => 'businesses#stats_update', as: :stats_update_business
  	
   match '/signup',  to: 'businesses#new'
 

@@ -1,4 +1,10 @@
 <% content_for :head do %>
+	<%= stylesheet_link_tag "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" %>
+	<%= javascript_include_tag "jquery-1.9.1.min" %>
+    <%= javascript_include_tag "jquery-ui.min" %>
+    <%= javascript_include_tag "jquery-ui-timepicker-addon" %>
+    <%= javascript_include_tag "jquery-ui-sliderAccess" %>
+
   <script type="text/javascript">
 		$(function(){
 			$('#deal_endDate').datetimepicker( {stepMinute: 10} );

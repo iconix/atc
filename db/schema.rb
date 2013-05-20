@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508182512) do
+ActiveRecord::Schema.define(:version => 20130519210711) do
 
   create_table "businesses", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20130508182512) do
     t.string   "imageURL"
     t.text     "shortDescription"
     t.text     "longDescription"
+    t.time     "tuesayCloseTime"
     t.decimal  "latitude",           :precision => 15, :scale => 10
     t.decimal  "longitude",          :precision => 15, :scale => 10
     t.text     "address"
@@ -37,6 +38,14 @@ ActiveRecord::Schema.define(:version => 20130508182512) do
 
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true
   add_index "businesses", ["remember_token"], :name => "index_businesses_on_remember_token"
+
+  create_table "coordinates", :force => true do |t|
+    t.decimal  "latitude",   :precision => 15, :scale => 10
+    t.decimal  "longitude",  :precision => 15, :scale => 10
+    t.datetime "time"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
+  end
 
   create_table "deals", :force => true do |t|
     t.integer  "business_id"
@@ -59,6 +68,6 @@ ActiveRecord::Schema.define(:version => 20130508182512) do
     t.datetime "image_updated_at"
   end
 
-  add_index "deals", ["business_id", "created_at"], :name => "index_deals_on_business_id_and_created_at"
+  add_index "deals", ["business_id", "created_at"], :name => "index_deals"
 
 end

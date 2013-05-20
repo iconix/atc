@@ -7,8 +7,40 @@ class BusinessesController < ApplicationController
 
 	def stats
 		@business = Business.find(params[:id])
-		@deals = @business.deals
+
+    # heatmap manipulations
+    @start_date = Coordinate.minimum("time").getlocal.strftime("%m/%d/%Y %I:%M %p")
+    @end_date = Coordinate.maximum("time").getlocal.strftime("%m/%d/%Y %I:%M %p")
+
+		raw_data = JSON.parse(Coordinate.select("latitude, longitude").to_json)
+    raw_data.each do |d|
+      d["count"] = "1"
+    end
+    # formatting for javascript
+    @data = raw_data.to_json.gsub('"', '').gsub('latitude', 'lat').gsub('longitude', 'lng')
+    @size = raw_data.count
 	end
+
+  def stats_update
+    @business = Business.find(params[:id])
+    @start_date = params[:time][:start]
+    @end_date = params[:time][:end]
+
+    zone = Time.zone.formatted_offset(colon=false)
+    start_strp = DateTime.strptime(params[:time][:start] + zone, '%m/%d/%Y %I:%M %p%Z').utc.to_s(:db)
+    end_strp = DateTime.strptime(params[:time][:end] + zone, '%m/%d/%Y %I:%M %p%Z').utc.to_s(:db)
+
+    raw_data = JSON.parse(Coordinate.select("latitude, longitude").
+      where("time >= '#{start_strp}' and time <= '#{end_strp}'").to_json)
+    raw_data.each do |d|
+      d["count"] = "1"
+    end
+    # formatting for javascript
+    @data = raw_data.to_json.gsub('"', '').gsub('latitude', 'lat').gsub('longitude', 'lng')
+    @size = raw_data.count
+
+    render 'stats'
+  end
 
   def show
     @business = Business.find(params[:id])

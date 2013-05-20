@@ -4,16 +4,9 @@
     <title><%= full_title(yield(:title)) %></title>
 
 		<%= stylesheet_link_tag    "application", media: "all" %>
-    <%= javascript_include_tag "application" %>
     <%= favicon_link_tag 'favicon.png?v=2' %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>
-    
-    <%= stylesheet_link_tag "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" %>
-		<%= javascript_include_tag "jquery-1.9.1.min" %>
-    <%= javascript_include_tag "jquery-ui.min" %>
-    <%= javascript_include_tag "jquery-ui-timepicker-addon" %>
-    <%= javascript_include_tag "jquery-ui-sliderAccess" %>
     
     <%= yield :head %>
   </head>
