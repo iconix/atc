@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20130519210711) do
   add_index "businesses", ["email"], :name => "index_businesses_on_email", :unique => true
   add_index "businesses", ["remember_token"], :name => "index_businesses_on_remember_token"
 
-  create_table "coordinates", :force => true do |t|
+  create_table "coordinate", :force => true do |t|
     t.decimal  "latitude",   :precision => 15, :scale => 10
     t.decimal  "longitude",  :precision => 15, :scale => 10
     t.datetime "time"
