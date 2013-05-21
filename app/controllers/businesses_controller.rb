@@ -26,7 +26,7 @@ class BusinessesController < ApplicationController
     @start_date = params[:time][:start]
     @end_date = params[:time][:end]
 
-    zone = Time.zone.formatted_offset(colon=false)
+    zone = Time.zone.now.formatted_offset(colon=false)
     start_strp = DateTime.strptime(params[:time][:start] + zone, '%m/%d/%Y %I:%M %p%Z').utc.to_s(:db)
     end_strp = DateTime.strptime(params[:time][:end] + zone, '%m/%d/%Y %I:%M %p%Z').utc.to_s(:db)
 
