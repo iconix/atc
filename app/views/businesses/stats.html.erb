@@ -1,8 +1,9 @@
 <% content_for :head do %>
   	<%= javascript_include_tag "http://maps.google.com/maps/api/js?sensor=false" %>
   	<%= stylesheet_link_tag "bootstrap-datetimepicker.min.css" %>
-  	<%= javascript_include_tag "bootstrap.min.js" %>
   	<%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
+	<%= javascript_include_tag "stats/heatmap.js" %>
+	<%= javascript_include_tag "stats/heatmap-gmaps.js" %>
 <% end %>
 
 <% provide(:title, "Customer Statistics") %>
@@ -68,9 +69,6 @@
 			<% end %>
 	    </div>
 		<!-- /container -->
-		<%= javascript_include_tag "stats/heatmap.js" %>
-		<%= javascript_include_tag "stats/heatmap-gmaps.js" %>
-
 		 <script type="text/javascript">
 	        !function($){
 	            $(function(){

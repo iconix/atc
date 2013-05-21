@@ -3,52 +3,28 @@
 
 <div class="container jumbotron">
   <div class="row">
-    <div class="span6">
-			<%= form_for(@business) do |f| %>
-				<%= render 'shared/business_error_messages' %>
+	    <div class="span6">
+				<%= form_for(@business) do |f| %>
+					<%= render 'shared/business_error_messages' %>
 
-				<%= f.label :name %>
-				<%= f.text_field :name %>
+					<%= f.label :name, "Name or Organization" %>
+					<%= f.text_field :name %>
 
-				<%= f.label :email %>
-				<%= f.text_field :email %>
+					<%= f.label :email %>
+					<%= f.text_field :email %>
 
-				<%= f.label :password %>
-				<%= f.password_field :password %>
+					<%= f.label :password %>
+					<%= f.password_field :password %>
 
-				<%= f.label :password_confirmation, "Confirm Password" %>
-				<%= f.password_field :password_confirmation %>
+					<%= f.label :password_confirmation, "Confirm Password" %>
+					<%= f.password_field :password_confirmation %>
 
-				<br>
+					<br>
 
-				<%= f.submit "Create my account", class: "btn btn-primary" %>
-			<% end %>
-			<p>Already a user? <%= link_to "Sign in now!", signin_path %></p>
-    </div>
-  	<div class="span6">
-  		<h1>Business</h1>
-  		<!--
-  		<h4>Free 30-day trial</h4>
-  		<p>$10/month after trial</p>
-  		-->
-  		<ul>
-  			<li>Unlimited deals listing</li>
-  			<li>Unlimited events listing</li>
-  			<li>Smart dashboard analytics
-  				<ul>
-						<li>Number of clicks</li>
-						<li>Number of views</li>
-						<li>Customers feedback</li>
-					</ul>
-  			</li>
-  		</ul>
-  		<br>
-  		<h4> Never miss any potential customer </h4>
-  		<img src="/assets/potential_mobile_customer.jpg" width="300px">
-		</div>
-		<!--div class="span4">
-			<h1> Never miss any potential customers </h1>
-			<img src="/assets/potential_mobile_customer.jpg" width="300px">
-		</div-->
+					<%= f.submit "Create my account", class: "btn btn-primary" %>
+				<% end %>
+				<p>Already a user? <%= link_to "Sign in now!", signin_path %></p>
+	    </div>
+	  	<%= render 'shared/summary_messages' %>
 	</div>
 </div>

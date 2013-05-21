@@ -19,24 +19,6 @@
 			<% end %>
 			<p>New user? <%= link_to "Sign up now!", signup_path %></p>
 		</div>
-    <div class="span6">
-    	<h1>Business</h1>
-    	<ul>
-  			<li>Create deals</li>
-  			<li>Create events</li>
-  			<li>View smart dashboard analytics
-  				<ul>
-						<li>Number of clicks</li>
-						<li>Number of views</li>
-						<li>Customers feedback</li>
-					</ul>
-  			</li>
-  		</ul>
-    	<!--
-      <img src="/assets/logo_iphone.png" alt="logo", width="200" height="200">
-      <p class="lead">Connect with your customers and the
-        world around you on Around the Corner.</p>
-      -->
-    </div>
+    <%= render 'shared/summary_messages' %>
   </div>
 </div>
