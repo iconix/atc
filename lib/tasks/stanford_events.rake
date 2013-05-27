@@ -69,7 +69,7 @@ SHORT_DESC_WORD_COUNT = 30
 
 # events of a specific date
 def events_by_date(date)
-  date_url = date.strftime("%Y/%b/%e")
+  date_url = date.strftime("%Y/%B/%-d")
   puts "events_by_date: #{date_url}"
   base_url = 'http://events.stanford.edu'
   page_url = base_url + '/' + date_url

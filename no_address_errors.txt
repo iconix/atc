@@ -1,2 +1,0 @@
-{"title"=>["CCRMA Spring Concert"], "link"=>["http://events.stanford.edu/events/375/37567"], "guid"=>["http://events.stanford.edu/events/375/37567"], "description"=>["\nDate:  Tuesday, May 28, 2013.  8:00 PM.<br/>\n\nLocation: Bing Concert Hall Studio<br/><br/>\n\nThis concert program will feature live and multi-channel works including final projects from CCRMA students in Music 220c, 223M, and 222 classes."], "pubDate"=>["Thu, 16 May 2013 11:23:26 PDT"]}
-
