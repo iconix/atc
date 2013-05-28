@@ -71,6 +71,7 @@ GEM
     ffi (1.8.1)
     formatador (0.2.4)
     geocoder (1.1.8)
+    google-analytics-rails (0.0.4)
     guard (1.7.0)
       formatador (>= 0.2.4)
       listen (>= 0.6.0)
@@ -207,6 +208,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.2)
   faker (= 1.0.1)
   geocoder
+  google-analytics-rails
   guard-rspec (= 1.2.1)
   guard-spork (= 1.2.0)
   jquery-rails

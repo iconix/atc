@@ -13,6 +13,7 @@ gem "aws-sdk"
 gem 'geocoder'
 gem 'xml-simple', :require => 'xmlsimple'
 gem 'nokogiri'
+gem 'google-analytics-rails'
 
 group :development, :test do
   gem 'sqlite3'
