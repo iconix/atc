@@ -1,3 +1,8 @@
+<% content_for :head do %>
+	<%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true" %>
+	<%= javascript_include_tag "google-places-autocomplete.js" %>
+<% end %>
+
 <% provide(:title, "Edit Profile") %> 
 <% provide(:subtitle, "Update Your Profile") %>
 
@@ -19,8 +24,13 @@
 		    <%= f.password_field :password_confirmation %>
 			</div>
 			<div class="span6">
-				<%= f.label :address %>
-				<%= f.text_area :address, :rows => "2" %>
+				<div id='address_input'>
+			    	<%= f.label :address, "Address" %>
+					<%= f.hidden_field :address %>
+					<%= text_field_tag :location_search, nil, type: "text", value: @business.address, placeholder: "Start typing a place name..." %>
+			    </div>
+
+			    <div id='map-canvas'></div>
 				
 				<%= f.label :"Phone Number" %>
 				<%= f.text_field :phoneNumber %>

@@ -1,31 +1,23 @@
 <% content_for :head do %>
-	<%= stylesheet_link_tag "http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" %>
-    <%= javascript_include_tag "jquery-ui.min" %>
-    <%= javascript_include_tag "jquery-ui-timepicker-addon" %>
-    <%= javascript_include_tag "jquery-ui-sliderAccess" %>
-
-  <script type="text/javascript">
-		$(function(){
-			$('#deal_endDate').datetimepicker( {stepMinute: 10} );
-		});
-	</script>
+	<%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true" %>
+	<%= javascript_include_tag "google-places-autocomplete.js" %>
+	<%= stylesheet_link_tag "bootstrap-datetimepicker.min.css" %>
+  <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
 	
-	<script type="text/javascript">
-	  $(function(){
-			$('#deal_startDate').datetimepicker( {stepMinute: 10} );
-		});
-  </script>
-  
   <script type="text/javascript">
-	  $(function(){
-      $("form").submit(function() {
-        $(this).submit(function() {
-            return false;
-        });
-        return true;
-      });
-    });
-  </script>
+	  	$(function() {
+	    	$('#start').datetimepicker({
+	      		language: 'en',
+	      		pick12HourFormat: true,
+	      		pickSeconds: false
+	    	});
+	    	$('#end').datetimepicker({
+	    		language: 'en',
+	      		pick12HourFormat: true,
+	      		pickSeconds: false
+	    	})
+	  	});
+	</script>
 <% end %>
 
 <% provide(:title, "New Promotion") %> 
@@ -52,23 +44,31 @@
 		    <%= f.text_field :tags %>
 		  </div>
 			<div class="span6">
-        <%= f.label :startDate, "Start Date and time (required)" %>
-		    <%= f.text_field :startDate, :name => "deal[startDate]", :id => "deal_startDate" %>
-
-		    <%= f.label :endDate, "End Date and time (required)" %>
-		    <%= f.text_field :endDate, :name => "deal[endDate]", :id => "deal_endDate" %>
-
-        <% if false %>
-		    <%= f.label :startDate, "Start Date and time (required)" %>
-		    <%= f.text_field :startDate, :type => "datetime-local" %>
-
-		    <%= f.label :endDate, "End Date and time (required)" %>
-		    <%= f.text_field :endDate, :type => "datetime-local" %>
-		    <% end %>
+				<div id="start" class="input-append">
+		    	<%= f.label :startDate, "Start Date and time (required)" %>
+		    	<input id="deal_startDate" name="deal[startDate]" data-format="MM/dd/yyyy HH:mm PP" type="text"></input>
+		    	<span class="add-on">
+			      	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+			      	</i>
+		    	</span>
+		  	</div>
+		  	<div id="end" class="input-append">
+		    	<%= f.label :endDate, "End Date and time (required)" %>
+		    	<input id="deal_endDate" name="deal[endDate]" data-format="MM/dd/yyyy HH:mm PP" type="text"></input>
+		    	<span class="add-on">
+			      	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+			      	</i>
+		    	</span>
+		  	</div>
 		    <br>
 
-				<%= f.label :address %>
-				<%= f.text_area :address, :rows => "3", :value => current_business.address %>
+		    <div id='address_input'>
+		    	<%= f.label :address, "Address (required)" %>
+					<%= f.hidden_field :address %>
+					<%= text_field_tag :location_search, nil, type: "text", value: current_business.address, placeholder: "Start typing a place name..." %>
+		    </div>
+
+		    <div id='map-canvas'></div>
 
 		    <%= f.label :image, "Upload Image" %>
 		    <%= f.file_field :image %>
