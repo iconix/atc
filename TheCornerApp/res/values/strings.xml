@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Around The Corner</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="menu_bar_home">Home</string>
+	<string name="menu_bar_map_type">Map Type</string>
+	<string name="menu_sub_favorite">Add to favorite</string>
+	<string name="ad_image_description">advertisement image</string>
+	<string name="ad_list_arrow">arrow icon</string>
+	<string name="full_detail_view_description"><b><i>Description</i></b></string>
+	<string name="full_detail_view_time"><b><i>Time</i></b></string>
+	<string name="full_detail_view_from_time"><b><i>From: </i></b></string>
+	<string name="full_detail_view_to_time"><b><i>To: </i></b></string>
+	<string name="detail_view_from_time"><b><i>From: </i></b></string>
+	<string name="detail_view_to_time"><b><i>To: </i></b></string>
+	<string name="full_detail_view_distance"><b><i>Distance</i></b></string>
+	<string name="full_detail_view_full_description"><b><i>Full description</i></b></string>
+	<string name="full_detail_view_address"><b><i>Location</i></b></string>
+	<string name="full_detail_view_get_direction"><i>get direction</i></string>
+	<string name="map_tab_bar_event_text">EVENTS</string>
+	<string name="map_tab_bar_promotion_text">DEALS</string>
+	<string name="favorite_tab_bar_past_text">PAST</string>
+	<string name="favorite_tab_bar_ongoing_text">ONGOING</string>
+	
+	<string name="ad_simple_map_prev_button">prev</string>
+	<string name="ad_simple_map_next_button">next</string>
+	<string name="check_box_msg">do not remind me again</string>
+</resources>
