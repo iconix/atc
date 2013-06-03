@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile ~/.gitignore_global
 
+last_ran.txt
+last_ran.txt~
+
 # Ignore bundler config
 /.bundle
 

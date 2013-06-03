@@ -14,6 +14,7 @@ gem 'geocoder'
 gem 'xml-simple', :require => 'xmlsimple'
 gem 'nokogiri'
 gem 'google-analytics-rails'
+gem 'debugger'
 
 group :development, :test do
   gem 'sqlite3'
