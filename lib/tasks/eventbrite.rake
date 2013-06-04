@@ -7,6 +7,7 @@ require 'open-uri'
 
 HEADERS_HASH = {"User-Agent" => "Ruby/#{RUBY_VERSION}"}
 COMMON_TAGS = "event, eventbrite"
+SHORT_DESC_LENGTH = 230
 SHORT_DESC_WORD_COUNT = 30
 
 # events of a this month
@@ -92,12 +93,17 @@ def events_this_month(base_page_url, tags)
         event[:short_desc] = ""
         if non_empty < paragraphs.length then
           short_desc = paragraphs[non_empty].gsub(/\s+/, ' ').strip.squeeze(' ')
-          short_desc_words = short_desc.split
-          if short_desc_words.length < SHORT_DESC_WORD_COUNT then
+          if short_desc.length < SHORT_DESC_LENGTH then
             event[:short_desc] = '<p>' + short_desc + '</p>'
           else
-            for i in 0..(SHORT_DESC_WORD_COUNT-2) do
-              event[:short_desc] += short_desc_words[i] + " "
+            short_desc_words = short_desc.split
+            min_number = [SHORT_DESC_WORD_COUNT, short_desc_words.length].min
+            for i in 0..(min_number-2) do
+              if event[:short_desc].length + short_desc_words[i].length < SHORT_DESC_LENGTH then
+                event[:short_desc] += short_desc_words[i] + " "
+              else 
+                break 
+              end
             end
             event[:short_desc] += "..."
           end
@@ -135,7 +141,7 @@ namespace :populate do
     events += events_this_month(bayarea_url, "event, Bay Area")
     
     # Other cities
-    if true then
+    if false then
       cities = ['Menlo Park', 'Redwood City', 'San Mateo']
       base_url_month = 'http://www.eventbrite.com/directory?date=month&city='
       cities.each do |city|
@@ -150,6 +156,21 @@ namespace :populate do
     # Write to DB (Rails)
     if true then
       business = Business.find_by_name('Bay Area')
+      if not business then 
+        puts "Bay Area business account is not found!" 
+        return
+      end
+      # delete old events
+      old_events = business.deals.find(:all, conditions: {isEvent: true})
+      begin
+        old_events.each do |e|
+          e.destroy
+        end
+      rescue Exception=>ex
+        puts "DEV Exception: #{ex}"
+        next
+      end
+      # insert new events
 		  begin
 		    events.each do |e|
 			    business.deals.create!(business_id: business.id,
@@ -165,8 +186,8 @@ namespace :populate do
 									    latitude: e[:lat],
 									    longitude: e[:lng])
 		    end # events.each
-		  rescue Exception=>e
-        puts "DEV Exception: #{e}"
+		  rescue Exception=>exp
+        puts "DEV Exception: #{ex}"
         next
       end
 		end # if
