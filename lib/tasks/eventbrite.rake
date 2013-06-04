@@ -10,11 +10,26 @@ COMMON_TAGS = "event, eventbrite"
 SHORT_DESC_WORD_COUNT = 30
 
 # events of a this month
-def events_this_month()
+def events_this_month(base_page_url, tags)
   puts "events_this_month"
-  base_url = 'http://www.eventbrite.com/'
-  base_page_url = 'http://www.eventbrite.com/directory?loc=Palo+Alto&is_miles=True&city=Palo+Alto&slat=37.44&slng=-122.14&date=month&radius=60.0&lat=37.44&lng=-122.14'
-  paginations = ['', '&page=2', '&page=3', '&page=4', '&page=5', '&page=6', '&page=7', '&page=8', '&page=9']
+  
+  # Find pagination number
+  begin
+    page = Nokogiri::HTML(open(base_page_url))
+    search_result = page.css('section#search_results h6')
+    number_events = search_result[0].text.split('of')[1].to_i
+    number_paginations = number_events / 10
+    if number_events % 10 != 0 then number_paginations += 1 end
+    puts "number_events = #{number_events}, number_paginations = #{number_paginations}"
+    paginations = ['']
+    for p in 2..number_paginations do 
+      paginations << "&page=#{p}"
+    end
+    puts paginations
+  rescue Exception=>e
+    puts "DEV Exception: #{e}"
+    return []
+  end
   
   events_parsed = []
   paginations.each do |p|
@@ -31,10 +46,6 @@ def events_this_month()
       img = item.css('td.logo a img')[0]['src']
       begin
         event_page = Nokogiri::HTML(open(event_url, HEADERS_HASH))
-      rescue Exception=>e
-        puts "\t\t Error opening event URL: #{e}"
-        sleep 5
-      else
         puts "\t\t ...Parsing"
         event_header = event_page.css('div#contentpub div.main div#subheader table#subheader_table tbody tr td#subheader_info_cell div#event_header')[0]
         if not event_header then next end
@@ -57,24 +68,52 @@ def events_this_month()
           start_date = DateTime.parse(date_text.strip + ', ' + time_text.strip)
           date_text, time_text = end_text.split('at')
           end_date = DateTime.parse(date_text.strip + ', ' + time_text.strip)
+        elsif when_text.include? "at" then
+          date_text, time_text = when_text.split('at')
+          start_date = DateTime.parse(date_text.strip + ', ' + time_text.strip)
+          end_date = start_date + Rational(2, 24) # assuming 2-hour events
         else
           next
         end
         event[:start_date] = start_date
         event[:end_date] = end_date
         # DESCRIPTION
-        event_desc = event_page.css('div#contentpub div.main div#col_628 div.panel_628 div.panel_body span.description')[0].text.gsub(/\s+/, ' ').strip.squeeze(' ')
+        event_desc = event_page.css('div#contentpub div.main div#col_628 div.panel_628 div.panel_body span.description')[0].text.strip
+        paragraphs = event_desc.split(/\r?\n/)
+        event[:long_desc] = ""
+        paragraphs.each do |para|
+          event[:long_desc] += '<p>' + para.gsub(/\s+/, ' ').strip.squeeze(' ') + '</p>'
+        end
+        # find a non-empty paragraph
+        non_empty = 0
+        while non_empty < paragraphs.length and paragraphs[non_empty].length < 5 do 
+          non_empty += 1 
+        end
         event[:short_desc] = ""
-        event[:long_desc] = event_desc
+        if non_empty < paragraphs.length then
+          short_desc = paragraphs[non_empty].gsub(/\s+/, ' ').strip.squeeze(' ')
+          short_desc_words = short_desc.split
+          if short_desc_words.length < SHORT_DESC_WORD_COUNT then
+            event[:short_desc] = '<p>' + short_desc + '</p>'
+          else
+            for i in 0..(SHORT_DESC_WORD_COUNT-2) do
+              event[:short_desc] += short_desc_words[i] + " "
+            end
+            event[:short_desc] += "..."
+          end
+        end
         # WHERE
         where_text = event_page.css('div#contentpub div.main div#col_280 div.panel_280 div#panel_when.panel_body h2.location.vcard')[0].text.gsub(/\s+/, ' ').strip.squeeze(' ')
         event[:address] = where_text
         # TAG
-        event[:tags] = "event, eventbrite, Palo Alto"
+        event[:tags] = tags
         
         events_parsed << event
         puts event
         success_count += 1
+      rescue Exception=>e
+        puts "\t\t DEV Exception: #{e}"
+        sleep 5
       ensure
         count += 1
         sleep 1.0 + rand
@@ -87,32 +126,50 @@ end
 
 namespace :populate do
   desc "Fill database with events from http://www.eventbrite.com"
-  task palo_alto_events: :environment do
+  task eventbrite_bayarea_events: :environment do
     #debugger
+    events = []
     
-    # events if this month
-    events = events_this_month()
+    # Bay Area searched from eventbrite.com
+    bayarea_url = 'http://www.eventbrite.com/directory?loc=Bay+Area%2C+CA&is_miles=True&spellcheck=0&slat=37.71&slng=-122.25&date=month&radius=60&lat=37.71&lng=-122.25'
+    events += events_this_month(bayarea_url, "event, Bay Area")
+    
+    # Other cities
+    if true then
+      cities = ['Menlo Park', 'Redwood City', 'San Mateo']
+      base_url_month = 'http://www.eventbrite.com/directory?date=month&city='
+      cities.each do |city|
+        word1, word2 = city.split
+        events += events_this_month(base_url_month + word1 + '+' + word2, "event, #{city}")
+      end # cities.each
+    end
     
     events.uniq!
     puts "events = #{events.length}"
     
     # Write to DB (Rails)
     if true then
-		  business = Business.find_by_name('Palo Alto')
-		  events.each do |e|
-			  business.deals.create!(business_id: business.id,
-									  isEvent: true,
-									  title: e[:title],
-									  startDate: e[:start_date],
-									  endDate: e[:end_date],
-									  shortDescription: e[:short_desc],
-									  longDescription: e[:long_desc],
-									  imageURL: e[:image_url],
-									  tags: e[:tags],
-									  address: e[:address],
-									  latitude: e[:lat],
-									  longitude: e[:lng])
-		  end
-		end
-  end
+      business = Business.find_by_name('Bay Area')
+		  begin
+		    events.each do |e|
+			    business.deals.create!(business_id: business.id,
+									    isEvent: true,
+									    title: e[:title],
+									    startDate: e[:start_date],
+									    endDate: e[:end_date],
+									    shortDescription: e[:short_desc],
+									    longDescription: e[:long_desc],
+									    imageURL: e[:image_url],
+									    tags: e[:tags],
+									    address: e[:address],
+									    latitude: e[:lat],
+									    longitude: e[:lng])
+		    end # events.each
+		  rescue Exception=>e
+        puts "DEV Exception: #{e}"
+        next
+      end
+		end # if
+  end # environment
 end
+
