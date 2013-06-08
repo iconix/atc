@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#00000000"
+    android:orientation="vertical"
+    android:paddingRight="10dp" 
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_row_title_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/new_ad_list_row_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:textColor="#ffffff"
+            android:textIsSelectable="false"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"/>
+
+        <TextView
+            android:id="@+id/new_ad_list_row_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="7dip"
+            android:paddingLeft="7dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:gravity="right"
+            android:textColor="#ffffff"
+            android:textIsSelectable="false"
+            android:textSize="14sp"
+            android:textStyle="bold|italic"/>
+    </LinearLayout>
+
+    <FrameLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+	    <ImageView
+	        android:id="@+id/new_ad_list_row_image"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:scaleType="fitCenter"
+	        android:contentDescription="@string/ad_image_description" />
+	    
+	    <TextView 
+	        android:id="@+id/new_ad_list_row_distance"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="bottom|right"
+	        android:padding="3dp"
+	        android:background="#77000000"
+	        android:textColor="#d2d2d2"
+	        android:textSize="15sp" 
+	        android:textIsSelectable="false"/>
+	</FrameLayout>
+    <TextView
+        android:id="@+id/new_ad_list_row_short_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/list_row_desc_bg"
+        android:textColor="#999999"
+        android:padding="7dp"
+        android:textIsSelectable="false"
+        android:textSize="13sp" 
+        android:textStyle="bold|italic"/>
+
+</LinearLayout>

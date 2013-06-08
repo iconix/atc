@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/deal_list_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/home_bg"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selection_bar_bg"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/deal_list_menu_selection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/category_icon"
+                android:contentDescription="@string/ad_image_description" />
+
+            <ImageView
+                android:id="@+id/deal_list_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/setting_icon"
+                android:contentDescription="@string/ad_image_description" 
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@id/deal_list_setting"
+                android:layout_alignLeft="@id/deal_list_menu_selection"
+                android:layout_alignRight="@id/deal_list_setting"
+                android:gravity="center"
+                android:text="@string/deal_text"
+                android:textColor="#ffffff"
+                android:textIsSelectable="false"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <fragment
+            android:id="@+id/list_deal_fragment"
+            android:name="com.sapenguins.thecornerapp.DealListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            tools:layout="@layout/new_ad_list" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/deal_list_menu_selection_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <ScrollView
+            android:id="@+id/deal_list_menu_selection_window"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:background="#6F7D9F" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/view_text"
+                    android:textColor="#c2c2c2"
+                    android:textIsSelectable="false"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#c2c2c2" />
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_map_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/map_icon"
+                        android:gravity="center"
+                        android:text="@string/map_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_event_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/event_icon"
+                        android:gravity="center"
+                        android:text="@string/events_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_deal_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#22ffffff"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/deal_icon"
+                        android:gravity="center"
+                        android:text="@string/deals_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_favorite_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/favorite_icon"
+                        android:gravity="center"
+                        android:text="@string/favorite_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <!-- HERE IS THE CATEGORIES PART -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/category_text"
+                    android:textColor="#c2c2c2"
+                    android:textIsSelectable="false"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="#c2c2c2" />
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_category_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="#22ffffff"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/deal_category_all_icon"
+                        android:gravity="center"
+                        android:text="@string/all_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_category_entertainment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/event_category_entertainment_icon"
+                        android:gravity="center"
+                        android:text="@string/entertainment_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_category_shopping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/deal_category_shopping_icon"
+                        android:gravity="center"
+                        android:text="@string/shopping_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#c2c2c2" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/deal_list_menu_category_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/deal_category_food_icon"
+                        android:gravity="center"
+                        android:text="@string/food_list_text"
+                        android:textColor="#ffffff"
+                        android:textIsSelectable="false"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/deal_list_menu_collapse_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

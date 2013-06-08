@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ad_full_detail_wrapper"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@drawable/home_bg"
+        android:padding="10dp">
+    
+    <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tabbar_bg"
+                android:orientation="horizontal" 
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/ad_full_star_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/star_icon"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/ad_favorite_text" 
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"/>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#c2c2c2" />
+
+                <Button
+                    android:id="@+id/ad_full_like_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#00000000"
+                    android:drawableLeft="@drawable/like_icon"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/ad_like_text" 
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"
+                    android:textStyle="bold|italic"/>
+            </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/ad_full_detail_scroll_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+
+            <TextView
+                android:id="@+id/ad_full_detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#8c1515"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:textColor="#ffffff"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/ad_full_detail_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#8c1515"
+                android:gravity="right"
+                android:paddingBottom="3dp"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dip"
+                android:paddingTop="3dp"
+                android:textColor="#ffffff"
+                android:textIsSelectable="false"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <ImageView
+                    android:id="@+id/ad_full_detail_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/ad_image_description"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/ad_full_detail_distance_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:background="#77000000"
+                    android:padding="3dp"
+                    android:textColor="#d2d2d2"
+                    android:textIsSelectable="false"
+                    android:textSize="15sp"
+                    android:textStyle="bold|italic" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/ad_full_detail_full_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e9e9e9"
+                android:padding="7dp"
+                android:textColor="#666666"
+                android:textIsSelectable="false"
+                android:textSize="13sp"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/ad_full_detail_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e9e9e9"
+                android:padding="7dp"
+                android:textColor="#999999"
+                android:textIsSelectable="false"
+                android:textSize="14sp"
+                android:textStyle="bold|italic" />
+            
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#cccccc"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/ad_full_detail_map"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:text="@string/full_detail_view_address"
+                            android:textColor="#222222"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/ad_full_detail_direction"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="7dp"
+                            android:text="@string/full_detail_view_get_direction"
+                            android:textColor="#5050ff"
+                            android:textIsSelectable="false"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/ad_full_detail_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="14dp"
+                        android:textColor="#666666"
+                        android:textIsSelectable="false"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/ad_full_detail_map"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:padding="7dp" >
+
+                    <fragment
+                        android:id="@+id/ad_full_detail_map_fragment"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="#ccffffff" >
+
+                        <ImageView
+                            android:id="@+id/ad_full_detail_expanding_map"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:background="@drawable/expanding_button"
+                            android:contentDescription="@string/ad_image_description" />
+                    </LinearLayout>
+                </FrameLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ad_full_detail_support_map_container"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#88000000"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/ad_full_detail_hide_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/closing_button"
+                        android:contentDescription="@string/ad_image_description"
+                        android:padding="5dp" />
+                </LinearLayout>
+
+                <fragment
+                    android:id="@+id/ad_full_detail_support_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            
+            <RelativeLayout               
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                  <TextView 
+	                android:id="@+id/ad_full_detail_add_to_favorite"
+	                android:layout_alignParentRight="true"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:gravity="center"
+	                android:padding="5dp"
+	                android:textIsSelectable="false"
+	                android:textStyle="bold"
+	                android:textSize="17sp"
+	                android:textColor="#d9d9d9"
+	                android:drawableLeft="@drawable/star_icon"
+	                android:text="@string/ad_favorite_text"/>
+            </RelativeLayout>
+          
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
