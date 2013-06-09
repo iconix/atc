@@ -1,0 +1,6 @@
+<%= form_for(@deal) do |f| %>
+  <div class="field">
+    <%= f.text_area :title, placeholder: "Compose new deal..." %>
+  </div>
+  <%= f.submit "Post", class: "btn btn-large btn-primary" %>
+<% end %>

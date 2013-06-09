@@ -1,0 +1,10 @@
+#summary-msgs ul {
+	overflow: hidden;
+}
+
+#summary-msgs li {
+	list-style-type: none;
+	background: url('/assets/arrow.gif') no-repeat 0 .5em;
+	height: 20px;
+	padding-left: 10px;
+}

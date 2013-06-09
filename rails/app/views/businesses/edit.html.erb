@@ -1,0 +1,59 @@
+<% content_for :head do %>
+	<%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true" %>
+	<%= javascript_include_tag "google-places-autocomplete.js" %>
+<% end %>
+
+<% provide(:title, "Edit Profile") %> 
+<% provide(:subtitle, "Update Your Profile") %>
+
+<div class="container jumbotron">
+	<div class="row">
+		<%= form_for @business, :html => { :multipart => true } do |f| %>
+			<%= render 'shared/business_error_messages' %>
+			<div class="span6">
+		    <%= f.label :name %>
+		    <%= f.text_field :name %>
+
+		    <%= f.label :email %>
+		    <%= f.text_field :email %>
+
+		    <%= f.label :password %>
+		    <%= f.password_field :password %>
+
+		    <%= f.label :password_confirmation, "Confirm Password" %>
+		    <%= f.password_field :password_confirmation %>
+			</div>
+			<div class="span6">
+				<div id='address_input'>
+			    	<%= f.label :address, "Address" %>
+					<%= f.hidden_field :address %>
+					<%= text_field_tag :location_search, nil, type: "text", value: @business.address, placeholder: "Start typing a place name..." %>
+			    </div>
+
+			    <div id='map-canvas'></div>
+				
+				<%= f.label :"Phone Number" %>
+				<%= f.text_field :phoneNumber %>
+
+		    <%= f.label :image, "Or Upload Image" %>
+		    <%= f.file_field :image %>
+			<% unless @business.image_file_size.blank? %>
+	          <p>
+	          	(Current upload -- Check box to delete:<br />
+	          	<%= f.check_box :image_delete %> <%= @business.image_file_name %>)
+	          </p>
+	        <% end %>
+				
+		    <br><br>
+		    <%= f.submit "Save changes", class: "btn btn-primary" %>
+		    <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-primary", style: "margin-left: 20px;" %>
+			</div>
+			<!--
+			<div class="span4">	
+				<%= f.label :imageURL, "Image URL" %>
+		    <%= f.text_field :imageURL %>
+
+		  </div>-->
+		<% end %>
+	</div>
+</div>

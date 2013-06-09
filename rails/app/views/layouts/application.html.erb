@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= full_title(yield(:title)) %></title>
+
+		<%= stylesheet_link_tag    "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= favicon_link_tag 'favicon.png?v=2' %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/shim' %>
+    
+    <%= yield :head %>
+
+    <%= analytics_init if Rails.env.production? %>
+  </head>
+  <body style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', Verdana, Arial, Helvetica, sans-serif;">
+    <%= render 'layouts/header' %>
+		<%= render 'layouts/subheader' %>
+    <div class="container">
+			<% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+      <% end %>
+    </div>
+			<div style="min-height: 403px">
+    <%= yield %>
+		</div>
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

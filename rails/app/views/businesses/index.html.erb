@@ -1,0 +1,23 @@
+<% provide(:title, 'All Businesses') %>
+<% provide(:subtitle, 'All Businesses') %>
+
+<div class="container jumbotron">
+
+<% if current_business.admin? then %>
+  <%= link_to "<< View profile", current_business %>
+<% end %>
+
+<ul class="businesses">
+  <% @businesses.each do |business| %>
+    <li>
+      <%= link_to business.name, business %>
+      (<%= business.deals.all.size %>)
+      <% if current_business.admin? && !current_business?(business) %>
+        | <%= link_to "delete", business, method: :delete,
+                                      data: { confirm: "You sure?" } %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+</div>

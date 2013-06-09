@@ -1,0 +1,41 @@
+<header id="header" class ="masthead">
+	<div class="container">
+		<div id="header-logo">
+			<a href="/"><img src="/assets/new_logo.png" alt="logo", width="70px"></a>
+			<span id="company-name">Around The Corner</span>
+		</div>
+
+		<% if signed_in? %>
+			<div class="navbar"> 
+      	<div>
+        	<ul class="nav pull-right">
+          	<li class="dropdown">
+            	<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= current_business.name %><b class="caret"></b></a>
+            	<ul class="dropdown-menu">
+              	<li class="nav-header">Your Account</li>
+              	<li><%= link_to "View profile", current_business %></li>
+              	<li><%= link_to "Edit profile", edit_business_path(current_business) %></li>
+								<li><%= link_to "Help", help_path %></li>
+              	<li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+								<!--
+              	<li class="nav-header">Your Customers</li>
+              	<li><%= link_to "Profile", current_business %></li>
+              	<li><%= link_to "Sign out", signout_path, method: "delete" %></li>
+								-->
+            	</ul>
+          	</li>
+        	</ul>
+      	</div>
+    	</div>
+		<% else %>
+			<div id="header-navbar" class="navbar">
+				<form class="navbar-form pull-right" method="post" action="/sessions">
+					<input type="text" name="session[email]" placeholder="Email">
+					<input id="password_signin" type="password" name="session[password]" placeholder="Password">
+					<button type="submit" class="btn">Sign in</button>
+				</form>
+			</div>
+		<% end %>
+	</div>
+</header>
+

@@ -1,0 +1,50 @@
+<% if @deal.isEvent then %>
+	<% provide(:title, "Event") %>
+	<% provide(:subtitle, "Event") %>
+<% else %>
+	<% provide(:title, "Deal") %>
+	<% provide(:subtitle, "Deal") %>
+<% end %>
+
+<div class="container jumbotron">
+	<div class="row">
+		<div class="span6">
+    	<p>
+	      	<% d = Deal.find(params[:id]) %>
+	        <% b = Business.find(d.business_id) %>
+			<%= link_to "<< View all promotions", business_path(b) %>
+  		</p>
+			<h1><%= @deal.title %></h1>
+			<p>
+				<a href="/promos/<%= @deal.id %>/edit">Edit</a>
+			</p>
+			<p>Start date: <%= display_time(@deal.startDate.to_s) %></p>
+			<p>End date: <%= display_time(@deal.endDate.to_s) %></p>
+			<p>Image URL: 
+		  	<% unless @deal.imageURL.blank? %> 
+					<p><%= image_tag @deal.imageURL %></p>
+				<% end %>
+			</p>
+			<p>Image Upload: 
+  			<% unless @deal.image_file_name.blank? %> 
+					<p><%= image_tag @deal.image.url(:medium) %></p>
+				<% end %>
+	  	</p>
+			<% if @deal.shortDescription %>
+				<p>Short description: <%= raw(@deal.shortDescription) %></p>
+			<% end %>
+		</div>
+		<div class="span6">
+			<% if @deal.longDescription %>
+				<p>Long description: <%= raw(@deal.longDescription) %></p>
+			<% end %>
+			<% if @deal.address %>
+				<p>Address: <%= @deal.address %>
+			<% end %>
+			<% if @deal.tags %>
+				<p>Tags: <%= @deal.tags %></p>
+			<% end %>
+		</div>
+	</div>
+</div>
+	

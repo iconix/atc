@@ -1,0 +1,88 @@
+<% provide(:title, @business.name) %>
+<% provide(:subtitle, "Dashboard") %>
+
+<div class="container jumbotron">
+<div class="row">
+  <aside class="span4">
+    <% if current_business.admin? && !current_business?(@business) then %>
+      <%= link_to "<< View all businesses", businesses_path %>
+    <% end %>
+    <section>
+      <h1><%= @business.name %></h1>
+	  <% unless @business.imageURL.blank? %> 
+		<img src=<%= @business.imageURL %> width="200px", height="200px">
+		<br><br>
+	  <% end %>
+	  <% unless @business.image_file_name.blank? %> 
+		<%= image_tag @business.image.url(:medium) %>
+		<br><br>
+	  <% end %>
+	  <p><%= link_to "Edit profile", edit_business_path(@business) %></p>
+	  <p><%= link_to "View customer statistics", stats_business_path(@business) %></p>
+			<% unless current_business.admin? then %>
+				<p><a href="/newpromo" class="btn btn-primary">Create promotion</a></p>
+			<% end %>
+    </section>
+  </aside>
+	<% unless @business.admin? then %>
+		<div class="span4">
+		  <h3> Your Events: </h3>
+		  <% if @business.deals.any? %>
+			  <ol>
+				  <% @events.each do |d| %>
+					  <% if d.title && d.isEvent then %>
+						  <li>
+								<a href="/promos/<%= d.id %>"><%= d.title %></a>
+                <i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+								<a href="/promos/<%= d.id %>/edit">Edit</a>
+                <% if current_business.admin? || current_business?(@business) then %>
+                  <%= link_to "Delete", d, method: :delete,
+                                                      data: { confirm: "You sure?" },
+                                                      title: d.title %>
+                <% end %>
+              </li>
+					  <% end %>
+				  <% end %>
+			  </ol>
+			  <% if @events.total_pages > 1 %>
+				<p>Page <%= @events.current_page %>/<%= @events.total_pages %></p>
+			  <% end %>
+			  <%= render(partial: 'shared/business_page_nav', 
+		  	  	locals: {page: @events, param_name: :events_page}) %>
+		  <% end %>
+		</div>
+		<div class="span4">
+		 	<h3> Your Deals: </h3>
+		 	<% if @business.deals.any? %>
+		 	<ol>
+			  	<% @deals.each do |d| %>
+				  	<% if d.title && !d.isEvent then %>
+					  	<li>
+								<a href="/promos/<%= d.id %>"><%= d.title %></a>
+               	<i>Posted <%= time_ago_in_words(d.created_at) %> ago.</i>
+								<a href="/promos/<%= d.id %>/edit">Edit</a>
+               	<% if current_business.admin? || current_business?(@business) then %>
+                 	<%= link_to "Delete", d, method: :delete,
+                   	                                  data: { confirm: "You sure?" },
+                     	                                title: d.title %>
+               	<% end %>
+             	</li>
+				  	<% end %>
+			  	<% end %>
+		  	</ol>
+		  	<% if @deals.total_pages > 1 %>
+				<p>Page <%= @deals.current_page %>/<%= @deals.total_pages %></p>
+			  <% end %>
+		  	<%= render(partial: 'shared/business_page_nav', 
+		  	  	locals: {page: @deals, param_name: :deals_page}) %>
+		 	<% end %>
+		</div>
+	<% else %>  
+		<div class="span6"
+		  <h3> Administrative Console </h3>
+		  <h4><%= link_to "Manage businesses unique to site", businesses_path %></h4>
+		  <h4><%= link_to "Site statistics", stats_path %></h4>
+		</div>
+	<% end %>
+</div>
+</div>

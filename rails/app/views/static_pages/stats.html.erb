@@ -1,0 +1,13 @@
+<% provide(:title, 'Site Statistics') %>
+<% provide(:subtitle, 'Site Statistics') %>
+
+<div class="container jumbotron">
+  <% if current_business.admin? %>
+    <%= link_to "<< View profile", current_business %>
+	  <h1>Site Statistics</h1>
+    <br />
+	  <h4>Total number of businesses: <%= Business.all.size %></h4>
+    <h4>Total number of deals: <%= Deal.find(:all, :conditions => {:isEvent => [nil, false]}).size %></h4>
+    <h4>Total number of events: <%= Deal.find(:all, :conditions => {:isEvent => true}).size %></h4>
+  <% end %>
+</div>

@@ -1,0 +1,36 @@
+// Place all the styles related to the Businesses controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.businesses {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid gray;
+    &:last-child {
+      border-bottom: 1px solid gray;
+    }
+  }
+}
+
+.business-creation {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.business-update {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.deal-creation {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+.deal-update {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}

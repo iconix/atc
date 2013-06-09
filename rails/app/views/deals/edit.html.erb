@@ -1,0 +1,108 @@
+<% content_for :head do %>
+	<%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true" %>
+	<%= javascript_include_tag "google-places-autocomplete.js" %>
+	<%= stylesheet_link_tag "bootstrap-datetimepicker.min.css" %>
+  <%= javascript_include_tag "bootstrap-datetimepicker.min.js" %>
+	
+  <script type="text/javascript">
+	  	$(function() {
+	    	$('#start').datetimepicker({
+	      		language: 'en',
+	      		pick12HourFormat: true,
+	      		pickSeconds: false
+	    	});
+	    	$('#end').datetimepicker({
+	    		language: 'en',
+	      		pick12HourFormat: true,
+	      		pickSeconds: false
+	    	})
+	  	});
+	</script>
+<% end %>
+
+
+<% if @deal.isEvent then %>
+	<% provide(:title, "Edit Event") %>
+	<% provide(:subtitle, "Update Your Event") %>
+<% else %>
+	<% provide(:title, "Edit Deal") %>
+	<% provide(:subtitle, "Update Your Deal") %>
+<% end %>
+
+<div class="container jumbotron">
+	<div class="row">
+		<%= form_for @deal, :html => { :multipart => true } do |f| %>
+			<%= render 'shared/deal_error_messages' %>
+			<div class="span6">
+				<% if @deal.isEvent then %>
+					<%= f.radio_button :isEvent, 0 %> Deal&nbsp;&nbsp;&nbsp;
+					<%= f.radio_button :isEvent, 1, :checked => true %> Event<br><br>
+				<% else %>
+					<%= f.radio_button :isEvent, 0, :checked => true %> Deal&nbsp;&nbsp;&nbsp;
+					<%= f.radio_button :isEvent, 1 %> Event<br><br>
+				<% end %>
+
+		    <%= f.label :title, "Title (required)" %>
+		    <%= f.text_field :title %>
+
+		    <%= f.label :shortDescription, "Short Description (max 30 words)" %>
+		    <%= f.text_area :shortDescription, :rows => "2" %>
+
+		    <%= f.label :longDescription, "Long Description" %>
+		    <%= f.text_area :longDescription, :rows => "3" %>
+
+		    <%= f.label :tags, "Tags (separated by comma)" %>
+		    <%= f.text_field :tags %>
+		  </div>
+			<div class="span6">
+		    <div id="start" class="input-append">
+		    	<%= f.label :startDate, "Start Date and time (required)" %>
+		    	<input id="deal_startDate" name="deal[startDate]" data-format="MM/dd/yyyy HH:mm PP" type="text" value="<%= @deal.startDate.strftime("%m/%d/%Y %I:%M %p") %>"></input>
+		    	<span class="add-on">
+			      	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+			      	</i>
+		    	</span>
+		  	</div>
+		  	<div id="end" class="input-append">
+		    	<%= f.label :endDate, "End Date and time (required)" %>
+		    	<input id="deal_endDate" name="deal[endDate]" data-format="MM/dd/yyyy HH:mm PP" type="text" value="<%= @deal.endDate.strftime("%m/%d/%Y %I:%M %p") %>"></input>
+		    	<span class="add-on">
+			      	<i data-time-icon="icon-time" data-date-icon="icon-calendar">
+			      	</i>
+		    	</span>
+		  	</div>
+		    <br>
+
+				<div id='address_input'>
+		    	<%= f.label :address, "Address (required)" %>
+					<%= f.hidden_field :address %>
+					<%= text_field_tag :location_search, nil, type: "text", value: @deal.address, placeholder: "Start typing a place name..." %>
+		    </div>
+
+		    <div id='map-canvas'></div>
+				
+		    <%= f.label :image, "Upload Image" %>
+		    <%= f.file_field :image %>
+		    <% unless @deal.image_file_size.blank? %>
+	          <p>
+	          	(Current upload -- Check box to delete:<br />
+	          	<%= f.check_box :image_delete %> <%= @deal.image_file_name %>)
+	          </p>
+	        <% end %>
+		    
+		    <br><br>
+		    <%= f.submit "Save changes", class: "btn btn-primary" %>
+      <%= submit_tag 'Cancel', :name => 'cancel', class: "btn btn-primary", style: "margin-left: 20px;" %>
+		  </div>  
+			<!--
+		  <div class="span4">
+
+		    <%= f.label :imageURL, "Image URL" %>
+		    <%= f.text_field :imageURL %>
+
+			</div>
+			-->
+		<% end %>
+	</div>
+</div>
+

@@ -1,0 +1,58 @@
+<% provide(:title, 'Welcome') %>
+<% provide(:subtitle, '') %>
+
+<!-- Dynamic panel -->
+<div id="dynamic-panel">
+	<div class="container">
+		<div class="row">
+			<div class="dynamic-panel-text span6">
+				<h1>Your promotions,</h1>
+				<h1>auto-delivered to</h1>
+				<h1>customer hands</h1>
+				<!--p class="btn btn-large"> <%= link_to "Sign up", signup_path %></p-->
+				<% if !signed_in? %>
+					<a href="/signup"><button class="btn btn-primary btn-large">Sign up</button></a>
+		  	<% end %>
+		  </div>
+			<div class="dynamic-panel-image span6">
+				<iframe width="460" height="259" src="http://www.youtube.com/embed/qMAHCXbxLIs?rel=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
+			</div>
+		</div>
+  </div>
+</div>
+		
+<!-- Content panel -->
+<div id="content-panel">
+	<div class="container">
+		<div class="row">
+			<div class="content span4 pull-left">
+				<div class="content-image">
+					<img src="/assets/business.jpg">
+				</div>
+				<div class="content-text">
+					<p>Create deals and events to promote your business, and let them be automatically pushed to and saved on customer smartphones whenever they are near your business location.</p>
+				</div>
+			</div>
+			<div class="content span4" style="margin-left: 45px">
+				<div class="content-image">
+					<img src="/assets/mobile_user.jpg">
+					<!-- http://www.istockphoto.com/stock-illustration-4236441-college-communication.php?st=65b9158 -->
+				</div>
+				<div class="content-text">
+					<p>Customers can <a href="https://play.google.com/store/apps/details?id=com.sapenguins.thecornerapp&feature=search_result#?t=W251bGwsMSwyLDEsImNvbS5zYXBlbmd1aW5zLnRoZWNvcm5lcmFwcCJd"><b>download</b></a> our Android app to discover deals and events around them. The app automatically discovers personalized deals, goods, and business events around their vicinity.</p>
+				</div>
+			</div>
+			<div class="content span4 pull-right">
+				<div class="content-image">
+					<img src="/assets/customer_feedback.jpg">
+					<!-- http://baltimoresunmediagroup.com/wp-content/uploads/2012/08/iStock_000020052881Medium-300x212.jpg -->
+				</div>
+				<div class="content-text">
+					<p><font size="3"><b>What our customers are saying</b></font></p>
+					<p>"This is so cool. I can't tell you how many departments and student groups would love to see this become reality."</p>
+					<p>-Colin Campbell, Peer Health Coordinator</p> 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
